@@ -265,6 +265,9 @@ impl Rama {
     pub fn actor(&self) -> &Receiver {
         &self.actor
     }
+    pub(crate) fn supports_slot(&self, slot: usize) -> bool {
+        slot < self.rules.len()
+    }
     pub fn actor_mut(&mut self) -> &mut Receiver {
         &mut self.actor
     }

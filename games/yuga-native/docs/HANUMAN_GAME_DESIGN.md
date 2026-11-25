@@ -1,5 +1,7 @@
 # Hanuman · The Returning Leap
 
+**Rust browser addition:** the current Confluence build adds a sixth action, [Vanara Sena](design/vanara-sena-2026/README.md), on V. The Godot practice kit described below remains the separate five-action implementation.
+
 Hanuman is a close-range rescuer in YUGA’s offline practice court. He clears space with the gada, shields an ally in front of him, vaults to a clear position and leaves a short-lived rear warning when enemies follow. Mountain Pulse asks him to commit to a shared landing area for rescue and pressure. In a typical exchange, use the shortest action that solves the immediate problem and keep the vault available for the next opening. [Play the trial](HANUMAN_HANDOFF.md)
 
 ## Inspiration and interpretation

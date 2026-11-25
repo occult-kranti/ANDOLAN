@@ -196,6 +196,84 @@ function buildMap(
   return solidIds;
 }
 
+// A deliberately spectral, painted effect card, shared by every active cast in
+// this scene. It is presentation only: the server resolves the disk's damage.
+const senaTexture = new WeakMap<RenderKit, pc.Texture>();
+function guardianTexture(kit: RenderKit) {
+  const cached = senaTexture.get(kit);
+  if (cached) return cached;
+  const texture = kit.texture('Vanara Sena · painted spirit', 256, 384, (ctx) => {
+    ctx.clearRect(0, 0, 256, 384);
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const gold = ctx.createLinearGradient(0, 25, 0, 370);
+    gold.addColorStop(0, '#ffda91'); gold.addColorStop(.45, '#db792f'); gold.addColorStop(1, '#a44716');
+    ctx.strokeStyle = gold; ctx.fillStyle = gold; ctx.shadowColor = '#ffba54'; ctx.shadowBlur = 9;
+    const outline = 'rgba(112,43,11,.86)';
+    function outlinedFill() {
+      ctx.save(); ctx.shadowBlur = 0; ctx.strokeStyle = outline; ctx.lineWidth = 5; ctx.stroke(); ctx.restore();
+      ctx.fill();
+    }
+    function outlinedStroke(width: number) {
+      ctx.save(); ctx.shadowBlur = 0; ctx.strokeStyle = outline; ctx.lineWidth = width + 5; ctx.stroke(); ctx.restore();
+      ctx.lineWidth = width; ctx.stroke();
+    }
+    // Curved tail and a small gada remain recognizable at the game camera.
+    ctx.lineWidth = 9;
+    ctx.beginPath(); ctx.moveTo(104, 226); ctx.bezierCurveTo(51, 250, 32, 210, 48, 181);
+    ctx.bezierCurveTo(58, 163, 74, 166, 76, 182); outlinedStroke(9);
+    ctx.lineWidth = 8;
+    ctx.beginPath(); ctx.moveTo(177, 143); ctx.lineTo(207, 75); outlinedStroke(8);
+    ctx.beginPath(); ctx.ellipse(210, 67, 13, 18, .3, 0, Math.PI * 2); outlinedFill();
+    // Crown, head and muzzle form a single soft outline, rather than a box figure.
+    ctx.beginPath(); ctx.moveTo(98, 72); ctx.bezierCurveTo(93, 47, 104, 29, 128, 30);
+    ctx.bezierCurveTo(150, 29, 161, 45, 158, 65); ctx.bezierCurveTo(169, 70, 168, 82, 156, 86);
+    ctx.bezierCurveTo(147, 103, 110, 104, 100, 85); ctx.closePath(); outlinedFill();
+    ctx.beginPath(); ctx.ellipse(96, 74, 9, 13, -.3, 0, Math.PI * 2); outlinedFill();
+    ctx.beginPath(); ctx.ellipse(160, 74, 9, 13, .3, 0, Math.PI * 2); outlinedFill();
+    // One flowing silhouette for shoulders, arms, waist, legs and feet.
+    ctx.beginPath(); ctx.moveTo(113, 101); ctx.bezierCurveTo(92, 102, 79, 112, 73, 131);
+    ctx.lineTo(58, 178); ctx.quadraticCurveTo(55, 190, 65, 193); ctx.quadraticCurveTo(75, 194, 79, 181);
+    ctx.lineTo(94, 147); ctx.lineTo(100, 209); ctx.lineTo(92, 244); ctx.lineTo(101, 279);
+    ctx.lineTo(91, 335); ctx.quadraticCurveTo(88, 348, 100, 349); ctx.quadraticCurveTo(113, 349, 116, 338);
+    ctx.lineTo(128, 287); ctx.lineTo(139, 338); ctx.quadraticCurveTo(143, 349, 156, 349);
+    ctx.quadraticCurveTo(168, 348, 165, 335); ctx.lineTo(155, 279); ctx.lineTo(164, 244);
+    ctx.lineTo(155, 209); ctx.lineTo(162, 147); ctx.lineTo(176, 162);
+    ctx.quadraticCurveTo(184, 170, 191, 162); ctx.quadraticCurveTo(196, 155, 188, 147);
+    ctx.lineTo(173, 122); ctx.quadraticCurveTo(160, 104, 143, 101); ctx.closePath(); outlinedFill();
+    ctx.shadowBlur = 0;
+    // Fine dark-gold edges separate face, armor and dhoti inside the luminous outline.
+    ctx.strokeStyle = 'rgba(118,52,18,.78)'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(108, 77); ctx.quadraticCurveTo(128, 70, 148, 77);
+    ctx.moveTo(115, 90); ctx.quadraticCurveTo(128, 93, 141, 90);
+    ctx.moveTo(104, 133); ctx.quadraticCurveTo(128, 143, 153, 133);
+    ctx.moveTo(101, 205); ctx.quadraticCurveTo(128, 216, 155, 205);
+    ctx.moveTo(108, 231); ctx.lineTo(129, 252); ctx.lineTo(149, 231); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,245,210,.8)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(128, 48); ctx.lineTo(128, 65); ctx.stroke();
+  });
+  senaTexture.set(kit, texture);
+  return texture;
+}
+
+// One static mesh replaces the twelve independently rendered disk tick marks.
+function makeSenaMarks(kit: RenderKit, root: pc.Entity, material: pc.Material, radius: number) {
+  const positions: number[] = [], normals: number[] = [], indices: number[] = [];
+  for (let i = 0; i < 12; i++) {
+    const theta = i * Math.PI / 6, s = Math.sin(theta), c = Math.cos(theta);
+    const x = s * (radius - .28), z = c * (radius - .28), first = positions.length / 3;
+    for (const [side, forward] of [[-.06, -.26], [.06, -.26], [.06, .26], [-.06, .26]]) {
+      positions.push(x + c * side + s * forward, .034, z - s * side + c * forward);
+      normals.push(0, 1, 0);
+    }
+    indices.push(first, first + 2, first + 1, first, first + 3, first + 2);
+  }
+  const mesh = pc.createMesh(kit.app.graphicsDevice, positions, { normals, indices });
+  const marks = new pc.Entity('Vanara Sena · radial markers', kit.app);
+  root.addChild(marks);
+  marks.addComponent('render', { meshInstances: [new pc.MeshInstance(mesh, material)],
+    castShadows: false, receiveShadows: true });
+}
+
 function makeTelegraph(kit: RenderKit, rule: any, seat: string, mountainSource: pc.Entity) {
   const root = new pc.Entity(rule.id, kit.app);
   kit.app.root.addChild(root);
@@ -206,6 +284,14 @@ function makeTelegraph(kit: RenderKit, rule: any, seat: string, mountainSource: 
   const g = rule.geometry,
     radius = g.range_m ?? g.radius_m ?? 0.65;
   const half = g.kind === 'sector' ? Math.acos(g.half_angle_cos) : Math.PI;
+  let outline: pc.StandardMaterial | null = null;
+  if (rule.id === 'vanara_sena') {
+    // A narrow dark underlay separates the golden danger boundary from pale ground.
+    outline = kit.material(seat + ' sena boundary', '#873a12', 0.08, 0.25, 0.86);
+    outline.cull = pc.CULLFACE_NONE;
+    outline.update();
+    kit.arc(root, outline, radius, 0.25, 0.027, -half, half, 56);
+  }
   kit.arc(root, material, radius, 0.095, 0.032, -half, half, 56);
   const wave = kit.arc(root, material, radius, 0.135, 0.042, -half, half, 48);
   if (g.kind === 'sector')
@@ -224,7 +310,9 @@ function makeTelegraph(kit: RenderKit, rule: any, seat: string, mountainSource: 
       );
       edge.setLocalEulerAngles(0, a * RAD, 0);
     }
-  if (g.kind === 'disk')
+  if (g.kind === 'disk' && rule.id === 'vanara_sena') {
+    makeSenaMarks(kit, root, material, radius);
+  } else if (g.kind === 'disk')
     for (let i = 0; i < 12; i++) {
       const a = (i * Math.PI) / 6;
       kit
@@ -245,6 +333,7 @@ function makeTelegraph(kit: RenderKit, rule: any, seat: string, mountainSource: 
     g.kind === 'movement' ? kit.shape(root, 'plane', material, 0, 0.04, 0, 0.13, 1, 1) : null;
   let mote: pc.Entity | null = null;
   const impactSparks: pc.Entity[] = [];
+  const senaSpirits: pc.Entity[] = [];
   if (rule.id === 'mountain_pulse') {
     // Reuse the bundled rock for the visual projectile, without a physics body.
     mote = mountainSource.clone();
@@ -263,8 +352,27 @@ function makeTelegraph(kit: RenderKit, rule: any, seat: string, mountainSource: 
       impactSparks.push(spark);
     }
   }
+  if (rule.id === 'vanara_sena') {
+    const texture = guardianTexture(kit);
+    const spirit = kit.material(seat + ' sena spirit', '#ffffff', 0.45, 0.15, 0.72);
+    spirit.diffuseMap = texture;
+    spirit.emissiveMap = texture;
+    spirit.opacityMap = texture;
+    spirit.opacityMapChannel = 'a';
+    spirit.useLighting = false;
+    spirit.cull = pc.CULLFACE_NONE;
+    spirit.update();
+    for (let i = 0; i < 5; i++) {
+      const guardian = kit.shape(root, 'plane', spirit, 0, 0, 0, .84, 1, 1.28);
+      guardian.name = 'Vanara Sena · spectral guardian ' + (i + 1);
+      guardian.render!.castShadows = false;
+      guardian.render!.receiveShadows = false;
+      guardian.enabled = false;
+      senaSpirits.push(guardian);
+    }
+  }
   root.enabled = false;
-  return { root, wave, material, trail, mote, impactSparks, geometry: g };
+  return { root, wave, material, outline, trail, mote, impactSparks, senaSpirits, geometry: g };
 }
 
 export async function makeScene(
@@ -296,10 +404,11 @@ export async function makeScene(
   const mountainCatalog = (mountain ?? nature).instantiateRenderEntity();
   app.root.addChild(mountainCatalog);
   mountainCatalog.enabled = false;
-  const mountainSource = mountainCatalog.findByName(
+  const mountainCandidate = mountainCatalog.findByName(
     mountain ? 'rock_face_01_compact' : 'rock_island'
   ) as pc.Entity | null;
-  if (!mountainSource) throw new Error('Mountain visual is missing its rock prefab');
+  if (!mountainCandidate) throw new Error('Mountain visual is missing its rock prefab');
+  const mountainSource: pc.Entity = mountainCandidate;
   const kit = new RenderKit(app);
   const cameraObstacles = cameraObstaclesFromMap(map);
   createOriginalEnvironment(app);
@@ -356,11 +465,16 @@ export async function makeScene(
   for (const angle of [-45, 45])
     kit.shape(cross, 'plane', rejected, 0, 0.07, 0, 0.12, 1, 0.84).setLocalEulerAngles(0, angle, 0);
   aimFootprint.enabled = false;
+  let targeting: { position: Point; clear: boolean; radius: number } | null = null;
 
-  function showGroundAim(at: Point | null, clear = false) {
+  function showGroundAim(at: Point | null, clear = false, radius = mountainRule.geometry.radius_m) {
     aimFootprint.enabled = at !== null;
-    if (!at) return;
+    if (!at) { targeting = null; return; }
     aimFootprint.setPosition(at[0], 0, at[1]);
+    radius = Number.isFinite(radius) && radius > 0 ? radius : mountainRule.geometry.radius_m;
+    targeting = { position: [at[0], at[1]], clear, radius };
+    const footprintScale = radius / mountainRule.geometry.radius_m;
+    area.setLocalScale(footprintScale, 1, footprintScale);
     center.enabled = clear;
     cross.enabled = !clear;
     setMaterial(area, clear ? eligible : rejected);
@@ -467,8 +581,13 @@ export async function makeScene(
     if (r.id === 'measured_step')
       groundRules.set(r.id, { ...r, geometry: { kind: 'movement', target_range_m: r.range_m } });
   }
-  function makeHeroEffects(seat: string) {
-    return {
+  function prepareSena(effects: { seat: string; areas: Map<string, ReturnType<typeof makeTelegraph>> }) {
+    const sena = groundRules.get('vanara_sena');
+    if (sena && !effects.areas.has(sena.id))
+      effects.areas.set(sena.id, makeTelegraph(kit, sena, effects.seat, mountainSource));
+  }
+  function makeHeroEffects(seat: string, prepare = false) {
+    const effects = {
       seat,
       areas: new Map<string, ReturnType<typeof makeTelegraph>>(),
       shafts: [] as pc.Entity[],
@@ -476,8 +595,12 @@ export async function makeScene(
       projectiles: 0,
       casts: [] as string[]
     };
+    // Build the bounded Sena geometry and its shared painted texture before an
+    // invocation begins. Lazy fallback below still covers a later hero change.
+    if (prepare) prepareSena(effects);
+    return effects;
   }
-  const localFx = makeHeroEffects('local');
+  const localFx = makeHeroEffects('local', true);
   function makeRemote(seat: number, id: string) {
     const markers = new pc.Entity('Seat ' + (seat + 1) + ' vitals', app);
     app.root.addChild(markers);
@@ -485,7 +608,7 @@ export async function makeScene(
     const bar = kit.shape(markers, 'box', vitalsBacking, 0, 0, 0, 1.1, 0.13, 0.07);
     const hp = kit.shape(markers, 'box', sunMarker, 0, 0, 0, 1, 0.074, 0.09);
     bar.render!.castShadows = hp.render!.castShadows = false;
-    return { seat, rig: makeRig(id, true), fx: makeHeroEffects('seat' + seat), markers, ring, bar, hp, state: null as any };
+    return { seat, rig: makeRig(id, true), fx: makeHeroEffects('seat' + seat, id === 'hanuman'), markers, ring, bar, hp, state: null as any };
   }
   const remotes = new Map<number, ReturnType<typeof makeRemote>>();
   function remoteStates(state: any): any[] {
@@ -553,6 +676,7 @@ export async function makeScene(
       if (view.rig.id !== heroId) {
         view.rig.holder.destroy();
         view.rig = makeRig(heroId, true);
+        if (heroId === 'hanuman') prepareSena(view.fx);
       }
       view.state = remote;
       view.rig.holder.enabled = view.markers.enabled = true;
@@ -645,10 +769,36 @@ export async function makeScene(
       e.wave.setLocalScale(size, 1, size);
       e.material.opacity = (0.94 - 0.44 * progress) * clamp((cast.end_tick - age) / 3, 0.14, 1);
       e.material.update();
+      if (e.outline) {
+        e.outline.opacity = e.material.opacity * 0.86;
+        e.outline.update();
+      }
       if (e.trail) {
         const length = Math.hypot(cast.target[0] - cast.origin[0], cast.target[1] - cast.origin[1]);
         e.trail.setLocalScale(0.13, 1, length);
         e.trail.setLocalPosition(0, 0.035, -length * 0.5);
+      }
+      if (e.senaSpirits.length) {
+        // Five flat, painted guardian silhouettes form a short-lived crescent.
+        // Their motion follows the replicated cast clock; they have no hitboxes,
+        // independent AI, target selection, or authority over damage.
+        const elapsed = age - cast.release_tick;
+        const life = Math.max(1, cast.end_tick - cast.release_tick);
+        const time = clamp(elapsed / life, 0, 1);
+        const arrival = clamp(elapsed / 4, 0, 1);
+        const departure = clamp((cast.end_tick - age) / 5, 0, 1);
+        const scale = Math.min(arrival, departure);
+        const radius = (e.geometry.radius_m ?? 3) * (0.73 - 0.14 * Math.sin(Math.PI * time));
+        for (let i = 0; i < e.senaSpirits.length; i++) {
+          const guardian = e.senaSpirits[i];
+          const theta = -Math.PI * .62 + (i / 4) * Math.PI * 1.24;
+          guardian.enabled = elapsed >= 0 && age < cast.end_tick && scale > 0.01;
+          guardian.setLocalPosition(Math.sin(theta) * radius,
+            .68 + .12 * Math.sin(Math.PI * time * 3 + i * .7), Math.cos(theta) * radius);
+          guardian.setLocalScale(.84 * scale, 1, 1.28 * scale);
+          const position = guardian.getPosition(), eye = camera.getPosition();
+          guardian.setEulerAngles(90, Math.atan2(eye.x - position.x, eye.z - position.z) * RAD, 0);
+        }
       }
       if (e.mote) {
         const q = clamp(
@@ -755,6 +905,7 @@ export async function makeScene(
   function diagnostics() {
     const rect = canvas.getBoundingClientRect();
     const mountainEffect = localFx.areas.get('mountain_pulse');
+    const senaEffect = localFx.areas.get('vanara_sena');
     const mountainVisible = !!mountainEffect?.root.enabled;
     const activeRemotes = [...remotes.values()].filter((v) => v.state).sort((a, b) => a.seat - b.seat);
     const opponent = activeRemotes.find((v) => v.state.actor.team !== lastState.actor.team);
@@ -762,7 +913,9 @@ export async function makeScene(
       const { actor } = state, p = rig.holder.getPosition();
       return { seat, id: actor.id, team: actor.team, color: actor.team === 'sun' ? teamColors.sun : teamColors.moon,
         hero: rig.id, skinnedSurfaces: rig.surfaces, groomVisible: rig.groom?.visible ?? false, pos: [p.x, p.z], hp: actor.hp, maxHp: actor.max_hp, clip: rig.clip,
-        casts: [...fx.casts], projectiles: fx.projectiles, nocked: !!fx.nock?.enabled };
+        casts: [...fx.casts], projectiles: fx.projectiles, nocked: !!fx.nock?.enabled,
+        senaSpirits: fx.areas.get('vanara_sena')?.root.enabled
+          ? fx.areas.get('vanara_sena')!.senaSpirits.filter((s) => s.enabled).length : 0 };
     });
     return {
       frames,
@@ -784,6 +937,7 @@ export async function makeScene(
       }),
       soldierCount: lastState?.army ? 0 : soldierActors.size,
       visibleCasts: [...localFx.casts],
+      groundTargeting: targeting,
       mountainCue: mountainEffect ? {
         inFlight: mountainVisible && !!mountainEffect.mote?.enabled,
         renderSurfaces: mountainEffect.mote
@@ -793,6 +947,10 @@ export async function makeScene(
         impactSparks: mountainVisible
           ? mountainEffect.impactSparks.filter((spark) => spark.enabled).length
           : 0
+      } : null,
+      senaCue: senaEffect ? {
+        visibleSpirits: senaEffect.root.enabled ? senaEffect.senaSpirits.filter((s) => s.enabled).length : 0,
+        casts: localFx.casts.filter((id) => id === 'vanara_sena').length
       } : null,
       cameraClearance,
       projectiles: localFx.projectiles,

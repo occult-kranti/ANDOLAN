@@ -44,7 +44,7 @@ const distance = (a,b) => Math.hypot(a[0]-b[0], a[1]-b[1]);
 async function coachScore(expected, stage) {
   if (!values['coach-screenshot']) return;
   const hint = await page.locator('#match-detail').textContent();
-  check(hint.startsWith(expected + '/5 techniques'), 'coach shows ' + expected + '/5 after ' + stage);
+  check(hint.startsWith(expected + '/6 techniques'), 'coach shows ' + expected + '/6 after ' + stage);
   (evidence.coach_steps ??= []).push({stage, count:expected, hint});
 }
 
@@ -129,8 +129,8 @@ try {
   await page.locator('#close-credits').click();
   await page.locator('#begin').click();
   const first = await until('start drill', p => p.mode === 'playing' && p.state?.targets?.length === 4 && p.renderer?.frames > 0);
-  check(first.period === 0.05 && first.state.abilities.length === 5 && first.state.enemies === 3,
-    'offline play starts the 20 Hz trial with five actions, three enemies and an ally');
+  check(first.period === 0.05 && first.state.abilities.length === 6 && first.state.enemies === 3,
+    'offline play starts the 20 Hz trial with six actions, three enemies and an ally');
   const { heroClips, heroBones, mapProps, lanes, waters, decks, visualSolidIds, soldierCount } = first.renderer;
   check(heroBones===167 && ['fire','cast2','cast1','tail_sweep','mountain_pulse'].every(name=>heroClips.includes(name)),
     'renderer loaded the source skin and named clips for every ability');
@@ -261,12 +261,16 @@ try {
   evidence.ability_results.vault = {release_tick:(await beat(takeoff,'release')).event.tick, air_y:apex.state.actor.y, landed:ground.current.state.actor.pos};
 
   await aim(3);
-  await cast(0, async ()=>{ await page.mouse.down(); await page.mouse.up(); });
+  const sena = await cast(5, ()=>page.keyboard.press('v'));
+  const senaImpact = await beat(sena,'impact');
+  check(senaImpact.event.receipts.some(r=>r.damage===12), 'Vanara Sena lands its first server-authoritative hit');
+  await coachScore(6, 'catching the last guard in Vanara Sena');
+  evidence.ability_results.vanara_sena = {begin:sena.tick, impact:senaImpact.event.tick};
   const won = await until('drill complete',p=>p.mode==='complete');
   check(won.state.defeated===3 && await page.locator('#result').isVisible(), 'all three neutralizations show the completion dialog');
   if (values['coach-screenshot']) {
     evidence.coach_completion = await page.locator('#summary').innerText();
-    check(evidence.coach_completion.includes('5/5 techniques demonstrated'), 'the completion dialog preserves all five demonstrated techniques');
+    check(evidence.coach_completion.includes('6/6 techniques demonstrated'), 'the completion dialog preserves all six demonstrated techniques');
     const coachShot = path.resolve(values['coach-screenshot']);
     await mkdir(path.dirname(coachShot), {recursive:true});
     evidence.coach_png_sha256 = hash(await page.screenshot({path:coachShot,timeout:90_000}));

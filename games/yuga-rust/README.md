@@ -1,6 +1,6 @@
 # YUGA · Confluence in Rust
 
-**Optional Hanuman sculpt preview.** A [separate tested download](downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true) uses a subtle facial-geometry candidate. The standard download below still uses the prior model. The preview's [build, visual and rig evidence](../yuga-native/art/hanuman-build-qa-2026/README.md) records its limits.
+**Optional Hanuman sculpt preview.** An [earlier tested download](downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true) uses a subtle facial-geometry candidate. That older package predates Vanara Sena; the current standard download below includes the new ability and retains the prior hero model. The preview's [build, visual and rig evidence](../yuga-native/art/hanuman-build-qa-2026/README.md) records its limits.
 
 The latest branch package includes a camera-clearance solver, a corrected interrupted vault, elevation-aware Hanuman area attacks and a timed Mountain Pulse visual. The camera solver checks the authoritative building and deck boxes; animated weapons and tail can still need framing work. The in-game rock is an interim cue, and the richer [five-action Blender study](../yuga-native/art/hanuman-motion-panel-2026/README.md) is an offline production study. [Panel results and next steps](../yuga-native/docs/design/five-round-panel-2026/README.md)
 
@@ -10,7 +10,7 @@ Play as **Hanuman or Rama** in a private hero-only match: five against five, thr
 
 ## Launch the game
 
-**Solo.** Extract the ZIP and open `yuga-rust.html` in a desktop browser with WebAssembly and WebGL 2. Choose a hero and select **Explore arena**. Exploration has no AI opponents. To try the five attacks on stationary targets, choose **Hanuman practice**. If your browser blocks local HTML, run `python3 -m http.server 8000 --bind 127.0.0.1` in the extracted folder and open `http://127.0.0.1:8000/yuga-rust.html`.
+**Solo.** Extract the ZIP and open `yuga-rust.html` in a desktop browser with WebAssembly and WebGL 2. Choose a hero and select **Explore arena**. Exploration has no AI opponents. To try Hanuman's six actions with stationary targets, choose **Hanuman practice**. If your browser blocks local HTML, run `python3 -m http.server 8000 --bind 127.0.0.1` in the extracted folder and open `http://127.0.0.1:8000/yuga-rust.html`.
 
 **Hanuman.** Click **Mountain Pulse** in the action bar and point at the ground. The seven-metre ring previews its footprint. A gold center marks a clear landing, and a cross explains a blocked or distant target in the status line. Press **X** for an immediate cast, or **Esc** to cancel an armed shot. In practice, the technique counter credits effective casts. [Hero art, timing and testing](../yuga-native/art/hanuman-hero-finish/GAMEPLAY.md)
 
@@ -37,7 +37,10 @@ Move with **WASD** or the arrow keys. Aim at the ground with the mouse. A shortc
 | E | Maruti Udayana vaults toward clear ground. | Measured Step moves through a short clear lane. |
 | C | Lanka Dahan sweeps behind the caster and leaves a burning sector. | Guardian Circle shields and heals allies occupying its marked area. |
 | X | Mountain Pulse marks a delayed impact that damages enemies and heals allies. | Dawn Volley commits to three firing lanes and releases three staggered arrows. |
+| V | Vanara Sena calls five brief spectral guardians around the targeted ground area; enemies can leave or use cover. | — |
 | R | — | Reload the twelve-arrow magazine. An attempted primary shot on an empty magazine also starts a reload. |
+
+Vanara Sena is an authoritative, temporary ground-area ability: select clear ground within 10 m, then after a 0.6 s windup it deals 12 initial enemy damage and up to 16 more over two seconds within a 3 m radius. The five figures are visual manifestations of that one field, not autonomous NPCs. Cover and team checks still apply; Hanuman has no invulnerability during the cast, and defeat interrupts it. [Design, animation and source notes](../yuga-native/docs/design/vanara-sena-2026/README.md)
 
 The current interim mode awards a point to the opposing team for each hero knockout. The target is 25 in 5v5, 20 in 3v3 and 10 in 1v1; eliminated heroes respawn after three seconds. A simultaneous tie at the target continues until a team leads. At the 18-minute limit, the higher score wins and a tie is a draw. There are no lane waves or autonomous jungle units. This is not yet the proposed [round-based two-site objective mode](../yuga-native/docs/design/mandala-rift-5v5/MATCH_SCRIPT.md), and Mandala Rift is not yet the playable map.
 
@@ -68,12 +71,17 @@ In the source checkout the default authority is the native executable. In the ex
 cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin drill -- --map
 cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin lanes -- 15 1200
 cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin court -- verify
+cargo test --locked --manifest-path games/yuga-rust/Cargo.toml --test vanara_sena
 node games/yuga-rust/tools/test_room_parity.mjs
 node games/yuga-rust/tools/test_rooms.mjs
 node games/yuga-rust/tools/test_browser.mjs
 node games/yuga-rust/tools/test_match.mjs
 node games/yuga-rust/tools/test_5v5_rooms.mjs path/to/extracted-package report.json
 node games/yuga-rust/tools/test_5v5_browser.mjs path/to/extracted-package report.json gameplay.png
+node games/yuga-rust/tools/test_vanara_sena.mjs path/to/extracted-package sena-network.json
+node games/yuga-rust/tools/test_vanara_browser.mjs path/to/extracted-package sena-browser.json sena-gameplay.png
+node games/yuga-rust/tools/test_vanara_observer.mjs path/to/extracted-package sena-observer.json sena-observer.png
+node games/yuga-rust/tools/test_vanara_two_browsers.mjs path/to/extracted-package sena-two-browsers.json sena-two-browsers.png
 cargo run --release --locked --manifest-path games/yuga-rust/Cargo.toml --bin roster -- --play sita
 ```
 

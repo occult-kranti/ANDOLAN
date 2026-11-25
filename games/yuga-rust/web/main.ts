@@ -9,7 +9,7 @@ const menu = byId('menu'),
   play = byId('play'),
   overlay = byId('overlay');
 const credits = byId<HTMLDialogElement>('credits');
-const keyNames = ['LMB', 'Q', 'E', 'C', 'X'];
+const keyNames = ['LMB', 'Q', 'E', 'C', 'X', 'V'];
 const practiceCoach = new PracticeCoach();
 const keys = new Set<string>();
 const decoder = new TextDecoder();
@@ -38,7 +38,7 @@ let lastAim: [number, number] = [0, 1];
 let armedSlot: number | null = null;
 const aimMessages = ['Clear landing · Click to cast Mountain Pulse', 'Out of range · Bring the landing point closer',
   'Cover blocks this landing · Choose open ground', 'Land on clear ground before casting', 'Aim at the arena floor'];
-let mountainAim: { code: number; ground: [number, number] | null; actorX: number; actorZ: number; height: number; ready: boolean } | null = null;
+let mountainAim: { slot: number; code: number; ground: [number, number] | null; actorX: number; actorZ: number; height: number; ready: boolean } | null = null;
 let messageUntil = 0;
 let ctx: AudioContext | undefined;
 let output: GainNode | undefined;
@@ -77,7 +77,9 @@ function observe() {
     state: current ? structuredClone(current) : null,
     renderer: scene?.diagnostics(),
     input: { armedSlot, pointer: pointer?.slice() ?? null, ground: lastGround?.slice() ?? null,
-      mountainAim: mountainAim && structuredClone(mountainAim) },
+      groundAim: mountainAim && structuredClone(mountainAim),
+      mountainAim: mountainAim && current?.abilities?.[mountainAim.slot]?.id === 'mountain_pulse'
+        ? structuredClone(mountainAim) : null },
     period: PERIOD,
     mixer: mixerKind,
     audio: { state: ctx?.state ?? null, muted, gain: output?.gain.value ?? null },
@@ -204,29 +206,33 @@ function target(): [number, number] {
 // The local Wasm uses the same spatial rules as the room host. Cooldown and all
 // hits still resolve on the authoritative tick when the pointer is committed.
 function updateGroundAim() {
-  if (mode !== 'playing' || armedSlot === null || current.abilities[armedSlot]?.id !== 'mountain_pulse') {
+  const ability = armedSlot === null ? null : current?.abilities?.[armedSlot];
+  if (mode !== 'playing' || armedSlot === null || !['mountain_pulse', 'vanara_sena'].includes(ability?.id)) {
     if (mountainAim) scene.showGroundAim(null);
     mountainAim = null;
     return;
   }
   const at = pointer && scene.ground(...pointer);
   const actor = current.actor;
-  const sameLanding = at && mountainAim?.ground && at[0] === mountainAim.ground[0] && at[1] === mountainAim.ground[1]
+  const sameLanding = at && mountainAim?.slot === armedSlot && mountainAim?.ground && at[0] === mountainAim.ground[0] && at[1] === mountainAim.ground[1]
     && actor.pos[0] === mountainAim.actorX && actor.pos[1] === mountainAim.actorZ && actor.y === mountainAim.height;
   const code = !at ? 4 : sameLanding ? mountainAim!.code : wasm.trial_ground_aim(armedSlot, ...actor.pos, actor.y, ...at);
   const ready = code === 0 && !current.respawn_ticks && !current.active && !current.abilities[armedSlot].cooldown_ticks;
-  if (!sameLanding || mountainAim?.ready !== ready) scene.showGroundAim(at, ready);
-  mountainAim = { code, ground: at, actorX: actor.pos[0], actorZ: actor.pos[1], height: actor.y, ready };
-  let message = aimMessages[code] ?? aimMessages[4];
+  const rule = data.kit.abilities.find((r: any) => r.id === ability.id);
+  if (!sameLanding || mountainAim?.ready !== ready) scene.showGroundAim(at, ready, rule?.geometry?.radius_m);
+  mountainAim = { slot: armedSlot, code, ground: at, actorX: actor.pos[0], actorZ: actor.pos[1], height: actor.y, ready };
+  let message = code === 0 ? 'Clear landing · Click to cast ' + ability.label : (aimMessages[code] ?? aimMessages[4]);
   if (current.respawn_ticks) message = 'Wait for respawn';
   else if (current.active) message = 'Finish the current invocation';
-  else if (current.abilities[armedSlot].cooldown_ticks) message = 'Mountain Pulse is cooling down';
+  else if (ability.cooldown_ticks) message = ability.label + ' is cooling down';
   if (byId('status').textContent !== message) byId('status').textContent = message;
 }
 
 function cast(slot: number) {
   if (mode !== 'playing') return false;
-  if (armedSlot === slot && current.abilities[slot].id === 'mountain_pulse') {
+  const ability = current?.abilities?.[slot];
+  if (!ability) return false;
+  if (armedSlot === slot && ['mountain_pulse', 'vanara_sena'].includes(ability.id)) {
     updateGroundAim();
     if (!mountainAim?.ready) return false;
   }
@@ -237,7 +243,6 @@ function cast(slot: number) {
     return true;
   }
   if (!wasm.trial_cast(slot, point[0], point[1], ...lastAim)) {
-    const ability = current.abilities[slot];
     say(
       current.hero === 'rama' && (current.reload_ticks || (slot === 0 && current.ammo === 0))
         ? 'Reloading the bow'
@@ -272,7 +277,8 @@ function buildHud() {
     b.className = 'slot';
     b.dataset.slot = String(ability.slot);
     b.title = ability.description + ' · Select, then click the arena.';
-    b.setAttribute('aria-label', ability.label);
+    b.setAttribute('aria-label', ability.label + ' · ' + keyNames[ability.slot] + '. ' + ability.description);
+    if (ability.slot > 0) b.setAttribute('aria-keyshortcuts', keyNames[ability.slot]);
     b.setAttribute('aria-pressed', 'false');
     const key = document.createElement('kbd');
     key.textContent = keyNames[ability.slot];
@@ -563,8 +569,8 @@ window.addEventListener('keydown', (e) => {
     }
     return;
   }
-  const slot = ['', 'KeyQ', 'KeyE', 'KeyC', 'KeyX'].indexOf(e.code);
-  if (slot > 0 && !e.repeat) {
+  const slot = ['', 'KeyQ', 'KeyE', 'KeyC', 'KeyX', 'KeyV'].indexOf(e.code);
+  if (slot > 0 && current.abilities?.[slot] && !e.repeat) {
     e.preventDefault();
     arm(null);
     cast(slot);

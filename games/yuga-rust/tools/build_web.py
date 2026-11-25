@@ -28,6 +28,17 @@ def sha(data):
 def capture(args):
     return subprocess.check_output(args, cwd=PROJECT, text=True)
 
+
+def browser_hanuman_kit():
+    """Extend the web/Rust kit without changing the separate native Godot profile."""
+    kit = json.loads((NATIVE / "assets/design/hanuman-ability-kit.json").read_text())
+    sena = json.loads((PROJECT / "assets/vanara-sena.json").read_text())
+    if not isinstance(sena, dict) or any(rule.get("id") == sena.get("id") for rule in kit["abilities"]):
+        raise ValueError("Invalid or duplicate Vanara Sena ability")
+    kit["abilities"].append(sena)
+    return kit
+
+
 def playable_hanuman(stage, model_override=None):
     finish = NATIVE / "art/hanuman-hero-finish/models/hanuman-enhanced.glb"
     if model_override is not None:
@@ -53,7 +64,7 @@ def playable_hanuman(stage, model_override=None):
             raise ValueError(f"Invalid Hanuman GLB: {model}")
         header = json.loads(handle.read(size_json))
     tracks = {action["name"] for action in header.get("animations", [])}
-    rules = json.loads((NATIVE / "assets/design/hanuman-ability-kit.json").read_text())
+    rules = browser_hanuman_kit()
     required = {"idle", "run", "defeat", *(r["motion"] for r in rules["abilities"])}
     if not header.get("skins") or not required <= tracks:
         raise ValueError(f"Hanuman needs a skin and all match actions, missing {required - tracks}")
@@ -121,6 +132,12 @@ def notices(workspace):
     mountain_notice = WEB / "art/mountain-rock-NOTICE.txt"
     if (WEB / "art/mountain-rock.glb").is_file() and mountain_notice.is_file():
         include("Mountain Pulse rock (CC0)", mountain_notice.read_text())
+    sena_cue = NATIVE / "assets/audio/hanuman-trial/vanara_sena.wav"
+    sena_notice = NATIVE / "NOTICE/VANARA_SENA_AUDIO.json"
+    if sena_cue.is_file():
+        if not sena_notice.is_file():
+            raise ValueError("Vanara Sena audio provenance is missing")
+        include("YUGA Vanara Sena cue", sena_notice.read_text())
     if (NATIVE / "art/hanuman-hero-finish/models/hanuman-enhanced.glb").is_file():
         include("YUGA playable Hanuman finish", "The YUGA team adapted the credited Hanuman body and native motions with a compact muzzle, revised surface textures, weighted copper guard hair and a tail recoil pass. The downloadable model retains the base asset terms listed in Hanuman asset provenance.")
     if (NATIVE / "art/hanuman-hero-finish/design/hanuman-portrait-target.webp").is_file():
@@ -224,9 +241,7 @@ def main():
                 (NATIVE / "assets/world/confluence-map.json").read_text()
             ),
             "mixWorklet": (WEB / "mix-worklet.js").read_text(),
-            "kit": json.loads(
-                (NATIVE / "assets/design/hanuman-ability-kit.json").read_text()
-            ),
+            "kit": browser_hanuman_kit(),
             "ramaKit": json.loads(
                 (NATIVE / "assets/design/rama-ability-kit.json").read_text()
             ),
@@ -267,7 +282,7 @@ def main():
         }
         (stage / "build.json").write_text(json.dumps(report, indent=2) + "\n")
         (stage / "PLAY.txt").write_text(
-            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nChoose a hero and explore the arena, or choose Hanuman practice to train against three stationary targets. Explore has no AI opponents yet. Move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Soldier waves are paused. For private 5v5, 3v3 or 1v1 rooms install Node 22.12 or newer. In this extracted folder run node serve_rooms.mjs, then open http://127.0.0.1:8787. To play across a trusted LAN, run node serve_rooms.mjs --host 0.0.0.0 and each player opens http://HOST-LAN-IP:8787. The host chooses a format and shares the room code. A match starts when all ten, six or two seats are filled. 5v5 is first to 25 hero knockouts, 3v3 to 20 and 1v1 to 10; the higher score wins at 18 minutes, with a draw if tied. Leave the terminal running while playing. For Hanuman, click Mountain Pulse and point at the floor to see its footprint. A gold center means the landing is clear. A crossed center and the status text explain an unavailable landing. X quick-casts. Escape cancels targeting or pauses.\n"
+            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nChoose a hero and explore the arena, or choose Hanuman practice to train against three stationary targets. Explore has no AI opponents yet. Move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Hanuman can press V to call Vanara Sena at the aimed ground. Soldier waves are paused. For private 5v5, 3v3 or 1v1 rooms install Node 22.12 or newer. In this extracted folder run node serve_rooms.mjs, then open http://127.0.0.1:8787. To play across a trusted LAN, run node serve_rooms.mjs --host 0.0.0.0 and each player opens http://HOST-LAN-IP:8787. The host chooses a format and shares the room code. A match starts when all ten, six or two seats are filled. 5v5 is first to 25 hero knockouts, 3v3 to 20 and 1v1 to 10; the higher score wins at 18 minutes, with a draw if tied. Leave the terminal running while playing. For Hanuman, click Mountain Pulse and point at the floor to see its footprint. A gold center means the landing is clear. A crossed center and the status text explain an unavailable landing. X quick-casts. Escape cancels targeting or pauses.\n"
         )
         with ZipFile(stage / "yuga-rust-confluence.zip", "w") as archive:
             for name in [

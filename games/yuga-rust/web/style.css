@@ -245,6 +245,13 @@ h1 {
   display: block;
   color: #eac578;
   margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.actions .slot span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .slot.cool {
   color: #c8cdbe;
@@ -351,6 +358,11 @@ dialog::backdrop {
   }
   .slot kbd {
     font-size: 11px;
+  }
+  .actions .slot {
+    min-height: 44px;
+    font-size: clamp(10px, 2.5vw, 13px);
+    padding: 6px 4px;
   }
   .tools button {
     padding: 7px;

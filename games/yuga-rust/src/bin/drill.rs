@@ -3,7 +3,7 @@ use serde_json::json;
 use std::io::{self, BufRead, IsTerminal, Write};
 use yuga_rust::{combat::Combat, world::World};
 
-const HELP: &str = "status | aim X Z | move DX DZ TICKS | wait TICKS | cast SLOT GROUND_X GROUND_Z | reset | quit\nSlots 1–5: Gada, Kavacha, Udayana, Dahan, Mountain Pulse. One tick is 0.05 s.";
+const HELP: &str = "status | aim X Z | move DX DZ TICKS | wait TICKS | cast SLOT GROUND_X GROUND_Z | reset | quit\nSlots 1–6: Gada, Kavacha, Udayana, Dahan, Mountain Pulse, Vanara Sena. One tick is 0.05 s.";
 
 fn number(text: &str) -> Result<f32, String> {
     text.parse::<f32>()
@@ -42,9 +42,9 @@ fn apply(line: &str, combat: &mut Combat, world: &World) -> Result<bool, String>
             }
         }
         ["cast", n, x, z] => {
-            let slot: usize = n.parse().map_err(|_| "use slots 1–5")?;
-            if !(1..=5).contains(&slot) {
-                return Err("use slots 1–5".into());
+            let slot: usize = n.parse().map_err(|_| "use slots 1–6")?;
+            if !(1..=6).contains(&slot) {
+                return Err("use slots 1–6".into());
             }
             combat.cast(slot - 1, [number(x)?, number(z)?], world)?;
         }

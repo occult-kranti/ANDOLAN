@@ -82,8 +82,8 @@ for await (const line of createInterface({ input: process.stdin, crlfDelay: Infi
     if (player.reload) game.duel_reload(seat);
     let result = null;
     for (const { slot, ground, aim } of player.casts) {
-      // Slots outside the five-action bar must stay invalid even across the u32 WASM boundary.
-      result = slot < 5 && game.duel_cast(seat, slot, ...ground, ...aim) === 1;
+      // Rust validates the selected hero's kit; bound before the u32 WASM conversion.
+      result = slot < 6 && game.duel_cast(seat, slot, ...ground, ...aim) === 1;
     }
     return result;
   });

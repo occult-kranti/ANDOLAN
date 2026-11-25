@@ -33,6 +33,7 @@ function start(program, args) {
 }
 const peers = [start(nativePath, []), start(process.execPath, [path.join(root, 'room-wasm.mjs'), wasm])];
 let numericFields = 0, maxError = 0, comparedFrames = 0, acceptedCasts = 0, lowestHp = 300;
+let senaAccepted = 0, senaDamageObserved = false;
 function compare(a, b, at = 'frame') {
   if (typeof a === 'number' && typeof b === 'number') {
     const error = Math.abs(a - b);
@@ -58,6 +59,7 @@ async function exchange(command) {
     lowestHp = Math.min(lowestHp, s.actor.hp);
   }
   acceptedCasts += a.accepted.filter(Boolean).length;
+  senaDamageObserved ||= a.states.some(s => s.events.some(e => e.id === 'vanara_sena' && e.receipts?.some(r => r.damage > 0)));
   comparedFrames++;
   return a;
 }
@@ -71,15 +73,22 @@ try {
       const length = Math.hypot(dx, dz) || 1;
       const aim = [dx / length, dz / length];
       return { motion: { movement: [0, frame < 32 ? sign * 0.5 : 0], aim },
-        casts: frame >= 24 && frame % 2 === 0 ? [{ slot: 0, ground: target, aim }] : [] };
+        casts: frame === 23 ? [{ slot: 5, ground: target, aim }] :
+          frame >= 24 && frame % 2 === 0 ? [{ slot: 0, ground: target, aim }] : [] };
     });
     packet = await exchange({ players, ticks: 4 });
+    if (frame === 23) {
+      senaAccepted = packet.accepted.filter(Boolean).length;
+      assert.ok(packet.accepted.filter((_, i) => i % 2 === 1).every(v => v === false), 'Rama cannot cast slot 5');
+    }
   }
   assert.ok(acceptedCasts > 0, 'ordinary cast inputs were accepted');
   assert.ok(lowestHp < 300, 'ordinary attacks damaged a hero');
+  assert.ok(senaAccepted > 0 && senaDamageObserved, 'Vanara Sena was accepted and damaged a hero');
   const report = { result: 'pass', scope: 'native room versus packaged Wasm authority, ten seats, no rendered clients',
     compared_frames: comparedFrames, compared_seat_snapshots: comparedFrames * 10,
     numeric_fields: numericFields, max_absolute_error: maxError, accepted_casts: acceptedCasts, lowest_hero_hp: lowestHp,
+    sena_accepted: senaAccepted, sena_damage_observed: senaDamageObserved,
     native_sha256: createHash('sha256').update(await readFile(nativePath)).digest('hex'),
     wasm_sha256: createHash('sha256').update(await readFile(wasm)).digest('hex') };
   await writeFile(reportFile, JSON.stringify(report, null, 2) + '\n');

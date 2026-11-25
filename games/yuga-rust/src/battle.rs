@@ -85,6 +85,12 @@ impl Fighter {
             Self::Bow(r) => r.cast(slot, ground, world),
         }
     }
+    fn supports_slot(&self, slot: usize) -> bool {
+        match self {
+            Self::Gada(h) => h.supports_slot(slot),
+            Self::Bow(r) => r.supports_slot(slot),
+        }
+    }
     fn tick(&mut self, movement: Point, world: &World) {
         match self {
             Self::Gada(h) => h.tick(movement, world),
@@ -370,10 +376,7 @@ impl Battle {
     }
 
     pub fn cast(&mut self, seat: usize, input: CastInput, world: &World) -> Result<(), String> {
-        if self.winner.is_some()
-            || input.slot >= 5
-            || !input.ground.iter().chain(&input.aim).all(|x| x.is_finite())
-        {
+        if self.winner.is_some() || !input.ground.iter().chain(&input.aim).all(|x| x.is_finite()) {
             return Err("Invalid cast or match already finished".into());
         }
         if !self
@@ -382,6 +385,11 @@ impl Battle {
             .is_some_and(|p| p.fighter.body().hp > 0.)
         {
             return Err("Hero unavailable".into());
+        }
+        // Validate against the selected hero's actual kit before applying aim.
+        // Rama has five actions while Hanuman has six.
+        if !self.players[seat].fighter.supports_slot(input.slot) {
+            return Err("Invalid cast or match already finished".into());
         }
         let bodies = self.receivers(self.army.tick_index());
         let elevations = self.elevations();
@@ -589,4 +597,26 @@ fn compact(mut state: Value) -> Value {
         fields.remove("events");
     }
     state
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn unknown_hero_action_does_not_change_aim_or_state() {
+        let world = World::load().unwrap();
+        let mut game = Battle::with_hero_roster(&world, &[Hero::Hanuman, Hero::Rama]).unwrap();
+        for (seat, slot) in [(0, 6), (1, 5)] {
+            let before = game.snapshot(seat).unwrap();
+            let pos = game.players[seat].fighter.body().pos;
+            let command = CastInput {
+                slot,
+                ground: pos,
+                aim: [1., 0.],
+            };
+            assert!(game.cast(seat, command, &world).is_err());
+            assert_eq!(game.snapshot(seat).unwrap(), before);
+        }
+    }
 }

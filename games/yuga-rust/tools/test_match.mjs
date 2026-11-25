@@ -84,7 +84,7 @@ async function awaitMatch(page, hero) {
   const {heroBones,heroClips,armyVisible,armyNear,armyRoles,objectiveCount,lanes} = snap.renderer;
   assert.ok(heroBones > 10 && heroClips.length >= 5 && lanes === 3);
   assert.equal(armyVisible, 0);
-  assert.equal(snap.state.abilities.length,5);
+  assert.equal(snap.state.abilities.length,hero === 'hanuman' ? 6 : 5);
   assert.equal(snap.state.army.waves_enabled, false);
   evidence.renderers[hero] = {heroBones,heroClips,armyVisible,armyNear,armyRoles,objectiveCount,lanes};
   return snap;

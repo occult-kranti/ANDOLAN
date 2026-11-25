@@ -31,6 +31,11 @@ state display, W3 imported rig, W4 collision and W6 package/source freezes.
 
 For Confluence, begin with the [measured 20 Hz action index](../../../games/yuga-native/docs/design/combat-panel-2026/baseline.json)
 and [layered cast design](../../../games/yuga-native/docs/design/combat-panel-2026/README.md).
+The Rust/PlayCanvas Hanuman also has [Vanara Sena](../../../games/yuga-native/docs/design/vanara-sena-2026/README.md)
+on V. Its five short-lived guardian images present one server-owned area field;
+they are not autonomous NPCs. Preserve the telegraph, enemy/team/cover checks,
+death interruption and 20 Hz cast timing when changing the effect. The separate
+Godot trial still owns its original five-action profile.
 Maruti Udayana's impact event marks takeoff; its actual landing can occur
 early and is reported by `landed_age_ticks`. Keep Lanka Dahan's rear field
 anchored for its authoritative lifetime after body recovery. Decorative effects

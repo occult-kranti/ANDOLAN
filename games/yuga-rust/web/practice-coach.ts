@@ -13,6 +13,7 @@ const techniques = [
   ['maruti_udayana', 'Vault to clear ground'],
   ['lanka_dahan', 'Catch a pursuer in your rear embers'],
   ['mountain_pulse', 'Heal an ally or hit a guard with Mountain Pulse'],
+  ['vanara_sena', 'Catch a guard within the spirit formation'],
 ] as const;
 
 /** Per-run feedback reads Rust results. Players can demonstrate techniques in any order. */
@@ -43,6 +44,9 @@ export class PracticeCoach {
         break;
       case 'mountain_pulse':
         demonstrated = impact && event.receipts.some(r => r.damage > 0 || (r.unit !== 0 && r.heal > 0));
+        break;
+      case 'vanara_sena':
+        demonstrated = (impact || event.kind === 'tick') && event.receipts.some(r => r.damage > 0);
         break;
     }
     if (demonstrated) this.shown.add(event.id);

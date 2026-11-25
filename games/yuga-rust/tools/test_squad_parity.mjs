@@ -402,7 +402,7 @@ async function rejectedAbi() {
     ['nonfinite aim', () => probe.squad_motion(0, 0.9, 0, Infinity, 1)],
     ['empty frame', () => probe.squad_advance(0)],
     ['oversized frame', () => probe.squad_advance(5)],
-    ['bad action slot', () => probe.duel_cast(0, 5, 0, 0, 1, 0)],
+    ['bad action slot', () => probe.duel_cast(0, 6, 0, 0, 1, 0)],
     ['invalid cast ground', () => probe.duel_cast(4, 3, Infinity, 0, 1, 0)],
     ['invalid cast aim', () => probe.duel_cast(4, 3, 0, 0, NaN, 0)],
     ['bad reload seat', () => probe.duel_reload(6)],

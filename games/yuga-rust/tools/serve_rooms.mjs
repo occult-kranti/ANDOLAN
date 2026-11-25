@@ -173,7 +173,7 @@ function acceptInput(socket, client, msg) {
       !Number.isSafeInteger(msg.seq) || msg.seq < 0 || !point(msg.movement, 1) || !point(msg.aim, 10000) ||
       (msg.reload !== undefined && typeof msg.reload !== 'boolean') ||
       (cast !== undefined && (!keysAllowed(cast, ['slot', 'ground', 'aim']) ||
-        !Number.isInteger(cast.slot) || cast.slot < 0 || cast.slot > 4 || !point(cast.ground, 10000) || !point(cast.aim, 10000)))) {
+        !Number.isInteger(cast.slot) || cast.slot < 0 || cast.slot > 5 || !point(cast.ground, 10000) || !point(cast.aim, 10000)))) {
     reject(socket, 'Invalid input fields.'); return;
   }
   if (msg.seq <= player.seq) { reject(socket, 'Input sequence already processed.'); return; }

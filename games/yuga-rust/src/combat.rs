@@ -7,10 +7,19 @@ use std::collections::VecDeque;
 include!(concat!(env!("OUT_DIR"), "/motion_markers.rs"));
 
 const KIT: &str = include_str!("../../yuga-native/assets/design/hanuman-ability-kit.json");
+// The browser/Rust game has an extra ability; keep Godot's five-action kit separate.
+const VANARA_SENA: &str = include_str!("../assets/vanara-sena.json");
 const HZ: u32 = 20;
 const STEP: f32 = 1.0 / HZ as f32;
 const WALK_SPEED: f32 = 5.0;
-const SLOTS: [&str; 5] = ["primary", "ability_1", "ability_2", "ability_3", "ultimate"];
+const SLOTS: [&str; 6] = [
+    "primary",
+    "ability_1",
+    "ability_2",
+    "ability_3",
+    "ultimate",
+    "ability_4",
+];
 type Point = [f32; 2];
 
 fn difference(a: Point, b: Point) -> Point {
@@ -290,7 +299,7 @@ pub struct Combat {
     target_elevations: Vec<(u32, f32)>,
     aim: Point,
     height: f32,
-    cooldowns: [u32; 5],
+    cooldowns: [u32; SLOTS.len()],
     casts: Vec<Cast>,
     events: VecDeque<Value>,
 }
@@ -298,10 +307,14 @@ pub struct Combat {
 impl Combat {
     pub fn load() -> Result<Self, String> {
         let mut kit: Kit = serde_json::from_str(KIT).map_err(|e| e.to_string())?;
-        if kit.schema_version != 1 || kit.hero_id != "hanuman" || kit.abilities.len() != SLOTS.len()
+        if kit.schema_version != 1
+            || kit.hero_id != "hanuman"
+            || kit.abilities.len() != SLOTS.len() - 1
         {
             return Err("Unsupported Hanuman kit".into());
         }
+        let vanara_sena: Rule = serde_json::from_str(VANARA_SENA).map_err(|e| e.to_string())?;
+        kit.abilities.push(vanara_sena);
         for (rule, expected_slot) in kit.abilities.iter_mut().zip(SLOTS) {
             let (_, release, impact) = MOTION_MARKERS
                 .iter()
@@ -349,7 +362,7 @@ impl Combat {
             target_elevations: Vec::new(),
             aim: [0., 1.],
             height: 0.,
-            cooldowns: [0; 5],
+            cooldowns: [0; SLOTS.len()],
             casts: Vec::new(),
             events: VecDeque::new(),
         };
@@ -372,7 +385,7 @@ impl Combat {
         self.aim = [0., 1.];
         self.height = 0.0;
         self.target_elevations.clear();
-        self.cooldowns = [0; 5];
+        self.cooldowns = [0; SLOTS.len()];
         self.casts.clear();
         self.events.clear();
     }
@@ -401,6 +414,10 @@ impl Combat {
 
     pub fn actor(&self) -> &Receiver {
         &self.actor
+    }
+
+    pub(crate) fn supports_slot(&self, slot: usize) -> bool {
+        slot < self.kit.abilities.len()
     }
 
     pub fn actor_mut(&mut self) -> &mut Receiver {
