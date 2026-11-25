@@ -142,6 +142,9 @@ func _practice() -> void:
 	var trial := current_scene
 	var field: MultiMeshInstance3D = trial.effects._ground_field
 	trial.effects.set_process(false)
+	# This fixture exits immediately after a short impact capture. The separate
+	# presentation suite owns the asynchronous audio playback assertions.
+	trial.effects.set_options({"volume": 0.0})
 	trial.army.set_physics_process(false)
 	trial.combat.ability_event.connect(func(event): _events.append(event))
 	trial._resume.pressed.emit()
@@ -210,4 +213,8 @@ func _run() -> void:
 			if output != null:
 				output.store_string(JSON.stringify(report, "  ") + "\n")
 	print("YUGA_HANUMAN_GROUND_FIELD ", JSON.stringify(report))
+	if is_instance_valid(current_scene):
+		current_scene.queue_free()
+	await process_frame
+	await process_frame
 	quit(0 if passed == _checks.size() else 1)

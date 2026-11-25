@@ -3,6 +3,7 @@ extends Node3D
 ## The hit result, movement and timing remain owned by the practice controller.
 
 const BOUNDARY := preload("res://shaders/rama_ability_boundary.gdshader")
+const InvocationArt := preload("res://scripts/hanuman_invocation_art.gd")
 const GroundField := preload("res://scripts/hanuman_ground_field.gd")
 const RIBBON := preload("res://shaders/rama_ribbon.gdshader")
 const PROFILES := "res://assets/design/hanuman-presentation.json"
@@ -15,6 +16,7 @@ var _style: Dictionary = {}
 var _casts: Dictionary = {}
 var _voices: Array[AudioStreamPlayer3D] = []
 var _ground_field: MultiMeshInstance3D
+var _art := InvocationArt.new()
 var _voice_index := 0
 var _generation := -1
 var _sequence := -1
@@ -47,6 +49,7 @@ func _ready() -> void:
 				"impact_gain": float(gain),
 				"rise_m": float(rise),
 			}
+	_art.configure(_style)
 	for index in 3:
 		var voice := AudioStreamPlayer3D.new()
 		voice.name = "AbilityVoice%d" % index
@@ -70,6 +73,9 @@ func set_options(options: Dictionary) -> void:
 	_reduced = options.get("reduced_effects", false) == true or options.get("reduced_motion", false) == true
 	if is_instance_valid(_ground_field):
 		_ground_field.set_reduced(_reduced)
+	for cast in _casts.values():
+		if is_instance_valid(cast.mark):
+			cast.mark.visible = not _reduced
 	var volume: Variant = options.get("volume", _volume)
 	if _number(volume, 0.0, 1.0):
 		_volume = float(volume)
@@ -142,6 +148,8 @@ func consume_event(event: Dictionary) -> bool:
 			cast.released = true
 			cast.release_time = cast.age
 			cast.flash = 0.0
+			if is_instance_valid(cast.mark):
+				_art.set_phase(cast.mark, 1)
 			_build_release(cast)
 			_play(cast.style.stream, cast.geometry.origin, id)
 		elif kind == "impact":
@@ -149,6 +157,9 @@ func consume_event(event: Dictionary) -> bool:
 				return false
 			cast.impacted = true
 			cast.flash = 0.0
+			# Instantaneous resolution still gets a short visual release beat.
+			# Combat receipts and the time field remain on the authority event.
+			_update_mark(cast)
 			_build_impact(cast, event)
 		elif kind == "tick":
 			if not cast.impacted:
@@ -206,8 +217,11 @@ func _preview(event: Dictionary, style: Dictionary) -> Dictionary:
 			])
 			_draw_strip(group, warning, vertices, PackedVector2Array([Vector2.ZERO, Vector2.DOWN, Vector2.RIGHT, Vector2.ONE]))
 	var timing: Dictionary = event.timing
+	var mark: MeshInstance3D = null
+	if not _reduced:
+		mark = _art.mark(group, geometry, style.kind, radius, angle)
 	return {
-		"group": group, "style": style, "geometry": geometry, "warning": warning,
+		"group": group, "style": style, "geometry": geometry, "warning": warning, "mark": mark,
 		"ability_id": event.ability_id, "ribbons": [], "age": 0.0, "released": false,
 		"release_time": 0.0, "travel_s": float(timing.travel_s), "active_s": float(timing.active_s), "recovery_s": float(timing.recovery_s),
 		"impacted": false, "recovered": false, "flash": 0.0,
@@ -225,17 +239,16 @@ func _build_release(cast: Dictionary) -> void:
 	var edge := _material(RIBBON, style.accent, 0.58)
 	cast.ribbons.append_array([front, edge])
 	match style.kind:
+		"crescent":
+			_ring(group, front, radius * .96, minf(radius * .15, .26), angle, .095)
+			if not _reduced:
+				_build_gada_arc(cast, front, edge, radius, angle)
 		"ward":
-			_ring(group, front, radius * 0.90, 0.25, angle, 0.085)
+			_ring(group, front, radius * .90, .25, angle, .085)
+			if not _reduced:
+				_build_ward_canopy(cast, front, edge, radius, angle)
 		"wind":
-			var start := group.to_local(geometry.origin)
-			for index in (1 if _reduced else 3):
-				var drift := Vector3((float(index) - 1.0) * 0.20, 0.0, 0.0)
-				var path: Array[Vector3] = []
-				for point in 24:
-					var t := float(point) / 23.0
-					path.append(start.lerp(Vector3.ZERO, t) + drift + Vector3.UP * (0.10 + 1.15 * sin(PI * t)))
-				_stroke(group, front, path, 0.09)
+			_build_vault_wake(cast, front, edge)
 		"mountain":
 			_ring(group, edge, radius * 0.72, 0.15, PI, 0.080)
 			if not _reduced:
@@ -244,10 +257,65 @@ func _build_release(cast: Dictionary) -> void:
 			_ring(group, front, radius * 0.97, 0.29, angle, 0.17)
 			if not _reduced:
 				_build_ember_field(cast, front, edge, radius, angle)
-		_:
-			_ring(group, front, radius * 0.96, minf(radius * 0.15, 0.29), angle, 0.23)
-			if not _reduced:
-				_ring(group, edge, radius * 0.81, 0.11, angle * 0.78, 0.38)
+
+
+
+func _build_gada_arc(cast: Dictionary, core: ShaderMaterial, accent: ShaderMaterial, radius: float, angle: float) -> void:
+	var arc := Node3D.new()
+	arc.name = &"GadaSolarArc"
+	cast.group.add_child(arc)
+	var vertices := PackedVector3Array()
+	var uv := PackedVector2Array()
+	var rim: Array[Vector3] = []
+	for index in 37:
+		var t := float(index) / 36.0
+		var a := lerpf(-angle * .76, angle * .76, t)
+		var arc_width := maxf(.02, pow(sin(PI * t), .72))
+		var top := _polar(a, radius * .88, .39 + .24 * arc_width)
+		vertices.append(_polar(a, radius * (.88 - arc_width * .22), .14))
+		vertices.append(top)
+		uv.append(Vector2(t, 0))
+		uv.append(Vector2(t, 1))
+		rim.append(top)
+	_draw_strip(arc, core, vertices, uv)
+	_stroke(arc, accent, rim, minf(.028, .045 * radius))
+	cast.decor = arc
+
+
+func _build_ward_canopy(cast: Dictionary, core: ShaderMaterial, accent: ShaderMaterial, radius: float, angle: float) -> void:
+	var canopy := Node3D.new()
+	canopy.name = &"WardCanopy"
+	cast.group.add_child(canopy)
+	for index in 2:
+		var curve: Array[Vector3] = []
+		var extent := angle * (.71 - .13 * float(index))
+		for point in 29:
+			var t := float(point) / 28.0
+			curve.append(_polar(lerpf(-extent, extent, t), radius * (.53 + .14 * float(index)),
+				.11 + (.98 - .19 * float(index)) * pow(sin(PI * t), .62)))
+		_stroke(canopy, core if index == 0 else accent, curve, minf(.084, .043 * radius), Vector3.FORWARD)
+	cast.decor = canopy
+
+
+func _build_vault_wake(cast: Dictionary, core: ShaderMaterial, accent: ShaderMaterial) -> void:
+	var group: Node3D = cast.group
+	var wake := Node3D.new()
+	wake.name = &"VaultFeatherTrail"
+	group.add_child(wake)
+	var start := group.to_local(cast.geometry.origin)
+	var right := Vector3(-start.z, 0.0, start.x).normalized()
+	for index in (1 if _reduced else 3):
+		var side := 0.0 if _reduced else float(index - 1)
+		var curve: Array[Vector3] = []
+		for point in 29:
+			var t := float(point) / 28.0
+			var arc := sin(PI * t)
+			var drift := right * (side * arc * (.07 + .45 * t))
+			var height := .09 if _reduced else .18 + (1.19 - .28 * absf(side)) * arc
+			curve.append(start.lerp(Vector3.ZERO, .06 + .88 * t) + drift + Vector3.UP * height)
+		_stroke(wake, core if side == 0.0 else accent, curve, .08, Vector3.UP)
+	if not _reduced:
+		cast.decor = wake
 
 
 func _build_ember_field(cast: Dictionary, core: ShaderMaterial, accent: ShaderMaterial, radius: float, angle: float) -> void:
@@ -283,6 +351,7 @@ func _build_mountain_payload(cast: Dictionary, core: ShaderMaterial, accent: Sha
 	group.add_child(payload)
 	payload.position.y = cast.style.rise_m
 	var width := _radius(cast.geometry) * 0.18
+	_art.mountain(payload, width * .84)
 	# Two crossed ridge contours convey mass from either shoulder angle.
 	for index in 2:
 		var ridge := Node3D.new()
@@ -379,6 +448,7 @@ func _process(delta: float) -> void:
 			continue
 		if cast.released:
 			cast.flash += delta
+		_update_mark(cast)
 		if cast.has("decor"):
 			cast.decor.visible = not _reduced and (not cast.has("payload") or cast.decor != cast.payload or not cast.impacted)
 		if cast.has("payload") and not cast.impacted:
@@ -392,6 +462,21 @@ func _process(delta: float) -> void:
 			material.set_shader_parameter("phase", cast.flash)
 			material.set_shader_parameter("reduced_motion", _reduced)
 			material.set_shader_parameter("opacity", float(material.get_meta("base_opacity")) * fade * (0.66 if _reduced else 0.94))
+
+
+func _update_mark(cast: Dictionary) -> void:
+	var mark: MeshInstance3D = cast.mark
+	if not is_instance_valid(mark):
+		return
+	mark.visible = not _reduced
+	var released_for := float(cast.age) - float(cast.release_time)
+	if cast.impacted and released_for >= .085 and mark.get_meta("art_phase") == 1:
+		_art.set_phase(mark, 2)
+	var base: Vector3 = mark.get_meta("art_base_size")
+	var scale_factor := 1.0
+	if cast.released:
+		scale_factor = lerpf(.78, 1.0, clampf(released_for * 7.3, 0.0, 1.0))
+	mark.scale = Vector3(base.x * scale_factor, 1.0, base.z * scale_factor)
 
 
 static func _radius(geometry: Dictionary) -> float:

@@ -12,6 +12,9 @@ const JUMP_SPEED := 5.9
 const TURN_RATE := 15.0
 const ABILITY_BLEND := .11
 const MODEL_PATH := "res://assets/heroes/hanuman/hanuman.glb"
+const ABILITY_MOTION_PATH := "res://assets/heroes/hanuman/hanuman-ability-motion.tres"
+const ABILITY_CLIPS := [&"fire", &"cast2", &"cast1", &"tail_sweep", &"mountain_pulse"]
+const IMPACT_PHASE_META := &"hanuman_impact_phase"
 const LOCOMOTION := [&"idle", &"run", &"jump"]
 const ChainResponse = preload("res://scripts/hero_chain_response.gd")
 const TAIL_PROFILE := "res://assets/design/hanuman-tail-response.json"
@@ -30,6 +33,8 @@ var look_sensitivity := .0024
 var invert_y := false
 var last_error := ""
 var tail_error := ""
+var _ability_motion_error := ""
+var _revised_clips: Array[StringName] = []
 var _clips: Dictionary = {}
 var _action: Dictionary = {}
 var _vault: Dictionary = {}
@@ -100,6 +105,7 @@ func configure_visual(packed: PackedScene) -> bool:
 		var library := animator.get_animation_library(name_).duplicate(true) as AnimationLibrary
 		animator.remove_animation_library(name_)
 		animator.add_animation_library(name_, library)
+	_install_ability_motion()
 	for loop_name in [&"idle", &"run"]:
 		animator.get_animation(_clips[loop_name]).loop_mode = Animation.LOOP_LINEAR
 	var response := ChainResponse.new()
@@ -114,6 +120,62 @@ func configure_visual(packed: PackedScene) -> bool:
 	_play_locomotion("idle")
 	animator.advance(0.0)
 	return true
+
+func _install_ability_motion() -> void:
+	if not ResourceLoader.exists(ABILITY_MOTION_PATH, "AnimationLibrary"):
+		_ability_motion_error = "Revised ability library unavailable"
+		return
+	var library := load(ABILITY_MOTION_PATH) as AnimationLibrary
+	if library == null or library.get_animation_list().size() != ABILITY_CLIPS.size():
+		_ability_motion_error = "Revised ability library requires five clips"
+		return
+	# Qualify the entire pack before replacing any owned donor action.
+	for id in ABILITY_CLIPS:
+		if not _clips.has(id) or not library.has_animation(id):
+			_ability_motion_error = "Missing ability clip: " + String(id)
+			return
+		var original := animator.get_animation(_clips[id])
+		var revised := library.get_animation(id)
+		if revised.loop_mode != Animation.LOOP_NONE or not is_finite(revised.length) or revised.length <= 0.0 \
+				or not _matches_motion_tracks(original, revised):
+			_ability_motion_error = "Incompatible ability clip: " + String(id)
+			return
+		if id in [&"cast1", &"mountain_pulse"] and _impact_phase(revised) <= 0.0:
+			_ability_motion_error = "Missing impact marker: " + String(id)
+			return
+	for id in ABILITY_CLIPS:
+		var path := String(_clips[id])
+		var owned := animator.get_animation_library(StringName(path.get_base_dir()))
+		var clip := StringName(path.get_file())
+		owned.remove_animation(clip)
+		owned.add_animation(clip, library.get_animation(id).duplicate(true) as Animation)
+		_revised_clips.append(id)
+
+func _matches_motion_tracks(original: Animation, revised: Animation) -> bool:
+	for track in original.get_track_count():
+		if revised.find_track(original.track_get_path(track), original.track_get_type(track)) < 0:
+			return false
+	var root_node := animator.get_node_or_null(animator.root_node)
+	for track in revised.get_track_count():
+		if revised.track_get_key_count(track) == 0:
+			return false
+		var path := revised.track_get_path(track)
+		var kind := revised.track_get_type(track)
+		if original.find_track(path, kind) >= 0:
+			continue
+		# The donor need not animate every joint. Allow art to add rotation on
+		# real, previously static skeleton helpers without rebinding the asset.
+		if kind != Animation.TYPE_ROTATION_3D or path.get_subname_count() != 1 \
+				or root_node == null or root_node.get_node_or_null(NodePath(path.get_concatenated_names())) != skeleton \
+				or skeleton.find_bone(path.get_subname(0)) < 0:
+			return false
+	return true
+
+func _impact_phase(motion: Animation) -> float:
+	var phase: Variant = motion.get_meta(IMPACT_PHASE_META, -1.0)
+	if typeof(phase) in [TYPE_FLOAT, TYPE_INT] and is_finite(float(phase)) and float(phase) < 1.0:
+		return float(phase)
+	return -1.0
 
 func has_clip(clip: StringName) -> bool:
 	return ready_for_play and _clips.has(clip)
@@ -196,6 +258,8 @@ func _physics_process(delta: float) -> void:
 		_step_vault(delta)
 	else:
 		_step_movement(delta)
+		if not _action.is_empty() and _action.movement and _action.stage == "travel" and is_on_floor():
+			_enter_action_stage("recovery", float(_action.impact_s))
 	_step_action(delta)
 	if _action.is_empty():
 		var speed := Vector2(velocity.x, velocity.z).length()
@@ -253,47 +317,74 @@ func play_event(event: Dictionary, definition: Dictionary) -> void:
 	var kind := String(event.get("kind", ""))
 	if kind == "reset":
 		_action.clear()
+		_vault.clear()
+		_last_vault.clear()
 		if is_instance_valid(tail_response): tail_response.reset()
 		_last_motion = ""
 		_play_locomotion("idle")
 		return
 	if kind == "begin":
 		var clip := StringName(definition.get("motion", ""))
-		if not _clips.has(clip): return
-		var length := animator.get_animation(_clips[clip]).length
+		if not _action.is_empty() or not _clips.has(clip): return
+		var motion := animator.get_animation(_clips[clip])
+		var length := motion.length
 		var timing: Dictionary = event.get("timing", {})
 		var phase := clampf(float(definition.get("motion_phase", .5)), .04, .96)
+		var travel := maxf(0.0, float(timing.get("travel_s", 0.0)))
+		var recovery := maxf(.001, float(timing.get("recovery_s", .2)))
+		var impact := phase
+		if travel > 0.0:
+			var authored_impact := _impact_phase(motion)
+			impact = authored_impact if authored_impact > phase else lerpf(phase, 1.0, travel / (travel + recovery))
 		_action = {"id": int(event.get("cast_id", -1)), "generation":int(event.get("generation", -1)),
-			"clip":clip, "contact_s":length * phase, "length_s":length, "stage":"windup",
-			"windup_s":maxf(.001, float(timing.get("windup_s", .2))), "age":0.0,
-			"tail_s":maxf(.001, float(timing.get("travel_s", 0)) + float(timing.get("recovery_s", .2)))}
+			"clip":clip, "contact_s":length * phase, "impact_s":length * impact, "length_s":length,
+			"windup_s":maxf(.001, float(timing.get("windup_s", .2))),
+			"travel_s":travel, "recovery_s":recovery,
+			"movement":event.get("geometry", {}).get("kind") == "movement"}
 		_turn_model(event.get("forward", aim_forward()), 1.0)
 		velocity.x = 0.0
 		velocity.z = 0.0
 		animator.speed_scale = 1.0
 		animator.play(_clips[clip], ABILITY_BLEND, 0.0)
-		animator.seek(0.0, true)
+		_enter_action_stage("windup", 0.0)
 		_last_motion = String(clip)
 	elif not _action.is_empty() and int(event.get("cast_id", -1)) == int(_action.id) and int(event.get("generation", -1)) == int(_action.generation):
-		if kind == "release":
-			_action.stage = "released"
-			_action.age = 0.0
-			animator.seek(float(_action.contact_s), true)
+		if kind == "release" and _action.stage == "windup":
+			_enter_action_stage("travel" if float(_action.travel_s) > 0.0 else "recovery", float(_action.contact_s))
+		elif kind == "impact" and _action.stage == "travel" and not _action.movement:
+			_enter_action_stage("recovery", float(_action.impact_s))
 		elif kind in ["recovery", "end", "cancel"]:
+			if kind == "recovery" and _action.stage == "recovery":
+				animator.seek(float(_action.length_s), true)
+			if kind == "cancel" and _action.movement:
+				_vault.clear()
 			_action.clear()
 			if kind == "cancel" and is_instance_valid(tail_response): tail_response.cancel_response()
 			_last_motion = ""
 			_play_locomotion("jump" if not is_on_floor() else "idle")
 
+func _enter_action_stage(stage: String, clip_seconds: float) -> void:
+	_action.stage = stage
+	_action.age = 0.0
+	_action.stage_frame = Engine.get_physics_frames()
+	animator.seek(clip_seconds, true)
+
 func _step_action(delta: float) -> void:
-	if _action.is_empty(): return
+	if _action.is_empty() or int(_action.stage_frame) == Engine.get_physics_frames(): return
 	_action.age = float(_action.age) + delta
 	var release := float(_action.contact_s)
-	if _action.stage == "windup":
-		animator.seek(release * minf(.999, float(_action.age) / float(_action.windup_s)), true)
-	else:
-		var phase := minf(1.0, float(_action.age) / float(_action.tail_s))
-		animator.seek(lerpf(release, float(_action.length_s), phase), true)
+	var impact := float(_action.impact_s)
+	match String(_action.stage):
+		"windup":
+			animator.seek(release * minf(.999, float(_action.age) / float(_action.windup_s)), true)
+		"travel":
+			var flight := float(_action.age) / float(_action.travel_s)
+			if _action.movement and not _vault.is_empty():
+				flight = float(_vault.age) / float(_vault.duration)
+			animator.seek(lerpf(release, impact, minf(.999, flight)), true)
+		"recovery":
+			var settle := minf(1.0, float(_action.age) / float(_action.recovery_s))
+			animator.seek(lerpf(impact, float(_action.length_s), settle), true)
 
 func _play_locomotion(clip: String, speed := 1.0) -> void:
 	if not ready_for_play or not _action.is_empty(): return
@@ -314,5 +405,6 @@ func socket_world(socket: StringName) -> Vector3:
 func report() -> Dictionary:
 	return {"ready":ready_for_play, "error":last_error, "bones":skeleton.get_bone_count() if ready_for_play else 0,
 		"clips":_clips.keys(), "motion":_last_motion, "position":global_position,
+		"revised_motion_clips":_revised_clips.duplicate(), "ability_motion_error":_ability_motion_error,
 		"grounded":is_on_floor(), "vault":_vault.duplicate(), "last_vault":_last_vault.duplicate(), "action":_action.duplicate(),
 		"tail":tail_response.report() if is_instance_valid(tail_response) else {"configured":false,"last_error":tail_error}}
