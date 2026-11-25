@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Blender world elements.** Append or link 43 editable architecture, nature, foundation and sign assets. The same workflow can compile the FireRed remake’s Rust fallback geometry into a separate 36-piece Blender study. [Download and preview the libraries](games/yuga-native/art/reuse-library/README.md)
+
 This repository contains two games: **YUGA**, an original mythology-inspired native 3D game, and **ANDOLAN**, a separate browser city game.
 
 **YUGA desktop work:** [active handoff](games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [10 screen rounds + 3 integration rounds](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [six-worker task ledger](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The campaign has **17/78 reviewed packets and 0/13 complete rounds**. Mobile is deferred. Whole-hero/world art and sustained motion remain active work.

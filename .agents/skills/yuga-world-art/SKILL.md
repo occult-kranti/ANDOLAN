@@ -23,6 +23,8 @@ Lead assigns exclusive geometry, material, scene and source paths. Coordinate
 shared navigation/collision with W5, UI overview with W2 and export/resources
 with W6. Preserve the existing playable map while a candidate is reviewed.
 
+For a new lane or courtyard, check the [editable world elements](../../../games/yuga-native/art/reuse-library/README.md) first. Link a collection when multiple placements should follow one master. Append it when the map needs a variant. Check its base anchor, footprint and existing material slots from a gameplay camera. The Rust study and the four-manifest importer provide additional building blocks for local authoring. Check the recorded provenance before moving a study into the game.
+
 ## Phase 1: freeze the place and gameplay purpose
 
 1. Record task ID, baseline, exclusive files, intended visible improvement,
