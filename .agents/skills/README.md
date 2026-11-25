@@ -1,6 +1,6 @@
 # YUGA project skills
 
-Six canonical skills for the existing desktop-first game roadmap. Start with
+The six worker roles below support the desktop-first game roadmap. Start with
 [the local model and squad guide](../../games/yuga-native/docs/LOCAL_MODEL_SWARM.md)
 and [AGENTS.md](../../AGENTS.md). The lead assigns one bounded packet and
 exclusive files to each active worker; the roles do not create six GPUs or
@@ -10,7 +10,7 @@ prove the complete game exists.
 | --- | --- | --- |
 | W1 | [yuga-evidence-review](yuga-evidence-review/SKILL.md) | Sources, controlled analysis and independent actual-game review |
 | W2 | [yuga-ui-flow](yuga-ui-flow/SKILL.md) | Screens, controls, accessibility and player journeys |
-| W3 | [yuga-hero-art](yuga-hero-art/SKILL.md) | Character geometry, materials, rig/skin and hero quality |
+| W3 | [yuga-hero-art](yuga-hero-art/SKILL.md) · [yuga-anatomy-review](yuga-anatomy-review/SKILL.md) | Character modeling, rigging, materials, and measured review of individual body parts |
 | W4 | [yuga-world-art](yuga-world-art/SKILL.md) | City/swamp, lanes, buildings, armies and collision |
 | W5 | [yuga-motion-combat](yuga-motion-combat/SKILL.md) | Animation, action events, effects/audio and authority |
 | W6 | [yuga-models-build](yuga-models-build/SKILL.md) | Local model capacity, source provenance, builds and packaging |

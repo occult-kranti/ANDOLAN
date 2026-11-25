@@ -30,8 +30,8 @@ def arguments():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--width", type=int, default=960)
     parser.add_argument("--samples", type=int, default=36)
-    parser.add_argument("--stages", nargs="*", choices=(*HERO_STAGES, "court"),
-                        default=[*HERO_STAGES, "court"])
+    parser.add_argument("--stages", nargs="*", choices=(*HERO_STAGES, "textile", "hand_pose", "court"),
+                        default=[*HERO_STAGES, "textile", "hand_pose", "court"])
     parser.add_argument("--build-only", action="store_true")
     return parser.parse_args(sys.argv[sys.argv.index("--") + 1:])
 
@@ -180,6 +180,10 @@ def configure_scene(scene, profile, args):
     for area in profile["light"]["areas"]:
         data = bpy.data.lights.new(area["name"], type="AREA")
         data.energy, data.size, data.color = area["power_w"], area["size_m"], area["color"]
+        if "height_m" in area:
+            data.shape = "RECTANGLE"
+            data.size_y = area["height_m"]
+        data.spread = math.radians(area.get("spread_degrees", 180))
         pointed_object(data, data.name, area["location"], area["target"])
 
     scene.render.engine = "CYCLES"
@@ -190,8 +194,7 @@ def configure_scene(scene, profile, args):
     scene.cycles.use_denoising = False
     scene.cycles.max_bounces = 8
     scene.cycles.volume_bounces = 1
-    scene.render.threads_mode = "FIXED"
-    scene.render.threads = 2
+    scene.render.threads_mode = "AUTO"
     scene.render.resolution_x = args.width
     scene.render.resolution_y = args.width * 3 // 4
     scene.render.resolution_percentage = 100
@@ -247,6 +250,8 @@ def main():
     if texture := profile.get("wardrobe", {}).get("cloth_texture"):
         profile["wardrobe"]["cloth_texture"] = str(ART / texture)
 
+    if "textile" in args.stages and not profile["wardrobe_enabled"]:
+        raise ValueError("The textile stage requires the wardrobe stage")
     scene = bpy.context.scene
     rig = scene.objects["YugaHeroRig"]
     select_shot(rig, scene)
@@ -259,9 +264,13 @@ def main():
     for stage in HERO_STAGES:
         if stage in args.stages:
             reports[stage] = importlib.import_module(stage).apply(scene, profile)
+    if "textile" in args.stages:
+        reports["textile"] = importlib.import_module("textile").apply(scene, profile)
     rig.data.pose_position = "POSE"
     update()
     apply_pose(rig, profile)
+    if "hand_pose" in args.stages:
+        reports["hand_pose"] = importlib.import_module("hand_pose").apply(rig, profile)
     if "court" in args.stages:
         reports["court"] = importlib.import_module("court").apply(scene, profile)
     update()

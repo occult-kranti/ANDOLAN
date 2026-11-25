@@ -64,21 +64,27 @@ def distance_on_line(point, start, end):
 
 def face_shape(p):
     x,y,z = p
-    mask = sm(1.724,1.797,z) * sm(.182,.030,abs(x))
+    ax = abs(x)
+    mask = sm(1.724,1.797,z) * sm(.182,.030,ax)
     front = sm(.055,.207,-y)
     lower = bell(z,1.794,.064)
     mouth = bell(z,1.811,.049) * bell(x,0,.090) * front
-    cheek = bell(abs(x),.078,.044) * bell(z,1.842,.055) * front
-    brow = bell(abs(x),.045,.060) * bell(z,1.911,.018) * front
-    nose = bell(abs(x),.017,.019) * bell(z,1.844,.022) * front
+    cheek = bell(ax,.086,.033) * bell(z,1.854,.031) * front
+    hollow = bell(ax,.079,.035) * bell(z,1.805,.025) * front
+    jaw = bell(z,1.775,.043) * sm(.041,.087,ax) * front
+    brow = bell(ax,.044,.056) * bell(z,1.912,.018) * front
+    nasal_bridge = bell(ax,0,.029) * bell(z,1.862,.023) * front
+    nasal_wing = bell(ax,.021,.017) * bell(z,1.844,.014) * front
+    upper_muzzle = bell(ax,0,.058) * bell(z,1.827,.018) * front
     lip = bell(x,0,.072) * bell(z,1.794,.017) * front
     chin = bell(x,0,.057) * bell(z,1.767,.021) * front
-    # Less center projection, broader angular lower face, stronger cheek/brow.
-    # Entire face and its fitted iris/lips/tilak use the same continuous field.
+    # Keep the high cheek and brow ridges while tapering to a narrower chin.
+    # The bilateral field is shared by the skull and all fitted eye pieces.
     return Vector((
-        x*(1.+.267*mask*lower+.225*mouth+.102*cheek),
-        y+.034*mouth-.018*cheek-.015*brow-.013*nose+.020*lip+.008*chin,
-        z-.012*mask*lower+.004*cheek-.003*brow-.004*chin,
+        x*(1.+.135*mask*lower+.141*mouth+.089*cheek-.143*jaw+.10*nasal_wing),
+        y+.029*mouth-.020*cheek+.013*hollow-.012*brow-.014*nasal_bridge
+        -.010*nasal_wing-.012*upper_muzzle+.020*lip+.003*chin,
+        z-.012*mask*lower+.005*cheek-.002*brow-.006*chin,
     ))
 
 
@@ -317,13 +323,13 @@ def swept_mane(sculpt, lo, hi, seed, count):
         q=.018+v*(1.62+.41*math.sin(a)+.14*math.cos(2*a))
         ridge=(.0036*math.cos(31*a-8*v)+.0026*math.cos(17*a+2*v))*v
         crown_depth=.135+.025*max(0,-math.sin(a))**1.6
-        lean = -.046*(1-v)**1.6
+        lean = -.033*(1-v)**1.6
         # Asymmetric crest above the temple. The front profile rises from the
         # low nape to a swept peak, with the fitted forehead left exposed.
-        crest = .014*(1-v)**1.9 + .021*bell(u%1,.60,.17)*math.sin(v*math.pi)**2
+        crest = .009*(1-v)**1.9 + .017*bell(u%1,.60,.19)*math.sin(v*math.pi)**2
         point=Vector(((.120+ridge)*math.sin(q)*math.cos(a)+lean,
             -.030+(crown_depth+ridge)*math.sin(q)*math.sin(a)+.043*(1-v),
-            1.951+(.146+ridge)*math.cos(q)+.005*math.cos(a*3)*v+crest))
+            1.951+(.141+ridge)*math.cos(q)+.005*math.cos(a*3)*v+crest))
         if v>.71:
             # Close the helmet-like gap at the temples by burying only the cap
             # edge in the authored scalp. Main locks inherit the same contact.
@@ -342,7 +348,7 @@ def swept_mane(sculpt, lo, hi, seed, count):
         direction=1 if u<.5 else -1
         for i in range(15):
             t=i/14
-            az=u+direction*(.092+.153*d)*t+.009*math.sin(math.pi*t)
+            az=u+direction*(.110+.177*d)*t+.009*math.sin(math.pi*t)
             radial=mix(.97-.28*d,.31+.49*d,t)+.058*math.sin(math.pi*t)
             p=cap(az,radial)
             n=(p-Vector((0,-.008,1.95))).normalized()
@@ -350,21 +356,21 @@ def swept_mane(sculpt, lo, hi, seed, count):
     for k in range(205):
         u=k/205+rng.uniform(-.0014,.0014)
         d=.51+.26*math.sin(math.tau*(k//15)/9)+rng.uniform(-.045,.045)
-        geom.add(list(swath(u,d,rng.uniform(.005,.016))),rng.uniform(.0024,.0043),[("head",1.)],sides=5)
+        geom.add(list(swath(u,d,rng.uniform(.003,.010))),rng.uniform(.0021,.0035),[("head",1.)],sides=5)
     for k in range(count):
         u=rng.random()
         d=min(.98,max(.02,.51+.25*math.sin(math.tau*(int(u*205)//15)/9)+rng.uniform(-.22,.22)))
-        geom.add(list(swath(u,d,rng.uniform(.003,.014))),rng.uniform(.00022,.00071),[("head",1.)])
-    for _ in range(66):
+        geom.add(list(swath(u,d,rng.uniform(.002,.009))),rng.uniform(.00022,.00062),[("head",1.)])
+    for _ in range(25):
         # A small number of longer tapered silhouette wisps stand out from the
         # packed filaments, following the same flow through the mane crest.
         u=rng.uniform(.53,.73)
-        points=list(swath(u,rng.uniform(.04,.2),rng.uniform(.017,.028)))
+        points=list(swath(u,rng.uniform(.06,.25),rng.uniform(.008,.014)))
         for i,p in enumerate(points):
             t=i/(len(points)-1)
-            p.x-=.019*t*t
-            p.z+=.017*t*t
-        geom.add(points,rng.uniform(.00055,.0013),[("head",1.)])
+            p.x-=.009*t*t
+            p.z+=.006*t*t
+        geom.add(points,rng.uniform(.00047,.00093),[("head",1.)])
     for i in range(142):
         # Lower locks rooted at the rear cap, curled toward the neck behind
         # the ears. They soften the shell's former hard cutoff in profile.
@@ -389,12 +395,13 @@ def beard(sculpt, material, seed, count):
         x,y,z=p
         if not 1.726<z<1.890 or y>-.063:
             continue
-        beard_line=1.776+.62*max(0,abs(x)-.040)
+        beard_line=1.775+.77*max(0,abs(x)-.039)
         if z<beard_line and z>1.733+abs(x)*.12:
-            p0=sm(1.734,1.771,z)*sm(-.052,-.136,y)
+            chin=bell(x,0,.042)
+            p0=sm(1.734,1.771,z)*sm(-.052,-.136,y)*(.54+.46*chin)
             if p0>.03:
                 choices.append((tri,tri.area*p0))
-        elif .075<abs(x)<.133 and 1.786<z<1.878:
+        elif .078<abs(x)<.133 and 1.796<z<1.878:
             choices.append((tri,.9*tri.area))
     accum=list(accumulate(weight for _,weight in choices))
     rng=random.Random(seed)
@@ -410,13 +417,14 @@ def beard(sculpt, material, seed, count):
         root=sum((f*v.co for f,v in zip(bary,verts)),Vector())
         normal=sum((f*v.normal for f,v in zip(bary,verts)),Vector()).normalized()
         sign=-1 if root.x<0 else 1
-        motion=Vector((sign*(.29+.24*bell(root.z,1.835,.055)),.03,-.89))
+        chin=bell(root.x,0,.045)
+        motion=Vector((sign*.56*(1-chin),.13,-.80-.22*chin))
         tangent=(motion-normal*motion.dot(normal)).normalized()
         tangent+=normal.cross(tangent)*rng.uniform(-.25,.25)
         is_guard=i < lock_count
         length=rng.uniform(.016,.031) if is_guard else rng.uniform(.008,.022)
-        length*=.75+.37*sm(.071,.119,abs(root.x))
-        points=[root-normal*.001+length*(t*tangent+normal*(.59*t+.29*math.sin(math.pi*t)))
+        length*=.68+.35*chin+.16*sm(.071,.119,abs(root.x))
+        points=[root-normal*.001+length*(t*tangent+normal*(.31*t+.22*math.sin(math.pi*t)))
                 for t in (0.,.2,.45,.72,1.)]
         radius=rng.uniform(.0012,.0020) if is_guard else rng.uniform(.00039,.00093)
         groom.add(points,radius,[("head",1.)],sides=5 if is_guard else 4)
@@ -451,7 +459,7 @@ def pigment_material(name, rgb, roughness=.71, specular=.14):
 def refine_eyes(scene, rig):
     """Adjust the native eye pieces, keeping the original eye-bone binding."""
     sclera=pigment_material("Hanuman match · warm hydrated sclera",(.36,.275,.20),.33,.35)
-    iris=pigment_material("Hanuman match · dark amber iris",(.28,.104,.035),.25,.37)
+    iris=pigment_material("Hanuman match · dark amber iris",(.229,.103,.047),.28,.31)
     pupil=pigment_material("Hanuman match · hydrated pupil",(.016,.009,.005),.20,.42)
     lids=pigment_material("Hanuman match · warm orbital folds",(.112,.049,.023),.59,.24)
     changed=[]
@@ -480,7 +488,7 @@ def refine_eyes(scene, rig):
                     reference.y-=.006
                     if not prefix.startswith("Eye"):
                         radial=point-focus
-                        reference.x+=.0011+.14*radial.x
+                        reference.x+=.0021+.14*radial.x
                         reference.z+=.10*radial.z
                 vert.co=reference
             obj.data.update()
@@ -512,12 +520,12 @@ def face_marks(sculpt):
 
     def brow_point(t, side, lift, offset):
         x=side*(.016+.074*t)
-        z=1.909+.011*math.sin(math.pi*t*.80)+.002*t
+        z=1.907+.014*math.sin(math.pi*t*.79)+.002*t
         return fitted(x,z+lift,offset)
 
     for side in (-1,1):
         guide=[brow_point(j/34,side,0,.00085) for j in range(35)]
-        sculpt.tube("Hanuman match · angular brow ridge",guide,.0033,shade,"head",8,
+        sculpt.tube("Hanuman match · angular brow ridge",guide,.0040,shade,"head",8,
                     lambda t:.17+.83*math.sin(math.pi*t)**.59)
         for j in range(140):
             t=rng.uniform(.02,.93)
@@ -533,9 +541,9 @@ def face_marks(sculpt):
     lower=pigment_material("Hanuman match · lower lip plane",(.202,.083,.053),.69,.16)
 
     def lip_point(t,height,up):
-        x=(t-.5)*.112
+        x=(t-.5)*.104
         width=math.sin(math.pi*t)**.82
-        z=1.789+(.005 if up else -.008)*height*width+.0012*width
+        z=1.789+(.0048 if up else -.0065)*height*width+.0012*width
         offset=(.0009+.0017*math.sin(math.pi*height)-.0019*height)*width
         return fitted(x,z,offset)
 
@@ -546,6 +554,28 @@ def face_marks(sculpt):
     line=[lip_point(j/48,0,False)+Vector((0,-.0012,0)) for j in range(49)]
     sculpt.tube("Hanuman match · closed mouth seam",line,.00075,seam,"head",8,
                 lambda t:.17+.83*math.sin(math.pi*t)**.7)
+
+    nostril=pigment_material("Hanuman match · shaded nostril tissue",(.064,.022,.012),.73,.12)
+    sectors=24
+    for side,label in ((-1,"R"),(1,"L")):
+        points=[fitted(side*.024,1.834,.00065)]
+        for ring in range(1,5):
+            radius=ring/4
+            for j in range(sectors):
+                angle=math.tau*j/sectors
+                along=math.cos(angle)*radius
+                x=side*(.024+.0082*along)
+                z=1.834+.0033*math.sin(angle)*radius+.0027*along
+                points.append(fitted(x,z,.00065-.00040*radius))
+        faces=[(0,1+j,1+(j+1)%sectors) for j in range(sectors)]
+        for ring in range(3):
+            start=1+ring*sectors
+            for j in range(sectors):
+                a,b=start+j,start+(j+1)%sectors
+                faces.append((a,a+sectors,b+sectors,b))
+        if side<0:
+            faces=[tuple(reversed(face)) for face in faces]
+        sculpt.mesh(f"Hanuman match · fitted nostril {label}",points,faces,nostril,bone="head")
 
 
 def diadem(sculpt, foundation):
@@ -594,11 +624,11 @@ def apply(scene, reference_profile=None):
     if body.data.users>1:
         body.data=body.data.copy()
     arms=arm_axes(rig)
-    face_prefixes=("Nostril","Vanara ear","Ear concha","Rounded helix","Earring loop")
+    face_prefixes=("Vanara ear","Ear concha","Rounded helix","Earring loop")
     hide_prefixes=("Swept cheek fur","Swept Vanara mane cap","Mane crest",
                    "Sandal soles","Sandal leather straps","Sacred forehead pigment",
                    "Angular expressive brow","Upper fitted muzzle lip","Lower fitted muzzle lip",
-                   "Closed mouth corner crease")
+                   "Closed mouth corner crease","Nostril")
     hidden=0
     for obj in list(scene.objects):
         name=obj.name.removeprefix("LookDev - ")

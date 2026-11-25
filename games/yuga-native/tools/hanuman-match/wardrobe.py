@@ -5,6 +5,7 @@ rest coordinates. The pose and camera are owned by the master shot recipe.
 """
 from __future__ import annotations
 
+from bisect import bisect_right
 import math
 from pathlib import Path
 import sys
@@ -196,8 +197,12 @@ def palette(profile):
                                   .26, .23, 43, 220, .0007),
         "tuft": surface_material("dark chestnut tuft", (.012, .0027, .0015), (.111, .020, .006),
                                  0, .53, 20, 520, .00095),
+        "tuft_light": surface_material("auburn plume guard hairs", (.034,.007,.0025), (.154,.042,.013),
+                                       0, .53, 21, 510, .0007),
         "tail": surface_material("copper tail coat", (.071,.020,.007), (.247,.080,.028),
                                  0,.59,20,550,.0013),
+        "tail_light": surface_material("warm copper rim hair", (.112,.031,.009), (.332,.114,.037),
+                                       0, .60, 19, 470, .0007),
     }
 
 
@@ -314,7 +319,53 @@ def engraved_lotus(s, center, x, y, width, mat, bone):
         s.tube("Ref · lotus chased petal", petals, .00165, mat, bone, 6)
 
 
+def set_stone(s, label, center, normal, across, radii, mat, bone):
+    """Cast an oval setting into its support and lay a low cabochon in it."""
+    axis = (across - normal * across.dot(normal)).normalized()
+    tangent = normal.cross(axis)
+    width, height, dome = radii
+
+    def ring(u, size, offset):
+        a = TAU*u
+        return center + (axis*(width*math.cos(a)) + tangent*(height*math.sin(a)))*size + normal*offset
+
+    rim = ((1.01,-.004),(1.00,.001),(1.04,.004),(.96,.007),(.82,.007),(.76,.004),(.70,.001))
+    s.cloth("Ref · cast bezel "+label,
+            lambda u,v: ring(u,*rim[round(v*(len(rim)-1))]),
+            mat["gold"], rows=len(rim)-1, columns=48, wrap=True, bone=bone)
+    def jewel(u,v):
+        pitch = math.pi*v/2
+        return ring(u, .77*max(.0005,math.cos(pitch)), .0033+dome*math.sin(pitch))
+    s.cloth("Ref · inset carnelian "+label,jewel,mat["stone"],
+            rows=14, columns=48, wrap=True, bone=bone)
+
+
+def fit_torso_weights(s, objects):
+    """Keep the cast plate and its fine relief on the same torso chain."""
+    bones = [s.rig.data.bones[f"spine0{i}"] for i in (4,3,2,1)]
+    heights = [bone.head_local.z for bone in bones]
+    for obj in objects:
+        obj.vertex_groups.clear()
+        groups = [obj.vertex_groups.new(name=bone.name) for bone in bones]
+        for vertex in obj.data.vertices:
+            upper = bisect_right(heights,vertex.co.z)
+            if upper == 0 or upper == len(bones):
+                groups[min(upper,len(bones)-1)].add([vertex.index],1.0,"REPLACE")
+                continue
+            lower = upper-1
+            above = smoothstep(heights[lower],heights[upper],vertex.co.z)
+            groups[lower].add([vertex.index],1-above,"REPLACE")
+            groups[upper].add([vertex.index],above,"REPLACE")
+
+
 def cuirass(s, mat):
+    rib_heights = (.21, .38, .56, .72)
+    first_component = len(s.objects)
+
+    def rise(u):
+        wing = abs(u-.5)*2
+        return .119 * wing ** .62 - .019 * math.sin(TAU*wing)
+
     def shell(u, v):
         a = (u - .5) * 3.78
         wing = abs(a) / 1.89
@@ -343,9 +394,13 @@ def cuirass(s, mat):
             skin_y = sum(depths)
             front = 1-smoothstep(1.16,1.48,abs(a))
             p.y = mix(p.y,min(p.y,skin_y-.026-.024*math.sin(math.pi*v)),front)
+        rib_u = (u-.074)/.852
+        if 0 < rib_u < 1:
+            lip = min(abs(v-(height+rise(rib_u))) for height in rib_heights)
+            p -= ray*.0036*math.exp(-(lip/.016)**2)*math.sin(math.pi*rib_u)**.42
         return p
 
-    plate = s.cloth("Ref · dark forged cuirass", shell, mat["bronze"], rows=47, columns=76)
+    plate = s.cloth("Ref · dark forged cuirass", shell, mat["bronze"], rows=84, columns=92)
     solid = plate.modifiers.new("Plate thickness · 5mm", "SOLIDIFY")
     solid.thickness = .005
     for furthest in (.021, .982):
@@ -354,31 +409,39 @@ def cuirass(s, mat):
     for u in (.014, .986, .50):
         s.tube("Ref · raised torso ridge", [shell(u,j/60) for j in range(61)],
                .0034, mat["gold"], sides=8)
-    for r in (.21, .38, .56, .72):
+    for r in rib_heights:
         def seam(u, offset=0):
-            side = abs(u - .5) * 2
-            return shell(mix(.074, .926, u), r + .119 * side ** .62 - .019 * math.sin(TAU*side) + offset)
+            return shell(mix(.074, .926, u), r + rise(u) + offset)
         s.tube("Ref · shaded fold beneath armor seam",
-               [seam(k/62,-.012) for k in range(63)],.0041,mat["recess"],sides=7)
+               [seam(k/72,-.008) for k in range(73)],.0033,mat["recess"],sides=7)
         s.tube("Ref · cast winged armor seam", [seam(k/62) for k in range(63)],
-               .0030, mat["gold"], sides=8)
+               .0025, mat["gold"], sides=8)
         for u in (.115,.215,.785,.885):
             p = seam(u) + Vector((0,-.002,.017))
             s.ellipsoid("Ref · hammered chest stud", p, (.0035,.0022,.0035), mat["gold"], None, 10, 6)
-    for direction in (-1, 1):
-        for row in range(3):
-            for branch in (-1, 1):
+    for direction in (-1,1):
+        for row, base in enumerate((.287,.456,.633,.797)):
+            def chased(u,v):
+                return shell(.5+direction*u,v) + Vector((0,-.0013,0))
+            for branch in (-1,1):
                 points = []
                 for i in range(25):
                     t = i/24
-                    u = .5 + direction*(.114 + .151*t)
-                    v = .33 + .16*row + .14*t + .021*branch*math.sin(math.pi*t)
-                    points.append(shell(u,v) + Vector((0,-.002,0)))
-                s.tube("Ref · planished breastplate cuts", points, .0011, mat["gold"], sides=6)
-    heart = shell(.50,.781) + Vector((0,-.005,.0))
-    s.ellipsoid("Ref · oval heart-set bezel", heart, (.033,.013,.046), mat["gold"], "spine01", 38, 20)
-    s.ellipsoid("Ref · oval carnelian", heart + Vector((0,-.012,0)), (.023,.013,.034),
-                mat["stone"], "spine01", 40, 20)
+                    u = .104 + .156*t
+                    v = base + .094*t + .018*branch*math.sin(math.pi*t)
+                    points.append(chased(u,v))
+                s.tube("Ref · mirrored brass leaf chase",points,.0012,mat["gold"],sides=6)
+            if row == 3:
+                for leaf in range(4):
+                    u = .115+.035*leaf
+                    mark = [chased(u+.028*t, base+.023*leaf+.023*math.sin(math.pi*t)) for t in (i/14 for i in range(15))]
+                    s.tube("Ref · inset chest foliage veins",mark,.00086,mat["gold"],sides=5)
+    heart = shell(.50,.788)
+    heart_up = shell(.5,.808)-shell(.5,.768)
+    across = Vector((1,0,0))
+    set_stone(s, "heart", heart, across.cross(heart_up).normalized(), across,
+              (.032,.046,.018),mat,"spine01")
+    fit_torso_weights(s,s.objects[first_component:])
 
     def buckle_body(u,v):
         a=TAU*u
@@ -505,31 +568,81 @@ def weapon(s, mat, reference):
     for t,r in ((-.391,.028),(-.363,.036),(end-.063,.040),(end-.013,.050),(end+.029,.075),(end+.047,.091)):
         s.tube("Ref · gada forged collar",
                [point(t,TAU*k/55,r) for k in range(56)],.0037,mat["gold"],wrist.name,8)
-    stations=[]
-    for j in range(49):
-        t = j / 48
-        r=radius*math.sin(math.pi*t)**.62
-        stations.append((head_center+.222*(2*t-1),max(.016,r),.076*math.sin(math.pi*t)))
-    bell = lathe("Ref · oval nine-fluted gada head",stations,mat["bronze"],112)
-    for v in (.125,.176,.777,.887):
-        s.tube("Ref · incised gada orb band",[bell(k/112,v) for k in range(113)],
-               .0035,mat["gold"],wrist.name,8)
-    for petal in range(9):
-        u=(petal+.5)/9
-        s.tube("Ref · gilded gada orb lobe",[bell(u,.15+k*.69/54) for k in range(55)],
-               .0029,mat["gold"],wrist.name,7)
-        for v in (.34,.64):
-            p=bell(u+.5/9,v)
-            s.ellipsoid("Ref · chased gold gada rivet bezel",p,(.015,.015,.015),
-                        mat["gold"],wrist.name,16,10)
-            near=point(head_center+.222*(2 * v-1))
-            p += (p-near).normalized()*.010
-            s.ellipsoid("Ref · inset red gada rivet",p,(.010,.010,.010),
-                        mat["stone"],wrist.name,16,12)
+    flute_count = 9
+    head_bands = (.133,.187,.813,.867)
+
+    def bell(u, t, relief=0):
+        a = TAU*u
+        shape = math.sin(math.pi*t)
+        phase = flute_count*a
+        lobe = math.cos(phase)
+        # Broader shoulders on each cast segment and a narrow incision
+        # along the valley. The flutes fade out into the two collars.
+        raised = .095 * shape ** 1.35 * (.86*lobe - .14*math.cos(2*phase))
+        chase = .0040*math.exp(-((1+lobe)/.020)**2)*shape**1.8
+        groove = .0024 * math.exp(-(min(abs(t-band) for band in head_bands)/.012)**2)
+        r = max(.016, radius * shape ** .62 * (1+raised)) - chase - groove
+        return point(head_center+.222*(2*t-1), a, r+relief)
+
+    s.cloth("Ref · oval nine-fluted gada head",bell,mat["bronze"],rows=72,columns=162,wrap=True,bone=wrist.name)
+    for v in head_bands:
+        s.tube("Ref · incised gada orb band",[bell(k/162,v,.0014) for k in range(163)],
+               .0021,mat["gold"],wrist.name,7)
+    for petal in range(flute_count):
+        trough = (petal+.5)/flute_count
+        s.tube("Ref · oxidized gada flute seam",[bell(trough,.15+k*.70/64,.0013) for k in range(65)],
+               .0024,mat["recess"],wrist.name,7)
+        for side in (-1,1):
+            u = trough + side*.009
+            s.tube("Ref · fine soldered gada flute edge",[bell(u,.175+k*.65/64,.0005) for k in range(65)],
+                   .00115,mat["gold"],wrist.name,6)
+        for v in (.343,.657):
+            center_u = petal / flute_count
+            p = bell(center_u,v)
+            longitudinal = bell(center_u,v+.002)-bell(center_u,v-.002)
+            circumferential = bell(center_u+.001,v)-bell(center_u-.001,v)
+            normal = longitudinal.cross(circumferential).normalized()
+            radial = p-point(head_center+.222*(2*v-1))
+            if normal.dot(radial) < 0:
+                normal.negate()
+            set_stone(s, "gada rivet", p, normal, longitudinal,
+                      (.016,.016,.007),mat,wrist.name)
     # Keep the source object names through this separate shot. Recalculate the
     # visual markers from the same definition so any head/skull clearance audit
     # follows the sculpt, not R5's smaller prop.
     return point(0), point(head_center), radius
+
+
+def mesh_fibers(s, name, fibers, material, highlights):
+    """Batch round tapered fibers while preserving each root's skin weights."""
+    vertices, faces, weights, pigments = [], [], [], []
+    side_count = 4
+    cross_axis = Vector((0,1,0))
+    for points, radius, root_weights, pigment in fibers:
+        start = len(vertices)
+        last = len(points)-1
+        for i, point in enumerate(points):
+            tangent = (points[min(last,i+1)]-points[max(0,i-1)]).normalized()
+            across = tangent.cross(cross_axis)
+            if across.length_squared < .0001:
+                across = tangent.cross(Vector((0,0,1)))
+            across.normalize()
+            opposite = tangent.cross(across)
+            taper = radius * (.11+.89*(1-i/last)**.71)
+            vertices.extend(point+taper*u for u in (across,opposite,-across,-opposite))
+            weights.extend([root_weights]*side_count)
+            if i:
+                prior = start+(i-1)*side_count
+                for k in range(side_count):
+                    a,b = prior+k,prior+(k+1)%side_count
+                    faces.append((a,b,b+side_count,a+side_count))
+                    pigments.append(pigment)
+    result = s.mesh(name,vertices,faces,material,weights=weights)
+    result.data.materials.append(highlights)
+    for polygon,pigment in zip(result.data.polygons,pigments):
+        polygon.material_index = pigment
+    result["vertices_per_fiber"] = len(fibers[0][0])*side_count
+    return result
 
 
 def tail_tuft(s, mat, scene):
@@ -557,10 +670,10 @@ def tail_tuft(s, mat, scene):
         original[crest_start] + lower_arc * Vector((.13,-.045,0)),
         Vector((.822,.296,1.178)),
         Vector((.732,.281,1.419)),
-        Vector((.665,.293,1.663)),
-        Vector((.678,.311,1.873)),
-        Vector((.756,.326,1.963)),
-        Vector((.868,.338,1.903)),
+        Vector((.637,.293,1.622)),
+        Vector((.643,.311,1.812)),
+        Vector((.721,.323,1.910)),
+        Vector((.822,.338,1.854)),
     ]
     anchors.append(anchors[-1] + (anchors[-1]-anchors[-2]))
     for j in range(crest_start,count):
@@ -574,61 +687,83 @@ def tail_tuft(s, mat, scene):
         centers.append(p1*(2*t**3-3*t**2+1) + m1*(t**3-2*t**2+t) +
                        p2*(-2*t**3+3*t**2) + m2*(t**3-t**2))
 
-    groom_verts, groom_faces, groom_weights = [], [], []
+    coat = []
     names = {group.index: group.name for group in base.vertex_groups}
     for j, center in enumerate(centers):
         first, last = max(0,j-1), min(count-1,j+1)
         tangent = (centers[last]-centers[first]).normalized()
         original_tangent = (original[last]-original[first]).normalized()
         spin = original_tangent.rotation_difference(tangent)
-        width = 1 + .34 * smoothstep(14,40,j) - .10 * smoothstep(50,76,j)
+        width = 1 + .33*smoothstep(14,40,j) + .05*smoothstep(61,74,j) - 1.11*smoothstep(75,84,j)
         for k in range(sides):
             vert = base.data.vertices[j*sides+k]
             out = spin @ ((vert.co - original[j]) * width)
             vert.co = center + out
-            if j < 15 or (k+j)%2:
+            if j < 15:
                 continue
-            spread = tangent.cross(out).normalized() * .00085
-            root = vert.co
-            end = root + out.normalized() * (.006+.003*math.sin(j*33.7+k)) + tangent*.010
-            start = len(groom_verts)
-            groom_verts.extend((root-spread,root+spread,end))
-            groom_faces.append((start,start+1,start+2))
+            pattern=math.sin(j*88.721+k*29.115)
+            outward=out.normalized()
+            sideways=tangent.cross(outward)
+            root = vert.co-outward*.002+sideways*(.0038*pattern)
+            span = .012 + .020*(.5+.5*pattern) + .008*smoothstep(55,74,j)
+            lift = .0038+.0083*(.5+.5*math.cos(j*73.17+k*43.191))
+            points=[
+                root+tangent*(span*v)+outward*(lift*math.sin(v*math.pi*.70))+
+                sideways*(.0052*pattern*v*v)
+                for v in (0,.24,.48,.73,1)
+            ]
             weights = [(names[group.group],group.weight) for group in vert.groups if group.weight]
-            groom_weights.extend([weights]*3)
+            coat.append((points,.00038+.00038*(.5+.5*pattern),weights,int(pattern>.32)))
     base.data.update()
     base.material_slots[0].link="OBJECT"
     base.material_slots[0].material=mat["tail"]
-    s.mesh("Ref · close copper tail groom",groom_verts,groom_faces,mat["tail"],weights=groom_weights)
+    mesh_fibers(s,"Ref · close copper tail groom",coat,mat["tail"],mat["tail_light"])
 
-    root, end = centers[78], centers[84]
-    guide = (end - root).normalized()
-    strands, faces = [], []
-    strand_count = 122
+    root, end = centers[77], centers[84]
+    control_a = end + Vector((.028,.003,-.035))
+    control_b = end + Vector((.024,-.007,-.213))
+    tip = end + Vector((.139,.014,-.155))
+
+    def plume(t):
+        u=1-t
+        return root*u**3 + control_a*(3*u*u*t) + control_b*(3*u*t*t) + tip*t**3
+
+    def plume_frame(t):
+        tangent = (plume(min(1,t+.004))-plume(max(0,t-.004))).normalized()
+        a = tangent.cross(Vector((0,1,0))).normalized()
+        return a, tangent.cross(a)
+
+    def volume(t):
+        return (.023 + .009*smoothstep(.05,.31,t))*(1-.983*smoothstep(.37,1,t))
+
+    def pelt(u,t):
+        a,b=plume_frame(t)
+        radial=a*math.cos(TAU*u)+b*(.78*math.sin(TAU*u))
+        return plume(t) + radial * volume(t)
+
+    s.cloth("Ref · rounded chestnut plume core",pelt,mat["tuft"],rows=36,columns=28,wrap=True,bone="tail_04")
+    fibers=[]
+    strand_count = 328
+    # Quasiperiodic starters cover the volume without repeating clumps.
     for i in range(strand_count):
-        phase = TAU * i / strand_count
-        noise = math.sin(i*17.39)
-        a = root + Vector((.014*math.sin(phase),.015*math.cos(phase),.014*noise))
-        b = end + Vector((.017+.029*math.sin(phase), .035*math.cos(phase), -.049+.024*noise))
-        c = end + Vector((.021+.061*noise,.039*math.cos(phase),-.225+.042*math.sin(phase)))
-        d = end + Vector((.101+.052*noise,.043*math.cos(phase),-.179+.055*math.sin(phase)))
-        thickness=.0031 + .00125 * (noise+1)
-        offset=len(strands)
-        segments=17
-        for j in range(segments+1):
-            t=j/segments
-            alt=1-t
-            p=a*alt**3 + b*3*alt*alt*t + c*3*alt*t*t + d*t**3
-            p += Vector((math.sin(phase+6*t), math.cos(phase+5*t), math.sin(2*phase+4*t))) * .010 * t*t
-            angle=(p-a).normalized().cross(Vector((0,1,0))) if j else guide.cross(Vector((0,1,0)))
-            angle.normalize()
-            amount=thickness*(.07+(1-t)**.83)
-            strands += [p-angle*amount,p+angle*amount]
-            if j:
-                k=offset+j*2
-                faces.append((k-2,k-1,k+1,k))
-    s.mesh("Ref · layered tail tuft fibers",strands,faces,mat["tuft"],"tail_04")
-    return {"tuft_strands":strand_count,"guard_hairs":len(groom_faces),
+        phase = TAU*((i*.61803398875)%1.0)
+        noise = .5+.5*math.sin(i*17.39)
+        start = .265*((i*.41421356237)%1.0)
+        flyaway = i%11 in (0,4)
+        stop = .75+.25*((i*.73205080757)%1.0) if flyaway else .64+.32*((i*.73205080757)%1.0)
+        points=[]
+        for step in range(15):
+            t=step/14
+            station=mix(start,stop,t)
+            a,b=plume_frame(station)
+            theta=phase+(.20*noise-.1)*t+.21*math.sin(4*t+i)*t*t
+            normal=a*math.cos(theta)+b*(.82*math.sin(theta))
+            extrusion=mix(-.004,.004+.013*noise,smoothstep(.0,.35,t))
+            flutter=a*(.010+.015*noise+.022*flyaway)*t**4*math.sin(phase+5*t)
+            points.append(plume(station)+normal*(volume(station)+extrusion)+flutter)
+        fibers.append((points,.00062+.00085*noise,[("tail_04",1.0)],int(noise>.64 or flyaway)))
+    mesh_fibers(s,"Ref · layered tail tuft fibers",fibers,mat["tuft"],mat["tuft_light"])
+    return {"tuft_strands":strand_count,"guard_hairs":len(coat),
             "modified_tail_vertices":count*sides,"tip_rest_m":list(end)}
 
 

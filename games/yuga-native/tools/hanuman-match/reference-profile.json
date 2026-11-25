@@ -3,20 +3,20 @@
   "pose": {
     "root_height_change_m": -0.028,
     "chest_yaw_degrees": -8,
-    "head_yaw_degrees": 28,
-    "head_tilt_degrees": 3,
-    "ankles": {"R": [-0.42, 0.045, 0.082], "L": [0.43, -0.11, 0.082]},
+    "head_yaw_degrees": 38,
+    "head_tilt_degrees": 1,
+    "ankles": {"R": [-0.42, 0.045, 0.083], "L": [0.43, -0.11, 0.083]},
     "foot_yaw_degrees": {"R": -25, "L": 16},
     "leg_pole": [0, -1, 0],
-    "left_wrist": [0.285, -0.246, 1.145],
+    "left_wrist": [0.321, -0.252, 1.157],
     "left_elbow_pole": [1, 0.16, 0.1],
-    "mace_grip": [-0.419, -0.089, 1.701],
+    "mace_grip": [-0.419, -0.089, 1.671],
     "mace_palm_bone_offset": [0, 0.11465, 0.0273],
-    "mace_axis": [0.903, 0.355, 0.249],
+    "mace_axis": [0.903, 0.355, 0.288],
     "mace_roll_degrees": 14,
     "right_elbow_pole": [-0.65, 0.1, -1]
   },
-  "character": {},
+  "character": {"limb_density": 18100},
   "wardrobe": {"cloth_texture": "lookdev/madder-cloth-imagegen-albedo.png", "mace_head_center_m": 0.815, "mace_head_radius_m": 0.232},
   "camera": {
     "location": [0.64, -6.05, 1.28],
@@ -24,7 +24,7 @@
     "lens_mm": 72.0,
     "shift_y": -0.033,
     "focus_m": 5.97,
-    "aperture": 5.0
+    "aperture": 3.5
   },
   "review_views": {
     "crop_full_width": 2200,
@@ -35,6 +35,7 @@
     "regions": {
       "face": [0.407, 0.026, 0.552, 0.229],
       "grip": [0.277, 0.129, 0.407, 0.328],
+      "belt_hand": [0.502, 0.379, 0.649, 0.529],
       "torso": [0.303, 0.228, 0.687, 0.499],
       "feet": [0.279, 0.776, 0.699, 0.990],
       "tail": [0.715, 0.116, 0.879, 0.733]
@@ -43,11 +44,11 @@
   "light": {
     "world": {"color": [0.19, 0.34, 0.52], "strength": 0.24},
     "areas": [
-      {"name": "Warm courtyard key", "location": [-3.55, -2.55, 4.05], "target": [0, 0, 1.12], "power_w": 580, "size_m": 1.82, "color": [1, 0.82, 0.63]},
-      {"name": "Cool temple rim", "location": [1.6, 1.65, 3.55], "target": [0.1, 0, 1.24], "power_w": 560, "size_m": 1.38, "color": [0.43, 0.68, 1]},
-      {"name": "Sky bounce", "location": [1.4, -4.2, 2.92], "target": [0, -0.06, 1.45], "power_w": 95, "size_m": 3.1, "color": [0.63, 0.81, 1]},
-      {"name": "Face bounce", "location": [0.38, -2.25, 2.68], "target": [0, -0.1, 1.76], "power_w": 45, "size_m": 1.05, "color": [1, 0.85, 0.69]},
-      {"name": "Warm fur edge", "location": [-2.15, 0.18, 1.7], "target": [-0.35, 0, 0.88], "power_w": 36, "size_m": 0.94, "color": [1, 0.71, 0.47]},
+      {"name": "Warm courtyard key", "location": [-3.24, -1.54, 3.56], "target": [0, 0, 1.12], "power_w": 225, "size_m": 1.52, "height_m": 2.15, "spread_degrees": 166, "color": [1, 0.82, 0.63]},
+      {"name": "Cool temple rim", "location": [1.6, 1.75, 3.05], "target": [0.1, 0, 1.24], "power_w": 405, "size_m": 0.57, "height_m": 1.9, "spread_degrees": 148, "color": [0.43, 0.68, 1]},
+      {"name": "Sky bounce", "location": [1.4, -4.2, 2.92], "target": [0, -0.06, 1.45], "power_w": 85, "size_m": 3.1, "color": [0.63, 0.81, 1]},
+      {"name": "Face bounce", "location": [1.28, -1.97, 2.64], "target": [0, -0.1, 1.76], "power_w": 37, "size_m": 0.91, "spread_degrees": 150, "color": [1, 0.85, 0.69]},
+      {"name": "Warm fur edge", "location": [-2.15, 0.18, 1.7], "target": [-0.35, 0, 0.88], "power_w": 51, "size_m": 0.52, "height_m": 1.5, "spread_degrees": 143, "color": [1, 0.71, 0.47]},
       {"name": "Low lamp return", "location": [-1.9, -1.3, 0.57], "target": [0, 0, 0.71], "power_w": 13, "size_m": 0.48, "color": [1, 0.62, 0.37]}
     ]
   }

@@ -14,6 +14,7 @@ import struct
 import bpy
 from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Matrix, Vector
+from mathutils.geometry import interpolate_bezier
 
 PROJECT = Path(__file__).resolve().parents[2]
 ASSETS = PROJECT / "art/hanuman/match-court-assets"
@@ -76,7 +77,7 @@ class Geometry:
                  for row in range(len(section) - 1) for a in range(sides)]
         self.add(points, faces, smooth=True)
 
-    def tube(self, points, radius, sides=6):
+    def tube(self, points, radius, sides=6, *, tip_radius=None):
         points = [Vector(point) for point in points]
         vertices = []
         for i, p in enumerate(points):
@@ -85,11 +86,16 @@ class Geometry:
             if basis.length < .1:
                 basis = direction.cross(Vector((1, 0, 0))).normalized()
             other = direction.cross(basis)
-            vertices.extend(p + radius * (cos(tau * a / sides) * basis + sin(tau * a / sides) * other)
+            ring_radius = radius
+            if tip_radius is not None:
+                ring_radius += (tip_radius - radius) * (i / (len(points) - 1)) ** .82
+            vertices.extend(p + ring_radius * (cos(tau * a / sides) * basis + sin(tau * a / sides) * other)
                             for a in range(sides))
         faces = [(i * sides + j, i * sides + (j + 1) % sides,
                   (i + 1) * sides + (j + 1) % sides, (i + 1) * sides + j)
                  for i in range(len(points) - 1) for j in range(sides)]
+        if tip_radius is not None:
+            faces.append(tuple(range(len(vertices) - sides, len(vertices))))
         self.add(vertices, faces, smooth=True)
 
     def object(self, name, material, collection, matrix=None):
@@ -193,9 +199,9 @@ def rock_material(name, images, tint, relief, wet=False):
         noise.inputs["Detail"].default_value = 3
         links.new(position.outputs["Object"], noise.inputs["Vector"])
         puddles = nodes.new("ShaderNodeMapRange")
-        puddles.inputs["From Min"].default_value = .47
+        puddles.inputs["From Min"].default_value = .50
         puddles.inputs["From Max"].default_value = .64
-        puddles.inputs["To Max"].default_value = .30
+        puddles.inputs["To Max"].default_value = .37
         links.new(noise.outputs["Fac"], puddles.inputs["Value"])
         links.new(puddles.outputs["Result"], shader.inputs["Coat Weight"])
         shader.inputs["Coat Roughness"].default_value = .14
@@ -329,6 +335,73 @@ def bell(bronze, x, y, base, scale=1.0):
         bronze.tube(points, .0044 * scale, 5)
 
 
+def leaflet(batch, origin, axis, length, width, twist, asymmetry):
+    across = Vector((axis.z, 0, -axis.x)).normalized()
+    across = across * cos(twist) + axis.cross(across) * sin(twist)
+    normal = axis.cross(across)
+    profile = ((.14, .40), (.34, .88), (.58, 1.), (.79, .71), (.93, .28))
+
+    def edge(fraction, breadth):
+        bent_center = origin + axis * (fraction * length) - normal * (.09 * length * fraction ** 2)
+        return bent_center + across * (breadth * width)
+
+    rim = [origin, *(edge(t, w) for t, w in profile), edge(1., 0.),
+           *(edge(t, -w * asymmetry) for t, w in reversed(profile))]
+    ridge = origin + axis * (.47 * length) + normal * (.11 * width)
+    faces = [(0, 1 + i, 1 + (i + 1) % len(rim)) for i in range(len(rim))]
+    batch.add([ridge, *rim], faces, smooth=True)
+
+
+def tamarind_canopy(stage):
+    """Screen-staged growth preserves the open crown and the hanging bells."""
+    limbs, shaded, tipped = Geometry(), Geometry(), Geometry()
+    bark = material("Court · silhouette bark", (.024, .015, .009), .86)
+    leaf_shadow = material("Court · tamarind shade leaves", (.018, .027, .009), .81)
+    leaf_tip = material("Court · tamarind rim leaves", (.034, .044, .016), .73)
+    rng = Random(22413)
+
+    def anchor(u, v, depth):
+        z = stage.z_at(u, v, depth)
+        return Vector((stage.x_at(u, depth, z), depth, z))
+
+    main = interpolate_bezier(anchor(-.052, .970, -.55), anchor(.027, 1.008, -.52),
+                              anchor(.144, 1.046, -.39), anchor(.274, .992, -.26), 16)
+    upper = interpolate_bezier(main[8], anchor(.197, 1.039, -.34),
+                               anchor(.278, 1.063, -.17), anchor(.364, 1.011, -.10), 16)
+    lower = interpolate_bezier(main[2], anchor(.013, .981, -.37),
+                               anchor(.057, .950, -.17), anchor(.132, .930, .02), 13)
+    far = interpolate_bezier(main[5], anchor(.118, 1.031, -.12),
+                             anchor(.166, .995, .05), anchor(.206, .962, .15), 12)
+
+    for path, base, tip, drop in ((main, .033, .0041, .17), (upper, .016, .0018, .13),
+                                  (lower, .016, .0017, .16), (far, .010, .0013, .14)):
+        limbs.tube(path, base, 8, tip_radius=tip)
+        for i in range(2, len(path), 2):
+            stem = path[i]
+            side = 1 if i % 4 else -1
+            reach = rng.uniform(.10, .22) * side
+            fall = drop * rng.uniform(.64, 1.29)
+            back = rng.uniform(-.096, .098)
+            spray = interpolate_bezier(stem, stem + Vector((reach * .38, back * .5, .020)),
+                                       stem + Vector((reach * .84, back * .9, -fall * .52)),
+                                       stem + Vector((reach, back, -fall)), 7 + rng.randrange(3))
+            limbs.tube(spray, .0032, 5, tip_radius=.00055)
+            for j in range(1, len(spray) - 1):
+                direction = (spray[j + 1] - spray[j - 1]).normalized()
+                fan = Vector((-direction.z, back * 2, direction.x)).normalized()
+                taper = 1.14 - .54 * (j / (len(spray) - 1)) ** 1.45
+                for flank in (-1, 1):
+                    step = (spray[j + 1] - spray[j]) * rng.uniform(-.14, .24)
+                    blade = (direction * rng.uniform(.33, .70) + fan * flank).normalized()
+                    length = rng.uniform(.042, .076) * taper
+                    batch = tipped if rng.random() < .25 else shaded
+                    leaflet(batch, spray[j] + step, blade, length, length * rng.uniform(.16, .21),
+                            rng.uniform(-.68, .68), rng.uniform(.78, 1.10))
+    stage.place(limbs, "Left foreground · forked tamarind limbs and rachises", bark)
+    stage.place(shaded, "Left foreground · tapered paired tamarind leaflets", leaf_shadow)
+    stage.place(tipped, "Left foreground · tamarind rim leaflets", leaf_tip)
+
+
 class Court:
     def __init__(self, scene):
         self.scene = scene
@@ -410,15 +483,28 @@ def apply(scene, reference_profile):
     profile = reference_profile.get("court", {})
     stage = Court(scene)
     images = rock_images()
-    slab = rock_material("Court · damp gray granite", images, (.102, .102, .105), .98, wet=True)
+    slab = rock_material("Court · damp gray granite", images, (.071, .076, .079), .98, wet=True)
     wall = rock_material("Court · weathered brown stone", images, (.275, .248, .222), .88)
     fine = rock_material("Court · worn relief and ledges", images, (.306, .281, .264), .73)
-    distance = rock_material("Court · blue stone in twilight", images, (.14, .238, .33), .51)
-    far_trim = rock_material("Court · cloud-worn tower articulation", images, (.19, .32, .43), .69)
+    distance = rock_material("Court · blue stone in twilight", images, (.125, .169, .205), .51)
+    far_trim = rock_material("Court · cloud-worn tower articulation", images, (.168, .231, .274), .69)
     shade = material("Court · deep portal shade", (.032, .042, .049), .86)
-    mortar = material("Court · dark recessed wet joints", (.013, .022, .032), .66)
-    puddle = material("Court · shallow wet film", (.016, .024, .033), .26)
-    puddle.node_tree.nodes.get("Principled BSDF").inputs["Coat Weight"].default_value = .31
+    mortar = material("Court · dark recessed wet joints", (.017, .017, .016), .76)
+    puddle = material("Court · shallow wet film", (.009, .011, .012), .22)
+    water_nodes, water_links = puddle.node_tree.nodes, puddle.node_tree.links
+    water = water_nodes.get("Principled BSDF")
+    water.inputs["Coat Weight"].default_value = .48
+    water.inputs["Coat Roughness"].default_value = .095
+    ripple = water_nodes.new("ShaderNodeTexNoise")
+    ripple.inputs["Scale"].default_value = 38
+    water_coords = water_nodes.new("ShaderNodeTexCoord")
+    water_links.new(water_coords.outputs["Object"], ripple.inputs["Vector"])
+    ripple_bump = water_nodes.new("ShaderNodeBump")
+    ripple_bump.inputs["Strength"].default_value = .18
+    ripple_bump.inputs["Distance"].default_value = .003
+    water_links.new(ripple.outputs["Fac"], ripple_bump.inputs["Height"])
+    water_links.new(ripple_bump.outputs["Normal"], water.inputs["Normal"])
+    water_links.new(ripple_bump.outputs["Normal"], water.inputs["Coat Normal"])
     metal = material("Court · patinated hanging bronze", (.21, .109, .045), .35, .81)
     glow = material("Court · oil lamp flame", (1., .245, .04), .35, emission=5.2)
     glow_core = material("Court · white-gold wick", (1., .66, .31), .22, emission=8.7)
@@ -427,22 +513,30 @@ def apply(scene, reference_profile):
     bed.stone(0, 6.7, -.118, 31, 29, .106)
     stage.place(bed, "Court ground · mortar under the setts", mortar)
     dx, dy = .81, .63
+    joint_rng = Random(1393)
+    course_offsets = [joint_rng.uniform(-.046, .046) for _ in range(43)]
     floor_pavers = 0
-    for row in range(-11, 31):
-        y = row * dy
+    for course, row in enumerate(range(-11, 31)):
+        bottom = (row - .5) * dy + course_offsets[course]
+        top_edge = (row + .5) * dy + course_offsets[course + 1]
+        y = (bottom + top_edge) * .5
+        head_joints = [joint_rng.uniform(-.132, .132) for _ in range(36)]
         for column in range(-17, 18):
-            x = dx * (column + .48 * (row % 2))
-            if abs(x) > 7.2 + max(y, 0) * .55:
+            nominal_x = dx * (column + .48 * (row % 2))
+            if abs(nominal_x) > 7.2 + max(row * dy, 0) * .55:
                 continue
-            w = dx - stage.random.uniform(.007, .023)
-            d = dy - stage.random.uniform(.012, .024)
+            left = nominal_x - dx * .5 + head_joints[column + 17]
+            right = nominal_x + dx * .5 + head_joints[column + 18]
+            x = (left + right) * .5
+            w = right - left - stage.random.uniform(.008, .022)
+            d = top_edge - bottom - stage.random.uniform(.008, .020)
             top = stage.random.uniform(-.003, .004)
             if abs(x) < .85 and abs(y) < .65:
                 top = 0.0
-            lots.stone(x, y, -.058, w, d, .058 + top, .019, stage.random,
+            lots.stone(x, y, -.058, w, d, .058 + top, joint_rng.uniform(.009, .016), stage.random,
                        offset=(stage.random.random(), stage.random.random()), density=.77)
             floor_pavers += 1
-            if abs(y) < 5 and abs(x) > .85 and stage.random.random() < .082:
+            if abs(row * dy) < 5 and abs(nominal_x) > .85 and stage.random.random() < .082:
                 rx = stage.random.uniform(.045, .18)
                 ry = stage.random.uniform(.055, .17)
                 vertices = [(x + cos(tau * i / 15) * rx * stage.random.uniform(.83, 1.08),
@@ -550,26 +644,7 @@ def apply(scene, reference_profile):
         bell(bronze, x, d, z, scale)
     stage.place(bronze, "Left foreground · turned bells and alternating chain links", metal)
 
-    canopy, leaves = Geometry(), Geometry()
-    canopy_mat = material("Court · silhouette bark", (.052,.033,.018), .81)
-    leaf_mat = material("Court · low-key tamarind leaves", (.048,.073,.028), .67)
-    leaf_depth = -.57
-    coords = [(u, stage.z_at(u, v, leaf_depth)) for u, v in ((-.02,.96),(.08,1.043),(.19,1.055),(.37,1.075))]
-    canopy.tube([(stage.x_at(u, leaf_depth, z), leaf_depth, z) for u,z in coords], .068)
-    for i in range(12):
-        u = i * .030 - .035
-        z = stage.z_at(u, .979 - .045 * sin(i * .47), leaf_depth)
-        x = stage.x_at(u, leaf_depth, z)
-        rx, ry = stage.random.uniform(-.16,.19), stage.random.uniform(-.08,.06)
-        canopy.tube([(x, leaf_depth, z + .22), (x+rx*.4,leaf_depth + ry*.4,z+.11), (x+rx,leaf_depth+ry,z)], .008, 5)
-        for j in range(8):
-            a = j * 2.4
-            start = Vector((x + stage.random.uniform(-.10,.10), leaf_depth + ry, z + stage.random.uniform(-.06,.08)))
-            delta = Vector((cos(a)*.067,sin(a)*.073,-.033))
-            cross = Vector((-.025*sin(a),.025*cos(a),.014))
-            leaves.add((start, start + delta*.45 + cross, start+delta, start+delta*.48-cross), [(0,1,2,3)])
-    stage.place(canopy, "Left foreground · tamarind branches", canopy_mat)
-    stage.place(leaves, "Left foreground · tamarind silhouette leaves", leaf_mat)
+    tamarind_canopy(stage)
 
     haze_density = min(.055, float(profile.get("haze_density", .034)))
     if haze_density > 0:

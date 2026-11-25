@@ -46,6 +46,8 @@ Lead assigns exclusive asset paths and owns notices/manifests and integration.
 
 ## Reference matching in Blender
 
+For a mirrored sculpt, measure the two sides in armature rest space before posing. Keep finger curl, eye line, hair parting and tail gesture editable in the held pose. Verify decorative UV masks in a lit cloth crop and compare rigid armor with and without the adjacent arm transform. The Hanuman builder and checker demonstrate these operations on the shared rig. [Anatomy review](../yuga-anatomy-review/SKILL.md) · [Working Blender example](../../../games/yuga-native/art/hanuman/match/README.md)
+
 1. Save a new editable scene from the pinned master. Keep the generated still
    beside the delivered Blender file for comparison. If an artist needs an
    overlay during staging, remove it from the delivered scene. Record camera

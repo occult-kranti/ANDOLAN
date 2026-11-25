@@ -65,7 +65,12 @@ class LimbAxis:
         # down the upper arm. Both forms fade before the elbow hinge.
         biceps = .0105 * hill(t, .54, .24) * ramp(-.16, .92, anterior)
         triceps = .0085 * hill(t, .63, .29) * ramp(.05, .98, -anterior)
-        return normal * (biceps + triceps) * edge * window(t, .09, .94, .19)
+        # The brachialis is visible on the lateral flank between the two larger
+        # muscle bellies. Use the local axis for the same shape on either arm.
+        flank = max(0.0, 1.0 - anterior * anterior)
+        brachialis = .016 * hill(t, .62, .27) * flank
+        deltoid = .012 * hill(t, .23, .16) * (.5 + .5 * flank)
+        return normal * (biceps + triceps + brachialis + deltoid) * edge * window(t, .09, .94, .19)
 
     def forearm(self, point):
         surface = self.surface(point, .05, .77, .13)
