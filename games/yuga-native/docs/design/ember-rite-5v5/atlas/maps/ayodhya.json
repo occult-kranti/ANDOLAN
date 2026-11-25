@@ -1,0 +1,62 @@
+{
+  "id": "ayodhya",
+  "title": "Ayodhya",
+  "subtitle": "The assembly quarter on the Sarayu",
+  "decision": "Read the other team's commitment from Ledger Court, then choose the covered street rotation or declare the switch by crossing the shallow wash.",
+  "bounds": [-78, -81, 70, 81],
+  "nodes": {
+    "atk":    {"label":"Cart Gate","xz":[-31,-67],"size":[18,14],"y":0},
+    "west":   {"label":"Lamp Lane","xz":[-60,-27],"size":[16,16],"y":2},
+    "a":      {"label":"Assembly Court","xz":[-50,27],"size":[24,20],"y":4},
+    "north":  {"label":"Cloth Gate","xz":[-5,56],"size":[18,14],"y":4},
+    "def":    {"label":"Archive Gate","xz":[48,55],"size":[18,14],"y":3},
+    "east":   {"label":"Gauge Steps","xz":[53,20],"size":[18,16],"y":1},
+    "b":      {"label":"Ferry Quay","xz":[40,-26],"size":[22,20],"y":0},
+    "south":  {"label":"Potters Bend","xz":[8,-52],"size":[17,14],"y":0},
+    "mid":    {"label":"Ledger Court","xz":[-16,6],"size":[18,16],"y":3},
+    "weigh":  {"label":"Weigh House","xz":[-21,-22],"size":[16,14],"y":2},
+    "sluice": {"label":"Sluice Gate","xz":[13,17],"size":[14,12],"y":2},
+    "wash":   {"label":"Wash Steps","xz":[18,-3],"size":[14,12],"y":0}
+  },
+  "links": [
+    {"from":"atk","to":"west","kind":"ramp","width":7,"via":[[-55,-57],[-55,-39]]},
+    {"from":"west","to":"a","kind":"ramp","width":7,"via":[[-63,-5],[-63,12],[-57,16]]},
+    {"from":"a","to":"north","kind":"walk","width":6,"via":[[-50,44],[-28,48],[-22,56]]},
+    {"from":"north","to":"def","kind":"ramp","width":7,"via":[[8,61],[28,61]]},
+    {"from":"def","to":"east","kind":"ramp","width":7,"via":[[53,44],[53,33]]},
+    {"from":"east","to":"b","kind":"ramp","width":7,"via":[[53,-7],[40,-7]]},
+    {"from":"b","to":"south","kind":"walk","width":6,"via":[[28,-35],[27,-46]]},
+    {"from":"south","to":"atk","kind":"walk","width":7,"via":[[-3,-59],[-17,-58]]},
+    {"from":"west","to":"weigh","kind":"walk","width":6,"via":[[-44,-26],[-40,-21]]},
+    {"from":"south","to":"weigh","kind":"ramp","width":6,"via":[[-2,-37],[-13,-37]]},
+    {"from":"weigh","to":"mid","kind":"ramp","width":6,"via":[[-22,-9],[-16,-6]]},
+    {"from":"mid","to":"a","kind":"ramp","width":6,"via":[[-32,8],[-35,18],[-42,24]]},
+    {"from":"mid","to":"sluice","kind":"ramp","width":6,"via":[[-9,15],[2,17]]},
+    {"from":"sluice","to":"north","kind":"ramp","width":6,"via":[[6,39],[5,48]]},
+    {"from":"sluice","to":"east","kind":"ramp","width":6,"via":[[29,30],[38,24]]},
+    {"from":"weigh","to":"wash","kind":"ramp","width":6,"via":[[-6,-22],[4,-13],[10,-13]]},
+    {"from":"sluice","to":"wash","kind":"ramp","width":6,"via":[[22,13],[22,5]]},
+    {"from":"mid","to":"wash","kind":"water","width":6,"via":[[-8,0],[2,-3]]},
+    {"from":"wash","to":"b","kind":"walk","width":6,"via":[[26,-12],[26,-20]]}
+  ],
+  "cover": [
+    {"label":"Petition screen","xz":[-57,31],"size":[3,5],"height":2.5},
+    {"label":"Scribe bench","xz":[-43,21],"size":[4,3],"height":1.05},
+    {"label":"Ferry winch","xz":[46,-31],"size":[4,4],"height":2.4},
+    {"label":"Quay kerb","xz":[34,-20],"size":[3,3],"height":1.1},
+    {"label":"Ledger cabinet","xz":[-10,10],"size":[3,3],"height":2.5},
+    {"label":"Gauge plinth","xz":[59,24],"size":[3,4],"height":1.2},
+    {"label":"Wash parapet","xz":[13,1],"size":[2,3],"height":1.1}
+  ],
+  "section":{"title":"Assembly terrace to river landing","route":["a","mid","wash","b"]},
+  "artifacts": [
+    {"label":"Petition canopy","node":"a","cue":"A shallow fan roof marks the assembly entrance from the uphill street."},
+    {"label":"Measure beam","node":"mid","cue":"A horizontal stone measure points to the river exit. Back it with plain plaster so heroes read clearly."},
+    {"label":"Flood gauge","node":"east","cue":"Three large steps and ruled ceramic tiles identify the dry eastern approach without relying on hue."},
+    {"label":"Twin drums","node":"b","cue":"Paired mooring drums at the back of the landing identify the lower site from both river approaches."}
+  ],
+  "sightlines": [
+    {"label":"Gauge descent","from":[53,13],"to":[53,-6]},
+    {"label":"Wash exit","from":[26,-17],"to":[26,-11]}
+  ]
+}

@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Designing the 5v5 objective maps.** Start with the [Ember Rite atlas](../games/yuga-native/docs/design/ember-rite-5v5/atlas/README.md) for the four plans, editable geometry and build order. The [table rehearsal](../games/yuga-native/docs/design/ember-rite-5v5/atlas/ENCOUNTERS.md) follows all ten player roles through a contested ignition. The map models are offline design studies.
+
 **Animation technical codex.** Use the [five-hero intake and roadmap](../games/yuga-native/docs/design/animation-tech-codex-2026/README.md) for the latest animation, IK, VFX, ability and performance proposals. Its source draft includes unfinished fields; it does not establish motion-capture sessions, engine compatibility or new playable abilities.
 
 **Ember Rite, new 5v5 direction.** Start with the [story, objective rules, proposed ten-hero roster, colors and roadmap](../games/yuga-native/docs/design/ember-rite-5v5/README.md). Its isolated Rust round/series experiment has tests but is not integrated with movement, the online room, UI or the downloadable skirmish. The latest objective proposal supersedes the older Rift Seal timing while retaining its map study.

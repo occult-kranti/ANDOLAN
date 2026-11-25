@@ -1,5 +1,7 @@
 # YUGA full game production roadmap
 
+**Competitive map production.** Four Ember Rite map designs now have measured blueprints and offline 3D blockouts. Build Mandala Rift’s ordinary routes first, stage a plant and quench at each site edge, then test the raised Sluice, shallow crossing and folded doorways across both teams. The [atlas build order and acceptance gates](design/ember-rite-5v5/atlas/README.md#first-build-and-acceptance-gates) identify the world, authority, art and playtest owners.
+
 **Latest animation intake:** The [five-hero technical codex roadmap](design/animation-tech-codex-2026/README.md) maps the supplied performance, IK, ability, combo and optimization proposals to the actual rigs and authority. All new items are planned; no runtime, task-ledger status or engine compatibility is implied.
 
 **Latest objective direction:** [Ember Rite](design/ember-rite-5v5/README.md) adapts the two-site 5v5 proposal into a carried-fire objective, with story, hero/color concepts, tested standalone round rules and an [integration roadmap](design/ember-rite-5v5/SOURCES_AND_ROADMAP.md). The Rust experiment is not wired into the current skirmish, network, UI or published ZIP. The objective contract supersedes the earlier Rift Seal timing; no task-ledger completion status is changed.

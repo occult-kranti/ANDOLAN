@@ -5,6 +5,7 @@ Ember Rite adapts the user's **“plant the fire”** brief into an original 5v5
 - [Round rules, timing and authority contract](ROUND_AND_TECH.md)
 - [Story, opening cinematic and voice script](STORY.md)
 - [Ten hero roles, ability concepts and color research](HEROES_AND_COLOR.md)
+- [Four-map atlas, measured blueprints and 3D blockouts](atlas/README.md) · [Ten-player encounter script](atlas/ENCOUNTERS.md)
 - [Maps, modes and player progression](MODES_AND_MAPS.md)
 - [Sources, corrections and implementation roadmap](SOURCES_AND_ROADMAP.md)
 - [Five-hero animation, ability and VFX technical intake](../animation-tech-codex-2026/README.md)

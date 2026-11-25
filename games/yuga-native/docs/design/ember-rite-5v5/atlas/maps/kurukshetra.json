@@ -1,0 +1,63 @@
+{
+  "id": "kurukshetra",
+  "title": "Kurukshetra",
+  "subtitle": "Hastinapura terrace and Saraswati floodplain",
+  "decision": "Show the boatyard crossing to threaten either site, or commit the carrier to a quicker outer bank and give up the short switch between sites.",
+  "bounds": [-65, -77, 78, 69],
+  "nodes": {
+    "atk": {"label":"Cart Yard","xz":[0,-65],"size":[18,12],"y":0},
+    "def": {"label":"Record Gate","xz":[0,56],"size":[18,14],"y":2},
+    "a": {"label":"Palace Terrace","xz":[-44,18],"size":[24,18],"y":4},
+    "b": {"label":"Wind Field","xz":[50,11],"size":[22,18],"y":1},
+    "mid": {"label":"Gauge Bridge","xz":[0,0],"size":[16,18],"y":2},
+    "ox": {"label":"Ox Gate","xz":[-38,-34],"size":[14,14],"y":1},
+    "boats": {"label":"Boat Yard","xz":[0,-30],"size":[14,12],"y":1},
+    "furrow": {"label":"Furrow","xz":[34,-34],"size":[16,12],"y":0},
+    "weir": {"label":"Stone Weir","xz":[-51,-9],"size":[14,12],"y":2},
+    "sill": {"label":"Mill Sill","xz":[48,-9],"size":[12,10],"y":1},
+    "ford": {"label":"Reed Lip","xz":[68,-8],"size":[10,10],"y":0},
+    "records": {"label":"Seal Porch","xz":[-18,11],"size":[14,12],"y":3},
+    "tally": {"label":"Tally Steps","xz":[20,15],"size":[12,12],"y":1},
+    "archive": {"label":"Archive","xz":[-34,42],"size":[16,12],"y":4},
+    "mill": {"label":"Winnow Shed","xz":[36,39],"size":[16,12],"y":1}
+  },
+  "links": [
+    {"from":"atk","to":"ox","width":6,"kind":"ramp","via":[[-14,-54],[-35,-49]]},
+    {"from":"atk","to":"boats","width":7,"kind":"ramp","via":[[-3,-46]]},
+    {"from":"atk","to":"furrow","width":7,"kind":"walk","via":[[17,-52],[31,-49]]},
+    {"from":"ox","to":"weir","width":6,"kind":"ramp","via":[[-46,-27],[-51,-20]]},
+    {"from":"weir","to":"a","width":6,"kind":"ramp","via":[[-51,3],[-49,11]]},
+    {"from":"boats","to":"mid","width":6,"kind":"ramp","via":[[0,-20],[-2,-13]]},
+    {"from":"mid","to":"records","width":6,"kind":"ramp","via":[[-6,5],[-12,5]]},
+    {"from":"records","to":"a","width":6,"kind":"ramp","via":[[-31,11],[-35,18]]},
+    {"from":"mid","to":"tally","width":6,"kind":"ramp","via":[[8,4],[14,13]]},
+    {"from":"tally","to":"b","width":6,"kind":"walk","via":[[31,15],[39,11]]},
+    {"from":"furrow","to":"sill","width":6,"kind":"ramp","via":[[42,-26],[48,-22]]},
+    {"from":"sill","to":"b","width":5,"kind":"walk","via":[[50,0]]},
+    {"from":"furrow","to":"ford","width":5,"kind":"walk","via":[[58,-31],[67,-20]]},
+    {"from":"ford","to":"b","width":5,"kind":"water","via":[[68,8],[63,12]]},
+    {"from":"def","to":"archive","width":6,"kind":"ramp","via":[[-18,50],[-28,49]]},
+    {"from":"archive","to":"a","width":6,"kind":"walk","via":[[-39,34],[-40,27]]},
+    {"from":"def","to":"tally","width":6,"kind":"ramp","via":[[4,37],[16,31]]},
+    {"from":"def","to":"mill","width":6,"kind":"ramp","via":[[18,53],[29,45]]},
+    {"from":"mill","to":"b","width":6,"kind":"walk","via":[[40,29],[45,24]]}
+  ],
+  "cover": [
+    {"label":"Pier Buttress","xz":[-55,-8],"size":[2.4,4],"height":2.3},
+    {"label":"Ledger Screen","xz":[-37,14.9],"size":[3,2.2],"height":2.4},
+    {"label":"Seal Press","xz":[-50,24],"size":[3.5,2.2],"height":2.3},
+    {"label":"Sluice Cheek","xz":[4.5,5.5],"size":[1.5,3],"height":2.1},
+    {"label":"Threshing Bin","xz":[43,5],"size":[3,2],"height":1.1},
+    {"label":"Drying Wall","xz":[55,17.5],"size":[4.5,2.4],"height":2.3}
+  ],
+  "section": {"title":"Weir to field via the palace crest","route":["weir","a","records","mid","tally","b"]},
+  "artifacts": [
+    {"label":"Seal Die","node":"a","cue":"One square die cast into the palace parapet marks A from either ramp."},
+    {"label":"Flood Rule","node":"mid","cue":"Twin notched staffs frame the river crossing and show where its dry deck begins."},
+    {"label":"Wind Fork","node":"b","cue":"Three fixed prongs above the drying wall mark B across the plain."}
+  ],
+  "sightlines": [
+    {"label":"Porch reveal","from":[-25,11],"to":[-44,18]},
+    {"label":"Sill to ring","from":[48,-9],"to":[50,14]}
+  ]
+}

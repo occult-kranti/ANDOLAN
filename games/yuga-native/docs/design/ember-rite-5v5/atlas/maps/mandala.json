@@ -1,0 +1,70 @@
+{
+  "id": "mandala",
+  "title": "Mandala Rift",
+  "subtitle": "Ghat, temple and market",
+  "decision": "Cross the raised Sluice to keep both sites in reach, or commit to a sheltered bank or folded doorway and give away the timing of your arrival.",
+  "bounds": [-68, -128, 68, 128],
+  "nodes": {
+    "atk": {"label": "Spice Gate", "xz": [0, -112], "size": [18, 16], "y": 0},
+    "def": {"label": "Water Gate", "xz": [0, 112], "size": [18, 16], "y": 0},
+    "a": {"label": "Ghat Mandapa", "xz": [0, 0], "size": [22, 20], "y": 0},
+    "b": {"label": "Bazaar Sanctuary", "xz": [40, 0], "size": [22, 20], "y": 0},
+    "mid": {"label": "Sluice", "xz": [20, 0], "size": [10, 12], "y": 2.4},
+    "steps_s": {"label": "Reed Steps", "xz": [-46, -43], "size": [14, 16], "y": 0},
+    "steps_n": {"label": "Jar Steps", "xz": [-46, 43], "size": [14, 16], "y": 0},
+    "bank": {"label": "Dry Bank", "xz": [-28, 0], "size": [15, 14], "y": 1.8},
+    "ford": {"label": "Reed Ford", "xz": [-52, 0], "size": [11, 14], "y": -0.3},
+    "temple_s": {"label": "South Temple", "xz": [12, -32], "size": [8, 8], "y": 0},
+    "pyramid_s": {"label": "South Pyramid", "xz": [28, -32], "size": [8, 8], "y": 0},
+    "temple_n": {"label": "North Temple", "xz": [12, 32], "size": [8, 8], "y": 0},
+    "pyramid_n": {"label": "North Pyramid", "xz": [28, 32], "size": [8, 8], "y": 0},
+    "yard_s": {"label": "Cloth Yard", "xz": [49, -68], "size": [14, 16], "y": 0},
+    "yard_n": {"label": "Scale Yard", "xz": [49, 68], "size": [14, 16], "y": 0}
+  },
+  "links": [
+    {"from": "atk", "to": "steps_s", "width": 8, "kind": "walk", "via": [[-23,-99],[-29,-82],[-46,-80]]},
+    {"from": "atk", "to": "temple_s", "width": 7, "kind": "walk", "via": [[-7,-90],[-7,-61],[3,-53],[3,-38]]},
+    {"from": "atk", "to": "yard_s", "width": 8, "kind": "walk", "via": [[22,-100],[27,-90],[47,-90]]},
+    {"from": "def", "to": "steps_n", "width": 8, "kind": "walk", "via": [[-15,101],[-36,89],[-46,70]]},
+    {"from": "def", "to": "temple_n", "width": 7, "kind": "walk", "via": [[5,88],[5,49]]},
+    {"from": "def", "to": "yard_n", "width": 8, "kind": "walk", "via": [[15,100],[36,91],[49,84]]},
+    {"from": "steps_s", "to": "bank", "width": 7, "kind": "ramp", "via": [[-25,-30],[-23,-16]]},
+    {"from": "steps_n", "to": "bank", "width": 7, "kind": "ramp", "via": [[-25,30],[-23,16]]},
+    {"from": "steps_s", "to": "ford", "width": 5.5, "kind": "water", "via": [[-52,-32],[-54,-16]]},
+    {"from": "steps_n", "to": "ford", "width": 5.5, "kind": "water", "via": [[-52,32],[-54,16]]},
+    {"from": "ford", "to": "bank", "width": 5, "kind": "water", "via": [[-44,-3],[-37,-3]]},
+    {"from": "bank", "to": "a", "width": 7, "kind": "ramp", "via": [[-15,0],[-10,4]]},
+    {"from": "temple_s", "to": "a", "width": 7, "kind": "walk", "via": [[0,-25],[-5,-21],[-5,-13]]},
+    {"from": "temple_n", "to": "a", "width": 7, "kind": "walk", "via": [[0,25],[-5,21],[-5,13]]},
+    {"from": "pyramid_s", "to": "b", "width": 6, "kind": "walk", "via": [[41,-25],[45,-15],[39,-10]]},
+    {"from": "pyramid_n", "to": "b", "width": 6, "kind": "walk", "via": [[41,25],[45,15],[40,10]]},
+    {"from": "yard_s", "to": "pyramid_s", "width": 7, "kind": "walk", "via": [[48,-54],[43,-39]]},
+    {"from": "yard_n", "to": "pyramid_n", "width": 7, "kind": "walk", "via": [[48,54],[43,39]]},
+    {"from": "temple_s", "to": "pyramid_s", "width": 5.5, "kind": "walk", "via": [[15,-45],[25,-45]]},
+    {"from": "temple_n", "to": "pyramid_n", "width": 5.5, "kind": "walk", "via": [[15,45],[25,45]]},
+    {"from": "temple_s", "to": "pyramid_s", "width": 4, "kind": "fold", "seconds": 1.5},
+    {"from": "temple_n", "to": "pyramid_n", "width": 4, "kind": "fold", "seconds": 1.5},
+    {"from": "temple_s", "to": "mid", "width": 6, "kind": "ramp", "via": [[15,-21],[22,-16],[22,-10]]},
+    {"from": "temple_n", "to": "mid", "width": 6, "kind": "ramp", "via": [[15,21],[18,13],[19,8]]},
+    {"from": "mid", "to": "a", "width": 5, "kind": "ramp", "via": [[15,-6],[13,-8],[9,-6],[5,-2]]},
+    {"from": "mid", "to": "b", "width": 5, "kind": "ramp", "via": [[26,6],[27,8],[30,9],[37,9],[39,6]]}
+  ],
+  "cover": [
+    {"label": "Bell screen", "xz": [-6.8,-3.5], "size": [2.2,4], "height": 2.6},
+    {"label": "Stone lectern", "xz": [6.7,6.6], "size": [2.6,2.6], "height": 1.05},
+    {"label": "Dye cabinet", "xz": [46.8,2.5], "size": [2.4,5], "height": 2.6},
+    {"label": "Weigh counter", "xz": [33.3,5.7], "size": [3.2,2.4], "height": 1.0},
+    {"label": "Bank parapet", "xz": [-32.6,4], "size": [3.4,2.2], "height": 1.2},
+    {"label": "Sluice gearbox", "xz": [16.8,3.6], "size": [2.1,2.2], "height": 2.1}
+  ],
+  "section": {"title": "From riverbed to market counter", "route": ["ford","bank","a","mid","b"]},
+  "artifacts": [
+    {"label": "Bell comb", "node": "a", "cue": "Three deep ribs rise above the western screen. The middle rib points to the Ghat floor ring."},
+    {"label": "Fold lintels", "node": "temple_s", "cue": "The south pair share one V notch, the north pair two bars. Both ends spell out their destination."},
+    {"label": "Weighbeam", "node": "b", "cue": "A square silhouette above the low counter marks the market. Its arm points along the Sluice exit."}
+  ],
+  "sightlines": [
+    {"label": "Bell screen check", "from": [-6.8,-8], "to": [-6.8,8]},
+    {"label": "Market near lip", "from": [40,-8], "to": [40,3]}
+  ]
+}

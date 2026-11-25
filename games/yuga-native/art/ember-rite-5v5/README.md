@@ -2,7 +2,7 @@
 
 ![Hanuman carrying the ember vessel toward a lotus-water sanctuary](objective-concept.png)
 
-This generated image is an original **concept study**, not a screenshot, model, level, route or playable mechanic. It shows a carried ember vessel, a circular sanctuary, a waterside approach and two distant visual routes. The full map design, playable geometry, two objective sites, characters and server interactions require separate creation and testing. The picture includes atmospheric fires for composition; they do not imply damaging objective fire.
+This generated image is an original **concept study**, not a screenshot, model, level, route or playable mechanic. It shows a carried ember vessel, a circular sanctuary, a waterside approach and two distant visual routes. The [four-map atlas](../../docs/design/ember-rite-5v5/atlas/README.md) now supplies the site dimensions and offline 3D layouts. Online ignition and quenching still require gameplay integration. The picture includes atmospheric fires for composition; they do not imply damaging objective fire.
 
 The file is a flattened **1672 × 941 RGB PNG**, without an embedded ICC profile. SHA-256: `30f530991fc86a958340b344847640e9233f5fda554a217880f490bbcd3c0903`. It was generated on 25 November 2026 from these previously generated YUGA images:
 
@@ -14,6 +14,14 @@ The reference files themselves are illustrated concepts, not authored 3D meshes.
 ## Visual review and limitations
 
 The carrier and brass vessel read clearly in the foreground, and the open platform and water establish a setting. The distant opponent is small and the side approaches are atmospheric rather than measured, so the image does not demonstrate competitive visibility, fair sightlines, collision, accessibility or actual route choices. Review hand-to-vessel contact, the long bridge exposure and hero scale separately in a graybox and actual camera captures. The image is not a 4K layered master, and generated imagery cannot establish game physics or performance.
+
+## District landmarks
+
+![Concept art of the Ghat bell comb, Lanka split beacon, Ayodhya mooring drums and Kurukshetra wind fork](district-landmarks.png)
+
+Read the artboard left to right. The bell comb stands at Mandala’s Ghat Mandapa and the split beacon marks Lanka’s Signal Court. The twin mooring drums identify Ayodhya’s Ferry Quay and the wind fork rises at Kurukshetra’s Wind Field. Each silhouette should give a teammate a usable spoken callout in grayscale. Keep the patterned arches and stonework in the study above the hero’s head or away from the fighting entrance. The wind fork and drums stay still during the round. Only the actual vessel displays the interaction indicator. [Plans, gameplay dimensions and artifact schedules](../../docs/design/ember-rite-5v5/atlas/README.md)
+
+OpenAI ImageGen produced the original text-prompted four-part architecture study on 25 November 2026. The direction specified three sandstone ribs over a ghat bell, two basalt-and-ivory harbour vanes, paired rope-grooved mooring drums and a fixed three-pronged timber field crest. It called for neutral afternoon light and a quiet band of plaster or stone behind players. The flattened 1536 × 1024 RGB PNG has SHA-256 `13960a43ef4c7c90bf44fa6b9411f332d031116b50cbcf66739b5947066c69d9`. No source image was supplied to the generator. The map GLBs contain the design floors and cover solids. These four newly illustrated landmark forms still need authored meshes.
 
 ## Exact image-generation prompt
 

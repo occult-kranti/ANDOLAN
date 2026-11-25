@@ -1,5 +1,7 @@
 # Mandala Rift · 5v5 map and game-design handoff
 
+**Current map revision.** The [Mandala Rift blueprint and encounter plan](../ember-rite-5v5/atlas/maps/mandala.md) keeps both site and spawn anchors from this first sketch. It adds the raised Sluice, blockout geometry, distinct approaches to both sanctums and measured dry routes. Follow the [four-map atlas](../ember-rite-5v5/atlas/README.md) for the current production inputs.
+
 **Latest objective direction:** [Ember Rite](../ember-rite-5v5/README.md) replaces the earlier Rift Seal round-timing proposal with a carried-fire objective. This map remains a design study; the objective and map are not in the current playable skirmish.
 
 Mandala Rift is an original YUGA arena for five heroes against five. It combines three readable approaches, a temple courtyard, a city-edge bazaar, shallow jungle water and two mirrored folded-space links inside fictional temples and stepped sanctuaries. Soldier waves, siege vehicles and autonomous jungle minions are outside the new mode. The existing soldier art, animations and wave implementation remain available as source material for future hero equipment, visual echoes and noncombat architecture.

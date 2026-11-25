@@ -1,0 +1,61 @@
+{
+  "id": "lanka",
+  "title": "Lanka",
+  "subtitle": "The windward citadel and Ashoka Garden",
+  "decision": "Cross the high Wind Arch for a quick site switch, or keep the vessel under cover along the longer salt arcade.",
+  "bounds": [-66, -88, 66, 86],
+  "nodes": {
+    "atk":   {"label":"Ferry Gate","xz":[0,-73],"size":[16,12],"y":0},
+    "salt":  {"label":"Salt Ramp","xz":[-43,-48],"size":[14,12],"y":2},
+    "jetty": {"label":"Jetty Gate","xz":[-48,-21],"size":[16,16],"y":4},
+    "chain": {"label":"Chain Foot","xz":[0,-34],"size":[14,14],"y":1},
+    "slip":  {"label":"Slipway","xz":[37,-44],"size":[17,16],"y":1},
+    "a":     {"label":"Signal Court","xz":[-48,9],"size":[24,20],"y":5},
+    "mid":   {"label":"Wind Arch","xz":[0,5],"size":[18,14],"y":5},
+    "fruit": {"label":"Fruit Stalls","xz":[27,3],"size":[14,12],"y":2},
+    "b":     {"label":"Ashoka Garden","xz":[47,-8],"size":[22,20],"y":1},
+    "crown": {"label":"Crown Gate","xz":[-32,47],"size":[16,14],"y":5},
+    "bell":  {"label":"Bell Pier","xz":[3,39],"size":[16,14],"y":6},
+    "wall":  {"label":"Garden Wall","xz":[42,39],"size":[16,16],"y":2},
+    "def":   {"label":"Upland Gate","xz":[0,74],"size":[16,14],"y":3}
+  },
+  "links": [
+    {"from":"atk","to":"salt","kind":"ramp","width":7,"via":[[-20,-69],[-33,-55]]},
+    {"from":"atk","to":"chain","kind":"ramp","width":6,"via":[[6,-57],[0,-49]]},
+    {"from":"atk","to":"slip","kind":"ramp","width":7,"via":[[24,-67],[24,-54]]},
+    {"from":"salt","to":"jetty","kind":"ramp","width":7,"via":[[-47,-37]]},
+    {"from":"jetty","to":"a","kind":"ramp","width":6,"via":[[-48,-4],[-55,-4],[-55,9]]},
+    {"from":"jetty","to":"chain","kind":"ramp","width":6,"via":[[-29,-22],[-17,-34]]},
+    {"from":"chain","to":"slip","kind":"walk","width":6,"via":[[14,-34],[25,-42]]},
+    {"from":"slip","to":"b","kind":"walk","width":6,"via":[[47,-34],[47,-21]]},
+    {"from":"chain","to":"mid","kind":"ramp","width":6,"via":[[-5,-18],[-5,-7]]},
+    {"from":"a","to":"mid","kind":"walk","width":7,"via":[[-35,12],[-28,5],[-17,5]]},
+    {"from":"mid","to":"fruit","kind":"ramp","width":6,"via":[[16,5]]},
+    {"from":"fruit","to":"b","kind":"ramp","width":6,"via":[[36,3],[36,-8]]},
+    {"from":"def","to":"crown","kind":"ramp","width":7,"via":[[-19,68],[-24,51]]},
+    {"from":"def","to":"bell","kind":"ramp","width":6,"via":[[7,59]]},
+    {"from":"def","to":"wall","kind":"ramp","width":7,"via":[[25,65],[36,48]]},
+    {"from":"crown","to":"a","kind":"walk","width":7,"via":[[-50,43],[-50,26]]},
+    {"from":"bell","to":"mid","kind":"ramp","width":6,"via":[[0,24],[0,16]]},
+    {"from":"wall","to":"b","kind":"ramp","width":7,"via":[[51,28],[51,10]]}
+  ],
+  "cover": [
+    {"label":"Signal screen","xz":[-55,15],"size":[3,5],"height":2.6},
+    {"label":"Rope chest","xz":[-41,4],"size":[4,3],"height":1.1},
+    {"label":"Cistern wall","xz":[53,-13],"size":[3,5],"height":2.5},
+    {"label":"Fruit trough","xz":[41,-3],"size":[3,3],"height":1.0},
+    {"label":"Bridge parapet","xz":[5,10],"size":[4,2],"height":1.2},
+    {"label":"Salt bay wall","xz":[-4,-38],"size":[3,2.5],"height":2.2},
+    {"label":"Net locker","xz":[8,43],"size":[3,3],"height":2.3}
+  ],
+  "section":{"title":"Causeway down to the garden","route":["a","mid","fruit","b"]},
+  "artifacts": [
+    {"label":"Split beacon","node":"a","cue":"Two stone vanes frame the high site. See the split above the roof before choosing Jetty Gate."},
+    {"label":"Wind comb","node":"mid","cue":"A row of slotted fins silhouettes the exposed crossing. Keep their moving shadows off the deck."},
+    {"label":"Garden trellis","node":"b","cue":"A low scalloped border identifies the garden. Train the leaves overhead to keep the west entrance readable."}
+  ],
+  "sightlines": [
+    {"label":"Deck crossing","from":[-16,5],"to":[7,5]},
+    {"label":"Garden entry","from":[47,-21],"to":[47,-6]}
+  ]
+}

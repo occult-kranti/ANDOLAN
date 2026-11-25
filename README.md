@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Ember Rite map atlas.** Explore the four proposed 5v5 arenas in an [eight-page printable blueprint set](games/yuga-native/docs/design/ember-rite-5v5/atlas/blueprints/yuga-map-atlas.pdf). The [level-design handoff](games/yuga-native/docs/design/ember-rite-5v5/atlas/README.md) includes Blender-importable blockouts, original landmark art, route measurements and a branching Mandala round. The current playable download remains the knockout skirmish.
+
 **Animation technical roadmap.** The [five-hero codex intake](games/yuga-native/docs/design/animation-tech-codex-2026/README.md) preserves the supplied draft and maps its motion, abilities, bridge, accessibility and performance proposals to existing assets and verification gates. It is a plan; the draft's new abilities and capture claims are not implemented by this update.
 
 **Ember Rite direction.** A new [5v5 fire-vessel objective, story, hero/ability concepts and color study](games/yuga-native/docs/design/ember-rite-5v5/README.md) adapts the supplied inspiration. A separate Rust rules experiment tests ignition, quenching and overtime; the current downloadable skirmish does not yet include the objective mode or its map.
