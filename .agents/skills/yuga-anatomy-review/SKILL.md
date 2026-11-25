@@ -5,6 +5,8 @@ description: Sculpt and review a YUGA hero by body region in Blender, from refer
 
 Use the [hero art skill](../yuga-hero-art/SKILL.md) for the shared rig, build, and export workflow. Start with the existing editable model and exact target illustration. Pin the source file, camera, intended action and quality budget. Separate material, outline, and deformation issues during review so the next edit has a specific cause to address.
 
+The [Hanuman geometry and anatomy packet](../../../games/yuga-native/docs/design/hanuman-anatomy-geometry-2026/README.md) contains a sourced cheat sheet, local-coordinate measurements, editable sketch and isolated Blender mirror/shape-key specimen. Use the [facial candidate and rejection record](../../../games/yuga-native/art/hanuman-facial-refinement-2026/README.md) to compare visual results with rest-space and animated contact measurements; the specimen is not the playable hero.
+
 ## Plan the part studies
 
 Spend the first pass on mass and negative space. Rotate forms on Practice Drawing This, sketch cranium, jaw, rib cage, pelvis and hand volumes from two angles, and read the weight line through the feet. Gesture studies guide the cape, tail or fabric arc before adding surface detail. Use the source in the browser for observation. A short practice pass can cover three minutes of rotated primitives, four minutes of skull and rib cage, four minutes of opposed thumb and folded fingers, and four minutes of load and gesture. Record the one observation that changes your sculpt. [Model index](https://practicedrawingthis.com/3d/) · [Source audit and exercises](../../../games/yuga-native/docs/research/hanuman-match-sources.md)

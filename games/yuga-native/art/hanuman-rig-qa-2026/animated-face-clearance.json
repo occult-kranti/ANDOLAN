@@ -1,0 +1,1585 @@
+{
+  "blender_version": "4.3.2",
+  "script_sha256": "ab967f9c82a08c5d2e92162601a04917e5359bdf6a4e2b604ef643abb9516577",
+  "method": "For each evaluated pose, undo the rigid head transform, then project detail vertices along the anatomical front axis onto the front-most nearby skin triangles. Positive depth is in front of that surface; negative depth is behind it.",
+  "limitations": [
+    "A negative projected depth is not a watertight signed-distance or penetration measurement.",
+    "Nearby surface and anatomical forward-axis assumptions can miss a ray or select an occluding triangle.",
+    "Twenty body-action samples do not cover facial expressions, speech, all blends, continuous motion or actual engine rendering."
+  ],
+  "baseline": {
+    "sha256": "6612e710578c2527fc1edb84cd8c2c64936cd7ec2a0b201d4a714eead870273a",
+    "samples": [
+      {
+        "clip": "idle",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19225251695975665,
+            "median_mm": 1.214102103069964,
+            "p95_mm": 3.405397282785734,
+            "max_mm": 3.7198008674663163,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918319500155448,
+            "median_mm": 2.8523785044435868,
+            "p95_mm": 7.415022120846354,
+            "max_mm": 8.253032196629096,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19219564686356883,
+            "median_mm": 1.2141384894586993,
+            "p95_mm": 3.40523861489342,
+            "max_mm": 3.719767607625324,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918369381052833,
+            "median_mm": 2.8522438732759974,
+            "p95_mm": 7.414792122653307,
+            "max_mm": 8.25289813594482,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19225251695975665,
+            "median_mm": 1.214102103069964,
+            "p95_mm": 3.405397282785734,
+            "max_mm": 3.7198008674663163,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918319500155448,
+            "median_mm": 2.8523785044435868,
+            "p95_mm": 7.415022120846354,
+            "max_mm": 8.253032196629096,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19235143178411573,
+            "median_mm": 1.2142966634208496,
+            "p95_mm": 3.40527268722475,
+            "max_mm": 3.7198126786467114,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918037092532356,
+            "median_mm": 2.8525836074587696,
+            "p95_mm": 7.4154514377677,
+            "max_mm": 8.253350286730798,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19225251695975665,
+            "median_mm": 1.214102103069964,
+            "p95_mm": 3.405397282785734,
+            "max_mm": 3.7198008674663163,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918319500155448,
+            "median_mm": 2.8523785044435868,
+            "p95_mm": 7.415022120846354,
+            "max_mm": 8.253032196629096,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1916938077778374,
+            "median_mm": 1.2140026106378654,
+            "p95_mm": 3.4052518750908867,
+            "max_mm": 3.7195387127985367,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918069504184496,
+            "median_mm": 2.852451162324146,
+            "p95_mm": 7.415177292230485,
+            "max_mm": 8.25340909836253,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19188994881885746,
+            "median_mm": 1.2138892272250401,
+            "p95_mm": 3.404903795784711,
+            "max_mm": 3.719430914925992,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.9180242387837905,
+            "median_mm": 2.852602473130142,
+            "p95_mm": 7.4152624306463855,
+            "max_mm": 8.253379864306353,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1916938077778374,
+            "median_mm": 1.2140026106378654,
+            "p95_mm": 3.4052518750908867,
+            "max_mm": 3.7195387127985367,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918069504184496,
+            "median_mm": 2.852451162324146,
+            "p95_mm": 7.415177292230485,
+            "max_mm": 8.25340909836253,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19187700441436473,
+            "median_mm": 1.213981136787251,
+            "p95_mm": 3.4052766582487184,
+            "max_mm": 3.719632635136888,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918122440024152,
+            "median_mm": 2.852351483821791,
+            "p95_mm": 7.415111329067747,
+            "max_mm": 8.25323169781525,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1916938077778374,
+            "median_mm": 1.2140026106378654,
+            "p95_mm": 3.4052518750908867,
+            "max_mm": 3.7195387127985367,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918069504184496,
+            "median_mm": 2.852451162324146,
+            "p95_mm": 7.415177292230485,
+            "max_mm": 8.25340909836253,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1913573151482162,
+            "median_mm": 1.2141428035025714,
+            "p95_mm": 3.4053971758800095,
+            "max_mm": 3.71974178055523,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918127252646064,
+            "median_mm": 2.8523302254985783,
+            "p95_mm": 7.415138957189899,
+            "max_mm": 8.25332055898484,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1915224246710201,
+            "median_mm": 1.2141826436777858,
+            "p95_mm": 3.4055090769380723,
+            "max_mm": 3.7196481037419513,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918173038979206,
+            "median_mm": 2.852497658219738,
+            "p95_mm": 7.415449439072325,
+            "max_mm": 8.253101379074785,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19160157328340643,
+            "median_mm": 1.2143101162226388,
+            "p95_mm": 3.405544966374079,
+            "max_mm": 3.719720860718645,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918112336126489,
+            "median_mm": 2.8525147758502456,
+            "p95_mm": 7.415022297844715,
+            "max_mm": 8.253468306904377,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1918143433243258,
+            "median_mm": 1.2139747895212882,
+            "p95_mm": 3.405167218074758,
+            "max_mm": 3.7196021863884763,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.917850947577295,
+            "median_mm": 2.8525335480939216,
+            "p95_mm": 7.415294258620642,
+            "max_mm": 8.253553517833273,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1913573151482162,
+            "median_mm": 1.2141428035025714,
+            "p95_mm": 3.4053971758800095,
+            "max_mm": 3.71974178055523,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918127252646064,
+            "median_mm": 2.8523302254985783,
+            "p95_mm": 7.415138957189899,
+            "max_mm": 8.25332055898484,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1913573151482162,
+            "median_mm": 1.2141428035025714,
+            "p95_mm": 3.4053965536437483,
+            "max_mm": 3.71974178055523,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.9182779235185095,
+            "median_mm": 2.8523067516720015,
+            "p95_mm": 7.415138957189899,
+            "max_mm": 8.253143848207579,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19174752708486786,
+            "median_mm": 1.2140944209656779,
+            "p95_mm": 3.405233386824401,
+            "max_mm": 3.7196344888359434,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918170624724493,
+            "median_mm": 2.8522871632532114,
+            "p95_mm": 7.414910042393669,
+            "max_mm": 8.253142923434043,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19148794802345548,
+            "median_mm": 1.2140964775341767,
+            "p95_mm": 3.405273611552441,
+            "max_mm": 3.7199124872595024,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.9180023246948306,
+            "median_mm": 2.8524368329912453,
+            "p95_mm": 7.415140686275635,
+            "max_mm": 8.253210426098667,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.19141085578258665,
+            "median_mm": 1.214411999842513,
+            "p95_mm": 3.40555887676635,
+            "max_mm": 3.7197579450946594,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.918089142372405,
+            "median_mm": 2.852332820989345,
+            "p95_mm": 7.414929062143166,
+            "max_mm": 8.253339535388537,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1913573151482162,
+            "median_mm": 1.2141428035025714,
+            "p95_mm": 3.4053965536437483,
+            "max_mm": 3.71974178055523,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.9182779235185095,
+            "median_mm": 2.8523067516720015,
+            "p95_mm": 7.415138957189899,
+            "max_mm": 8.253143848207579,
+            "behind_frontmost_skin": 102
+          }
+        }
+      }
+    ]
+  },
+  "v1": {
+    "sha256": "257ff4daf8694d682acc4dbfd171729ed2d5575225cfa9259533c1e9eb113abf",
+    "samples": [
+      {
+        "clip": "idle",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.16012723824332387,
+            "median_mm": 1.2129952781110842,
+            "p95_mm": 3.41001752611035,
+            "max_mm": 3.7242116809649284,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747228524779267,
+            "median_mm": 2.9555097177600684,
+            "p95_mm": 7.514889465745744,
+            "max_mm": 8.341441668289818,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.16023441596080268,
+            "median_mm": 1.2130529259043177,
+            "p95_mm": 3.4097291890582997,
+            "max_mm": 3.724071479030755,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.7474079992948495,
+            "median_mm": 2.9554554968549835,
+            "p95_mm": 7.514759321671671,
+            "max_mm": 8.341274633767688,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.16012723824332387,
+            "median_mm": 1.2129952781110842,
+            "p95_mm": 3.41001752611035,
+            "max_mm": 3.7242116809649284,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747228524779267,
+            "median_mm": 2.9555097177600684,
+            "p95_mm": 7.514889465745744,
+            "max_mm": 8.341441668289818,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.16032454810277486,
+            "median_mm": 1.2127961837515577,
+            "p95_mm": 3.4099034320983446,
+            "max_mm": 3.7242693168367813,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.746881371025218,
+            "median_mm": 2.955747085225571,
+            "p95_mm": 7.515204467246683,
+            "max_mm": 8.341759902195435,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.16012723824332387,
+            "median_mm": 1.2129952781110842,
+            "p95_mm": 3.41001752611035,
+            "max_mm": 3.7242116809649284,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747228524779267,
+            "median_mm": 2.9555097177600684,
+            "p95_mm": 7.514889465745744,
+            "max_mm": 8.341441668289818,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15962092289412144,
+            "median_mm": 1.212853791012769,
+            "p95_mm": 3.4098144335461864,
+            "max_mm": 3.723961826144956,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747046547619953,
+            "median_mm": 2.955764715158529,
+            "p95_mm": 7.515150351733474,
+            "max_mm": 8.341922322567974,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.16019831438834897,
+            "median_mm": 1.2127411251978693,
+            "p95_mm": 3.409807885771618,
+            "max_mm": 3.7237247131889637,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.7469361240511367,
+            "median_mm": 2.9558652632591524,
+            "p95_mm": 7.515223448237906,
+            "max_mm": 8.341906518061936,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15962092289412144,
+            "median_mm": 1.212853791012769,
+            "p95_mm": 3.4098144335461864,
+            "max_mm": 3.723961826144956,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747046547619953,
+            "median_mm": 2.955764715158529,
+            "p95_mm": 7.515150351733474,
+            "max_mm": 8.341922322567974,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15960903327957854,
+            "median_mm": 1.2124794737802813,
+            "p95_mm": 3.4098793781277394,
+            "max_mm": 3.723963811300801,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.7471752045104556,
+            "median_mm": 2.9558663293971774,
+            "p95_mm": 7.51501695843454,
+            "max_mm": 8.341905270445455,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15962092289412144,
+            "median_mm": 1.212853791012769,
+            "p95_mm": 3.4098144335461864,
+            "max_mm": 3.723961826144956,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747046547619953,
+            "median_mm": 2.955764715158529,
+            "p95_mm": 7.515150351733474,
+            "max_mm": 8.341922322567974,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15941711253728008,
+            "median_mm": 1.2131024972197868,
+            "p95_mm": 3.4100211372040574,
+            "max_mm": 3.7239887849408735,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747256867642712,
+            "median_mm": 2.9555884530424876,
+            "p95_mm": 7.514838385663191,
+            "max_mm": 8.341761333651416,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15971866446945482,
+            "median_mm": 1.2129842613998187,
+            "p95_mm": 3.410263241239028,
+            "max_mm": 3.7243409791254676,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747229470114161,
+            "median_mm": 2.9557399164506784,
+            "p95_mm": 7.515029057122868,
+            "max_mm": 8.341774293031289,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15957392653384583,
+            "median_mm": 1.2130895417414023,
+            "p95_mm": 3.4101200091076187,
+            "max_mm": 3.724119014464206,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.7470448949137314,
+            "median_mm": 2.955551114761437,
+            "p95_mm": 7.515026740089914,
+            "max_mm": 8.34201868217621,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.1596644455821028,
+            "median_mm": 1.2124801355264392,
+            "p95_mm": 3.409942478458093,
+            "max_mm": 3.723896643156699,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.7470296971891526,
+            "median_mm": 2.955681296216428,
+            "p95_mm": 7.51501973470009,
+            "max_mm": 8.342357583532023,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15941711253728008,
+            "median_mm": 1.2131024972197868,
+            "p95_mm": 3.4100211372040574,
+            "max_mm": 3.7239887849408735,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747256867642712,
+            "median_mm": 2.9555884530424876,
+            "p95_mm": 7.514838385663191,
+            "max_mm": 8.341761333651416,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15941711253728008,
+            "median_mm": 1.2131015082058605,
+            "p95_mm": 3.410020517697292,
+            "max_mm": 3.723988609034945,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747238441865086,
+            "median_mm": 2.9555750444198168,
+            "p95_mm": 7.514846663390196,
+            "max_mm": 8.341562687035232,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15962125245427838,
+            "median_mm": 1.2129182352662582,
+            "p95_mm": 3.409839388011518,
+            "max_mm": 3.7240198766764765,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747263686585706,
+            "median_mm": 2.9555456382127505,
+            "p95_mm": 7.514728518581593,
+            "max_mm": 8.341777076502133,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15960434256084843,
+            "median_mm": 1.213041689259009,
+            "p95_mm": 3.410103459517913,
+            "max_mm": 3.7241600590449675,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.74720151958996,
+            "median_mm": 2.955761546913682,
+            "p95_mm": 7.514881385124434,
+            "max_mm": 8.341888497547052,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15947991779849402,
+            "median_mm": 1.2131778452580122,
+            "p95_mm": 3.410219873881562,
+            "max_mm": 3.7242410663036187,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.7471709996731994,
+            "median_mm": 2.955524039606652,
+            "p95_mm": 7.514826475009617,
+            "max_mm": 8.34201665988385,
+            "behind_frontmost_skin": 102
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": -0.15941711253728008,
+            "median_mm": 1.2131015082058605,
+            "p95_mm": 3.410020517697292,
+            "max_mm": 3.723988609034945,
+            "behind_frontmost_skin": 4
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": -3.747238441865086,
+            "median_mm": 2.9555750444198168,
+            "p95_mm": 7.514846663390196,
+            "max_mm": 8.341562687035232,
+            "behind_frontmost_skin": 102
+          }
+        }
+      }
+    ]
+  },
+  "v2": {
+    "sha256": "ce238b5d020ff8e4233cf70eca58502130afef87ebf199c929027f32bfc16b75",
+    "samples": [
+      {
+        "clip": "idle",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.2490010027167422,
+            "median_mm": 0.7299335423363862,
+            "p95_mm": 1.4987023370421544,
+            "max_mm": 1.6090307048264307,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.25000505660424666,
+            "median_mm": 1.255416753312949,
+            "p95_mm": 1.9393820205563517,
+            "max_mm": 2.0634002546808805,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24870666045223588,
+            "median_mm": 0.7297857592637458,
+            "p95_mm": 1.4985769260361796,
+            "max_mm": 1.6087635365692743,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.24977248793389695,
+            "median_mm": 1.2553693370725845,
+            "p95_mm": 1.9390843564538462,
+            "max_mm": 2.063227252342176,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.2490010027167422,
+            "median_mm": 0.7299335423363862,
+            "p95_mm": 1.4987023370421544,
+            "max_mm": 1.6090307048264307,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.25000505660424666,
+            "median_mm": 1.255416753312949,
+            "p95_mm": 1.9393820205563517,
+            "max_mm": 2.0634002546808805,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24878894225888182,
+            "median_mm": 0.7295748918279832,
+            "p95_mm": 1.498685529687836,
+            "max_mm": 1.6090836480227022,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2502178351737605,
+            "median_mm": 1.2556496334294316,
+            "p95_mm": 1.9398297821764388,
+            "max_mm": 2.0637831100049353,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "idle",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.2490010027167422,
+            "median_mm": 0.7299335423363862,
+            "p95_mm": 1.4987023370421544,
+            "max_mm": 1.6090307048264307,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.25000505660424666,
+            "median_mm": 1.255416753312949,
+            "p95_mm": 1.9393820205563517,
+            "max_mm": 2.0634002546808805,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24920079848406163,
+            "median_mm": 0.7299243029667002,
+            "p95_mm": 1.4987425568390735,
+            "max_mm": 1.6087880706051882,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2501758097182005,
+            "median_mm": 1.255693546324252,
+            "p95_mm": 1.9397058183098226,
+            "max_mm": 2.0638483268929084,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24861063259096206,
+            "median_mm": 0.7298022906785662,
+            "p95_mm": 1.4985566426826218,
+            "max_mm": 1.6085884613100399,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.25023556248132683,
+            "median_mm": 1.2558177957377459,
+            "p95_mm": 1.939807669735033,
+            "max_mm": 2.063770726629138,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24920079848406163,
+            "median_mm": 0.7299243029667002,
+            "p95_mm": 1.4987425568390735,
+            "max_mm": 1.6087880706051882,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2501758097182005,
+            "median_mm": 1.255693546324252,
+            "p95_mm": 1.9397058183098226,
+            "max_mm": 2.0638483268929084,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24923632643825133,
+            "median_mm": 0.7295179939883212,
+            "p95_mm": 1.4987871244395405,
+            "max_mm": 1.6089168262376219,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.25003011019453236,
+            "median_mm": 1.2558066997842288,
+            "p95_mm": 1.939598012734689,
+            "max_mm": 2.063929904248557,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "run",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24920079848406163,
+            "median_mm": 0.7299243029667002,
+            "p95_mm": 1.4987425568390735,
+            "max_mm": 1.6087880706051882,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2501758097182005,
+            "median_mm": 1.255693546324252,
+            "p95_mm": 1.9397058183098226,
+            "max_mm": 2.0638483268929084,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24927633840318708,
+            "median_mm": 0.7303216406884805,
+            "p95_mm": 1.4989612891637583,
+            "max_mm": 1.6089772363202803,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2499760787024463,
+            "median_mm": 1.2555326397702404,
+            "p95_mm": 1.9395087352228058,
+            "max_mm": 2.0636884146797985,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24917393515716535,
+            "median_mm": 0.7300466569306607,
+            "p95_mm": 1.4990855912667675,
+            "max_mm": 1.6091548742377948,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2500250888161082,
+            "median_mm": 1.2557358491687292,
+            "p95_mm": 1.9395043095007392,
+            "max_mm": 2.0638417243890594,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24939889225453205,
+            "median_mm": 0.730240165065621,
+            "p95_mm": 1.4989163827326124,
+            "max_mm": 1.6090965235121546,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2501133955634671,
+            "median_mm": 1.2555649359542036,
+            "p95_mm": 1.9394449245812018,
+            "max_mm": 2.0639079668696994,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24913205593893317,
+            "median_mm": 0.7295523734359155,
+            "p95_mm": 1.4986464451365908,
+            "max_mm": 1.608653155407036,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.25011367497734804,
+            "median_mm": 1.2556085950640865,
+            "p95_mm": 1.939579828861393,
+            "max_mm": 2.064201241235464,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "mountain_pulse",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24927633840318708,
+            "median_mm": 0.7303216406884805,
+            "p95_mm": 1.4989612891637583,
+            "max_mm": 1.6089772363202803,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2499760787024463,
+            "median_mm": 1.2555326397702404,
+            "p95_mm": 1.9395087352228058,
+            "max_mm": 2.0636884146797985,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24927633840318708,
+            "median_mm": 0.7303206517083882,
+            "p95_mm": 1.4989606696618099,
+            "max_mm": 1.6089770604169606,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2499945047082508,
+            "median_mm": 1.2555326397702404,
+            "p95_mm": 1.9395170130314388,
+            "max_mm": 2.063489768068166,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.25,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24918416978542135,
+            "median_mm": 0.729994784455873,
+            "p95_mm": 1.4987289060614806,
+            "max_mm": 1.6088585736822314,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2499668861866977,
+            "median_mm": 1.2554234437998357,
+            "p95_mm": 1.9392598295797925,
+            "max_mm": 2.063752895692411,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.5,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24928495478362955,
+            "median_mm": 0.7301368617426696,
+            "p95_mm": 1.4989398266045146,
+            "max_mm": 1.6090215240097683,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2500304499079564,
+            "median_mm": 1.255582330189825,
+            "p95_mm": 1.9394077346184535,
+            "max_mm": 2.063812783113378,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 0.75,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24940455715571908,
+            "median_mm": 0.7303255023934085,
+            "p95_mm": 1.4991945324819498,
+            "max_mm": 1.6091405306194462,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.24997833254325474,
+            "median_mm": 1.2554797836420577,
+            "p95_mm": 1.9392720267902008,
+            "max_mm": 2.0638084541408643,
+            "behind_frontmost_skin": 0
+          }
+        }
+      },
+      {
+        "clip": "tail_sweep",
+        "phase": 1.0,
+        "groups": {
+          "mouth": {
+            "total": 108,
+            "ray_hits": 108,
+            "ray_misses": 0,
+            "min_mm": 0.24927633840318708,
+            "median_mm": 0.7303206517083882,
+            "p95_mm": 1.4989606696618099,
+            "max_mm": 1.6089770604169606,
+            "behind_frontmost_skin": 0
+          },
+          "nostrils": {
+            "total": 238,
+            "ray_hits": 238,
+            "ray_misses": 0,
+            "min_mm": 0.2499945047082508,
+            "median_mm": 1.2555326397702404,
+            "p95_mm": 1.9395170130314388,
+            "max_mm": 2.063489768068166,
+            "behind_frontmost_skin": 0
+          }
+        }
+      }
+    ]
+  }
+}

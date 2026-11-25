@@ -28,9 +28,14 @@ def sha(data):
 def capture(args):
     return subprocess.check_output(args, cwd=PROJECT, text=True)
 
-def playable_hanuman(stage):
+def playable_hanuman(stage, model_override=None):
     finish = NATIVE / "art/hanuman-hero-finish/models/hanuman-enhanced.glb"
-    if finish.is_file():
+    if model_override is not None:
+        model = model_override.resolve(strict=True)
+        if not model.is_file():
+            raise ValueError(f"Hanuman model is not a file: {model}")
+        edition = "custom-model"
+    elif finish.is_file():
         model = finish
         edition = "hero-finish"
     else:
@@ -52,7 +57,7 @@ def playable_hanuman(stage):
     required = {"idle", "run", "defeat", *(r["motion"] for r in rules["abilities"])}
     if not header.get("skins") or not required <= tracks:
         raise ValueError(f"Hanuman needs a skin and all match actions, missing {required - tracks}")
-    return model, {"edition": edition, "clips": sorted(tracks)}
+    return model, {"edition": edition, "clips": sorted(tracks), "sha256": sha(model.read_bytes())}
 
 
 def notices(workspace):
@@ -132,6 +137,10 @@ def notices(workspace):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=PROJECT / "dist")
+    parser.add_argument(
+        "--hanuman-model", type=Path,
+        help="Use a reviewed skinned Hanuman GLB instead of the published baseline for this build.",
+    )
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(exist_ok=True, parents=True)
@@ -145,7 +154,7 @@ def main():
     )
     with TemporaryDirectory(dir=out) as staging:
         stage = Path(staging)
-        hero, hero_info = playable_hanuman(stage)
+        hero, hero_info = playable_hanuman(stage, args.hanuman_model)
         cover = NATIVE / "art/hanuman-hero-finish/design/hanuman-portrait-target.webp"
         if not cover.is_file():
             cover = NATIVE / "art/hanuman/match/hanuman-keyframe-denoised.png"
@@ -206,6 +215,8 @@ def main():
         for cue in sorted((NATIVE / "assets/audio/rama-quality").glob("*.wav")):
             assets["audio/rama/" + cue.stem] = cue
         blobs = {name: path.read_bytes() for name, path in assets.items()}
+        if sha(blobs["hero"]) != hero_info["sha256"]:
+            raise ValueError("Hanuman model changed during packaging")
         (stage / "yuga-rust.wasm").write_bytes(blobs["wasm"])
         payload = {
             "coverMime": "image/webp" if cover.suffix == ".webp" else "image/png",

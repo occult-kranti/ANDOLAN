@@ -33,6 +33,15 @@ Use observed gesture, composition or palette with its source. The
 are generated concepts. Check weapon sockets, support feet and timing on the
 actual rig, including Rama's anatomical right-hand bow grip and Hanuman's gada.
 
+For the external `awesome-gamedev-agent-skills` pack, use the pinned
+[source and adoption note](../../../games/yuga-native/docs/research/gamedev-agent-skills-2026/README.md).
+Its `create-game-assets` and 3D pipeline guidance reinforces a locked visual
+target, artist-source retention and checks on the actual imported GLB. The pack
+does not include a PlayCanvas skill; route Rust/PlayCanvas integration through
+this project's working files and tests rather than substituting Bevy or Godot
+APIs. The separate native project declares Godot 4.6; check that version before
+using examples from the pack's Godot 4.7 guidance.
+
 Inspect the assigned editable source and import contract before editing.
 [Hero runtime](../../../games/yuga-native/scripts/rama_hero_runtime.gd) composes
 the asset; [motion](../../../games/yuga-native/scripts/rama_motion.gd) owns

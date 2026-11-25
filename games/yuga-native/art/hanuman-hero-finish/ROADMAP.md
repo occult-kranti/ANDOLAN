@@ -2,6 +2,8 @@
 
 The baseline for comparisons is the finished playable GLB with the matching game, Cycles views and editable studio. A candidate advances when the responsible artist and an independent reviewer can recover the difference from saved source and repeat the in-game check. [Published entry and model](README.md) · [Panel history](design/PANEL.md) · [Rebuild handoff](HANDOFF.md)
 
+**Current study, 25 November:** a [subtle V1 facial edit](../hanuman-facial-refinement-2026/README.md) has a separately packaged [playable preview](../hanuman-build-qa-2026/README.md). A V2 mouth fit passed directional gap checks but was rejected after profile review; a V3 retraction still left the seam visible. The [material study](../hanuman-surface-study-2026/README.md) remains experimental; it has not met visual-value and runtime-memory gates. The ordinary download remains the comparison baseline. Use the [geometry and anatomy packet](../../docs/design/hanuman-anatomy-geometry-2026/README.md) and [new concept turnaround](../hanuman-turnaround-2026/README.md) for the next artist pass, without treating the image or teaching specimen as a production model.
+
 | Order | Owner and dependency | Work and acceptance |
 | --- | --- | --- |
 | 1 · Face in motion | Character sculptor + facial animator, baseline ready | Start from the [Blender blink, focus and recovery study](expressions/README.md). Fit nostril wings, cheek-to-muzzle transition and lip corners in front, profile and three-quarter views. Add exertion and blend the accepted expressions onto moving combat poses. Supply same-camera overlays and a close-up with the eyes open, blinking and settled. Reject visible eyeball breaks, lip separation at rest or added features that obscure the tilak. |

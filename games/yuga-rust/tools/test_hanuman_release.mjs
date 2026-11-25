@@ -15,6 +15,7 @@ const { values } = parseArgs({
       ),
     },
     report: { type: 'string' },
+    'hanuman-model': { type: 'string' },
   },
 });
 const member = (name) =>
@@ -34,17 +35,22 @@ const data = JSON.parse(
 );
 const model = Buffer.from(data.blobs.hero, 'base64');
 assert.equal(sha(model), manifest.blobs.hero.sha256);
+if (manifest.hanuman.sha256) assert.equal(sha(model), manifest.hanuman.sha256, 'hero summary matches the embedded model');
 if (manifest.hanuman.edition === 'hero-finish') {
-  assert.deepEqual(
-    model,
-    await readFile(
+  assert.equal(
+    sha(model),
+    sha(await readFile(
       new URL(
         '../../yuga-native/art/hanuman-hero-finish/models/hanuman-enhanced.glb',
         import.meta.url,
       ),
-    ),
+    )),
+    'the package embeds the published model',
   );
+} else if (manifest.hanuman.edition === 'custom-model') {
+  assert.equal(sha(model), manifest.hanuman.sha256, 'custom model matches the build manifest');
 } else assert.equal(manifest.hanuman.edition, 'native-motion-export');
+if (values['hanuman-model']) assert.equal(sha(model), sha(await readFile(values['hanuman-model'])), 'the package embeds the requested model');
 const gltf = JSON.parse(model.subarray(20, 20 + model.readUInt32LE(12)));
 assert.deepEqual(
   gltf.animations.map((a) => a.name).sort(),

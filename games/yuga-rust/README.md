@@ -1,5 +1,7 @@
 # YUGA · Confluence in Rust
 
+**Optional Hanuman sculpt preview.** A [separate tested download](downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true) uses a subtle facial-geometry candidate. The standard download below still uses the prior model. The preview's [build, visual and rig evidence](../yuga-native/art/hanuman-build-qa-2026/README.md) records its limits.
+
 The latest branch package includes a camera-clearance solver, a corrected interrupted vault, elevation-aware Hanuman area attacks and a timed Mountain Pulse visual. The camera solver checks the authoritative building and deck boxes; animated weapons and tail can still need framing work. The in-game rock is an interim cue, and the richer [five-action Blender study](../yuga-native/art/hanuman-motion-panel-2026/README.md) is an offline production study. [Panel results and next steps](../yuga-native/docs/design/five-round-panel-2026/README.md)
 
 **Classic hero sparring.** A second download runs all fourteen heroes’ original weapons and 42 abilities through Rust and WebAssembly in Sangam City. Extract it, serve the folder with `python3 -m http.server 8000`, open `http://localhost:8000`, select a hero and choose **Hero sparring**. [Download the graphical roster](downloads/yuga-rust-classic.zip?raw=true) · [Screenshots, controls and build](../yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)
@@ -50,6 +52,8 @@ npm ci
 cargo test --release --locked --manifest-path games/yuga-rust/Cargo.toml
 python3 games/yuga-rust/tools/build_web.py
 ```
+
+For a reviewed experimental GLB without replacing the standard model, add `--hanuman-model path/to/hero.glb` and use a separate `--output` directory. The packager checks for a skin and required gameplay clips and records the embedded model's hash; perform visual and motion review separately.
 
 The packager writes `games/yuga-rust/dist/yuga-rust-confluence.zip`, the standalone HTML and a build manifest. The ZIP also contains the room host, Rust/Wasm worker, notices and launch instructions. For the optional native match executable on the host:
 

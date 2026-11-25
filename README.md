@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Hanuman anatomy and Blender study.** A reversible, subtle facial-sculpt candidate can be tested in the [separate playable preview](games/yuga-rust/downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true), with [rig, browser and package evidence](games/yuga-native/art/hanuman-build-qa-2026/README.md). The [anatomy and geometry notes](games/yuga-native/docs/design/hanuman-anatomy-geometry-2026/README.md) include an editable sketch and Blender teaching specimen; the [generated turnaround](games/yuga-native/art/hanuman-turnaround-2026/README.md) is art direction, not the actual 3D model. The normal Confluence build retains its existing hero.
+
 **New YUGA 5v5 direction.** [Mandala Rift](games/yuga-native/docs/design/mandala-rift-5v5/README.md) is a proposed temple-and-jungle tactical map with a top-down sketch, an illustrated concept, shallow-water routes and paired folded-space entrances. The current Rust download runs private **5v5 hero-only** team knockouts on the existing arena; the new map, portal traversal and round-based objective are design work for a later build. Soldier waves are paused, while their assets and code are retained.
 
 **Agentic cinematography study.** A local camera-blockout experiment evaluates a public editor copy and Sirio Berati's separate MIT-licensed camera pipeline. The four-second YUGA orbit is a placeholder reference, with a reproducible setup, a caption-access report and adoption gates. [Study, clip and roadmap](games/yuga-native/art/agentic-cinematography-2026/README.md)

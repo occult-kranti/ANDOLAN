@@ -1,0 +1,120 @@
+{
+  "scope": "Display-referred RGB pixel differences for one matched Blender idle still. Not an in-game screenshot, perceptual threshold, dynamic comparison, or physical GPU benchmark.",
+  "rationale": "The downsampled figure is about 175 pixels tall, approximating one observed browser practice camera; actual on-screen size and angle vary.",
+  "source_sha256": [
+    "257ff4daf8694d682acc4dbfd171729ed2d5575225cfa9259533c1e9eb113abf",
+    "334cfbedc552a4628ebe1ebe98b4a9d6e581344c018d16821b2a1230dd926fc1"
+  ],
+  "filter": {
+    "tool": "Intel Open Image Denoise CLI",
+    "binary_sha256": "1cb3a28ebc99b90d7548b0b8b16f70c163cb59abe8582458a254aa303338269c",
+    "mode": "RT, LDR sRGB",
+    "threads": 1,
+    "note": "Display-referred denoising without auxiliary albedo or normal passes."
+  },
+  "regions_source_xyxy": {
+    "face": [
+      180,
+      76,
+      255,
+      153
+    ],
+    "exposed_arm": [
+      298,
+      194,
+      365,
+      284
+    ],
+    "background_control": [
+      0,
+      58,
+      65,
+      550
+    ]
+  },
+  "results": {
+    "source_480x622": {
+      "resolution": [
+        480,
+        622
+      ],
+      "regions": {
+        "face": {
+          "region_xyxy": [
+            180,
+            76,
+            255,
+            153
+          ],
+          "mean_absolute_rgb_levels": 0.3084,
+          "p95_absolute_rgb_levels": 1.0,
+          "pixel_fraction_any_channel_over_2_levels": 0.03
+        },
+        "exposed_arm": {
+          "region_xyxy": [
+            298,
+            194,
+            365,
+            284
+          ],
+          "mean_absolute_rgb_levels": 1.1651,
+          "p95_absolute_rgb_levels": 5.0,
+          "pixel_fraction_any_channel_over_2_levels": 0.3078
+        },
+        "background_control": {
+          "region_xyxy": [
+            0,
+            58,
+            65,
+            550
+          ],
+          "mean_absolute_rgb_levels": 0.0003,
+          "p95_absolute_rgb_levels": 0.0,
+          "pixel_fraction_any_channel_over_2_levels": 0.0
+        }
+      }
+    },
+    "approx_gameplay_154x199": {
+      "resolution": [
+        154,
+        199
+      ],
+      "regions": {
+        "face": {
+          "region_xyxy": [
+            58,
+            24,
+            82,
+            49
+          ],
+          "mean_absolute_rgb_levels": 0.2528,
+          "p95_absolute_rgb_levels": 1.0,
+          "pixel_fraction_any_channel_over_2_levels": 0.0083
+        },
+        "exposed_arm": {
+          "region_xyxy": [
+            96,
+            62,
+            117,
+            91
+          ],
+          "mean_absolute_rgb_levels": 1.1866,
+          "p95_absolute_rgb_levels": 5.0,
+          "pixel_fraction_any_channel_over_2_levels": 0.312
+        },
+        "background_control": {
+          "region_xyxy": [
+            0,
+            19,
+            21,
+            176
+          ],
+          "mean_absolute_rgb_levels": 0.0003,
+          "p95_absolute_rgb_levels": 0.0,
+          "pixel_fraction_any_channel_over_2_levels": 0.0
+        }
+      }
+    }
+  },
+  "simulation_png_sha256": "d11984e509c2a924a9da05643e956513dab8a80d6f450ca0a1ad672d1045b66a"
+}
