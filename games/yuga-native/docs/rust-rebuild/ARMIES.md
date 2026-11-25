@@ -1,6 +1,6 @@
 # Confluence army simulation in Rust
 
-The `lanes` command takes a wave number and a number of simulation ticks. It lays out both armies on the original Confluence routes and reports where each unit would be after marching without opposition. This gives designers a reproducible way to compare composition, rank spacing, facing and arrival times on all three lanes. [Rust program and differential test](../../../yuga-rust/src/bin/lanes.rs) · [Canonical map](../../assets/world/confluence-map.json)
+The `lanes` command takes a wave number and a number of simulation ticks. It lays out both armies on the original Confluence routes and reports where each unit would be after marching without opposition. This gives designers a reproducible way to compare composition, rank spacing, facing and arrival times on all three lanes. [Shared Rust rules and differential test](../../../yuga-rust/src/army.rs) · [Command-line driver](../../../yuga-rust/src/bin/lanes.rs) · [Canonical map](../../assets/world/confluence-map.json)
 
 ```sh
 cargo run --locked --manifest-path games/yuga-rust/Cargo.toml --bin lanes -- 15 1200
@@ -23,17 +23,17 @@ The placement order, route direction, siege recurrence and arrival threshold com
 ## Verification
 
 ```sh
-cargo test --locked --manifest-path games/yuga-rust/Cargo.toml --bin lanes
+cargo test --locked --manifest-path games/yuga-rust/Cargo.toml --lib army::tests
 # Godot 4.6.3 with the native project's resources imported
-cargo test --locked --manifest-path games/yuga-rust/Cargo.toml --bin lanes -- --include-ignored
+cargo test --locked --manifest-path games/yuga-rust/Cargo.toml --lib army::tests -- --include-ignored
 ```
 
 The ordinary tests reconstruct the original 30-unit formation, then check all 14 per-role census rows recorded for events 2–15. They check faction symmetry per lane, a flanking unit straddling a lateral bend, reverse headings and the first arrival tick for all 38 wave-15 marchers. The source record used a cleared-spawn fixture between events. [Siege QA record](../evidence/siege-qa/army-final.json) · [Native fixture](../../tests/siege_army_cases.gd) · [Initial 30-unit and timing record](../evidence/siege-qa/lane-army-regression-final.json)
 
-The optional fourth test runs the current project in a separate Godot process. It compares all 136 native spawn rows from waves 1, 3, 5 and 15 against Rust, including per-role speeds, radii, headings, order and coordinates. It separately marches a single spearman along each lane from each end in Godot, compares sampled X/Z positions to within 1 mm and checks the exact arrival tick on all six journeys. All four tests passed on Godot 4.6.3 and Rust 1.88. Set the `GODOT_BIN` environment variable to select a different Godot executable. [Oracle and assertions](../../../yuga-rust/src/bin/lanes.rs)
+The optional fourth test runs the current project in a separate Godot process. It compares all 136 native spawn rows from waves 1, 3, 5 and 15 against Rust, including per-role speeds, radii, headings, order and coordinates. It separately marches a single spearman along each lane from each end in Godot, compares sampled X/Z positions to within 1 mm and checks the exact arrival tick on all six journeys. All four tests passed on Godot 4.6.3 and Rust 1.88. Set the `GODOT_BIN` environment variable to select a different Godot executable. [Oracle and assertions](../../../yuga-rust/src/army.rs)
 
 ## Next match integration
 
-This executable models one cleared wave at a time. Troops can pass through each other while marching, and reported arrivals mark route completion. The native match also tracks pressure across waves, target acquisition, attacks, body separation, deaths, rewards, core damage and winners. Those systems and browser rendering of these units remain outside this migration. The existing native Godot match includes those behaviors. [Native lifecycle test](../../tests/lane_army_cases.gd)
+The wave-number mode models one cleared wave at a time. Troops can pass through each other while marching, and reported arrivals mark route completion. The native match also tracks pressure across waves, target acquisition, attacks, body separation, deaths, rewards, core damage and winners. The isolated projection exercises spawn and movement independently of those systems. The existing native Godot match includes those behaviors. [Native lifecycle test](../../tests/lane_army_cases.gd)
 
-The next integration should retain live units between events, advance the fixed clock and admit each 10-unit infantry formation or 2-unit vehicle pair atomically. Run the existing native pressure fixture against the Rust equivalent and compare accepted lanes, troop counts and symmetrical refusals at the 72-live-unit limit. Follow with target selection and simultaneous impacts before comparing a 20-minute combat soak. [Original pressure and soak results](../evidence/siege-qa/army-final.json)
+The persistent mode now retains both armies between events, tracks both cores and admits formations atomically. Run the same command with `--match 24000` for 20 simulated minutes. The match guide reports its verification separately from the uncontested projections on this page. [Persistent match and source comparison](deep-search/ARMY-PORT.md) · [Original pressure and soak results](../evidence/siege-qa/army-final.json)

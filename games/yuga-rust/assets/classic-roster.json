@@ -1,0 +1,836 @@
+{
+  "schema": 1,
+  "sourceHashes": {
+    "heroes.ts": "2d22552cc2b700e4728317a66a29ca6357b35408f00fe8ede6093bc17d7db6d0",
+    "map.ts": "8de16e1ebedfbe3ddfb42f683c6d0e1947cb2ca9d9ed70ca8218adcb4209ca7d",
+    "simulation.ts": "e3fa766b06333eb00b5b9b8b03d938b22d5595bdef98b0ae07c0733d0e41a260"
+  },
+  "heroes": [
+    {
+      "id": "rama",
+      "name": "Rama",
+      "epithet": "The Steady Bow",
+      "origin": "Ramayana · original arena adaptation",
+      "role": "Striker",
+      "description": "A measured archer who keeps a clear firing lane and steps away from pressure. Strong aimed shots reward patient positioning.",
+      "silhouette": "Tall curved bow, swept sash, narrow crest",
+      "color": "#3cb8df",
+      "accent": "#ffdf85",
+      "health": 300,
+      "speed": 7.2,
+      "damage": 27,
+      "fireInterval": 0.48,
+      "projectileSpeed": 46,
+      "weapon": "bow",
+      "difficulty": 1,
+      "abilities": [
+        {
+          "kind": "bolt",
+          "name": "Steady Arrow",
+          "description": "Fire a powerful aimed projectile. Cover blocks the shot.",
+          "cooldown": 9,
+          "power": 54,
+          "range": 26,
+          "radius": 3,
+          "duration": 2,
+          "color": "#87e4ff"
+        },
+        {
+          "kind": "dash",
+          "name": "Measured Step",
+          "description": "Dash forward up to 10 metres. Walls stop the movement.",
+          "cooldown": 12,
+          "power": 25,
+          "range": 10,
+          "radius": 3,
+          "duration": 2,
+          "color": "#ffe39a"
+        },
+        {
+          "kind": "line",
+          "name": "Dawn Volley",
+          "description": "Brace in place for 1 second, then release three arrows along the locked firing angle. Each arrow can hit separately; cover blocks them.",
+          "cooldown": 44,
+          "power": 32,
+          "range": 28,
+          "radius": 3,
+          "duration": 2,
+          "color": "#fff0b7",
+          "mechanic": "dawn-volley",
+          "windup": 1
+        }
+      ]
+    },
+    {
+      "id": "ravana",
+      "name": "Ravana",
+      "epithet": "The Tenfold Strategist",
+      "origin": "Ramayana · original arena adaptation",
+      "role": "Vanguard",
+      "description": "A deliberate frontline controller. Gather enemies around a chosen point, then close the distance before releasing a nearby blast.",
+      "silhouette": "Ten-faceted crown, broad mantle, ring blade",
+      "color": "#ad71e8",
+      "accent": "#fbc86d",
+      "health": 390,
+      "speed": 6.4,
+      "damage": 26,
+      "fireInterval": 0.52,
+      "projectileSpeed": 34,
+      "weapon": "chakram",
+      "difficulty": 3,
+      "abilities": [
+        {
+          "kind": "ward",
+          "name": "Tenfold Guard",
+          "description": "Grant a temporary shield to yourself and nearby allies.",
+          "cooldown": 11,
+          "power": 48,
+          "range": 8,
+          "radius": 4,
+          "duration": 4,
+          "color": "#d1a0ff"
+        },
+        {
+          "kind": "pull",
+          "name": "Commanding Circle",
+          "description": "Damage enemies in the aimed circle and pull them toward its centre. Solid cover limits displacement.",
+          "cooldown": 16,
+          "power": 35,
+          "range": 20,
+          "radius": 5,
+          "duration": 2,
+          "color": "#e1a6ff"
+        },
+        {
+          "kind": "nova",
+          "name": "Crownfire",
+          "description": "Blast enemies around you in a broad circle.",
+          "cooldown": 48,
+          "power": 90,
+          "range": 8,
+          "radius": 7,
+          "duration": 2,
+          "color": "#ffce80"
+        }
+      ]
+    },
+    {
+      "id": "arjuna",
+      "name": "Arjuna",
+      "epithet": "The Focused Archer",
+      "origin": "Mahabharata · original arena adaptation",
+      "role": "Striker",
+      "description": "A quick archer who changes angles between volleys. High mobility comes with the roster’s smallest health reserve.",
+      "silhouette": "Long bow, split shoulder scarf, high quiver",
+      "color": "#6599fa",
+      "accent": "#f5e7bd",
+      "health": 275,
+      "speed": 7.7,
+      "damage": 20,
+      "fireInterval": 0.35,
+      "projectileSpeed": 48,
+      "weapon": "bow",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "burst",
+          "name": "Converging Volley",
+          "description": "Strike enemies in a forward fan within 18 metres.",
+          "cooldown": 8,
+          "power": 38,
+          "range": 18,
+          "radius": 5,
+          "duration": 2,
+          "color": "#a5c8ff"
+        },
+        {
+          "kind": "dash",
+          "name": "New Angle",
+          "description": "Dash forward up to 12 metres to change your firing position.",
+          "cooldown": 11,
+          "power": 25,
+          "range": 12,
+          "radius": 3,
+          "duration": 2,
+          "color": "#d5e3ff"
+        },
+        {
+          "kind": "line",
+          "name": "One Clear Line",
+          "description": "Fire a fast, heavy projectile along your aim.",
+          "cooldown": 42,
+          "power": 88,
+          "range": 28,
+          "radius": 3,
+          "duration": 2,
+          "color": "#edf4ff"
+        }
+      ]
+    },
+    {
+      "id": "duryodhana",
+      "name": "Duryodhana",
+      "epithet": "The Unyielding Mace",
+      "origin": "Mahabharata · original arena adaptation",
+      "role": "Vanguard",
+      "description": "A durable close-pressure fighter. Hold a position with a small allied shield, then punish enemies who remain in front of you.",
+      "silhouette": "Square shoulder guards, low crown, heavy mace",
+      "color": "#c58b48",
+      "accent": "#ffe2a5",
+      "health": 410,
+      "speed": 6.2,
+      "damage": 29,
+      "fireInterval": 0.55,
+      "projectileSpeed": 26,
+      "weapon": "mace",
+      "difficulty": 1,
+      "abilities": [
+        {
+          "kind": "burst",
+          "name": "Mace Shock",
+          "description": "Strike enemies in the short area in front of you.",
+          "cooldown": 10,
+          "power": 48,
+          "range": 10,
+          "radius": 5,
+          "duration": 2,
+          "color": "#ffd18c"
+        },
+        {
+          "kind": "ward",
+          "name": "Hold the Ground",
+          "description": "Shield yourself and close allies for a brief defensive stand.",
+          "cooldown": 15,
+          "power": 55,
+          "range": 8,
+          "radius": 4,
+          "duration": 4,
+          "color": "#ffe7bc"
+        },
+        {
+          "kind": "cone",
+          "name": "Iron Crescent",
+          "description": "Sweep a heavy wave through enemies in a broad forward cone.",
+          "cooldown": 46,
+          "power": 92,
+          "range": 12,
+          "radius": 8,
+          "duration": 2,
+          "color": "#fff0cd"
+        }
+      ]
+    },
+    {
+      "id": "hanuman",
+      "name": "Hanuman",
+      "epithet": "The Returning Leap",
+      "origin": "Ramayana · original arena adaptation",
+      "role": "Keeper",
+      "description": "A mobile ally who leaps between skirmishes and restores nearby teammates. His final pulse rewards reaching a crowded frontline.",
+      "silhouette": "Curved tail, flowing scarf, rounded mace",
+      "color": "#e79c61",
+      "accent": "#fff3bd",
+      "health": 350,
+      "speed": 7.6,
+      "damage": 23,
+      "fireInterval": 0.46,
+      "projectileSpeed": 29,
+      "weapon": "mace",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "leap",
+          "name": "Windward Leap",
+          "description": "Leap forward up to 14 metres. Solid obstacles stop your advance.",
+          "cooldown": 9,
+          "power": 28,
+          "range": 14,
+          "radius": 3,
+          "duration": 2,
+          "color": "#ffe1a6"
+        },
+        {
+          "kind": "heal",
+          "name": "Bring Them Home",
+          "description": "Restore health to yourself and allies close to you.",
+          "cooldown": 14,
+          "power": 48,
+          "range": 8,
+          "radius": 5,
+          "duration": 3,
+          "color": "#a9f0c9"
+        },
+        {
+          "kind": "nova",
+          "name": "Mountain Pulse",
+          "description": "Brace for 0.7 seconds, then leap to the aimed ground point. On landing, damage nearby enemies and heal nearby allies. Cover limits travel.",
+          "cooldown": 45,
+          "power": 65,
+          "range": 14,
+          "radius": 7,
+          "duration": 2,
+          "color": "#fff0be",
+          "mechanic": "mountain-descent",
+          "windup": 0.7
+        }
+      ]
+    },
+    {
+      "id": "karna",
+      "name": "Karna",
+      "epithet": "The Sunlit Challenger",
+      "origin": "Mahabharata · original arena adaptation",
+      "role": "Striker",
+      "description": "A slower marksman with heavy basic shots. A brief guard lets him hold an angle; his close-range final burst answers an enemy rush.",
+      "silhouette": "Radiant shoulder discs, crescent bow, long sash",
+      "color": "#e5ac35",
+      "accent": "#fff5cb",
+      "health": 315,
+      "speed": 6.8,
+      "damage": 30,
+      "fireInterval": 0.55,
+      "projectileSpeed": 43,
+      "weapon": "bow",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "line",
+          "name": "Sunshaft",
+          "description": "Fire a fast aimed projectile through a clear firing lane.",
+          "cooldown": 11,
+          "power": 62,
+          "range": 27,
+          "radius": 3,
+          "duration": 2,
+          "color": "#ffe399"
+        },
+        {
+          "kind": "ward",
+          "name": "Borrowed Dawn",
+          "description": "Give yourself and nearby allies a short-lived shield.",
+          "cooldown": 16,
+          "power": 42,
+          "range": 8,
+          "radius": 4,
+          "duration": 3,
+          "color": "#fff0b9"
+        },
+        {
+          "kind": "nova",
+          "name": "Solar Reprisal",
+          "description": "Strike enemies immediately around you with a bright area blast.",
+          "cooldown": 50,
+          "power": 95,
+          "range": 8,
+          "radius": 6,
+          "duration": 2,
+          "color": "#fff4d5"
+        }
+      ]
+    },
+    {
+      "id": "bhima",
+      "name": "Bhima",
+      "epithet": "The Forward Storm",
+      "origin": "Mahabharata · original arena adaptation",
+      "role": "Vanguard",
+      "description": "A forceful close-range fighter who commits to a lane. Leap into reach, pressure the forward arc and save the broad blast for a contested objective.",
+      "silhouette": "Broad torso, crossed straps, long-headed mace",
+      "color": "#62b88d",
+      "accent": "#eaf4bc",
+      "health": 400,
+      "speed": 6.4,
+      "damage": 28,
+      "fireInterval": 0.55,
+      "projectileSpeed": 27,
+      "weapon": "mace",
+      "difficulty": 1,
+      "abilities": [
+        {
+          "kind": "cone",
+          "name": "Heavy Sweep",
+          "description": "Strike enemies in a close forward cone.",
+          "cooldown": 10,
+          "power": 52,
+          "range": 10,
+          "radius": 5,
+          "duration": 2,
+          "color": "#b2efba"
+        },
+        {
+          "kind": "leap",
+          "name": "Closing Stride",
+          "description": "Leap forward up to 12 metres. Walls stop the advance.",
+          "cooldown": 15,
+          "power": 32,
+          "range": 12,
+          "radius": 3,
+          "duration": 2,
+          "color": "#d6f2bb"
+        },
+        {
+          "kind": "nova",
+          "name": "Thunder at Your Feet",
+          "description": "Damage enemies in a wide circle around you.",
+          "cooldown": 48,
+          "power": 92,
+          "range": 8,
+          "radius": 8,
+          "duration": 2,
+          "color": "#efffcf"
+        }
+      ]
+    },
+    {
+      "id": "meghnad",
+      "name": "Meghnad",
+      "epithet": "The Cloudline Archer",
+      "origin": "Ramayana · Indrajit/Meghnad traditions; original arena kit",
+      "role": "Striker",
+      "description": "A swift disruptor who places slowing pressure before changing angle. Catch a lane in the cloud zone, then turn a flank into a forward burst.",
+      "silhouette": "Forked crest, compact bow, layered cloud scarf",
+      "color": "#857ee0",
+      "accent": "#bce9ff",
+      "health": 285,
+      "speed": 7.8,
+      "damage": 22,
+      "fireInterval": 0.4,
+      "projectileSpeed": 42,
+      "weapon": "bow",
+      "difficulty": 3,
+      "abilities": [
+        {
+          "kind": "slow",
+          "name": "Cloud Snare",
+          "description": "Place an aimed zone that damages and slows enemies who remain inside.",
+          "cooldown": 12,
+          "power": 28,
+          "range": 22,
+          "radius": 4,
+          "duration": 3,
+          "color": "#a8b2ff"
+        },
+        {
+          "kind": "dash",
+          "name": "Storm Step",
+          "description": "Dash forward up to 13 metres, stopping at solid cover.",
+          "cooldown": 12,
+          "power": 25,
+          "range": 13,
+          "radius": 3,
+          "duration": 2,
+          "color": "#b5dcff"
+        },
+        {
+          "kind": "burst",
+          "name": "Gathered Squall",
+          "description": "Strike enemies in a long forward fan.",
+          "cooldown": 43,
+          "power": 78,
+          "range": 22,
+          "radius": 7,
+          "duration": 2,
+          "color": "#dce7ff"
+        }
+      ]
+    },
+    {
+      "id": "sita",
+      "name": "Sita",
+      "epithet": "The Patient Grove",
+      "origin": "Ramayana · original protective arena adaptation",
+      "role": "Keeper",
+      "description": "A resilient protector. Restore nearby allies, shape the approach with a slowing zone and shield a gathered team.",
+      "silhouette": "Leaf-tipped staff, long mantle, seed-shaped crest",
+      "color": "#69c8a2",
+      "accent": "#ffe3b1",
+      "health": 330,
+      "speed": 6.8,
+      "damage": 19,
+      "fireInterval": 0.45,
+      "projectileSpeed": 32,
+      "weapon": "staff",
+      "difficulty": 1,
+      "abilities": [
+        {
+          "kind": "heal",
+          "name": "Grove Renewal",
+          "description": "Restore health to yourself and allies within the nearby circle.",
+          "cooldown": 10,
+          "power": 50,
+          "range": 8,
+          "radius": 5,
+          "duration": 3,
+          "color": "#b3f3d0"
+        },
+        {
+          "kind": "slow",
+          "name": "Rooted Path",
+          "description": "Place an aimed zone that damages and slows enemies crossing it.",
+          "cooldown": 15,
+          "power": 25,
+          "range": 18,
+          "radius": 5,
+          "duration": 4,
+          "color": "#9be2b7"
+        },
+        {
+          "kind": "ward",
+          "name": "Shelter of Mithila",
+          "description": "Prepare in place for 0.8 seconds, then raise a fixed sanctuary for 6 seconds. Nearby allies gain a shield; allies who remain inside steadily recover health.",
+          "cooldown": 46,
+          "power": 70,
+          "range": 8,
+          "radius": 8,
+          "duration": 6,
+          "color": "#f1eab3",
+          "mechanic": "mithila-sanctuary",
+          "windup": 0.8
+        }
+      ]
+    },
+    {
+      "id": "draupadi",
+      "name": "Draupadi",
+      "epithet": "The Unbroken Voice",
+      "origin": "Mahabharata · original protective arena adaptation",
+      "role": "Keeper",
+      "description": "A resolute guardian. Shield allies, gather approaching enemies into a clear target area and restore a team holding its ground.",
+      "silhouette": "Five-point mantle clasp, flame staff, upright crown",
+      "color": "#d4759b",
+      "accent": "#ffe1a8",
+      "health": 340,
+      "speed": 6.5,
+      "damage": 20,
+      "fireInterval": 0.48,
+      "projectileSpeed": 33,
+      "weapon": "staff",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "ward",
+          "name": "Circle of Resolve",
+          "description": "Give yourself and close allies a temporary shield.",
+          "cooldown": 10,
+          "power": 46,
+          "range": 8,
+          "radius": 5,
+          "duration": 4,
+          "color": "#f1aed1"
+        },
+        {
+          "kind": "pull",
+          "name": "Stand Accountable",
+          "description": "Damage enemies in the aimed circle and pull them toward its centre; solid cover limits movement.",
+          "cooldown": 17,
+          "power": 30,
+          "range": 19,
+          "radius": 5,
+          "duration": 2,
+          "color": "#ffd0df"
+        },
+        {
+          "kind": "heal",
+          "name": "Unbroken Assembly",
+          "description": "Restore a large amount of health to yourself and allies in a broad nearby circle.",
+          "cooldown": 48,
+          "power": 95,
+          "range": 8,
+          "radius": 8,
+          "duration": 4,
+          "color": "#ffe5b8"
+        }
+      ]
+    },
+    {
+      "id": "subhadra",
+      "name": "Subhadra",
+      "epithet": "The Rallying Standard",
+      "origin": "Mahabharata · original commander arena adaptation",
+      "role": "Keeper",
+      "description": "A mobile field commander. An aimed opening shot and a small recovery circle support teammates; temporary allied sentinels reinforce a contested lane.",
+      "silhouette": "Spear pennant, rounded shoulder guards, side braid",
+      "color": "#64bbc5",
+      "accent": "#ffe8a4",
+      "health": 315,
+      "speed": 7.2,
+      "damage": 22,
+      "fireInterval": 0.45,
+      "projectileSpeed": 38,
+      "weapon": "spear",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "bolt",
+          "name": "Signal Lance",
+          "description": "Fire an aimed energy projectile toward the opposing line.",
+          "cooldown": 9,
+          "power": 44,
+          "range": 24,
+          "radius": 3,
+          "duration": 2,
+          "color": "#a9edf1"
+        },
+        {
+          "kind": "heal",
+          "name": "Rally Close",
+          "description": "Restore health to yourself and allies close to your position.",
+          "cooldown": 13,
+          "power": 42,
+          "range": 8,
+          "radius": 4,
+          "duration": 3,
+          "color": "#cff7d4"
+        },
+        {
+          "kind": "summon",
+          "name": "Twin Standards",
+          "description": "Call two temporary allied sentinels beside you for 9 seconds.",
+          "cooldown": 48,
+          "power": 28,
+          "range": 10,
+          "radius": 4,
+          "duration": 3,
+          "color": "#ffebac"
+        }
+      ]
+    },
+    {
+      "id": "hidimbi",
+      "name": "Hidimbi",
+      "epithet": "The Forest Sentinel",
+      "origin": "Mahabharata · original forest-guardian arena adaptation",
+      "role": "Vanguard",
+      "description": "A guardian with a strong presence around objectives. Control an approach, protect close allies and reinforce the lane with temporary sentinels.",
+      "silhouette": "Broad leaf mantle, braided crest, forked spear",
+      "color": "#7da96e",
+      "accent": "#f1d6a3",
+      "health": 375,
+      "speed": 6.8,
+      "damage": 24,
+      "fireInterval": 0.5,
+      "projectileSpeed": 31,
+      "weapon": "spear",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "slow",
+          "name": "Forest Boundary",
+          "description": "Place a nearby aimed zone that damages and slows enemies inside it.",
+          "cooldown": 12,
+          "power": 27,
+          "range": 16,
+          "radius": 5,
+          "duration": 4,
+          "color": "#b9dc96"
+        },
+        {
+          "kind": "ward",
+          "name": "Canopy Guard",
+          "description": "Shield yourself and allies standing close to you.",
+          "cooldown": 16,
+          "power": 50,
+          "range": 8,
+          "radius": 5,
+          "duration": 4,
+          "color": "#d5eab2"
+        },
+        {
+          "kind": "summon",
+          "name": "Grove Watch",
+          "description": "Call two temporary allied sentinels beside you for 9 seconds.",
+          "cooldown": 52,
+          "power": 32,
+          "range": 10,
+          "radius": 4,
+          "duration": 3,
+          "color": "#f2dfac"
+        }
+      ]
+    },
+    {
+      "id": "chitrangada",
+      "name": "Chitrangada",
+      "epithet": "The Crossing Spear",
+      "origin": "Mahabharata · original duelist arena adaptation",
+      "role": "Vanguard",
+      "description": "An agile defender who crosses a firing lane, answers with a spear arc and protects nearby allies. Her speed trades away the heavier vanguards’ health.",
+      "silhouette": "Short segmented mantle, braided knot, crescent spear",
+      "color": "#ca785d",
+      "accent": "#ffe0a5",
+      "health": 350,
+      "speed": 7.5,
+      "damage": 24,
+      "fireInterval": 0.46,
+      "projectileSpeed": 37,
+      "weapon": "spear",
+      "difficulty": 2,
+      "abilities": [
+        {
+          "kind": "dash",
+          "name": "Crossing Step",
+          "description": "Dash forward up to 12 metres to cross or leave a firing lane. Solid obstacles stop movement.",
+          "cooldown": 9,
+          "power": 25,
+          "range": 12,
+          "radius": 3,
+          "duration": 2,
+          "color": "#f1bb94"
+        },
+        {
+          "kind": "cone",
+          "name": "Spear Arc",
+          "description": "Strike enemies in a close forward cone with a sweeping energy blade.",
+          "cooldown": 12,
+          "power": 44,
+          "range": 11,
+          "radius": 4,
+          "duration": 2,
+          "color": "#ffdcaf"
+        },
+        {
+          "kind": "ward",
+          "name": "Defender’s Vow",
+          "description": "Grant a strong temporary shield to yourself and nearby allies. Gather close before committing to the fight.",
+          "cooldown": 44,
+          "power": 80,
+          "range": 8,
+          "radius": 6,
+          "duration": 4,
+          "color": "#fff0c7"
+        }
+      ]
+    },
+    {
+      "id": "ulupi",
+      "name": "Ulupi",
+      "epithet": "The Riverward Keeper",
+      "origin": "Mahabharata · original naga-inspired arena adaptation",
+      "role": "Keeper",
+      "description": "A guardian who gathers opponents into a clear target area and restores nearby allies. Her broad slowing zone controls an approach while leaving other routes open.",
+      "silhouette": "Wave crest, scale-edged collar, water-ring staff",
+      "color": "#4cb3c0",
+      "accent": "#d6f6e4",
+      "health": 320,
+      "speed": 7,
+      "damage": 20,
+      "fireInterval": 0.46,
+      "projectileSpeed": 35,
+      "weapon": "staff",
+      "difficulty": 3,
+      "abilities": [
+        {
+          "kind": "pull",
+          "name": "River Draw",
+          "description": "Damage enemies in the aimed circle and draw them toward its centre. Solid cover limits displacement.",
+          "cooldown": 12,
+          "power": 28,
+          "range": 19,
+          "radius": 4,
+          "duration": 2,
+          "color": "#9be5eb"
+        },
+        {
+          "kind": "heal",
+          "name": "Cooling Current",
+          "description": "Restore health to yourself and allies standing nearby.",
+          "cooldown": 14,
+          "power": 44,
+          "range": 8,
+          "radius": 5,
+          "duration": 3,
+          "color": "#bff4df"
+        },
+        {
+          "kind": "slow",
+          "name": "Naga Basin",
+          "description": "Place a broad aimed zone that damages and slows enemies remaining inside for up to 6 seconds.",
+          "cooldown": 46,
+          "power": 72,
+          "range": 23,
+          "radius": 7,
+          "duration": 6,
+          "color": "#a4e7dd"
+        }
+      ]
+    }
+  ],
+  "solids": [
+    {
+      "x": -20,
+      "z": -28,
+      "w": 18,
+      "d": 18,
+      "height": 10,
+      "style": "sandstone"
+    },
+    {
+      "x": -20,
+      "z": 28,
+      "w": 18,
+      "d": 18,
+      "height": 12,
+      "style": "sandstone"
+    },
+    {
+      "x": 20,
+      "z": -28,
+      "w": 18,
+      "d": 18,
+      "height": 15,
+      "style": "modern"
+    },
+    {
+      "x": 20,
+      "z": 28,
+      "w": 18,
+      "d": 18,
+      "height": 18,
+      "style": "modern"
+    },
+    {
+      "x": -63,
+      "z": -18,
+      "w": 12,
+      "d": 20,
+      "height": 8,
+      "style": "sandstone"
+    },
+    {
+      "x": -63,
+      "z": 22,
+      "w": 12,
+      "d": 20,
+      "height": 9,
+      "style": "sandstone"
+    },
+    {
+      "x": 63,
+      "z": -18,
+      "w": 12,
+      "d": 20,
+      "height": 20,
+      "style": "modern"
+    },
+    {
+      "x": 63,
+      "z": 22,
+      "w": 12,
+      "d": 20,
+      "height": 16,
+      "style": "modern"
+    }
+  ],
+  "rules": {
+    "heroRadius": 0.65,
+    "towerRadius": 1.8,
+    "coreRadius": 2.8,
+    "maxActors": 96,
+    "maxProjectiles": 192,
+    "maxZones": 32,
+    "eventHistory": 64,
+    "waveSeconds": 18,
+    "baseRadius": 15,
+    "inputExpiry": 0.35
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "scope": "Two isolated Chromium sessions and an authoritative room host",
+  "html_sha256": "ae71719a7491b74ede01649eab68f0e3d766da48129183ae6cfa56aff038f547",
+  "zip_sha256": "906b24a09436e298bbde51b3896aa1532325328db94827bec6f3ca395e1953c7",
+  "test_sha256": "4e55397de3c03c19f8c6d61fba5904adcabdcd5c1fc69b6f1f87dc615e457076",
+  "harness_sha256": "fe042ccc741b4ff2291b72a297220dc32b3f907b0e0f4f73cb60813d0c95b166",
+  "checks": [
+    "room assigns distinct teams and renders the selected rival rig in both browsers",
+    "the Moon camera faces the opposing lane direction",
+    "guest sees Hanuman move to the position accepted by the room host",
+    "Rama’s browser receives Hanuman’s committed rear sweep",
+    "Hanuman’s browser receives the rival bow volley from Rama",
+    "each browser used one same-origin room socket",
+    "host can return to a local match after the opponent leaves",
+    "all game assets were embedded and no external requests occurred",
+    "no uncaught browser errors"
+  ],
+  "renderers": {
+    "rama": {
+      "heroBones": 164,
+      "heroClips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "run",
+        "circle_draw",
+        "circle_release",
+        "dash",
+        "dash_release",
+        "draw",
+        "piercing_draw",
+        "piercing_release",
+        "release",
+        "volley_draw",
+        "volley_release"
+      ],
+      "armyVisible": 30,
+      "armyNear": 10,
+      "armyRoles": [
+        "spearman",
+        "bow_guard",
+        "commander"
+      ],
+      "objectiveCount": 8,
+      "lanes": 3
+    },
+    "hanuman": {
+      "heroBones": 167,
+      "heroClips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "mountain_pulse",
+        "run",
+        "tail_sweep"
+      ],
+      "armyVisible": 30,
+      "armyNear": 10,
+      "armyRoles": [
+        "spearman",
+        "bow_guard",
+        "commander"
+      ],
+      "objectiveCount": 8,
+      "lanes": 3
+    }
+  },
+  "requests": {
+    "documents": 2,
+    "room_sockets": 2,
+    "unexpected": []
+  },
+  "page_errors": [],
+  "browser": "154.0.8037.57",
+  "seat_viewport": {
+    "width": 760,
+    "height": 480
+  },
+  "replicated_movement": {
+    "from": [
+      0,
+      -5.399993896484375
+    ],
+    "during": [
+      0,
+      -4.399993896484375
+    ],
+    "to": [
+      0,
+      -0.399993896484375
+    ],
+    "guest_observed": [
+      0,
+      -0.399993896484375
+    ]
+  },
+  "synchronized_casts": [
+    {
+      "id": "lanka_dahan",
+      "owner": "hanuman",
+      "local_release_tick": 753,
+      "remote": {
+        "owner": "hanuman",
+        "tick": 746,
+        "clip": "tail_sweep"
+      },
+      "remote_render": {
+        "frames": 0,
+        "effect": false,
+        "clip": null
+      }
+    },
+    {
+      "id": "dawn_volley",
+      "owner": "rama",
+      "local_release_tick": 933,
+      "remote": {
+        "owner": "rama",
+        "tick": 916,
+        "clip": "volley_draw"
+      },
+      "remote_render": {
+        "frames": 4,
+        "effect": true,
+        "clip": "volley_draw"
+      }
+    }
+  ],
+  "screenshot_sha256": "8f0e4f18bef8e41afc74205d3b91612017c1d0839b29b15e154ac079078a053e",
+  "room_messages": [
+    {
+      "type": "closed",
+      "message": "A player left the room."
+    }
+  ],
+  "passed": true
+}

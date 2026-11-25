@@ -1,6 +1,6 @@
 # Start here: project and agent handoff
 
-**Rust game and handoff.** Start a Rust task with the playable package, the source-specific reuse decisions and the next migration gate. [Play and build](../games/yuga-rust/README.md) · [Five-round research and migration roadmap](../games/yuga-native/docs/rust-rebuild/README.md)
+**Rust game and handoff.** Start here for the playable two-hero lane match, packaged room server, and the source-backed roadmap from this build to the full roster and team game. [Play, host and rebuild](../games/yuga-rust/README.md) · [Source search and verification](../games/yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 Use the [project history library](../games/yuga-native/docs/PROJECT_HISTORY_LIBRARY.md) to recover a specific build, original brief, art study or source decision. For an art or runtime change, choose the artifact first, then follow the [production-round skill](../.agents/skills/yuga-art-production-rounds/SKILL.md).
 

@@ -383,3 +383,82 @@ dialog::backdrop {
     display: none;
   }
 }
+
+.hero-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-size: 0.9rem;
+  color: #e8dcc3;
+  font-family: DM, sans-serif;
+}
+.hero-choice select,
+.rooms input {
+  font: inherit;
+  color: #fff4dc;
+  background: #22312e;
+  border: 1px solid #778077;
+  border-radius: 3px;
+  padding: 0.45rem 0.6rem;
+}
+.entry-actions {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0.5rem;
+}
+.rooms {
+  font-size: 0.85rem;
+  color: #e4ddca;
+  max-width: 360px;
+}
+.rooms summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+#room-controls {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#room-controls button {
+  padding: 0.45rem 0.6rem;
+}
+#room-code {
+  width: 6.3rem;
+  text-transform: uppercase;
+}
+#room-status {
+  margin: 0.3rem 0;
+  line-height: 1.4;
+}
+#match-detail {
+  display: block;
+  font-size: 12px;
+  color: #e1d4b6;
+  margin-top: 0.2em;
+}
+#match-detail:empty {
+  display: none;
+}
+@media (max-height: 650px) {
+  .title-panel {
+    padding: 20px 4vw;
+  }
+  .title-copy {
+    margin: 8px 0;
+  }
+  .title-copy h1 {
+    font-size: clamp(45px, 8vh, 72px);
+    margin: 4px 0;
+  }
+  .title-copy .intro {
+    margin: 8px 0;
+  }
+  .title-copy .entry-actions {
+    margin: 0.6rem 0 0.1rem;
+  }
+}

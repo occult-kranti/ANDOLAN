@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 from tempfile import TemporaryDirectory
 from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 
@@ -72,11 +73,16 @@ def notices(workspace):
         for path in paths:
             include(label, path.read_text(errors="replace"))
     for label, path in {
+        "OpenBF stereo limiter (MIT)": PROJECT / "src/vendor/openbf/LICENSE",
+        "Rama original instrument cues": NATIVE
+        / "assets/audio/rama-quality/manifest.json",
+        "ws WebSocket transport": ROOT / "node_modules/ws/LICENSE",
         "PlayCanvas": ROOT / "node_modules/playcanvas/LICENSE",
         "DM Sans": ROOT / "node_modules/@fontsource/dm-sans/LICENSE",
         "Barlow Condensed": ROOT / "node_modules/@fontsource/barlow-condensed/LICENSE",
         "YUGA browser models and environment": BROWSER / "THIRD_PARTY_NOTICES.md",
         "YUGA Hanuman art": NATIVE / "art/hanuman/NOTICE.md",
+        "YUGA Rama rig": NATIVE / "NOTICE/RAMA-HERO-PROVENANCE.json",
         "YUGA original cues": NATIVE / "NOTICE/HANUMAN-ABILITY-AUDIO.json",
     }.items():
         include(label, path.read_text())
@@ -122,17 +128,44 @@ def main():
             cwd=PROJECT,
             check=True,
         )
+        rama = stage / "rama.glb"
+        subprocess.run(
+            [sys.executable, PROJECT / "tools/pack_rama.py", "--lod", "far", rama],
+            cwd=PROJECT,
+            check=True,
+        )
         runner = """require('esbuild').buildSync({entryPoints:[process.argv[1]],outfile:process.argv[2],bundle:true,minify:true,legalComments:'inline',target:'es2022',logLevel:'error'});"""
         subprocess.run(
             ["node", "-e", runner, str(WEB / "main.ts"), str(stage / "client.js")],
             cwd=ROOT,
             check=True,
         )
+        host_runner = """require('esbuild').buildSync({
+            entryPoints:[process.argv[1]],outfile:process.argv[2],bundle:true,platform:'node',
+            format:'esm',target:'node22',external:['bufferutil','utf-8-validate'],legalComments:'inline',
+            banner:{js:"import { createRequire as __roomRequire } from 'node:module'; const require = __roomRequire(import.meta.url);"}
+        });"""
+        subprocess.run(
+            [
+                "node",
+                "-e",
+                host_runner,
+                str(PROJECT / "tools/serve_rooms.mjs"),
+                str(stage / "serve_rooms.mjs"),
+            ],
+            cwd=ROOT,
+            check=True,
+        )
+        (stage / "room-wasm.mjs").write_bytes(
+            (PROJECT / "tools/room-wasm.mjs").read_bytes()
+        )
         assets = {
             "wasm": Path(metadata["target_directory"])
             / TARGET
             / "release/yuga_rust.wasm",
             "hero": hero,
+            "rama": rama,
+            "vehicles": WEB / "art/army-vehicles.glb",
             "soldier": BROWSER / "client/assets/units/soldier.glb",
             "architecture": NATIVE / "assets/world/architecture.glb",
             "nature": NATIVE / "assets/world/nature.glb",
@@ -144,13 +177,20 @@ def main():
         }
         for cue in sorted((NATIVE / "assets/audio/hanuman-trial").glob("*.wav")):
             assets["audio/" + cue.stem] = cue
+        for cue in sorted((NATIVE / "assets/audio/rama-quality").glob("*.wav")):
+            assets["audio/rama/" + cue.stem] = cue
         blobs = {name: path.read_bytes() for name, path in assets.items()}
+        (stage / "yuga-rust.wasm").write_bytes(blobs["wasm"])
         payload = {
             "map": json.loads(
                 (NATIVE / "assets/world/confluence-map.json").read_text()
             ),
+            "mixWorklet": (WEB / "mix-worklet.js").read_text(),
             "kit": json.loads(
                 (NATIVE / "assets/design/hanuman-ability-kit.json").read_text()
+            ),
+            "ramaKit": json.loads(
+                (NATIVE / "assets/design/rama-ability-kit.json").read_text()
             ),
             "notices": notices(stage),
             "blobs": {
@@ -175,6 +215,10 @@ def main():
             "rustc": capture(["rustc", "--version"]).strip(),
             "target": TARGET,
             "tick_hz": 20,
+            "hosts": {
+                name: sha((stage / name).read_bytes())
+                for name in ["serve_rooms.mjs", "room-wasm.mjs", "yuga-rust.wasm"]
+            },
             "html_sha256": sha((stage / filename).read_bytes()),
             "blobs": {
                 key: {"bytes": len(raw), "sha256": sha(raw)}
@@ -183,17 +227,25 @@ def main():
         }
         (stage / "build.json").write_text(json.dumps(report, indent=2) + "\n")
         (stage / "PLAY.txt").write_text(
-            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nBegin practice, move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Defeat all three Moon guards. Clicking an ability button selects it for your next arena click. Escape cancels targeting or pauses.\n"
+            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nChoose a hero and play a lane match, or choose Hanuman practice to defeat three Moon guards. Move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Advance your soldiers to the opposing core. For two-player rooms install Node 22.12 or newer. In this extracted folder run node serve_rooms.mjs, then open http://127.0.0.1:8787. To play across a trusted LAN, run node serve_rooms.mjs --host 0.0.0.0 and both players open http://HOST-LAN-IP:8787. One player creates a room and shares its code; the second joins. Leave the terminal running while playing. Clicking an ability button selects it for your next arena click. Escape cancels targeting or pauses.\n"
         )
-        with ZipFile(stage / "yuga-rust-practice.zip", "w") as archive:
-            for name in [filename, "PLAY.txt", "build.json", "THIRD-PARTY.txt"]:
+        with ZipFile(stage / "yuga-rust-confluence.zip", "w") as archive:
+            for name in [
+                filename,
+                "PLAY.txt",
+                "build.json",
+                "THIRD-PARTY.txt",
+                "serve_rooms.mjs",
+                "room-wasm.mjs",
+                "yuga-rust.wasm",
+            ]:
                 archive.writestr(
                     ZipInfo(name),
                     (stage / name).read_bytes(),
                     compress_type=ZIP_DEFLATED,
                     compresslevel=7,
                 )
-        for name in [filename, "build.json", "yuga-rust-practice.zip"]:
+        for name in [filename, "build.json", "yuga-rust-confluence.zip"]:
             os.replace(stage / name, out / name)
         print(f"{out/filename}    {report['html_sha256']}")
 

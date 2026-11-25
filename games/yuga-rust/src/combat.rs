@@ -160,18 +160,21 @@ impl Geometry {
     }
 }
 
-struct Unit {
-    id: u32,
-    team: &'static str,
-    pos: Point,
-    hp: f64,
-    max_hp: f64,
-    shield: f64,
-    shield_until: u32,
+#[derive(Clone, Debug)]
+pub struct Receiver {
+    pub id: u32,
+    pub team: &'static str,
+    pub pos: Point,
+    pub hp: f64,
+    pub max_hp: f64,
+    pub shield: f64,
+    pub shield_until: u32,
+    pub radius: f32,
+    pub height: f32,
 }
 
-impl Unit {
-    fn new(id: u32, team: &'static str, pos: Point, hp: f64, max_hp: f64) -> Self {
+impl Receiver {
+    pub fn new(id: u32, team: &'static str, pos: Point, hp: f64, max_hp: f64) -> Self {
         Self {
             id,
             team,
@@ -180,18 +183,20 @@ impl Unit {
             max_hp,
             shield: 0.0,
             shield_until: 0,
+            radius: 0.45,
+            height: 1.8,
         }
     }
-    fn state(&self) -> Value {
+    pub fn state(&self) -> Value {
         json!({"id":self.id,"team":self.team,"pos":self.pos,"hp":self.hp,
             "max_hp":self.max_hp,"shield":self.shield,"alive":self.hp>0.0})
     }
-    fn expire_shield(&mut self, now: u32) {
+    pub fn expire_shield(&mut self, now: u32) {
         if now >= self.shield_until {
             self.shield = 0.0;
         }
     }
-    fn damage(&mut self, amount: f64) {
+    pub fn damage(&mut self, amount: f64) {
         let absorbed = self.shield.min(amount);
         self.shield -= absorbed;
         self.hp = (self.hp - (amount - absorbed)).max(0.);
@@ -246,8 +251,8 @@ pub struct Combat {
     generation: u32,
     next_cast: u32,
     seq: u32,
-    actor: Unit,
-    targets: Vec<Unit>,
+    actor: Receiver,
+    targets: Vec<Receiver>,
     aim: Point,
     height: f32,
     cooldowns: [u32; 5],
@@ -304,7 +309,7 @@ impl Combat {
             generation: 0,
             next_cast: 0,
             seq: 0,
-            actor: Unit::new(0, "sun", [0., -55.], 275., 300.),
+            actor: Receiver::new(0, "sun", [0., -55.], 275., 300.),
             targets: Vec::new(),
             aim: [0., 1.],
             height: 0.,
@@ -321,18 +326,42 @@ impl Combat {
         self.generation = self.generation.wrapping_add(1);
         self.next_cast = 0;
         self.seq = 0;
-        self.actor = Unit::new(0, "sun", [0., -55.], 275., 300.);
+        self.actor = Receiver::new(0, "sun", [0., -55.], 275., 300.);
         self.targets = vec![
-            Unit::new(1, "moon", [0., -52.5], 90., 90.),
-            Unit::new(2, "moon", [0., -58.], 90., 90.),
-            Unit::new(3, "moon", [2., -48.], 90., 90.),
-            Unit::new(4, "sun", [1., -51.5], 90., 90.),
+            Receiver::new(1, "moon", [0., -52.5], 90., 90.),
+            Receiver::new(2, "moon", [0., -58.], 90., 90.),
+            Receiver::new(3, "moon", [2., -48.], 90., 90.),
+            Receiver::new(4, "sun", [1., -51.5], 90., 90.),
         ];
         self.aim = [0., 1.];
         self.height = 0.0;
         self.cooldowns = [0; 5];
         self.casts.clear();
         self.events.clear();
+    }
+
+    pub fn set_receivers(&mut self, targets: Vec<Receiver>) {
+        self.targets = targets;
+    }
+
+    pub fn receivers(&self) -> &[Receiver] {
+        &self.targets
+    }
+
+    pub fn actor(&self) -> &Receiver {
+        &self.actor
+    }
+
+    pub fn actor_mut(&mut self) -> &mut Receiver {
+        &mut self.actor
+    }
+
+    pub fn interrupt(&mut self) {
+        self.casts.clear();
+    }
+
+    pub fn set_position(&mut self, point: [f32; 2]) {
+        self.actor.pos = point;
     }
 
     pub fn set_aim(&mut self, aim: Point) {
@@ -412,6 +441,7 @@ impl Combat {
     fn payload(&mut self, c: &Cast, world: &World, ongoing: bool) -> Vec<Value> {
         let rule = &self.kit.abilities[c.slot];
         let mut receipts = Vec::new();
+        let faction = self.actor.team;
         for unit in self
             .targets
             .iter_mut()
@@ -431,13 +461,13 @@ impl Combat {
             for e in &rule.effects {
                 match e {
                     Effect::Damage { amount, team }
-                        if !ongoing && team == "enemy" && unit.team == "moon" =>
+                        if !ongoing && team == "enemy" && unit.team != faction =>
                     {
                         unit.damage(*amount);
                         accepted = true;
                     }
                     Effect::DamageRate { amount_per_s, team }
-                        if ongoing && team == "enemy" && unit.team == "moon" =>
+                        if ongoing && team == "enemy" && unit.team != faction =>
                     {
                         unit.damage(amount_per_s / f64::from(HZ));
                         accepted = true;
@@ -448,7 +478,7 @@ impl Combat {
                         include_caster,
                     } if !ongoing
                         && team == "ally"
-                        && unit.team == "sun"
+                        && unit.team == faction
                         && (!is_caster || *include_caster) =>
                     {
                         unit.hp = (unit.hp + amount).min(unit.max_hp);
@@ -461,7 +491,7 @@ impl Combat {
                         duration_s,
                     } if !ongoing
                         && team == "ally"
-                        && unit.team == "sun"
+                        && unit.team == faction
                         && (!is_caster || *include_caster) =>
                     {
                         unit.shield = unit.shield.max(*amount);
@@ -558,13 +588,17 @@ impl Combat {
             "id":r.id,"slot":i,"label":r.label,"description":r.description,"motion":r.motion,"motion_phase":r.motion_phase,
             "color":r.color,"cooldown_ticks":self.cooldowns[i].saturating_sub(self.now),"full_cooldown_ticks":ticks(r.cooldown_s)
         })).collect();
-        let enemies = self.targets.iter().filter(|t| t.team == "moon").count();
+        let enemies = self
+            .targets
+            .iter()
+            .filter(|t| t.team != self.actor.team)
+            .count();
         let defeated = self
             .targets
             .iter()
-            .filter(|t| t.team == "moon" && t.hp <= 0.)
+            .filter(|t| t.team != self.actor.team && t.hp <= 0.)
             .count();
-        json!({"generation":self.generation,"tick":self.now,"actor":actor,"targets":self.targets.iter().map(Unit::state).collect::<Vec<_>>(),
+        json!({"generation":self.generation,"tick":self.now,"actor":actor,"targets":self.targets.iter().map(Receiver::state).collect::<Vec<_>>(),
             "active":self.locked().map(phase),"casts":self.casts.iter().map(phase).collect::<Vec<_>>(),
             "events":self.events,"abilities":abilities,"enemies":enemies,"defeated":defeated})
     }

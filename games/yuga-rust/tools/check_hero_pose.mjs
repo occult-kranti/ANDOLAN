@@ -24,7 +24,8 @@ const resources = await new Promise((resolve, reject) => {
 });
 
 const bones = native.bones.map(name => resources.nodes.find(node => node.name === name));
-if (bones.some(bone => !bone) || bones.length !== 167) throw Error("Source skeleton mismatch");
+const rama = native.hero_id === "rama";
+if (bones.some(bone => !bone) || bones.length !== (rama ? 164 : 167)) throw Error("Source skeleton mismatch");
 const scene = resources.scenes[0];
 const rest = resources.nodes.map(n => [n.getLocalPosition().clone(), n.getLocalRotation().clone(), n.getLocalScale().clone()]);
 const measurements = {};
@@ -63,5 +64,5 @@ for (const [name, samples] of Object.entries(native.clips)) {
 console.log(JSON.stringify({ godot: native.engine, sha256: createHash("sha256").update(raw).digest("hex"),
     source_glb_sha256: native.source_glb_sha256, source_motion_sha256: native.source_motion_sha256,
     jointPoses: count, measurements }, null, 2));
-if (Object.keys(measurements).length !== 5 ||
+if (Object.keys(measurements).length !== (rama ? 10 : 5) ||
     Object.values(measurements).some(m => m.maxPosition > .0002 || m.maxBasis > .0002)) process.exitCode = 1;

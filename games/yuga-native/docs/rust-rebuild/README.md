@@ -1,5 +1,7 @@
 # Rebuilding YUGA in Rust
 
+**Later on 25 November:** The Rust build now runs full lane matches and two-player rooms with Rama and Hanuman. The five-round research and first drill below retain their original checkpoint. [New playable package, research and port plan](deep-search/README.md)
+
 **25 November 2026.** The first playable Rust build is Hanuman’s solo drill on Confluence. It reuses the production map, animated hero, soldier models, kit definitions and audio. Rust resolves player movement, casts, shields, health, collision and victory at 20 Hz. The native terminal and the browser run the same rules. The browser reuses YUGA’s PlayCanvas renderer, while Godot supplies a running comparison for the migration. The multiplayer match and complete hero roster remain in the migration backlog. [Play or build the drill](../../../yuga-rust/README.md) · [Download](../../../yuga-rust/downloads/yuga-rust-practice.zip?raw=true)
 
 ## Find the code you can use

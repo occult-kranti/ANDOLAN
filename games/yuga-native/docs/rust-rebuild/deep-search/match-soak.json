@@ -1,0 +1,70 @@
+{
+  "checkpoint_encoding": "SHA-256 of compact native serde_json serialization of the Sun-seat Battle snapshot",
+  "checkpoints": [
+    {
+      "cores": {
+        "moon": 100.0,
+        "sun": 100.0
+      },
+      "snapshot_sha256": "06bf0cf5145d5a9e50d9d0c7582ece7a0a5bbe39cc8b913128853ec0a603bb55",
+      "tick": 600,
+      "winner": null
+    },
+    {
+      "cores": {
+        "moon": 100.0,
+        "sun": 100.0
+      },
+      "snapshot_sha256": "43de3cc184d258936dfe0ba921bed6e216bb2f374ca2cc22c6547f8239cc550f",
+      "tick": 3000,
+      "winner": null
+    },
+    {
+      "cores": {
+        "moon": 100.0,
+        "sun": 100.0
+      },
+      "snapshot_sha256": "d51fd094fea79268ae7fd579cb847bf85d2151e43d4bca29dd0d9ad006a49b47",
+      "tick": 12000,
+      "winner": null
+    },
+    {
+      "cores": {
+        "moon": 100.0,
+        "sun": 100.0
+      },
+      "snapshot_sha256": "dd1fcfbc7f0e527fe2c8a436644bd419ec4fc9c1a68b138c306bea73cef1a921",
+      "tick": 21600,
+      "winner": "draw"
+    }
+  ],
+  "end_tick": 21600,
+  "entry_tick": 540,
+  "fixture": "Sun Hanuman and Moon Rama on native Confluence lanes",
+  "freeze_ticks_checked": 120,
+  "input_schedule": [
+    {
+      "moon": "Piercing Dawn towards Sun spawn",
+      "sun": "Mountain Pulse at Moon spawn",
+      "tick_before_step": 540
+    },
+    {
+      "moon": "Guardian Circle on own position",
+      "tick_before_step": 18000
+    }
+  ],
+  "played_ticks": 21060,
+  "reproduce": "cargo test --release --locked --manifest-path games/yuga-rust/Cargo.toml --test battle timed_full_match_restarts_replays_and_freezes -- --nocapture",
+  "schema": 1,
+  "start_snapshot_sha256": "161f7f6a77da9a0f056a8638bb0872a2814c324b199404bcfef980d64b3a5922",
+  "tick_hz": 20,
+  "ward": {
+    "expired_by_tick": 18102,
+    "hp_after": 280.0,
+    "hp_before": 235.0,
+    "shield": 55,
+    "shield_at_tick": 18011,
+    "start_tick": 18000
+  },
+  "winner": "draw"
+}

@@ -1,0 +1,84 @@
+{
+  "result": "pass",
+  "scope": "Real loopback WebSocket clients with one Rust authority per match. Rendering and WAN quality are outside this run.",
+  "authority": "Rust WebAssembly in a Node worker process",
+  "packaged_defaults": true,
+  "platform": "linux",
+  "node": "v24.19.0",
+  "rooms_at_peak": 2,
+  "game_messages_received": 171,
+  "received_payload_bytes": 2504079,
+  "hashes": {
+    "wasm_sha256": "d9f7141103759ee4af5580fc7a62e4e2ddbd854e80dc535f64660a93f2abc48d",
+    "worker_sha256": "9a61ea67fe5f000c4936d0ea1fd7888c09639be45745f8a41578058319f9b172",
+    "adapter_sha256": "35b30279a510c438939d2ec9c902ae2dfddd134fe04399a118af430ff98b8179",
+    "test_sha256": "b9ac2ba7ae8b0d7127bde79390135874c036996158479cc6071188cb0da1c350"
+  },
+  "checks": [
+    {
+      "name": "unpacked host serves the adjacent standalone game",
+      "bytes": 63572449,
+      "html_sha256": "ae71719a7491b74ede01649eab68f0e3d766da48129183ae6cfa56aff038f547"
+    },
+    {
+      "name": "separate authority processes and opposite heroes",
+      "rooms": 2,
+      "active": 2,
+      "sockets": 4,
+      "observed_authority_children": 2
+    },
+    {
+      "name": "opponent movement and cast mirrored at equal tick",
+      "caster": "rama",
+      "observed_by": "hanuman",
+      "delta_x_m": 0.5,
+      "movement_tick": 544,
+      "cast_tick": 550,
+      "cast_id": 1
+    },
+    {
+      "name": "second room saw no motion or cast from first room",
+      "isolated_tick": 550
+    },
+    {
+      "name": "duplicate and out-of-order command after cooldown",
+      "rejected_sequences": [
+        3,
+        1
+      ],
+      "observation_ticks": 8
+    },
+    {
+      "name": "invalid hero, full room and invalid ability slot",
+      "next_valid_cast_id": 2,
+      "oversized_payload_bytes": 9216,
+      "payload_close_code": 1009
+    },
+    {
+      "name": "concurrent human-rate movement and casts acknowledged",
+      "simultaneous_clients": 4,
+      "input_frames_sent": 96,
+      "input_interval_ms": 50,
+      "elapsed_ms": 1265,
+      "final_sequence_each": 123,
+      "min_snapshots_per_client": 13,
+      "max_snapshots_per_client": 13,
+      "max_native_tick_gap": 2
+    },
+    {
+      "name": "peer departure frees exactly one room",
+      "remaining_rooms": 1,
+      "notification": "A player left the room."
+    },
+    {
+      "name": "active shutdown, child cleanup and fresh same-port restart",
+      "original_children_reaped": 2,
+      "restarted_children_reaped": 1,
+      "final": {
+        "rooms": 0,
+        "sockets": 0,
+        "running": 0
+      }
+    }
+  ]
+}

@@ -1,63 +1,78 @@
-# YUGA in Rust
+# YUGA · Confluence in Rust
 
-**Play Hanuman’s Confluence drill.** Defeat the three Moon guards on the temple avenue. You have the revised 167-joint hero, five invocations, a Sun ally and the existing three-lane map. The browser handles drawing and audio. Rust WebAssembly resolves every cast, impact, shield and movement step. The guards in this drill are stationary. A separate native Rust program simulates uncontested army waves. [Download the standalone ZIP](downloads/yuga-rust-practice.zip?raw=true) · [Gameplay capture](../yuga-native/docs/rust-rebuild/browser-gameplay.png) · [Rebuild research and roadmap](../yuga-native/docs/rust-rebuild/README.md)
+Play as **Hanuman or Rama** alongside an army fighting across three lanes. Escort troops to the enemy core. Every third wave brings cannon carts. Every fifth wave sends royal chariots into the middle lane. You can play solo or take opposing sides in a two-player room. Hanuman’s original three-guard practice is also available. [Download the game and room host](downloads/yuga-rust-confluence.zip?raw=true) · [Research, verification and roadmap](../yuga-native/docs/rust-rebuild/deep-search/README.md)
 
-## Play
+## Launch the game
 
-1. Extract the ZIP. Open `yuga-rust.html` in a desktop browser with WebGL 2 and WebAssembly. The hero, world, six audio cues and fonts are embedded.
-2. If your browser restricts local HTML, run `python3 -m http.server 8000 --bind 127.0.0.1` in the extracted folder. Open `http://127.0.0.1:8000/yuga-rust.html`. This serves the file from your own computer.
-3. Choose **Begin practice**. Walk with **WASD** or the arrow keys. Aim at the ground with the mouse. Use the shortcuts below to cast immediately. To cast from the action bar, select an ability, then click its target in the arena. **Esc** cancels that selection or pauses the game. The results screen lets you restart or return to the title.
+**Solo.** Extract the ZIP and open `yuga-rust.html` in a desktop browser with WebAssembly and WebGL 2. Choose a hero and select **Play lane match**. To try the five attacks on stationary targets, choose **Hanuman practice**. If your browser blocks local HTML, run `python3 -m http.server 8000 --bind 127.0.0.1` in the extracted folder and open `http://127.0.0.1:8000/yuga-rust.html`.
 
-| Control | Ability | What to try |
+**Two players on one computer or LAN.** The ZIP contains the same Rust match engine as a portable WebAssembly worker and bundles the WebSocket transport. Install Node **22.12 or newer** on the host computer. Both players need a browser. Run one of the following commands in the extracted folder.
+
+```sh
+# Two browser windows on the same computer
+node serve_rooms.mjs
+
+# Two computers on the same LAN
+node serve_rooms.mjs --host 0.0.0.0
+```
+
+On the same computer, open `http://127.0.0.1:8787`. On the LAN, both players open the host’s LAN address on port 8787. Each chooses a hero and opens **Two-player room**. The first player selects **Create room** and shares the code. The second enters the code and selects **Join**. Keep the host running until the match ends. Leaving closes the room. The in-game menu pauses controls locally while a network match continues. The GitHub download includes the server; persistent public matchmaking remains a separate deployment.
+
+## Controls and rules
+
+Move with **WASD** or the arrow keys. Aim at the ground with the mouse. A shortcut casts immediately. Clicking an ability button selects it for the next click in the arena. **Esc** cancels that selection or opens the match menu.
+
+| Input | Hanuman | Rama |
 | --- | --- | --- |
-| LMB | Vajra Gada | Face the nearest guard and strike within the forward arc. |
-| Q | Vajra Kavacha | Face the Sun ally to shield both of you. |
-| E | Maruti Udayana | Aim along clear ground and vault down the avenue. |
-| C | Lanka Dahan | Put a guard behind Hanuman to catch it in the rear sweep and lingering fire. |
-| X | Mountain Pulse | Choose a visible point on the floor. The marked disk damages enemies and heals allies when the delayed impact arrives. |
+| LMB | Vajra Gada strikes in front. | Kodanda draws and releases an arrow. Hold for repeated fire. |
+| Q | Vajra Kavacha shields allies in front and the caster. | Piercing Dawn can strike successive enemies on its path. |
+| E | Maruti Udayana vaults toward clear ground. | Measured Step moves through a short clear lane. |
+| C | Lanka Dahan sweeps behind the caster and leaves a burning sector. | Guardian Circle shields and heals allies occupying its marked area. |
+| X | Mountain Pulse marks a delayed impact that damages enemies and heals allies. | Dawn Volley commits to three firing lanes and releases three staggered arrows. |
+| R | — | Reload the twelve-arrow magazine. An attempted primary shot on an empty magazine also starts a reload. |
 
-## Build from the repository
+Soldiers fight each other and damage the enemy core by reaching it. Hero last hits earn faction gold. The scoreboard shows core health, wave, gold and time. Both heroes can hurt the opposing human player, who respawns after three seconds. At the 18-minute limit, higher core health wins, and equal health gives a draw. Offline games enter the moving first wave 27 seconds into the same simulated clock.
 
-Use Rust 1.88, Node 22.12 or newer, npm and Python 3. The following commands start from the root of ANDOLAN. `RUSTUP_TOOLCHAIN` selects the same compiler inside the Python packaging script. Only Node dependencies from the repository lockfile are needed. The animation exporter reads the committed Godot motion library directly.
+## Build and test
+
+Run these commands from the repository root with Python 3, Node 22.12+ and Rust 1.88. The build reuses the committed animation data. Godot 4.6.3 is needed to regenerate the independent native comparisons.
 
 ```sh
 rustup toolchain install 1.88.0 --profile minimal --target wasm32-unknown-unknown
 export RUSTUP_TOOLCHAIN=1.88.0
 npm ci
-cargo test --locked --manifest-path games/yuga-rust/Cargo.toml
+cargo test --release --locked --manifest-path games/yuga-rust/Cargo.toml
 python3 games/yuga-rust/tools/build_web.py
 ```
 
-The packager writes `games/yuga-rust/dist/yuga-rust.html`, a ZIP and `build.json` with the HTML, Wasm and asset digests. The distributable ZIP also includes bundled third-party notices. The published screenshot and receipt come from the package referenced at the top of this page. [Browser input and package check](../yuga-native/docs/rust-rebuild/browser-check.json)
-
-To repeat the browser check on Linux, install Chromium or run `npx playwright install --with-deps chromium`, and have `unzip` on PATH. The driver tries a direct local file first. If the browser blocks it, the driver navigates to the same archive member over a temporary loopback HTTP server, closes the server and finishes the test offline. Use `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to select a Chromium binary explicitly.
+The packager writes `games/yuga-rust/dist/yuga-rust-confluence.zip`, the standalone HTML and a build manifest. The ZIP also contains the room host, Rust/Wasm worker, notices and launch instructions. For the optional native match executable on the host:
 
 ```sh
-node games/yuga-rust/tools/test_browser.mjs
+cargo build --release --locked --manifest-path games/yuga-rust/Cargo.toml --bin room
+node games/yuga-rust/tools/serve_rooms.mjs
 ```
 
-## Run the native tools
-
-The terminal drill takes the same inputs and advances the same simulation as the browser. Its coordinates are horizontal metres in X and Z. One tick is 50 ms. Terminal slots are numbered 1 through 5 in action-bar order. The example strikes the first guard, waits for the contact, then prints the state.
+In the source checkout the default authority is the native executable. In the extracted package the host automatically finds the adjacent WebAssembly and HTML. A source host can use `--wasm PATH` to choose a portable authority. The source checkout uses its installed `ws` dependency.
 
 ```sh
-printf 'aim 0 1\ncast 1 0 -52.5\nwait 6\nstatus\nquit\n' |
-  cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin drill
 cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin drill -- --map
 cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin lanes -- 15 1200
+cargo run --quiet --locked --manifest-path games/yuga-rust/Cargo.toml --bin court -- verify
+node games/yuga-rust/tools/test_room_parity.mjs
+node games/yuga-rust/tools/test_rooms.mjs
+node games/yuga-rust/tools/test_browser.mjs
+node games/yuga-rust/tools/test_match.mjs
+cargo run --release --locked --manifest-path games/yuga-rust/Cargo.toml --bin roster -- --play sita
 ```
 
-The last command emits the census and positions for wave 15 after one minute of unobstructed movement. Godot 4.6.3 can supply a live differential check for the headless army program, plus the joint transforms for independent hero verification. [Army comparison commands](../yuga-native/docs/rust-rebuild/ARMIES.md) · [Hero check and exporter commands](../yuga-native/docs/rust-rebuild/HERO-ANIMATION.md)
+`drill` also accepts terminal commands such as `aim 0 1`, `cast 1 0 -52.5` and `wait 6`. For all fourteen classic hero kits, use the separate terminal roster lab. [Roster commands and comparisons](../yuga-native/docs/rust-rebuild/deep-search/ROSTER-PORT.md)
 
-## Source layout
+The army command projects an isolated wave. The court command tests the real landmark’s support and capsule clearance. Chromium, Playwright and `unzip` are required for browser tests. Tests on managed Chromium used loopback when browser policy blocked direct file navigation. [First-generation drill ZIP](downloads/yuga-rust-practice.zip?raw=true) · [Gameplay and test documentation](../yuga-native/docs/rust-rebuild/deep-search/README.md)
 
-| Path | Responsibility |
+| Code | Responsibility |
 | --- | --- |
-| [src/combat.rs](src/combat.rs) and [build.rs](build.rs) | Fixed-tick rules, action snapshots, health receipts and motion markers from the native data. |
-| [src/world.rs](src/world.rs) | Loads the original Confluence routes and obstacles. Uses Parry for ground sweeps and sight queries. |
-| [src/bin/lanes.rs](src/bin/lanes.rs) | Both factions’ formation, siege cadence, route following and isolated arrivals. |
-| [src/hero.rs](src/hero.rs) | Validates the source model and replaces the five superseded actions in the exported GLB. |
-| [src/lib.rs](src/lib.rs) and [web/main.ts](web/main.ts) | Native library, WebAssembly boundary, input routing, pause, audio and results. |
-| [web/scene.ts](web/scene.ts) | Reuses YUGA’s PlayCanvas rendering kit, draws the source assets and samples motion against the Rust action phase. |
-
-This checkpoint covers local training and a separate headless wave reconstruction. Competitive matches, moving combat AI, online prediction, a native graphical Rust renderer and commercial-quality art and frame times are open milestones. [Full-game migration roadmap](../yuga-native/docs/rust-rebuild/README.md)
+| [Battle](src/battle.rs), [army](src/army.rs) and [world](src/world.rs) | Shared 20 Hz match, both team seats, core victory, persistent soldiers, navigation and collision. |
+| [Hanuman](src/combat.rs) and [Rama](src/rama.rs) | Authoritative actions and receipts, cooldowns, projectiles, wards and published animation phase. |
+| [Native host entry](src/bin/room.rs), [WebAssembly entries](src/lib.rs) and [room transport](tools/serve_rooms.mjs) | Identical Rust gameplay for native and portable room authorities. |
+| [Browser input](web/main.ts), [scene](web/scene.ts) and [armies](web/army-scene.ts) | Controls and results, interpolated hero and army presentation, ability and siege warnings. |
+| [Audio worklet](web/mix-worklet.js) and [Rust mixer](src/mix.rs) | Master stereo limiter adapted from the MIT OpenBF project, with a browser compressor fallback. |

@@ -253,6 +253,14 @@ impl World {
             .reduce(f32::min)
     }
 
+    /// First cover hit in the segment's normalized [0, 1] interval, including an occupied origin.
+    pub fn segment_wall_fraction(&self, from: [f32; 2], to: [f32; 2], margin: f32) -> Option<f32> {
+        if !margin.is_finite() || margin < 0. || !from.into_iter().chain(to).all(f32::is_finite) {
+            return Some(0.);
+        }
+        self.wall_fraction(Point::from(from), Point::from(to), margin)
+    }
+
     /// Point-to-point ground sight line. Touching a solid counts as occlusion.
     pub fn clear_line(&self, from: [f32; 2], to: [f32; 2]) -> bool {
         self.clear_line_with_margin(from, to, 0.)
@@ -287,6 +295,27 @@ impl World {
         range: f32,
         clearance: f32,
     ) -> Option<[f32; 2]> {
+        self.straight_endpoint(from, aim, range, clearance, clearance, 0.5)
+    }
+
+    pub fn step_endpoint(
+        &self,
+        from: [f32; 2],
+        direction: [f32; 2],
+        range: f32,
+    ) -> Option<[f32; 2]> {
+        self.straight_endpoint(from, direction, range, 0.48, 0.5, 0.25)
+    }
+
+    fn straight_endpoint(
+        &self,
+        from: [f32; 2],
+        aim: [f32; 2],
+        range: f32,
+        clearance: f32,
+        edge_margin: f32,
+        minimum: f32,
+    ) -> Option<[f32; 2]> {
         if !self.ground_target_allowed(from)
             || !range.is_finite()
             || range <= 0.
@@ -305,12 +334,12 @@ impl World {
             .wall_fraction(start, end, clearance)
             .map_or(1., |t| (t - 0.025).max(0.));
         let point = start + (end - start) * fraction;
-        let [xmin, xmax, zmin, zmax] = self.floor_bounds(clearance);
+        let [xmin, xmax, zmin, zmax] = self.floor_bounds(edge_margin);
         if xmin > xmax || zmin > zmax {
             return None;
         }
         let target = Point::new(point.x.clamp(xmin, xmax), point.y.clamp(zmin, zmax));
-        ((target - start).norm() >= 0.5).then(|| [target.x, target.y])
+        ((target - start).norm() >= minimum).then(|| [target.x, target.y])
     }
 }
 

@@ -1,0 +1,140 @@
+{
+  "scope": "Local lane match after disconnection",
+  "html_sha256": "ae71719a7491b74ede01649eab68f0e3d766da48129183ae6cfa56aff038f547",
+  "zip_sha256": "906b24a09436e298bbde51b3896aa1532325328db94827bec6f3ca395e1953c7",
+  "test_sha256": "4e55397de3c03c19f8c6d61fba5904adcabdcd5c1fc69b6f1f87dc615e457076",
+  "harness_sha256": "fe042ccc741b4ff2291b72a297220dc32b3f907b0e0f4f73cb60813d0c95b166",
+  "checks": [
+    "hanuman enters a three-lane battlefield with both formations and their cores rendered",
+    "hanuman sees advancing troops, a running match clock and tracked gold",
+    "localhost Chromium activated the packaged openbf Rust stereo limiter and a live unity-gain output",
+    "muting drives the active audio output to zero",
+    "unmuting restores the active audio output",
+    "hanuman moves forward with WASD",
+    "hanuman commits an animated ability with a visible effect through live input",
+    "hanuman pause freezes the lane authority and silences the mixer",
+    "hanuman restart clears previous casts and restores the opening formation",
+    "rama enters a three-lane battlefield with both formations and their cores rendered",
+    "rama sees advancing troops, a running match clock and tracked gold",
+    "rama moves forward with WASD",
+    "rama commits an animated ability with a visible effect through live input",
+    "rama pause freezes the lane authority and silences the mixer",
+    "rama restart clears previous casts and restores the opening formation",
+    "hero selection switches between the imported bow and gada animation libraries",
+    "all game assets were embedded and no external requests occurred",
+    "no uncaught browser errors"
+  ],
+  "renderers": {
+    "hanuman": {
+      "heroBones": 167,
+      "heroClips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "mountain_pulse",
+        "run",
+        "tail_sweep"
+      ],
+      "armyVisible": 30,
+      "armyNear": 10,
+      "armyRoles": [
+        "commander",
+        "spearman",
+        "bow_guard"
+      ],
+      "objectiveCount": 8,
+      "lanes": 3
+    },
+    "rama": {
+      "heroBones": 164,
+      "heroClips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "run",
+        "circle_draw",
+        "circle_release",
+        "dash",
+        "dash_release",
+        "draw",
+        "piercing_draw",
+        "piercing_release",
+        "release",
+        "volley_draw",
+        "volley_release"
+      ],
+      "armyVisible": 60,
+      "armyNear": 10,
+      "armyRoles": [
+        "commander",
+        "spearman",
+        "bow_guard"
+      ],
+      "objectiveCount": 8,
+      "lanes": 3
+    }
+  },
+  "requests": {
+    "documents": 1,
+    "room_sockets": 0,
+    "unexpected": []
+  },
+  "page_errors": [],
+  "browser": "154.0.8037.57",
+  "entry": "loopback HTTP, ZIP member, then offline (file URL blocked by managed Chromium)",
+  "audio_mixer": "openbf-rust",
+  "hanuman_cast": {
+    "id": "vajra_kavacha",
+    "clip": "cast2",
+    "pose_seconds": 0.3100000027816854,
+    "arrows": 0,
+    "nocked": false,
+    "aim": {
+      "unit": 16,
+      "world": [
+        1.2000000476837158,
+        1.0199966430664062
+      ]
+    },
+    "begin_tick": 580,
+    "release_tick": 587
+  },
+  "hanuman_pause": {
+    "before": 590,
+    "after": 590,
+    "gain": 0
+  },
+  "rama_cast": {
+    "id": "dawn_volley",
+    "clip": "volley_draw",
+    "pose_seconds": 0.2167000012593805,
+    "arrows": 0,
+    "nocked": true,
+    "aim": {
+      "unit": 16,
+      "world": [
+        1.2000000476837158,
+        1.0199966430664062
+      ]
+    },
+    "begin_tick": 560,
+    "release_tick": 579
+  },
+  "screenshot_sha256": "2951d8c0dc2d5e665711e8d1c110cd0089fec433e036d2668a8a240bc2a17241",
+  "rama_pause": {
+    "before": 600,
+    "after": 600,
+    "gain": 0
+  },
+  "passed": true
+}

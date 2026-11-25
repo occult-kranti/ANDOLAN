@@ -1,14 +1,10 @@
 // Exercise the shipped single-file game with browser input and a read-only state probe.
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { createServer } from 'node:http';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
+import { digest as hash, packageUnderTest, launchChromium, openOffline } from './browser-package.mjs';
 import { parseArgs } from 'node:util';
-import { chromium } from 'playwright';
 
 const gameRoot = fileURLToPath(new URL('../', import.meta.url));
 const { values } = parseArgs({
@@ -21,24 +17,17 @@ const { values } = parseArgs({
 const html = path.resolve(values.input);
 const shot = path.resolve(values.screenshot);
 const report = path.resolve(values.report);
-const hash = data => createHash('sha256').update(data).digest('hex');
-const archive = path.join(path.dirname(html),'yuga-rust-practice.zip');
-const fileBytes = await readFile(html);
-const packaged = execFileSync('unzip',['-p',archive,'yuga-rust.html'],{maxBuffer: 100 * 1024 * 1024});
-assert.ok(fileBytes.equals(packaged), 'the ZIP contains the exact standalone HTML under test');
+const game = await packageUnderTest(html);
 const viewport = { width: 1100, height: 720 };
 const evidence = {
   scope: 'Packaged HTML, desktop browser controls after disconnection, read-only Rust state and PlayCanvas presentation',
-  input_sha256: hash(fileBytes), zip_sha256: hash(await readFile(archive)),
+  input_sha256: game.html_sha256, zip_sha256: game.zip_sha256,
   test_sha256: hash(await readFile(fileURLToPath(import.meta.url))),
+  harness_sha256: hash(await readFile(new URL('./browser-package.mjs', import.meta.url))),
   viewport, checks: [], ability_results: {}, rendered_abilities: {}, external_requests: [], page_errors: [],
 };
 await Promise.all([mkdir(path.dirname(shot), { recursive: true }), mkdir(path.dirname(report), { recursive: true })]);
-const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || (existsSync('/usr/bin/chromium') ? '/usr/bin/chromium' : undefined);
-const browser = await chromium.launch({
-  executablePath, headless: true,
-  args: ['--no-sandbox', '--disable-dev-shm-usage', '--enable-unsafe-swiftshader', '--use-angle=swiftshader'],
-});
+const browser = await launchChromium();
 const context = await browser.newContext({ viewport, offline: true, deviceScaleFactor: 1 });
 let page;
 let initialDocument;
@@ -108,44 +97,6 @@ async function reset(mode) {
   check(p.state.events.length === 0 && p.state.actor.shield === 0 && !p.state.active, mode + ' reset clears targets, timers, shields and event history');
 }
 
-async function navigate(ctx) {
-  const local = await ctx.newPage();
-  try {
-    await local.goto(pathToFileURL(html).href, {waitUntil:'domcontentloaded', timeout:120_000});
-    return {tab:local, entry:'file'};
-  } catch (error) {
-    if (!String(error).includes('ERR_BLOCKED_BY_ADMINISTRATOR')) throw error;
-    await local.close();
-  }
-  // Some managed browsers explicitly block file://. Serve only the single verified ZIP member.
-  const tab = await ctx.newPage();
-  const server = createServer((req,res) => {
-    if (req.method !== 'GET' || req.url !== '/yuga-rust.html') {res.writeHead(404).end(); return;}
-    res.writeHead(200, {'Content-Type':'text/html; charset=utf-8','Content-Length':packaged.length});
-    res.end(packaged);
-  });
-  await new Promise((resolve,reject)=>server.once('error',reject).listen(0,'127.0.0.1',resolve));
-  const url = 'http://127.0.0.1:' + server.address().port + '/yuga-rust.html';
-  if (ctx === context) initialDocument = url;
-  let served = false;
-  try {
-    await ctx.route(/^https?:\/\//, route => {
-      if (!served && route.request().isNavigationRequest() && route.request().url() === url) {
-        served = true; return route.continue();
-      }
-      return route.abort();
-    });
-    await ctx.setOffline(false);
-    await tab.goto(url, {waitUntil:'domcontentloaded', timeout:120_000});
-    await ctx.setOffline(true);
-    assert.ok(served && await tab.evaluate(() => !navigator.onLine));
-    return {tab, entry:'loopback HTTP, ZIP member, then offline (file URL blocked by managed Chromium)'};
-  } finally {
-    server.closeAllConnections();
-    await new Promise(resolve=>server.close(resolve));
-  }
-}
-
 const requests = {};
 context.on('request', req => {
   const u = new URL(req.url());
@@ -159,7 +110,7 @@ context.on('page', tab => {
 });
 try {
   evidence.browser = browser.version();
-  const launched = await navigate(context);
+  const launched = await openOffline(context, game, url => { initialDocument = url; });
   page = launched.tab;
   evidence.entry = launched.entry;
   await page.locator('#begin').waitFor({ timeout: 120_000 });
@@ -260,7 +211,7 @@ try {
   evidence.ability_results.tail = {impact:burn.event.tick, first_exposure:lingering.event.tick};
 
   // Save a genuine running state; the canvas alone must contain visibly varied 3D imagery.
-  await page.screenshot({ path: shot, animations:'allow' });
+  await page.screenshot({ path: shot, animations:'allow', timeout:90_000 });
   const shotBytes = await readFile(shot);
   const bins = await page.evaluate(async b64 => {
     const image = new Image(); image.src='data:image/png;base64,'+b64; await image.decode();
@@ -301,12 +252,10 @@ try {
   await page.setViewportSize({width:820,height:600});
   await until('resized renderer still ticks',p=>p.mode==='playing'&&p.state.tick>2);
   check(await page.locator('#arena').isVisible() && await page.locator('#pause').isVisible(), 'resized trial keeps its viewport and pause control');
-  const unsupported = await chromium.launch({
-    headless: true, executablePath, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-webgl'],
-  });
+  const unsupported = await launchChromium(false);
   try {
     const noGraphics = await unsupported.newContext({offline: true});
-    const {tab:fallback} = await navigate(noGraphics);
+    const {tab:fallback} = await openOffline(noGraphics, game);
     await fallback.waitForFunction(() => window.yugaProbe?.().mode === 'error', undefined, {timeout: 45_000});
     check(await fallback.locator('#begin').isDisabled() && (await fallback.locator('#loading').textContent()).includes('WebGL'),
       'a desktop with WebGL disabled receives an actionable graphics requirement');

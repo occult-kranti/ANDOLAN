@@ -1,8 +1,16 @@
 import * as pc from 'playcanvas';
 import { RenderKit, RAD, clamp, mixAngle } from '../../yuga/client/render-kit';
+import { makeArmyScene, setMaterial } from './army-scene';
 import { createOriginalEnvironment } from '../../yuga/client/environment-light';
 
-type Assets = { hero: string; soldier: string; architecture: string; nature: string };
+type Assets = {
+  hero: string;
+  rama?: string;
+  vehicles?: string;
+  soldier: string;
+  architecture: string;
+  nature: string;
+};
 type Point = [number, number];
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const angle = (p: Point) => Math.atan2(p[0], p[1]);
@@ -182,11 +190,11 @@ function buildMap(
   return solidIds;
 }
 
-function makeTelegraph(kit: RenderKit, rule: any) {
+function makeTelegraph(kit: RenderKit, rule: any, seat: string) {
   const root = new pc.Entity(rule.id, kit.app);
   kit.app.root.addChild(root);
   // Double-sided ribbons remain visible for oblique cameras and both winding orders.
-  const material = kit.material(rule.id, '#' + rule.color, 0.75, 0.25, 0.82);
+  const material = kit.material(seat + rule.id, '#' + rule.color, 0.75, 0.25, 0.82);
   material.cull = pc.CULLFACE_NONE;
   material.update();
   const g = rule.geometry,
@@ -229,12 +237,19 @@ function makeTelegraph(kit: RenderKit, rule: any) {
     }
   const trail =
     g.kind === 'movement' ? kit.shape(root, 'plane', material, 0, 0.04, 0, 0.13, 1, 1) : null;
-  const mote = g.kind === 'disk' ? kit.shape(root, 'sphere', material, 0, 1, 0, 0.4, 0.6, 0.4) : null;
+  const mote =
+    rule.id === 'mountain_pulse' ? kit.shape(root, 'sphere', material, 0, 1, 0, 0.4, 0.6, 0.4) : null;
   root.enabled = false;
   return { root, wave, material, trail, mote, geometry: g };
 }
 
-export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: any, rules: any) {
+export async function makeScene(
+  canvas: HTMLCanvasElement,
+  assets: Assets,
+  map: any,
+  rules: any,
+  ramaKit?: any
+) {
   const app = new pc.Application(canvas, {
     graphicsDeviceOptions: { alpha: false, antialias: true, powerPreference: 'high-performance' }
   });
@@ -245,11 +260,13 @@ export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: 
     app.graphicsDevice.updateClientRect();
   };
   resize();
-  const [hanuman, soldier, architecture, nature] = await Promise.all([
+  const [hanuman, soldier, architecture, nature, rama, vehicles] = await Promise.all([
     loadGlb(app, assets.hero, 'hanuman'),
     loadGlb(app, assets.soldier, 'soldier'),
     loadGlb(app, assets.architecture, 'architecture'),
-    loadGlb(app, assets.nature, 'nature')
+    loadGlb(app, assets.nature, 'nature'),
+    assets.rama ? loadGlb(app, assets.rama, 'rama') : undefined,
+    assets.vehicles ? loadGlb(app, assets.vehicles, 'native-army') : undefined
   ]);
   const kit = new RenderKit(app);
   createOriginalEnvironment(app);
@@ -285,15 +302,113 @@ export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: 
   fill.setEulerAngles(38, -35, 0);
 
   const visualSolidIds = buildMap(app, kit, map, architecture, nature);
-  const holder = new pc.Entity('Hanuman feet', app);
-  app.root.addChild(holder);
-  const hero = figure(hanuman, holder);
+  const armyView = makeArmyScene(kit, map, vehicles);
+  const resources: { [key: string]: pc.ContainerResource | undefined } = { hanuman, rama };
+  const localRigs = new Map<string, ReturnType<typeof makeRig>>(),
+    remoteRigs = new Map<string, ReturnType<typeof makeRig>>();
+  const localRing = kit.ring(app.root, kit.material('Sun hero', '#f3b568', 0.48), 0.66, 0.065, 0.03, 32);
+  const remoteRing = kit.ring(
+    app.root,
+    kit.material('Moon hero', '#74d4ef', 0.58),
+    0.7,
+    0.09,
+    0.031,
+    32
+  );
+  const sunMarker = localRing.render!.meshInstances[0].material,
+    moonMarker = remoteRing.render!.meshInstances[0].material;
+  const remoteBar = kit.shape(
+    app.root,
+    'box',
+    kit.material('opponent vitals', '#142522'),
+    0,
+    0,
+    0,
+    1.1,
+    0.13,
+    0.07
+  );
+  const remoteHp = kit.shape(app.root, 'box', moonMarker, 0, 0, 0, 1, 0.074, 0.09);
+  localRing.enabled = remoteRing.enabled = remoteBar.enabled = remoteHp.enabled = false;
+  remoteBar.render!.castShadows = remoteHp.render!.castShadows = false;
+  function makeRig(id: string) {
+    const resource = resources[id];
+    if (!resource) throw new Error('Unbundled hero: ' + id);
+    const holder = new pc.Entity(id + ' feet', app);
+    app.root.addChild(holder);
+    const rig = figure(resource, holder);
+    const nodes = [
+      'spine03',
+      'upperarm01.R',
+      'lowerarm01.R',
+      'wrist.R',
+      'upperleg01.L',
+      'tail_02',
+      'bowstring'
+    ]
+      .map((n) => rig.model.findByName(n))
+      .filter((n): n is pc.GraphNode => !!n);
+    return {
+      ...rig,
+      holder,
+      nodes,
+      id,
+      yaw: 0,
+      phase: 0,
+      bowstring: rig.model.findByName('bowstring'),
+      grip: rig.model.findByName('wrist.R')
+    };
+  }
+  function selectRig(rigs: typeof localRigs, id: string) {
+    let chosen = rigs.get(id);
+    if (!chosen) {
+      chosen = makeRig(id);
+      rigs.set(id, chosen);
+    }
+    for (const r of rigs.values()) r.holder.enabled = r === chosen;
+    return chosen;
+  }
+  let hero = selectRig(localRigs, 'hanuman'),
+    opponent: ReturnType<typeof makeRig> | null = null;
   for (const rule of rules.abilities)
-    if (!hero.tracks.has(rule.motion)) throw new Error('Hero ability clip missing: ' + rule.motion);
-  const poses = ['spine03', 'upperarm01.R', 'lowerarm01.R', 'wrist.R', 'upperleg01.L', 'tail_02'];
-  const poseNodes = poses
-    .map((name) => hero.model.findByName(name))
-    .filter((n): n is pc.GraphNode => !!n);
+    if (!hero.tracks.has(rule.motion)) throw new Error('Missing Hanuman stage ' + rule.motion);
+  function poseRig(
+    rig: ReturnType<typeof makeRig>,
+    state: any,
+    prev: any,
+    t: number,
+    dt: number,
+    reset: boolean
+  ) {
+    const a = state.actor,
+      b = prev.actor;
+    const x = lerp(b.pos[0], a.pos[0], t),
+      y = lerp(b.y ?? 0, a.y ?? 0, t),
+      z = lerp(b.pos[1], a.pos[1], t);
+    const active = state.active,
+      moving = (a.pos[0] - b.pos[0]) ** 2 + (a.pos[1] - b.pos[1]) ** 2 > 1e-8;
+    const clip = a.hp <= 0 ? 'defeat' : (active?.motion ?? (moving ? 'run' : 'idle'));
+    if (!rig.tracks.has(clip)) throw new Error('Missing ' + rig.id + ' animation ' + clip);
+    if (clip !== rig.clip || reset) {
+      rig.anim.baseLayer.play(clip);
+      rig.clip = clip;
+    }
+    if (active && a.hp > 0) {
+      const current = active.motion_phase_normalized;
+      const old =
+        prev.active?.cast_id === active.cast_id && prev.active.motion === active.motion
+          ? prev.active.motion_phase_normalized
+          : current;
+      rig.phase = lerp(old, current, t);
+      rig.anim.speed = 0;
+      rig.anim.baseLayer.activeStateCurrentTime = rig.phase * rig.tracks.get(clip)!.duration;
+    } else rig.anim.speed = 1;
+    const targetYaw = angle(active?.aim ?? a.aim);
+    rig.yaw = reset ? targetYaw : mixAngle(rig.yaw, targetYaw, Math.min(1, Math.max(dt, 0) * 18));
+    rig.holder.setLocalPosition(x, y, z);
+    rig.holder.setLocalEulerAngles(0, rig.yaw * RAD, 0);
+    return { x, y, z };
+  }
   const friendly = kit.material('sun jade', '#6ee7be', 0.45),
     hostile = kit.material('moon vermilion', '#f27b62', 0.45);
   const backing = kit.material('status backing', '#293534');
@@ -309,50 +424,82 @@ export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: 
     bar.render!.castShadows = hp.render!.castShadows = false;
     return { root, skin, hp, bar };
   }
-  const effects = new Map<string, ReturnType<typeof makeTelegraph>>(
-    rules.abilities.map((rule: any) => [rule.id, makeTelegraph(kit, rule)])
-  );
+  function makeHeroEffects(seat: string) {
+    const groundRules = [...rules.abilities];
+    for (const r of ramaKit?.abilities ?? []) {
+      if (r.id === 'guardian_circle')
+        groundRules.push({ ...r, geometry: { kind: 'disk', radius_m: r.radius_m } });
+      if (r.id === 'measured_step')
+        groundRules.push({ ...r, geometry: { kind: 'movement', target_range_m: r.range_m } });
+    }
+    return {
+      areas: new Map<string, ReturnType<typeof makeTelegraph>>(
+        groundRules.map((r) => [r.id, makeTelegraph(kit, r, seat)])
+      ),
+      shafts: [] as pc.Entity[],
+      nock: undefined as pc.Entity | undefined,
+      projectiles: 0,
+      casts: [] as string[]
+    };
+  }
+  const localFx = makeHeroEffects('local'),
+    remoteFx = makeHeroEffects('opponent');
+  const arrowColors = new Map<string, pc.Material>();
+  for (const r of ramaKit?.abilities ?? [])
+    arrowColors.set(r.id, kit.material('arrow ' + r.id, '#' + r.color, 0.9));
   const screen = new pc.Vec3(),
     point = new pc.Vec3();
   let frames = 0,
-    phase = 0,
     lastState: any,
-    visibleCasts: string[] = [];
-  let yaw = 0,
-    generation = -1;
+    generation = -1,
+    lastMode = '',
+    lastRemote = '';
   function render(state: any, previous: any, alpha: number, dt: number) {
     if (!state?.actor) return;
-    const reset = generation !== state.generation;
+    const id = state.hero ?? state.hero_id ?? 'hanuman',
+      mode = state.mode ?? 'drill';
+    const reset = generation !== state.generation || id !== hero.id || mode !== lastMode;
     generation = state.generation;
+    lastMode = mode;
     const prev = !reset && previous?.generation === generation ? previous : state;
     const t = clamp(alpha, 0, 1),
-      a = state.actor,
-      b = prev.actor;
-    const x = lerp(b.pos[0], a.pos[0], t),
-      y = lerp(b.y, a.y, t),
-      z = lerp(b.pos[1], a.pos[1], t);
-    const active = state.active;
-    const moving = (a.pos[0] - b.pos[0]) ** 2 + (a.pos[1] - b.pos[1]) ** 2 > 1e-8;
-    const clip = active?.motion ?? (moving ? 'run' : 'idle');
-    if (clip !== hero.clip || reset) {
-      hero.anim.baseLayer.play(clip);
-      hero.clip = clip;
+      a = state.actor;
+    hero = selectRig(localRigs, id);
+    const { x, y, z } = poseRig(hero, state, prev, t, dt, reset);
+    const sign = a.team === 'moon' ? -1 : 1;
+    camera.setPosition(x + sign * 1.35, 4.4 + Math.min(y, 0.8) * 0.5, z - sign * 8.4);
+    camera.lookAt(x + sign * 0.15, 0.85 + Math.min(y, 0.8) * 0.5, z + sign * 0.2);
+    localRing.enabled = !!state.army;
+    if (localRing.enabled) {
+      localRing.setPosition(x, 0.03, z);
+      setMaterial(localRing, sign === 1 ? sunMarker : moonMarker);
     }
-    if (active) {
-      const current = active.motion_phase_normalized;
-      const old =
-        prev.active?.cast_id === active.cast_id ? prev.active.motion_phase_normalized : current;
-      phase = lerp(old, current, t);
-      hero.anim.speed = 0;
-      hero.anim.baseLayer.activeStateCurrentTime = phase * hero.tracks.get(clip)!.duration;
-    } else hero.anim.speed = 1;
-    const targetYaw = angle(active?.aim ?? a.aim);
-    yaw = reset ? targetYaw : mixAngle(yaw, targetYaw, Math.min(1, Math.max(dt, 0) * 18));
-    holder.setLocalPosition(x, y, z);
-    holder.setLocalEulerAngles(0, yaw * RAD, 0);
-    camera.setPosition(x + 1.35, 4.4 + Math.min(y, 0.8) * 0.5, z - 8.4);
-    camera.lookAt(x + 0.15, 0.85 + Math.min(y, 0.8) * 0.5, z + 0.2);
-    for (const unit of state.targets) {
+    const remote = state.opponent;
+    let priorRemote = prev.opponent;
+    const remoteId = remote?.hero ?? remote?.hero_id;
+    const otherReset =
+      reset || remoteId !== lastRemote || remote?.generation !== priorRemote?.generation;
+    if (otherReset || !priorRemote) priorRemote = remote;
+    lastRemote = remoteId ?? '';
+    remoteRing.enabled = remoteBar.enabled = remoteHp.enabled = !!remote;
+    if (remote) {
+      opponent = selectRig(remoteRigs, remoteId);
+      const p = poseRig(opponent, remote, priorRemote, t, dt, otherReset);
+      const hp = clamp(remote.actor.hp / remote.actor.max_hp, 0, 1);
+      remoteRing.setPosition(p.x, 0.032, p.z);
+      remoteBar.setPosition(p.x, p.y + 2.46, p.z);
+      remoteHp.setPosition(p.x + sign * (1 - hp) * 0.5, p.y + 2.46, p.z);
+      remoteHp.setLocalScale(hp, 0.074, 0.09);
+      const enemyMarker = sign === 1 ? moonMarker : sunMarker;
+      setMaterial(remoteRing, enemyMarker);
+      setMaterial(remoteHp, enemyMarker);
+    } else {
+      if (opponent) opponent.holder.enabled = false;
+      opponent = null;
+    }
+    armyView.update(state.army ?? null, prev.army ?? null, t, [x, z]);
+    for (const body of soldierActors.values()) body.root.enabled = !state.army;
+    for (const unit of state.army ? [] : (state.targets ?? [])) {
       let body = soldierActors.get(unit.id);
       if (!body) {
         body = makeSoldier(unit);
@@ -370,19 +517,35 @@ export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: 
       body.hp.setLocalScale(0.77 * ratio, 0.057, 0.018);
       body.hp.setLocalPosition((1 - ratio) * 0.385, 2.122, -0.025);
     }
-    for (const e of effects.values()) e.root.enabled = false;
-    visibleCasts.length = 0;
-    for (const cast of state.casts) {
-      const e = effects.get(cast.id);
+    updateEffects(localFx, state, prev, t);
+    updateEffects(remoteFx, remote, priorRemote, t);
+    app.update(clamp(dt, 0, 0.2));
+    updateNock(localFx, state, hero);
+    updateNock(remoteFx, remote, opponent);
+    app.render();
+    frames++;
+    lastState = state;
+    if (!state.active) hero.phase = hero.anim.baseLayer.activeStateProgress % 1;
+  }
+  function updateEffects(fx: typeof localFx, state: any, prev: any, t: number) {
+    for (const e of fx.areas.values()) e.root.enabled = false;
+    fx.casts.length = 0;
+    for (const cast of state?.casts ?? []) {
+      if (cast.field_end_tick != null && cast.age_ticks >= cast.field_end_tick) continue;
+      fx.casts.push(cast.id);
+      const e = fx.areas.get(cast.id);
       if (!e) continue;
       e.root.enabled = true;
-      visibleCasts.push(cast.id);
       const aimed = e.geometry.kind !== 'sector',
         base = aimed ? cast.target : cast.origin;
-      const direction = angle(cast.aim) + (e.geometry.direction === 'rear' ? Math.PI : 0);
+      const heading: Point =
+        e.geometry.kind === 'movement'
+          ? [cast.target[0] - cast.origin[0], cast.target[1] - cast.origin[1]]
+          : cast.aim;
+      const direction = angle(heading) + (e.geometry.direction === 'rear' ? Math.PI : 0);
       e.root.setLocalPosition(base[0], 0, base[1]);
       e.root.setLocalEulerAngles(0, direction * RAD, 0);
-      const prior = prev.casts?.find((v: any) => v.cast_id === cast.cast_id);
+      const prior = prev?.casts?.find((v: any) => v.cast_id === cast.cast_id);
       const age = lerp(prior?.age_ticks ?? cast.age_ticks, cast.age_ticks, t);
       const progress = clamp(age / Math.max(1, cast.end_tick), 0, 1);
       const pulse =
@@ -412,11 +575,62 @@ export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: 
         );
       }
     }
-    app.update(clamp(dt, 0, 0.2));
-    app.render();
-    frames++;
-    lastState = state;
-    if (!active) phase = hero.anim.baseLayer.activeStateProgress % 1;
+
+    const arrows = state?.projectiles ?? [];
+    fx.projectiles = Math.min(arrows.length, 36);
+    for (let i = 0; i < fx.projectiles; i++) {
+      const shot = arrows[i],
+        mat = arrowColors.get(shot.id);
+      if (!mat) throw new Error('Unknown Rama projectile ' + shot.id);
+      let shaft = fx.shafts[i];
+      if (!shaft) {
+        shaft = kit.shape(app.root, 'sphere', mat, 0, 0, 0, 0.06, 0.06, 0.86);
+        shaft.render!.castShadows = false;
+        fx.shafts.push(shaft);
+      }
+      shaft.enabled = true;
+      setMaterial(shaft, mat);
+      const old = (prev?.projectiles ?? []).find(
+        (r: any) => r.cast_id === shot.cast_id && r.index === shot.index
+      );
+      const from = old?.pos ?? shot.origin;
+      shaft.setPosition(lerp(from[0], shot.pos[0], t), shot.y, lerp(from[1], shot.pos[1], t));
+      shaft.setEulerAngles(0, angle(shot.forward) * RAD, 0);
+    }
+    for (let i = fx.projectiles; i < fx.shafts.length; i++) fx.shafts[i].enabled = false;
+  }
+  function updateNock(fx: typeof localFx, state: any, rig: ReturnType<typeof makeRig> | null) {
+    const active = state?.active,
+      mat = active && arrowColors.get(active.id);
+    const show =
+      rig?.id === 'rama' &&
+      mat &&
+      ['kodanda', 'piercing_dawn', 'dawn_volley'].includes(active.id) &&
+      active.phase === 'windup' &&
+      rig.bowstring &&
+      rig.grip;
+    if (!show) {
+      if (fx.nock) fx.nock.enabled = false;
+      return;
+    }
+    if (!fx.nock) {
+      fx.nock = kit.shape(app.root, 'sphere', mat, 0, 0, 0, 0.033, 0.033, 0.67);
+      fx.nock.render!.castShadows = false;
+    }
+    const start = rig.bowstring!.getPosition(),
+      end = rig.grip!.getPosition();
+    const dx = end.x - start.x,
+      dy = end.y - start.y,
+      dz = end.z - start.z,
+      len = Math.hypot(dx, dy, dz) || 1;
+    fx.nock.enabled = true;
+    setMaterial(fx.nock, mat);
+    fx.nock.setPosition(
+      start.x + (dx * 0.335) / len,
+      start.y + (dy * 0.335) / len,
+      start.z + (dz * 0.335) / len
+    );
+    fx.nock.lookAt(start.x + dx, start.y + dy, start.z + dz);
   }
   const near = new pc.Vec3(),
     far = new pc.Vec3();
@@ -445,17 +659,46 @@ export async function makeScene(canvas: HTMLCanvasElement, assets: Assets, map: 
       heroClips: [...hero.tracks.keys()],
       heroBones: hero.bones.size,
       activeClip: hero.clip,
-      posePhase: phase,
+      heroId: hero.id,
+      posePhase: hero.phase,
       poseTime: hero.anim.baseLayer.activeStateCurrentTime,
-      heroPose: poseNodes.flatMap((bone) => {
+      heroPose: hero.nodes.flatMap((bone) => {
         const q = bone.getLocalRotation();
         return [q.x, q.y, q.z, q.w];
       }),
-      soldierCount: soldierActors.size,
-      visibleCasts: [...visibleCasts],
-      targetScreens: (lastState?.targets ?? []).map((u: any) => {
+      soldierCount: lastState?.army ? 0 : soldierActors.size,
+      visibleCasts: [...localFx.casts],
+      projectiles: localFx.projectiles,
+      nocked: !!localFx.nock?.enabled,
+      opponentHero: opponent?.id ?? null,
+      opponentClip: opponent?.clip ?? null,
+      opponentCasts: [...remoteFx.casts],
+      opponentProjectiles: remoteFx.projectiles,
+      cameraForward: lastState?.actor?.team === 'moon' ? -1 : 1,
+      ...armyView.diagnostics(),
+      targetScreens: (lastState?.army
+        ? [
+            ...lastState.army.units.map((u: any) => ({ ...u, pos: u.xz })),
+            ...(lastState.opponent ? [lastState.opponent.actor] : [])
+          ]
+        : (lastState?.targets ?? [])
+      ).map((u: any) => {
         camera.camera!.worldToScreen(point.set(u.pos[0], 0, u.pos[1]), screen);
-        return { id: u.id, alive: u.alive, x: rect.left + screen.x, y: rect.top + screen.y };
+        return {
+          id: u.id,
+          kind: u === lastState?.opponent?.actor ? 'hero' : 'unit',
+          inView:
+            screen.x >= 0 &&
+            screen.x <= rect.width &&
+            screen.y >= 0 &&
+            screen.y <= rect.height &&
+            camera.forward.dot(point.sub(camera.getPosition())) > 0,
+          team: u.team,
+          role: u.role ?? null,
+          alive: u.alive,
+          x: rect.left + screen.x,
+          y: rect.top + screen.y
+        };
       })
     };
   }
