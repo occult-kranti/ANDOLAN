@@ -181,7 +181,7 @@ try {
       source_sha256: digest(await readFile(actor)),
       source:
         hero === 'rama'
-          ? 'Imported rama-hero.glb with native motion capture baked by pack_rama.py --lod near'
+          ? 'Original near-detail Rama GLB with solved Godot controller poses baked by pack_rama.py --lod near'
           : hero === 'hanuman'
             ? 'Original Hanuman GLB overlaid with native Hanuman ability tracks by hero_export'
             : 'models/' + hero + '.glb',

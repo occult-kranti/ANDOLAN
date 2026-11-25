@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#17191b">
+<title>YUGA · Four heroes in motion</title>
+<style>
+:root{color-scheme:dark;--ink:#f4eee4;--muted:#c4bab0;--gold:#e7b565;--line:#494340;--paper:#191a1c}
+*{box-sizing:border-box}
+body{margin:0;background:#131416;color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+a{color:var(--gold);text-underline-offset:.24em}
+a:focus-visible,button:focus-visible{outline:3px solid #f6ca76;outline-offset:5px}
+.wrap{max-width:1392px;margin:auto;padding:0 clamp(18px,5vw,80px)}
+header{border-bottom:1px solid var(--line)}
+header>div{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:64px}
+.word{font:700 1rem Georgia,serif;letter-spacing:.24em;color:var(--ink);text-decoration:none}
+header nav{display:flex;gap:24px}header nav a,.controls a,footer a{font-size:.88rem}
+.cover{position:relative;overflow:hidden;background:#211d1c}
+.cover img{width:100%;height:clamp(270px,45vw,610px);display:block;object-fit:cover;object-position:center 39%}
+.cover:after{content:"";position:absolute;inset:65% 0 0;background:linear-gradient(transparent,#131416)}
+.intro{position:relative;margin-top:clamp(-72px,-5vw,-15px);z-index:1}
+h1,h2,h3{font-family:Georgia,'Times New Roman',serif;font-weight:400;line-height:1.04}
+h1{font-size:clamp(2.65rem,6.4vw,6.55rem);letter-spacing:-.048em;margin:0}
+.intro p{max-width:60ch;font-size:clamp(1rem,1.5vw,1.20rem);color:var(--muted);margin:.85em 0 1.05em}
+.controls{display:flex;gap:12px 22px;flex-wrap:wrap;align-items:center}
+.cta{display:inline-flex;align-items:center;min-height:42px;padding:.45rem 1.15rem;color:#25201a;background:var(--gold);text-decoration:none;border-radius:2px;font-weight:650}
+.controls a:not(.cta){color:var(--ink)}
+#heroes{margin-top:clamp(35px,5vw,72px)}
+.hero-tabs{display:flex;gap:clamp(8px,3vw,48px);border-bottom:1px solid var(--line)}
+.hero-tabs button{font:400 clamp(1.15rem,2.3vw,2rem) Georgia,serif;cursor:pointer;border:0;border-bottom:3px solid transparent;padding:.45rem .2rem .7rem;background:transparent;color:var(--muted)}
+.hero-tabs button[aria-selected=true]{color:var(--gold);border-bottom-color:var(--gold)}
+.hero-info{display:grid;grid-template-columns:minmax(200px,1fr) minmax(200px,1fr);gap:1rem 4rem;align-items:center;margin:1.8rem 0 1.3rem}
+h2{font-size:clamp(2.3rem,4.7vw,4.25rem);margin:0 0 .45rem;letter-spacing:-.04em}
+.kit{color:var(--muted);margin:0;max-width:62ch}
+.tools{justify-content:end}
+.looks{display:grid;grid-template-columns:1.18fr 1fr;gap:clamp(12px,2vw,30px);align-items:start}
+figure{margin:0}
+figure>a{display:block}
+figure img, video{width:100%;height:auto;display:block;background:#232426;border:1px solid #363739}
+.looks .frame{aspect-ratio:3/2;object-fit:contain}
+figcaption,.note{margin:.6rem 0 0;color:var(--muted);font-size:.9rem}
+figcaption strong{color:var(--ink);font-weight:600}
+.section-head{display:flex;gap:10px;align-items:baseline;justify-content:space-between;margin:2.65rem 0 1rem}
+h3{font-size:clamp(1.6rem,3vw,2.6rem);margin:0;letter-spacing:-.025em}
+.film{max-width:1000px}.chapter-list{display:flex;gap:.45rem;flex-wrap:wrap;max-width:1000px;margin:.85rem 0 2rem}
+.chapter-list button{padding:.44rem .78rem;border:1px solid #68625c;border-radius:2px;color:var(--ink);background:#232427;cursor:pointer;font:inherit;font-size:.9rem}.chapter-list button:hover{border-color:var(--gold)}
+.chapter-list button span{color:var(--gold);font-variant-numeric:tabular-nums;margin-right:.38rem}
+.theater{margin-top:3rem;padding:2rem 0 3rem;background:#1e2022;border-top:1px solid var(--line)}
+.theater video{max-width:1000px}
+footer{display:flex;gap:20px;justify-content:space-between;color:var(--muted);padding-top:24px!important;padding-bottom:28px!important;font-size:.86rem}
+@media(max-width:700px){.looks,.hero-info{grid-template-columns:1fr}.tools{justify-content:start}.hero-tabs{justify-content:space-between}.hero-tabs button{font-size:1.17rem}.cover img{object-fit:contain;height:auto}.intro{margin-top:-12px}.looks{gap:22px}header nav{gap:14px}footer{display:block}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="word" href="#top">YUGA</a><nav aria-label="Collection"><a href="#heroes">Heroes</a><a href="animator-book.pdf">Animator book</a></nav></div></header>
+<main id="top">
+<div class="cover"><img src="media/art/ensemble.webp" alt="Hanuman, Shiva, Rama and Krishna stand together on a lamp-lit river ghat at sunset." width="1672" height="941"></div>
+<div class="wrap intro"><h1>Four heroes in motion</h1><p>Explore the turnarounds, acting beats and moving 3D rigs behind four mythological hero designs.</p>
+<div class="controls"><a class="cta" href="#signature">Watch the signature moves</a><a href="animator-book.pdf">Open the illustrated scripts</a></div></div>
+<section id="heroes" class="wrap" aria-label="Hero studies">
+<div class="hero-tabs" role="tablist" aria-label="Choose a hero">
+<button type="button" role="tab" id="t-hanuman" aria-selected="true" aria-controls="study">Hanuman</button>
+<button type="button" role="tab" id="t-shiva" aria-selected="false" aria-controls="study" tabindex="-1">Shiva</button>
+<button type="button" role="tab" id="t-rama" aria-selected="false" aria-controls="study" tabindex="-1">Rama</button>
+<button type="button" role="tab" id="t-krishna" aria-selected="false" aria-controls="study" tabindex="-1">Krishna</button></div>
+<div id="study" role="tabpanel" aria-labelledby="t-hanuman">
+<div class="hero-info"><div><h2 id="heroName">Hanuman</h2><p class="kit" id="characterNote"></p></div>
+<div class="controls tools"><a class="cta" id="rig" href="viewer/index.html?hero=hanuman">Inspect the animated rig</a><a id="script" href="scripts/hanuman.md">Animation script</a></div></div>
+<div class="looks"><figure><a id="sheetLink" href="media/art/hanuman.png"><img class="frame" id="sheet" src="media/art/hanuman.png" alt="Hanuman model sheet" width="1536" height="1024"></a><figcaption><strong>Concept turnaround</strong> · Front, profile, rear, portrait and action.</figcaption></figure>
+<figure><a id="stillLink" href="media/stills/hanuman.webp"><img class="frame" id="still" src="media/stills/hanuman.webp" alt="Posed views of the imported Hanuman mesh"></a><figcaption><strong>Blender study</strong> · Four camera views of the actual mesh.</figcaption></figure></div>
+<div class="section-head"><h3 id="technique">Mountain Descent</h3><a id="beatLink" href="media/art/hanuman-beats.webp">Full artwork</a></div>
+<figure><img id="beats" src="media/art/hanuman-beats.webp" alt="Three painted beats of Mountain Descent"><figcaption id="beatsNote"></figcaption></figure>
+<div class="section-head"><h3>Rig in motion</h3><a id="filmLink" href="media/video/hanuman.mp4" download>Save MP4</a></div>
+<video class="film" id="heroFilm" src="media/video/hanuman.mp4" controls playsinline preload="metadata" aria-label="Hanuman 3D motion study"></video><div class="chapter-list" id="heroChapters" role="group" aria-label="Jump to a 3D action"></div>
+</div></section>
+<section class="theater" id="signature"><div class="wrap"><div class="section-head"><h3>Signature moves</h3><a href="media/video/signature-animatic.mp4" download>Save MP4</a></div><video id="signatureFilm" controls playsinline preload="none" poster="media/art/ensemble.webp" src="media/video/signature-animatic.mp4" aria-label="Illustrated signature move animatic"></video><div class="chapter-list" id="signatureChapters" role="group" aria-label="Jump to an illustrated move"></div><p class="note">An illustrated animatic of all four moves, cut from twelve generated pose keys.</p></div></section>
+</main>
+<footer class="wrap"><span>YUGA character production</span><a href="README.md">Production notes and source credits</a></footer>
+<script src="chapters.js"></script>
+<script>
+const heroes={
+ hanuman:{name:'Hanuman',file:'hanuman.png',ability:'Mountain Descent',note:'A planted gada grip, a heavy airborne silhouette and a single tail that counterbalances the landing.',beat:'Classic Mountain Descent follows Hanuman through the air. Enhanced Mountain Pulse keeps the caster planted and places the impact at the target.'},
+ shiva:{name:'Shiva',file:'shiva.webp',ability:'Tandava Downbeat',note:'A tall trident and a tied drum frame a one-legged gather, followed by one grounded impact.',beat:'The raised knee holds the anticipation. The foot and shaft settle on the downbeat, then the drum cords continue moving.'},
+ rama:{name:'Rama',file:'rama.png',ability:'Dawn Volley',note:'A steady bow line, a quiet face and a short release hand movement carry the three-arrow volley.',beat:'For retargeting, the production rig grips the bow with its anatomical right hand and draws with its left. Follow those sockets when the illustration differs.'},
+ krishna:{name:'Krishna',file:'krishna.webp',ability:'Govardhan Canopy',note:'A flute, a single peacock plume and an open disc silhouette give way to the lifted hand under the mountain.',beat:'The flute clears the left hand. The index finger meets the shelter at the apex; the wrist lowers only after the release reads.'}
+};
+const $=id=>document.getElementById(id), buttons=Array.from(document.querySelectorAll('[role=tab]'));
+function chapterButtons(panel,film,id){
+ panel.replaceChildren();for(const chapter of (window.yugaChapters?.[id]||[])){
+   const button=document.createElement('button'),time=document.createElement('span');
+   button.type='button';const secs=Math.floor(chapter.start);
+   time.textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');
+   button.append(time,document.createTextNode(chapter.title));button.addEventListener('click',()=>{
+     film.currentTime=chapter.start;film.play().catch(()=>{film.focus();});
+   });panel.append(button);
+ }
+}
+chapterButtons($('signatureChapters'),$('signatureFilm'),'signature-animatic');
+function select(id,link=false){
+ const h=heroes[id];if(!h)return;
+ for(const b of buttons){const on=b.id==='t-'+id;b.setAttribute('aria-selected',String(on));b.tabIndex=on?0:-1;}
+ $('study').setAttribute('aria-labelledby','t-'+id);$('heroName').textContent=h.name;$('characterNote').textContent=h.note;
+ $('rig').href='viewer/index.html?hero='+id;$('script').href='scripts/'+id+'.md';$('technique').textContent=h.ability;
+ const image=(element,anchor,path,desc)=>{$(element).src=path;$(element).alt=desc;$(anchor).href=path;};
+ image('sheet','sheetLink','media/art/'+h.file,h.name+' concept turnaround with portrait and action pose');
+ image('still','stillLink','media/stills/'+id+'.webp',h.name+' from four Blender cameras');
+ image('beats','beatLink','media/art/'+id+'-beats.webp',h.ability+' in three illustrated phases');
+ $('beatsNote').textContent=h.beat;
+ const path='media/video/'+id+'.mp4';$('filmLink').href=path;
+ if($('heroFilm').getAttribute('src')!==path){$('heroFilm').pause();$('heroFilm').src=path;}
+ $('heroFilm').setAttribute('aria-label',h.name+' 3D motion study');
+ chapterButtons($('heroChapters'),$('heroFilm'),id);
+ if(link)history.replaceState(null,'','#hero-'+id);
+}
+buttons.forEach((b,i)=>{b.addEventListener('click',()=>select(b.id.slice(2),true));b.addEventListener('keydown',e=>{
+ const k=e.key;let n;if(k==='ArrowRight')n=(i+1)%4;else if(k==='ArrowLeft')n=(i+3)%4;else if(k==='Home')n=0;else if(k==='End')n=3;else return;
+ e.preventDefault();buttons[n].focus();select(buttons[n].id.slice(2),true);
+});});
+const initial=location.hash.slice(6);select(Object.hasOwn(heroes,initial)?initial:'hanuman');
+if(location.hash.startsWith('#hero-') && Object.hasOwn(heroes,initial))$('heroes').scrollIntoView();
+window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#hero-'))select(location.hash.slice(6));});
+</script>
+</body></html>
