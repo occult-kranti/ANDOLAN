@@ -188,6 +188,110 @@ fn mirrored_duel_hits_simultaneously_and_respawns_after_sixty_ticks() {
 }
 
 #[test]
+fn hanuman_knocked_out_in_a_vault_respawns_grounded_and_can_cast() {
+    let world = World::load().unwrap();
+    let mut battle = Battle::load(&world, Hero::Hanuman, Some(Hero::Hanuman)).unwrap();
+    let duel = [[11., -1.], [11., 1.]];
+    walk_to(&mut battle, &world, duel);
+
+    let mut hits = 0;
+    for _ in 0..200 {
+        if hits < 8 && battle.cast(1, input(0, duel[1], duel[0]), &world).is_ok() {
+            hits += 1;
+        }
+        battle.step(&[], &world);
+        if hits == 8 && battle.snapshot(0).unwrap()["actor"]["hp"] == 28. {
+            break;
+        }
+    }
+    assert_eq!(hits, 8);
+    assert_eq!(battle.snapshot(0).unwrap()["actor"]["hp"], 28.);
+    advance(&mut battle, &world, 12);
+
+    battle
+        .cast(
+            0,
+            CastInput {
+                slot: 2,
+                ground: duel[0],
+                aim: [1., 0.],
+            },
+            &world,
+        )
+        .unwrap();
+    advance(&mut battle, &world, 2);
+    battle
+        .cast(
+            1,
+            CastInput {
+                slot: 0,
+                ground: duel[0],
+                aim: direction(duel[1], [duel[0][0] + 8.5 / 3., duel[0][1]]),
+            },
+            &world,
+        )
+        .unwrap();
+    advance(&mut battle, &world, 4);
+    assert!(battle.snapshot(0).unwrap()["actor"]["y"].as_f64().unwrap() > 0.35);
+    battle.step(&[], &world);
+
+    let knocked_out = battle.snapshot(0).unwrap();
+    assert_eq!(knocked_out["actor"]["alive"], false);
+    assert_eq!(knocked_out["respawn_ticks"], 60);
+    assert_eq!(knocked_out["actor"]["y"], 0.);
+    advance(&mut battle, &world, 60);
+    let respawned = battle.snapshot(0).unwrap();
+    assert_eq!(respawned["actor"]["hp"], 300.);
+    assert_eq!(respawned["actor"]["y"], 0.);
+    assert!(battle
+        .cast(0, input(0, pos(&respawned), duel[1]), &world)
+        .is_ok());
+}
+
+#[test]
+fn gada_checks_the_target_height_on_both_sides_at_impact() {
+    let world = World::load().unwrap();
+    for jumper in [0usize, 1] {
+        for (attack_start_age, hit_expected) in [(2, true), (4, false)] {
+            let mut battle = Battle::load(&world, Hero::Hanuman, Some(Hero::Hanuman)).unwrap();
+            let attacker = 1 - jumper;
+            let mut duel = [[0., 0.]; 2];
+            duel[jumper] = [11., if jumper == 0 { -1. } else { 1. }];
+            duel[attacker] = [15., -duel[jumper][1]];
+            walk_to(&mut battle, &world, duel);
+
+            battle
+                .cast(
+                    jumper,
+                    CastInput {
+                        slot: 2,
+                        ground: duel[jumper],
+                        aim: [1., 0.],
+                    },
+                    &world,
+                )
+                .unwrap();
+            advance(&mut battle, &world, attack_start_age);
+            let sampled_target = [
+                duel[jumper][0] + 8.5 * attack_start_age as f32 / 9.,
+                duel[jumper][1],
+            ];
+            battle
+                .cast(attacker, input(0, duel[attacker], sampled_target), &world)
+                .unwrap();
+            advance(&mut battle, &world, 4);
+            let before = battle.snapshot(jumper).unwrap();
+            let height = before["actor"]["y"].as_f64().unwrap();
+            assert_eq!(before["actor"]["hp"], 300.);
+            assert_eq!(height <= 1.4, hit_expected);
+            battle.step(&[], &world);
+            let after = battle.snapshot(jumper).unwrap();
+            assert_eq!(after["actor"]["hp"], if hit_expected { 266. } else { 300. });
+        }
+    }
+}
+
+#[test]
 fn invalid_seats_vectors_slots_and_ground_cannot_commit_actions() {
     let w = World::load().unwrap();
     let mut a = Battle::load(&w, Hero::Rama, None).unwrap();

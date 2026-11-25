@@ -23,3 +23,10 @@ cmp /tmp/yuga-army-vehicles.glb games/yuga-rust/web/art/army-vehicles.glb
 ```
 
 Two builds produced the same 6,543,708-byte file with SHA-256 `2ba236492a7c721c343f3e6d65c748700c2e695ac0b17040c59768c9627491ff`. The file has ten detailed meshes, ten distance meshes and one shared vertex-colour material. A Chromium SwiftShader presentation check exercised 96 units, five roles, both hero rigs, a siege telegraph, projectile release, pooling across a wave change and return to solo. It checked rendering and transitions. Hardware frame times remain unmeasured.
+
+## Mountain Pulse projectile
+
+The bundled `mountain-rock.glb` is a compact visual copy of Poly Haven's
+Rock Face 01. It uses the original PBR maps and 2,823 simplified triangles.
+The authoritative ability owns its trajectory, landing and recipients. The
+visual has no collision body. [Source and license notice](mountain-rock-NOTICE.txt)

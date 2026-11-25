@@ -154,7 +154,14 @@ impl Rule {
 }
 
 impl Geometry {
-    fn contains(&self, center: Point, aim: Point, position: Point, y: f32) -> bool {
+    fn contains(
+        &self,
+        center: Point,
+        aim: Point,
+        position: Point,
+        feet_y: f32,
+        body_height: f32,
+    ) -> bool {
         let offset = difference(position, center);
         let distance = length(offset);
         match self {
@@ -170,13 +177,18 @@ impl Geometry {
                 } else {
                     dot
                 };
-                y.abs() <= *height_m
+                feet_y <= *height_m
+                    && feet_y + body_height >= -*height_m
                     && distance <= *range_m + 1e-6
                     && (distance < 1e-6 || dot >= (*half_angle_cos - 1e-6) * distance)
             }
             Self::Disk {
                 radius_m, height_m, ..
-            } => y.abs() <= *height_m && distance <= *radius_m + 1e-6,
+            } => {
+                feet_y <= *height_m
+                    && feet_y + body_height >= -*height_m
+                    && distance <= *radius_m + 1e-6
+            }
             Self::Movement { .. } => false,
         }
     }
@@ -275,6 +287,7 @@ pub struct Combat {
     seq: u32,
     actor: Receiver,
     targets: Vec<Receiver>,
+    target_elevations: Vec<(u32, f32)>,
     aim: Point,
     height: f32,
     cooldowns: [u32; 5],
@@ -333,6 +346,7 @@ impl Combat {
             seq: 0,
             actor: Receiver::new(0, "sun", [0., -55.], 275., 300.),
             targets: Vec::new(),
+            target_elevations: Vec::new(),
             aim: [0., 1.],
             height: 0.,
             cooldowns: [0; 5],
@@ -357,6 +371,7 @@ impl Combat {
         ];
         self.aim = [0., 1.];
         self.height = 0.0;
+        self.target_elevations.clear();
         self.cooldowns = [0; 5];
         self.casts.clear();
         self.events.clear();
@@ -364,6 +379,20 @@ impl Combat {
 
     pub fn set_receivers(&mut self, targets: Vec<Receiver>) {
         self.targets = targets;
+        self.target_elevations.clear();
+    }
+
+    pub(crate) fn set_receivers_with_elevations(
+        &mut self,
+        targets: Vec<Receiver>,
+        elevations: &[(u32, f32)],
+    ) {
+        self.set_receivers(targets);
+        self.target_elevations.extend_from_slice(elevations);
+    }
+
+    pub(crate) fn elevation(&self) -> f32 {
+        self.height
     }
 
     pub fn receivers(&self) -> &[Receiver] {
@@ -380,6 +409,7 @@ impl Combat {
 
     pub fn interrupt(&mut self) {
         self.casts.clear();
+        self.height = 0.;
     }
 
     pub fn set_position(&mut self, point: [f32; 2]) {
@@ -493,15 +523,26 @@ impl Combat {
         let rule = &self.kit.abilities[c.slot];
         let mut receipts = Vec::new();
         let faction = self.actor.team;
+        let elevations = &self.target_elevations;
+        let caster_height = self.height;
         for unit in self
             .targets
             .iter_mut()
             .chain(std::iter::once(&mut self.actor))
         {
             let is_caster = unit.id == 0;
-            let y = if is_caster { self.height } else { 0. };
+            let y = if is_caster {
+                caster_height
+            } else {
+                elevations
+                    .iter()
+                    .find(|(id, _)| *id == unit.id)
+                    .map_or(0., |(_, height)| *height)
+            };
             if unit.hp <= 0.
-                || !rule.geometry.contains(c.target, c.aim, unit.pos, y)
+                || !rule
+                    .geometry
+                    .contains(c.target, c.aim, unit.pos, y, unit.height)
                 || !world.clear_line(c.target, unit.pos)
             {
                 continue;
@@ -669,6 +710,36 @@ mod tests {
             s.tick([0., 0.], w);
         }
     }
+
+    #[test]
+    fn authored_height_bands_include_touching_capsules() {
+        let (combat, _) = setup();
+        let gada = &combat.kit.abilities[0].geometry;
+        let center = [0., 0.];
+        let aim = [0., 1.];
+        let target = [0., 1.];
+        assert!(gada.contains(center, aim, target, 1.4, 1.8));
+        assert!(!gada.contains(center, aim, target, 1.4001, 1.8));
+
+        let symmetric_band = Geometry::Disk {
+            radius_m: 2.,
+            height_m: 1.,
+            target_range_m: 2.,
+        };
+        assert!(symmetric_band.contains(center, aim, target, -3., 2.));
+        assert!(!symmetric_band.contains(center, aim, target, -3.0001, 2.));
+    }
+
+    #[test]
+    fn replacing_receivers_defaults_their_elevation_to_ground() {
+        let (mut combat, world) = setup();
+        let target = Receiver::new(42, "moon", [0., -52.5], 100., 100.);
+        combat.set_receivers_with_elevations(vec![target.clone()], &[(42, 2.)]);
+        combat.set_receivers(vec![target]);
+        combat.cast(0, [0., -55.], &world).unwrap();
+        advance(&mut combat, &world, 5);
+        assert_eq!(combat.receivers()[0].hp, 66.);
+    }
     #[test]
     fn five_native_action_timelines_match_all_recorded_beats() {
         let native: Value = serde_json::from_str(NATIVE_CAPTURE).unwrap();
@@ -778,6 +849,34 @@ mod tests {
         advance(&mut s, &w, 8);
         assert!(s.locked().is_none());
         assert_eq!(s.height, 0.);
+    }
+
+    #[test]
+    fn interrupted_vault_clears_height_but_keeps_its_cooldown_and_history() {
+        let (mut combat, world) = setup();
+        combat.set_aim([1., 0.]);
+        combat.cast(2, [0., -55.], &world).unwrap();
+        advance(&mut combat, &world, 8);
+        let airborne = combat.snapshot();
+        assert!(airborne["actor"]["y"].as_f64().unwrap() > 0.35);
+        let cooldown = airborne["abilities"][2]["cooldown_ticks"].clone();
+        let events = airborne["events"].clone();
+
+        combat.interrupt();
+        combat.interrupt();
+        let stopped = combat.snapshot();
+        assert_eq!(stopped["actor"]["y"], 0.);
+        assert!(stopped["active"].is_null());
+        assert!(stopped["casts"].as_array().unwrap().is_empty());
+        assert_eq!(stopped["abilities"][2]["cooldown_ticks"], cooldown);
+        assert_eq!(stopped["events"], events);
+        assert_eq!(
+            combat.cast(2, [0., -55.], &world).unwrap_err(),
+            "Ability is cooling down"
+        );
+        combat.cast(0, [0., -55.], &world).unwrap();
+        advance(&mut combat, &world, 5);
+        assert_eq!(combat.snapshot()["actor"]["y"], 0.);
     }
     #[test]
     fn motion_uses_authoritative_clip_markers_and_pause_does_not_advance() {

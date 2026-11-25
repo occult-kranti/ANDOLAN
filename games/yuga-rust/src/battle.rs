@@ -54,10 +54,16 @@ impl Fighter {
             Self::Bow(r) => r.actor_mut(),
         }
     }
-    fn targets(&mut self, targets: Vec<Receiver>) {
+    fn targets(&mut self, targets: Vec<Receiver>, elevations: &[(u32, f32)]) {
         match self {
-            Self::Gada(h) => h.set_receivers(targets),
+            Self::Gada(h) => h.set_receivers_with_elevations(targets, elevations),
             Self::Bow(r) => r.set_receivers(targets),
+        }
+    }
+    fn elevation(&self) -> f32 {
+        match self {
+            Self::Gada(h) => h.elevation(),
+            Self::Bow(_) => 0.,
         }
     }
     fn resolved(&self) -> &[Receiver] {
@@ -109,7 +115,7 @@ struct Player {
 impl Player {
     fn new(hero: Hero, team: Team) -> Result<Self, String> {
         let mut fighter = Fighter::load(hero)?;
-        fighter.targets(vec![]);
+        fighter.targets(vec![], &[]);
         fighter.body_mut().team = if team == Team::Sun { "sun" } else { "moon" };
         fighter.body_mut().hp = fighter.body().max_hp;
         Ok(Self {
@@ -240,8 +246,9 @@ impl Battle {
             placed.push(position);
         }
         let bodies = game.receivers(game.army.tick_index());
+        let elevations = game.elevations();
         for seat in 0..game.players.len() {
-            game.refresh_targets(seat, &bodies);
+            game.refresh_targets(seat, &bodies, &elevations);
         }
         Ok(game)
     }
@@ -287,7 +294,15 @@ impl Battle {
             .collect()
     }
 
-    fn refresh_targets(&mut self, seat: usize, bodies: &[Receiver]) {
+    fn elevations(&self) -> Vec<(u32, f32)> {
+        self.players
+            .iter()
+            .enumerate()
+            .map(|(seat, player)| (receiver_id(seat), player.fighter.elevation()))
+            .collect()
+    }
+
+    fn refresh_targets(&mut self, seat: usize, bodies: &[Receiver], elevations: &[(u32, f32)]) {
         let mut targets = self.army.receivers();
         targets.extend(
             bodies
@@ -296,7 +311,7 @@ impl Battle {
                 .filter(|(i, b)| *i != seat && b.hp > 0.)
                 .map(|(_, b)| b.clone()),
         );
-        self.players[seat].fighter.targets(targets);
+        self.players[seat].fighter.targets(targets, elevations);
     }
 
     fn collect_effects(&mut self, seat: usize, before: &[Receiver], incoming: &mut [Incoming]) {
@@ -343,7 +358,8 @@ impl Battle {
             return Err("Hero unavailable".into());
         }
         let bodies = self.receivers(self.army.tick_index());
-        self.refresh_targets(seat, &bodies);
+        let elevations = self.elevations();
+        self.refresh_targets(seat, &bodies, &elevations);
         let fighter = &mut self.players[seat].fighter;
         fighter.aim(input.aim);
         fighter.cast(input.slot, input.ground, world)
@@ -355,10 +371,12 @@ impl Battle {
         }
         let now = self.army.tick_index() + 1;
         let bodies = self.receivers(now);
+        // Positions and elevations must share the same pre-tick snapshot for every seat.
+        let elevations = self.elevations();
         let mut incoming: [Incoming; MAX_SEATS] = Default::default();
         for offset in 0..self.players.len() {
             let seat = (now as usize + offset) % self.players.len();
-            self.refresh_targets(seat, &bodies);
+            self.refresh_targets(seat, &bodies, &elevations);
             let p = &mut self.players[seat];
             let input = motion.get(seat).copied().unwrap_or_default();
             let living = p.fighter.body().hp > 0.;
@@ -395,7 +413,8 @@ impl Battle {
             if bodies[seat].hp > 0. && self.players[seat].fighter.body().hp <= 0. {
                 // An interrupted Guardian Circle also releases wards on other surviving heroes.
                 let at_death = self.receivers(now);
-                self.refresh_targets(seat, &at_death);
+                let elevations_at_death = self.elevations();
+                self.refresh_targets(seat, &at_death, &elevations_at_death);
                 let p = &mut self.players[seat];
                 p.fighter.interrupt();
                 p.defeats += 1;

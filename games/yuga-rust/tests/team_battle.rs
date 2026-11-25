@@ -324,3 +324,123 @@ fn ward_releasing_on_a_lethal_tick_does_not_revive_its_caster_or_teammates() {
         assert_eq!(state(&b, i)["respawn_ticks"], 60);
     }
 }
+
+#[test]
+fn six_seats_observe_grounded_respawn_after_vault_knockout() {
+    let world = World::load().unwrap();
+    let mut battle = Battle::with_roster(&world, &[Hero::Hanuman; 6]).unwrap();
+    position_all(&mut battle, &world);
+
+    for attackers in [&[1, 3, 5][..], &[1, 3, 5][..], &[1, 3][..]] {
+        for seat in attackers {
+            cast(&mut battle, &world, *seat, 0, NEAR[0]);
+        }
+        advance(&mut battle, &world, 12);
+    }
+    assert_eq!(hp(&battle, 0), 28.);
+
+    battle
+        .cast(
+            0,
+            CastInput {
+                slot: 2,
+                ground: NEAR[0],
+                aim: [1., 0.],
+            },
+            &world,
+        )
+        .unwrap();
+    advance(&mut battle, &world, 2);
+    let dx: f32 = 8.5 / 3.;
+    let dz = NEAR[0][1] - NEAR[1][1];
+    let length = dx.hypot(dz);
+    battle
+        .cast(
+            1,
+            CastInput {
+                slot: 0,
+                ground: NEAR[0],
+                aim: [dx / length, dz / length],
+            },
+            &world,
+        )
+        .unwrap();
+    advance(&mut battle, &world, 4);
+    assert!(state(&battle, 0)["actor"]["y"].as_f64().unwrap() > 0.35);
+    battle.step(&[], &world);
+
+    let check_views = |battle: &Battle, alive| {
+        let actor = state(battle, 0);
+        assert_eq!(actor["actor"]["alive"], alive);
+        assert_eq!(actor["actor"]["y"], 0.);
+        for seat in 1..6 {
+            let viewer = state(battle, seat);
+            let remote = viewer["roster"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|player| player["seat"] == 0)
+                .unwrap();
+            assert_eq!(remote["actor"]["alive"], alive);
+            assert_eq!(remote["actor"]["y"], 0.);
+        }
+    };
+    check_views(&battle, false);
+    assert_eq!(state(&battle, 0)["respawn_ticks"], 60);
+    advance(&mut battle, &world, 60);
+    check_views(&battle, true);
+    cast(&mut battle, &world, 0, 0, NEAR[1]);
+}
+
+#[test]
+fn shields_reach_airborne_allies_within_the_authored_height() {
+    let world = World::load().unwrap();
+    for side in [0usize, 1] {
+        let mut battle = Battle::with_roster(&world, &[Hero::Hanuman; 6]).unwrap();
+        position_all(&mut battle, &world);
+        let jumper = 2 + side;
+        battle
+            .cast(
+                jumper,
+                CastInput {
+                    slot: 2,
+                    ground: NEAR[jumper],
+                    aim: [1., 0.],
+                },
+                &world,
+            )
+            .unwrap();
+        advance(&mut battle, &world, 2);
+        battle
+            .cast(
+                side,
+                CastInput {
+                    slot: 1,
+                    ground: NEAR[side],
+                    aim: [1., 0.],
+                },
+                &world,
+            )
+            .unwrap();
+        advance(&mut battle, &world, 6);
+        let target = state(&battle, jumper);
+        let height = target["actor"]["y"].as_f64().unwrap();
+        assert!((1.4..=1.6).contains(&height));
+        assert_eq!(shield(&battle, jumper), 0.);
+        battle.step(&[], &world);
+        assert_eq!(shield(&battle, jumper), 48.);
+        for seat in 0..6 {
+            if seat == jumper {
+                continue;
+            }
+            let viewer = state(&battle, seat);
+            let remote = viewer["roster"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|player| player["seat"] == jumper)
+                .unwrap();
+            assert_eq!(remote["actor"]["shield"], 48.);
+        }
+    }
+}

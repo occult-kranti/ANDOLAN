@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Latest five-pass YUGA panel, 25 November 2026.** Start with the [panel handoff](../games/yuga-native/docs/design/five-round-panel-2026/README.md) and [next production work](../games/yuga-native/docs/design/five-round-panel-2026/NEXT.md). It links the tested Hanuman physics and camera update, the actual Blender film and editable timeline, four concept-art boards, historical-art sources and the full combat review. The [current Rust game download](../games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) is distinct from the older native preview and historical release assets. Shiva and Krishna's new action designs remain proposals for Confluence.
+
 **World-design research.** The Elden Ring crossover review records the verified mod sources, a standalone Rust terrain-cache test, a licensed rock intake and a YUGA landmark study. The team brief connects composition work to collision and multiplayer checks. [Elden Ring-inspired world study](../games/yuga-native/docs/research/elden-ring-world-study/README.md)
 
 **Current Hanuman release.** The Rust Confluence build embeds the same enhanced character used for the new Cycles portraits and motion reel. Use the handoff to locate or rebuild the sculpt, materials, motion and game. [Play and view](../games/yuga-native/art/hanuman-hero-finish/README.md) · [Developer and artist handoff](../games/yuga-native/art/hanuman-hero-finish/HANDOFF.md) · [Next milestones](../games/yuga-native/art/hanuman-hero-finish/ROADMAP.md)

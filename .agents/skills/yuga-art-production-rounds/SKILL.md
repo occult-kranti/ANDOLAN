@@ -24,6 +24,13 @@ Parallelize independent passes and lightweight probes. Queue costly renders, eng
 
 ## Run a bounded round
 
+For a five-pass design-and-integration panel, record the baseline and
+source access first, specify the design and authority contracts second, build
+or revise the selected artifacts third, challenge them across disciplines
+fourth, and verify the exact handoff and package fifth. Each pass needs an
+actual artifact, review or check. The [2026 panel handoff](../../../games/yuga-native/docs/design/five-round-panel-2026/README.md)
+shows the distinction between existing gameplay, proposals and artist studies.
+
 | Pass | Inputs | Deliverables and decision |
 | --- | --- | --- |
 | **1 · Pin and compare** | Product and task ID, existing editable asset, target image or source passages, current build notes, actual tools and resource capacity. | Capture the baseline or recover its original images. Pin the source commit or file SHA-256, tool version, pose, camera, framing, light and intended runtime distance. Name the visible defect, the change, exclusive paths, dependencies and acceptance checks. |

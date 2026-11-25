@@ -2,6 +2,7 @@ import * as pc from 'playcanvas';
 import { RenderKit, RAD, clamp, mixAngle } from '../../yuga/client/render-kit';
 import { makeArmyScene, setMaterial } from './army-scene';
 import { GROOM_MATERIAL, groomVisible, projectedHanumanHeight, verticalFocalPixels } from './groom-detail';
+import { cameraObstaclesFromMap, resolveChaseCamera } from './camera-clearance';
 import { createOriginalEnvironment } from '../../yuga/client/environment-light';
 
 type Assets = {
@@ -11,6 +12,7 @@ type Assets = {
   soldier: string;
   architecture: string;
   nature: string;
+  mountain?: string;
 };
 type Point = [number, number];
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -194,7 +196,7 @@ function buildMap(
   return solidIds;
 }
 
-function makeTelegraph(kit: RenderKit, rule: any, seat: string) {
+function makeTelegraph(kit: RenderKit, rule: any, seat: string, mountainSource: pc.Entity) {
   const root = new pc.Entity(rule.id, kit.app);
   kit.app.root.addChild(root);
   // Double-sided ribbons remain visible for oblique cameras and both winding orders.
@@ -241,10 +243,28 @@ function makeTelegraph(kit: RenderKit, rule: any, seat: string) {
     }
   const trail =
     g.kind === 'movement' ? kit.shape(root, 'plane', material, 0, 0.04, 0, 0.13, 1, 1) : null;
-  const mote =
-    rule.id === 'mountain_pulse' ? kit.shape(root, 'sphere', material, 0, 1, 0, 0.4, 0.6, 0.4) : null;
+  let mote: pc.Entity | null = null;
+  const impactSparks: pc.Entity[] = [];
+  if (rule.id === 'mountain_pulse') {
+    // Reuse the bundled rock for the visual projectile, without a physics body.
+    mote = mountainSource.clone();
+    mote.name = 'Mountain Pulse · airborne rock';
+    root.addChild(mote);
+    mote.setLocalScale(0.72, 0.65, 0.72);
+    for (const part of mote.findComponents('render') as pc.RenderComponent[])
+      part.castShadows = false;
+    kit.ring(mote, material, 0.65, 0.055, 0.18, 32);
+    mote.enabled = false;
+    for (let i = 0; i < 6; i++) {
+      const spark = kit.shape(root, 'sphere', material, 0, 0, 0, 0.12, 0.12, 0.12);
+      spark.name = 'Mountain Pulse · impact spark ' + (i + 1);
+      spark.render!.castShadows = false;
+      spark.enabled = false;
+      impactSparks.push(spark);
+    }
+  }
   root.enabled = false;
-  return { root, wave, material, trail, mote, geometry: g };
+  return { root, wave, material, trail, mote, impactSparks, geometry: g };
 }
 
 export async function makeScene(
@@ -264,15 +284,24 @@ export async function makeScene(
     app.graphicsDevice.updateClientRect();
   };
   resize();
-  const [hanuman, soldier, architecture, nature, rama, vehicles] = await Promise.all([
+  const [hanuman, soldier, architecture, nature, rama, vehicles, mountain] = await Promise.all([
     loadGlb(app, assets.hero, 'hanuman'),
     loadGlb(app, assets.soldier, 'soldier'),
     loadGlb(app, assets.architecture, 'architecture'),
     loadGlb(app, assets.nature, 'nature'),
     assets.rama ? loadGlb(app, assets.rama, 'rama') : undefined,
-    assets.vehicles ? loadGlb(app, assets.vehicles, 'native-army') : undefined
+    assets.vehicles ? loadGlb(app, assets.vehicles, 'native-army') : undefined,
+    assets.mountain ? loadGlb(app, assets.mountain, 'mountain-rock') : undefined
   ]);
+  const mountainCatalog = (mountain ?? nature).instantiateRenderEntity();
+  app.root.addChild(mountainCatalog);
+  mountainCatalog.enabled = false;
+  const mountainSource = mountainCatalog.findByName(
+    mountain ? 'rock_face_01_compact' : 'rock_island'
+  ) as pc.Entity | null;
+  if (!mountainSource) throw new Error('Mountain visual is missing its rock prefab');
   const kit = new RenderKit(app);
+  const cameraObstacles = cameraObstaclesFromMap(map);
   createOriginalEnvironment(app);
   app.scene.ambientLight = new pc.Color(0.48, 0.45, 0.42);
   const camera = new pc.Entity('Trial camera', app);
@@ -374,6 +403,9 @@ export async function makeScene(
     return chosen;
   }
   let hero = selectRig(localRigs, 'hanuman');
+  let cameraFraction = 1;
+  let cameraFov = 48;
+  let cameraClearance: ReturnType<typeof resolveChaseCamera> | null = null;
   for (const rule of rules.abilities)
     if (!hero.tracks.has(rule.motion)) throw new Error('Missing Hanuman stage ' + rule.motion);
   function poseRig(
@@ -484,8 +516,23 @@ export async function makeScene(
     hero = selectRig(localRigs, id);
     const { x, y, z } = poseRig(hero, state, prev, t, dt, reset);
     const sign = a.team === 'moon' ? -1 : 1;
-    camera.setPosition(x + sign * 1.35, 4.4 + Math.min(y, 0.8) * 0.5, z - sign * 8.4);
-    camera.lookAt(x + sign * 0.15, 0.85 + Math.min(y, 0.8) * 0.5, z + sign * 0.2);
+    cameraClearance = resolveChaseCamera({
+      look: { x: x + sign * 0.15, y: 0.85 + Math.min(y, 0.8) * 0.5, z: z + sign * 0.2 },
+      desired: { x: x + sign * 1.35, y: 4.4 + Math.min(y, 0.8) * 0.5, z: z - sign * 8.4 },
+      feet: { x, y, z },
+      height: 2.1,
+      obstacles: cameraObstacles,
+      nearClip: camera.camera!.nearClip,
+      aspect: Math.max(1, canvas.clientWidth) / Math.max(1, canvas.clientHeight),
+      previousFraction: reset ? 1 : cameraFraction,
+      previousFov: reset ? 48 : cameraFov,
+      dt
+    });
+    cameraFraction = cameraClearance.fraction;
+    cameraFov = cameraClearance.fov;
+    camera.camera!.fov = cameraFov;
+    camera.setPosition(cameraClearance.position.x, cameraClearance.position.y, cameraClearance.position.z);
+    camera.lookAt(cameraClearance.look.x, cameraClearance.look.y, cameraClearance.look.z);
     localRing.enabled = !!state.army;
     if (localRing.enabled) {
       localRing.setPosition(x, 0.03, z);
@@ -573,7 +620,7 @@ export async function makeScene(
       if (!e) {
         const rule = groundRules.get(cast.id);
         if (!rule) continue;
-        e = makeTelegraph(kit, rule, fx.seat);
+        e = makeTelegraph(kit, rule, fx.seat, mountainSource);
         fx.areas.set(cast.id, e);
       }
       e.root.enabled = true;
@@ -611,9 +658,25 @@ export async function makeScene(
         e.mote.enabled = age >= cast.release_tick && age < cast.impact_tick;
         e.mote.setPosition(
           lerp(cast.origin[0], cast.target[0], q),
-          1.15 * (1 - q) + 3.5 * Math.sin(Math.PI * q) + 0.1,
+          2.4 * (1 - q) + 2.2 * Math.sin(Math.PI * q) + 0.1,
           lerp(cast.origin[1], cast.target[1], q)
         );
+        e.mote.setLocalEulerAngles(0, q * 70, 0);
+        const impactAge = age - cast.impact_tick;
+        const sparkProgress = clamp(impactAge / 6, 0, 1);
+        for (let i = 0; i < e.impactSparks.length; i++) {
+          const spark = e.impactSparks[i];
+          const theta = i * Math.PI * 2 / e.impactSparks.length;
+          const spread = 0.3 + sparkProgress * 1.35;
+          const size = 0.16 * (1 - sparkProgress);
+          spark.enabled = impactAge >= 0 && impactAge < 6;
+          spark.setLocalPosition(
+            Math.sin(theta) * spread,
+            0.12 + Math.sin(Math.PI * sparkProgress) * 0.48,
+            Math.cos(theta) * spread
+          );
+          spark.setLocalScale(size, size, size);
+        }
       }
     }
 
@@ -690,6 +753,8 @@ export async function makeScene(
   }
   function diagnostics() {
     const rect = canvas.getBoundingClientRect();
+    const mountainEffect = localFx.areas.get('mountain_pulse');
+    const mountainVisible = !!mountainEffect?.root.enabled;
     const activeRemotes = [...remotes.values()].filter((v) => v.state).sort((a, b) => a.seat - b.seat);
     const opponent = activeRemotes.find((v) => v.state.actor.team !== lastState.actor.team);
     const remoteHeroes = activeRemotes.map(({ seat, rig, state, fx }) => {
@@ -718,6 +783,17 @@ export async function makeScene(
       }),
       soldierCount: lastState?.army ? 0 : soldierActors.size,
       visibleCasts: [...localFx.casts],
+      mountainCue: mountainEffect ? {
+        inFlight: mountainVisible && !!mountainEffect.mote?.enabled,
+        renderSurfaces: mountainEffect.mote
+          ? (mountainEffect.mote.findComponents('render') as pc.RenderComponent[])
+              .reduce((count, part) => count + part.meshInstances.length, 0)
+          : 0,
+        impactSparks: mountainVisible
+          ? mountainEffect.impactSparks.filter((spark) => spark.enabled).length
+          : 0
+      } : null,
+      cameraClearance,
       projectiles: localFx.projectiles,
       nocked: !!localFx.nock?.enabled,
       remoteHeroes,

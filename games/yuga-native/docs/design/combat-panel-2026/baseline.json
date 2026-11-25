@@ -1,0 +1,246 @@
+{
+  "hz": 20,
+  "scope": "Confluence authoritative profiles; future abilities are excluded",
+  "sources": {
+    "hanuman_profile": {
+      "path": "games/yuga-native/assets/design/hanuman-ability-kit.json",
+      "sha256": "6db7efe66e641d45d843e7b165ee0744d59f74aa277f36e2924034988c243474"
+    },
+    "rama_profile": {
+      "path": "games/yuga-native/assets/design/rama-ability-kit.json",
+      "sha256": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9"
+    },
+    "hanuman_authority": {
+      "path": "games/yuga-rust/src/combat.rs",
+      "sha256": "1b59e76f57f2d6eda66d0bcede495dcda88e5af3e62a0282d59fece15e380a4b"
+    },
+    "rama_authority": {
+      "path": "games/yuga-rust/src/rama.rs",
+      "sha256": "791c83fb962a21eacb0aecde83e8863ae76731eedb7d9335e6938ba616dc7bf8"
+    }
+  },
+  "heroes": {
+    "hanuman": [
+      {
+        "id": "vajra_gada",
+        "slot": "primary",
+        "clip": "fire",
+        "release_tick": 5,
+        "nominal_impact_tick": 5,
+        "unlock_tick": 11,
+        "field_end_tick": 5,
+        "cooldown_ticks": 12,
+        "geometry": {
+          "kind": "sector",
+          "anchor": "caster",
+          "range_m": 3.5,
+          "half_angle_cos": 0.55,
+          "height_m": 1.4
+        },
+        "effects": [
+          {
+            "kind": "damage",
+            "team": "enemy",
+            "amount": 34
+          }
+        ]
+      },
+      {
+        "id": "vajra_kavacha",
+        "slot": "ability_1",
+        "clip": "cast2",
+        "release_tick": 7,
+        "nominal_impact_tick": 7,
+        "unlock_tick": 12,
+        "field_end_tick": 7,
+        "cooldown_ticks": 180,
+        "geometry": {
+          "kind": "sector",
+          "anchor": "caster",
+          "range_m": 5.5,
+          "half_angle_cos": 0.4,
+          "height_m": 1.6
+        },
+        "effects": [
+          {
+            "kind": "shield",
+            "team": "ally",
+            "amount": 48,
+            "duration_s": 3,
+            "include_caster": true
+          }
+        ]
+      },
+      {
+        "id": "maruti_udayana",
+        "slot": "ability_2",
+        "clip": "cast1",
+        "release_tick": 4,
+        "nominal_impact_tick": 13,
+        "unlock_tick": 17,
+        "field_end_tick": 13,
+        "cooldown_ticks": 140,
+        "geometry": {
+          "kind": "movement",
+          "anchor": "caster",
+          "target_range_m": 8.5,
+          "height_m": 0.35,
+          "clearance_m": 0.48
+        },
+        "effects": []
+      },
+      {
+        "id": "lanka_dahan",
+        "slot": "ability_3",
+        "clip": "tail_sweep",
+        "release_tick": 9,
+        "nominal_impact_tick": 9,
+        "unlock_tick": 17,
+        "field_end_tick": 49,
+        "cooldown_ticks": 220,
+        "geometry": {
+          "kind": "sector",
+          "anchor": "caster",
+          "direction": "rear",
+          "range_m": 5,
+          "half_angle_cos": 0.15,
+          "height_m": 1.5
+        },
+        "effects": [
+          {
+            "kind": "damage",
+            "team": "enemy",
+            "amount": 28
+          },
+          {
+            "kind": "damage_rate",
+            "team": "enemy",
+            "amount_per_s": 8
+          }
+        ]
+      },
+      {
+        "id": "mountain_pulse",
+        "slot": "ultimate",
+        "clip": "mountain_pulse",
+        "release_tick": 14,
+        "nominal_impact_tick": 23,
+        "unlock_tick": 33,
+        "field_end_tick": 23,
+        "cooldown_ticks": 600,
+        "geometry": {
+          "kind": "disk",
+          "anchor": "ground_target",
+          "target_range_m": 14,
+          "radius_m": 7,
+          "height_m": 2.5
+        },
+        "effects": [
+          {
+            "kind": "damage",
+            "team": "enemy",
+            "amount": 65
+          },
+          {
+            "kind": "heal",
+            "team": "ally",
+            "amount": 45,
+            "include_caster": true
+          }
+        ]
+      }
+    ],
+    "rama": [
+      {
+        "id": "kodanda",
+        "slot": "primary",
+        "clips": [
+          "draw",
+          "release"
+        ],
+        "release_tick": 4,
+        "unlock_tick": 8,
+        "cooldown_ticks": 8,
+        "range_m": 40.0,
+        "speed_mps": 60.0,
+        "radius_m": 0.22,
+        "damage": 28.0,
+        "max_hits": 1
+      },
+      {
+        "id": "piercing_dawn",
+        "slot": "ability_1",
+        "clips": [
+          "piercing_draw",
+          "piercing_release"
+        ],
+        "release_tick": 13,
+        "unlock_tick": 19,
+        "cooldown_ticks": 120,
+        "range_m": 38.0,
+        "speed_mps": 52.0,
+        "radius_m": 0.36,
+        "damage": 70.0,
+        "max_hits": 6
+      },
+      {
+        "id": "measured_step",
+        "slot": "ability_2",
+        "clips": [
+          "dash",
+          "dash_release"
+        ],
+        "release_tick": 2,
+        "unlock_tick": 7,
+        "cooldown_ticks": 100,
+        "range_m": 4.5,
+        "movement_s": 0.22,
+        "nominal_move_end_tick": 7
+      },
+      {
+        "id": "guardian_circle",
+        "slot": "ability_3",
+        "clips": [
+          "circle_draw",
+          "circle_release"
+        ],
+        "release_tick": 11,
+        "unlock_tick": 17,
+        "cooldown_ticks": 220,
+        "range_m": 16.0,
+        "radius_m": 5.0,
+        "active_s": 4.5,
+        "shield": 55.0,
+        "heal_per_s": 10.0,
+        "field_end_tick": 101
+      },
+      {
+        "id": "dawn_volley",
+        "slot": "ultimate",
+        "clips": [
+          "volley_draw",
+          "volley_release"
+        ],
+        "release_tick": 19,
+        "unlock_tick": 30,
+        "cooldown_ticks": 360,
+        "range_m": 30.0,
+        "speed_mps": 34.0,
+        "radius_m": 0.4,
+        "damage": 82.0,
+        "max_hits": 1,
+        "yaw_offsets_rad": [
+          -0.105,
+          0.0,
+          0.105
+        ],
+        "stagger_s": 0.1,
+        "projectile_release_ticks": [
+          19,
+          21,
+          23
+        ]
+      }
+    ]
+  }
+}

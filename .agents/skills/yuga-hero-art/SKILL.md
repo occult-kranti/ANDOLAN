@@ -26,6 +26,13 @@ Compare the actual [generated target](../../../games/yuga-native/art/hanuman/loo
 with the existing [editable dusk scene](../../../games/yuga-native/art/hanuman/lookdev/README.md)
 before choosing the change.
 
+The [museum reference set](../../../games/yuga-native/docs/research/art-history-panel-2026/README.md)
+records eight individual public-domain objects, their credits and verified images.
+Use observed gesture, composition or palette with its source. The
+[new action boards](../../../games/yuga-native/art/ability-keyframes-2026/README.md)
+are generated concepts. Check weapon sockets, support feet and timing on the
+actual rig, including Rama's anatomical right-hand bow grip and Hanuman's gada.
+
 Inspect the assigned editable source and import contract before editing.
 [Hero runtime](../../../games/yuga-native/scripts/rama_hero_runtime.gd) composes
 the asset; [motion](../../../games/yuga-native/scripts/rama_motion.gd) owns

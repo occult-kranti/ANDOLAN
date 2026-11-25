@@ -771,6 +771,7 @@ async function init() {
       soldier: asset('soldier'),
       architecture: asset('architecture'),
       nature: asset('nature'),
+      mountain: data.blobs['mountain-rock'] ? asset('mountain-rock') : undefined,
     },
     data.map,
     data.kit,

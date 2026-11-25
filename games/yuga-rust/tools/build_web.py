@@ -113,6 +113,9 @@ def notices(workspace):
         "YUGA original cues": NATIVE / "NOTICE/HANUMAN-ABILITY-AUDIO.json",
     }.items():
         include(label, path.read_text())
+    mountain_notice = WEB / "art/mountain-rock-NOTICE.txt"
+    if (WEB / "art/mountain-rock.glb").is_file() and mountain_notice.is_file():
+        include("Mountain Pulse rock (CC0)", mountain_notice.read_text())
     if (NATIVE / "art/hanuman-hero-finish/models/hanuman-enhanced.glb").is_file():
         include("YUGA playable Hanuman finish", "The YUGA team adapted the credited Hanuman body and native motions with a compact muzzle, revised surface textures, weighted copper guard hair and a tail recoil pass. The downloadable model retains the base asset terms listed in Hanuman asset provenance.")
     if (NATIVE / "art/hanuman-hero-finish/design/hanuman-portrait-target.webp").is_file():
@@ -193,6 +196,11 @@ def main():
             "body-font": ROOT
             / "node_modules/@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2",
         }
+        mountain_rock = WEB / "art/mountain-rock.glb"
+        if mountain_rock.is_file():
+            if not (WEB / "art/mountain-rock-NOTICE.txt").is_file():
+                raise ValueError("Mountain rock attribution is missing")
+            assets["mountain-rock"] = mountain_rock
         for cue in sorted((NATIVE / "assets/audio/hanuman-trial").glob("*.wav")):
             assets["audio/" + cue.stem] = cue
         for cue in sorted((NATIVE / "assets/audio/rama-quality").glob("*.wav")):

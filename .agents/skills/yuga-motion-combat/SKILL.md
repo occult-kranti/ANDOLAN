@@ -29,6 +29,15 @@ Read [AGENTS.md](../../../AGENTS.md), [start here](../../../docs/START_HERE.md),
 Lead assigns exclusive files and owns shared manifests/ledger. Coordinate W2
 state display, W3 imported rig, W4 collision and W6 package/source freezes.
 
+For Confluence, begin with the [measured 20 Hz action index](../../../games/yuga-native/docs/design/combat-panel-2026/baseline.json)
+and [layered cast design](../../../games/yuga-native/docs/design/combat-panel-2026/README.md).
+Maruti Udayana's impact event marks takeoff; its actual landing can occur
+early and is reported by `landed_age_ticks`. Keep Lanka Dahan's rear field
+anchored for its authoritative lifetime after body recovery. Decorative effects
+use the accepted cast clock; a victim cue needs an actual recipient receipt.
+Review the [source notes and sample rigs](../../../games/yuga-native/docs/research/gamecraft-sources-2026/README.md)
+before adopting a new interpolation, pose or effects method.
+
 ## Phase 1: freeze simulation and motion contracts
 
 1. Record task ID, product/profile, exact baseline, exclusive files, reproduced

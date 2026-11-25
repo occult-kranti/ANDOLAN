@@ -29,6 +29,12 @@ For a new lane or courtyard, check the [editable world elements](../../../games/
 
 For an Elden Ring-inspired vista, use the [world research and team brief](../../../games/yuga-native/docs/research/elden-ring-world-study/README.md). Compare the source's framing, silhouette and approach against the current player camera. Use the project's original kits and separately licensed assets with their provenance. Treat the isolated Rust surface-cache probe as an experiment with a ray-query dependency, and reconcile any real route with the chosen runtime's authoritative collision.
 
+Review the [world panel candidate and camera evidence](../../../games/yuga-native/docs/research/world-panel-2026/README.md)
+alongside the [museum landscape references](../../../games/yuga-native/docs/research/art-history-panel-2026/README.md).
+At each contested wall, check the camera-to-player segment as well as the
+actor's collision. Inspect both teams' ordinary camera views and the ability
+footprint before promoting decorative scenery.
+
 1. Record task ID, baseline, exclusive files, intended visible improvement,
    reference images and the route or encounter served by the element.
 2. Freeze scale, camera, day/night phase, team visibility, collision and unit
