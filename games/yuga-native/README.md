@@ -1,8 +1,10 @@
 # YUGA native production track
 
+**Hanuman Trial** adds an offline courtyard on `game/yuga-hanuman-trial` with five abilities, eleven clips and a responsive four-joint tail. Run the source in Godot 4.6.3 and choose **Hanuman → Begin Hanuman Trial → Begin practice**. The studio bundle includes the Blender master, the separate ImageGen look, GLB and both verified reels. [Hanuman handoff](docs/HANUMAN_HANDOFF.md) · [Download studio ZIP](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/ecd4eb58f069c602bb81f8c56b74f39c0e1a0e34/YUGA-Hanuman-Studio-and-Trial.zip) · [Panel roadmap](docs/HANUMAN_SWARM_ROADMAP.md)
+
 **Active desktop work:** [resume handoff](docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
-**Latest source work:** [reuse into playable integration](docs/research/reuse-production-continuation/README.md) owns current source pins, six-worker results and next steps. It extends the existing world, transport and art tooling; source candidates are accepted separately from finished game art. The ledger remains **17/78 scoped packets, 0/13 complete rounds**. The public download below retains its older executable identity.
+**Earlier Confluence integration:** [reuse into playable integration](docs/research/reuse-production-continuation/README.md) pins the world, transport and art tooling changes. The desktop campaign ledger remains **17/78 scoped packets, 0/13 complete rounds**. The public executable below belongs to the earlier desktop preview.
 
 **Deferred mobile adaptation:** start with the [original 5v5 mobile roadmap](docs/MOBILE_PRODUCTION_ROADMAP.md), [code/stack decisions](docs/mobile/CODE_AND_STACK_DECISIONS.md) and [18-round / 108-packet queue](docs/MOBILE_PRODUCTION_BACKLOG.json). Six specialist research reports cover touch, rendering, characters, networking, open-source reuse and physical-device release gates. This proposed mobile profile is separate from the existing offline/native and browser rules; mobile exports and device qualification remain unimplemented.
 
@@ -26,7 +28,7 @@ and run commands. R2 is accepted as an optional cloth surface treatment; default
 adoption belonged to that earlier wave's scope. The new surface-finishing owner
 has separate integration and visual evidence in the current campaign.
 
-The current source builds **one Rama hero** across courtyard practice and Confluence: a new smooth-skinned model, detailed blue/ivory garments and goldwork, continuous locomotion/archery, five coherent abilities, health/shield, siege damage and respawn. Read the [milestone and code map](docs/RAMA_HERO_MILESTONE.md), [actual art review](art/hero-rama/REVIEW.md), [independent acceptance](docs/RAMA_HERO_ACCEPTANCE.md), and [source-pinned character-design research](docs/research/RAMA_HERO_DESIGN_STUDY.md).
+**Rama** remains the hero for bow practice and Confluence, with blue and ivory garments, goldwork, locomotion and archery, a five-part kit, shield, siege damage and respawn. Hanuman has his own practice scene. [Rama milestone](docs/RAMA_HERO_MILESTONE.md) · [Art review](art/hero-rama/REVIEW.md) · [Independent acceptance](docs/RAMA_HERO_ACCEPTANCE.md)
 
 **Play:** enter Confluence or courtyard practice. LMB draws/shoots, Q pierces, E steps, C places Guardian Circle, and X releases Dawn Volley. R reloads; F/G retain traversal. F3 opens the Rama guide, F2 opens Help/remapping, Escape pauses, and F5 resets practice. Both scenes use the same accepted combat events and motion controller. The older invocation catalogue is a separate legacy study, not the default hero kit.
 

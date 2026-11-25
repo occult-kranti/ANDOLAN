@@ -4,7 +4,9 @@ This repository contains two games: **YUGA**, an original mythology-inspired nat
 
 **YUGA desktop work:** [active handoff](games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [10 screen rounds + 3 integration rounds](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [six-worker task ledger](games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The campaign has **17/78 reviewed packets and 0/13 complete rounds**. Mobile is deferred. Whole-hero/world art and sustained motion remain active work.
 
-**Hanuman Trial:** The native title leads to Hanuman’s offline practice court on `game/yuga-hanuman-trial`. Download or regenerate the editable Blender scene and skinned game model from the [art handoff](games/yuga-native/art/hanuman/README.md). See the [five abilities and play script](games/yuga-native/docs/HANUMAN_GAME_DESIGN.md), [panel evidence](games/yuga-native/docs/research/hanuman-nov25/PANEL.md) and [rotating panel roadmap](games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md).
+**Hanuman Trial** is an offline practice court on `game/yuga-hanuman-trial`. With Godot 4.6.3, run `godot --path games/yuga-native` from the repository root and choose **Hanuman → Begin Hanuman Trial → Begin practice**. The trial has five abilities, eleven authored clips and a responsive four-joint tail. [Play and verification handoff](games/yuga-native/docs/HANUMAN_HANDOFF.md)
+
+The 35 MB studio bundle contains both editable Blender scenes, the playable GLB, the generated art, two reels and review evidence. The trial is playable from the source branch. [Download ZIP](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/ecd4eb58f069c602bb81f8c56b74f39c0e1a0e34/YUGA-Hanuman-Studio-and-Trial.zip) · [Blender art and rebuild](games/yuga-native/art/hanuman/README.md) · [Design script](games/yuga-native/docs/HANUMAN_GAME_DESIGN.md) · [Rotating panel roadmap](games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md)
 
 **Earlier native checkpoint:** [Reuse into playable integration](games/yuga-native/docs/research/reuse-production-continuation/README.md) covers the water-garden, typed native-authority adapter, event and socket diagnostics and ordinary gate input. The [production dashboard](https://occult-kranti.github.io/ANDOLAN/production/) is a dated snapshot.
 
@@ -12,7 +14,7 @@ This repository contains two games: **YUGA**, an original mythology-inspired nat
 
 Previously qualified runtime source `1236db50` adds truthful reload/returning/terminal guidance, authored descent and clearer swamp paving to the earlier focus/resource-sharing work. Test-only successor `93ebba9f` passed [all 37 foundation CI steps](https://github.com/occult-kranti/ANDOLAN/actions/runs/39154538312); that runtime composition also passed its actual native smoke. [Its report](games/yuga-native/docs/evidence/desktop-finish/continuation-oct18b/ROOT_FINAL_REVIEW.md) separates source, candidate builds and public-package evidence. C1–C8 hair studies remain rejected; canonical descent is accepted with explicit motion limits. The downloadable package below predates the new court source.
 
-**Next work:** start with the [current continuation](games/yuga-native/docs/research/reuse-production-continuation/README.md) and its [ten dependent stages](games/yuga-native/docs/research/reuse-production-continuation/NEXT_TEN.md). Older untracked project work is preserved on [the recovery branch](https://github.com/occult-kranti/ANDOLAN/tree/backup/yuga-workspace-2026-10-18); [the backup manifest and receipt](docs/evidence/workspace-backup-2026-10-18/README.md) describe its scope.
+**Confluence follow-on:** start with the [integration checkpoint](games/yuga-native/docs/research/reuse-production-continuation/README.md) and its [ten dependent stages](games/yuga-native/docs/research/reuse-production-continuation/NEXT_TEN.md). Older untracked project work is preserved on [the recovery branch](https://github.com/occult-kranti/ANDOLAN/tree/backup/yuga-workspace-2026-10-18). [Backup manifest and receipt](docs/evidence/workspace-backup-2026-10-18/README.md)
 
 The published `79e5` Linux package passed warm execution in **126.094 s** (7 manual + 9 natural captures) and fresh-user cold execution in **269.549 s** (3 manual + 9 natural captures), both native Quit 0 with zero runtime warnings/errors. W1 and W2 reviewed all **28 originals**: [execution](games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W1-actual-r1/package-successor-r2/receipt.json) and [independent visual review](games/yuga-native/docs/evidence/desktop-finish/continuation-oct18/W2-package-successor-r2/receipt.json). These captures retain their own scope; the earlier `96d5b9cd` release's 59-screen journey is historical.
 
@@ -23,6 +25,7 @@ Choose **Confluence** or **Bow training**, then the primary action. LMB draws/sh
 | Working on | Start here |
 | --- | --- |
 | New chat, contributor or worker | [Project handoff](docs/START_HERE.md) |
+| Hanuman art, motion and trial | [Hanuman handoff](games/yuga-native/docs/HANUMAN_HANDOFF.md) · [Next panel assignments](games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md) |
 | Native UI context and pinned Impeccable guidance | [Product](games/yuga-native/PRODUCT.md) · [Design](games/yuga-native/DESIGN.md) · [Reference pack](games/yuga-native/docs/research/impeccable/README.md) |
 | Native build, tests and art pipeline | [Build handbook](games/yuga-native/docs/BUILD_HANDBOOK.md) |
 | Production game, features and milestones | [Production roadmap](games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) |

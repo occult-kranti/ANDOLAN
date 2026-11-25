@@ -1,8 +1,8 @@
 # Start here: project and agent handoff
 
-**Hanuman Trial:** Choose **Hanuman** at the native title, then **Begin Hanuman Trial**. The offline courtyard runs Hanuman’s own rig, gada, responsive four-joint tail and five profile-driven actions. See the [art handoff](../games/yuga-native/art/hanuman/README.md), [design and play script](../games/yuga-native/docs/HANUMAN_GAME_DESIGN.md), [panel review](../games/yuga-native/docs/research/hanuman-nov25/PANEL.md) and [two-panel reuse roadmap](../games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md).
+**Hanuman Trial:** Choose **Hanuman → Begin Hanuman Trial → Begin practice** at the native title on `game/yuga-hanuman-trial`. The offline courtyard runs Hanuman’s gada, four-joint tail and five profile-driven actions. The handoff pins the verified model, commands, receipts and next owners. [Hanuman handoff](../games/yuga-native/docs/HANUMAN_HANDOFF.md) · [Two-panel roadmap](../games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md) · [Studio bundle](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/ecd4eb58f069c602bb81f8c56b74f39c0e1a0e34/YUGA-Hanuman-Studio-and-Trial.zip)
 
-**Latest implementation:** [reuse into playable integration](../games/yuga-native/docs/research/reuse-production-continuation/README.md). Start there for the source-derived water garden, typed authority factory, event/socket diagnostics, MPFB native hair candidates and ordinary gate-input results. Its exact worker/root receipts take precedence over historical source summaries below. The [ten-stage guide](../games/yuga-native/docs/research/reuse-production-continuation/NEXT_TEN.md) retains dependency gates; complete hero art, full matches and physical-GPU qualification remain open.
+**Earlier Confluence integration:** [reuse into playable integration](../games/yuga-native/docs/research/reuse-production-continuation/README.md) covers the source-derived water garden, typed authority factory, event and socket diagnostics, MPFB hair candidates and ordinary gate input. The [ten-stage guide](../games/yuga-native/docs/research/reuse-production-continuation/NEXT_TEN.md) retains the remaining dependency gates.
 
 **Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
 
@@ -13,7 +13,7 @@
 
 For native UI work, read [YUGA PRODUCT](../games/yuga-native/PRODUCT.md), [DESIGN](../games/yuga-native/DESIGN.md) and the [pinned Impeccable application contract](../games/yuga-native/docs/research/impeccable/README.md). The root product/design files belong to the separate browser game.
 
-Updated 23 October 2026. Start here, then open only the subsystem assigned to your task. This repository contains separate native, browser and protest games.
+Hanuman notes updated 25 November 2026. Earlier checkpoints retain their original dates. Start with the subsystem assigned to your task. This repository contains separate native, browser and protest games.
 
 **Deferred mobile planning track:** [YUGA 5v5 mobile roadmap](../games/yuga-native/docs/MOBILE_PRODUCTION_ROADMAP.md) → [code/stack decisions](../games/yuga-native/docs/mobile/CODE_AND_STACK_DECISIONS.md) → [108 planned implementation packets](../games/yuga-native/docs/MOBILE_PRODUCTION_BACKLOG.json). Six completed research assignments cover original mobile controls/art/maps/services and device qualification. This is planning evidence, not a playable Android/iOS release or completion of the separate native G1–G6 graphics campaign. When mobile work resumes, start at M1; do not assume the existing native 6v6 proposal or browser protocol 2 implements 5v5.
 
@@ -56,6 +56,7 @@ Earlier [Mythic](../games/yuga-native/docs/evidence/mythic-published/REVIEW.md),
 | Need | Start with | Then open only if relevant |
 | --- | --- | --- |
 | Build, change or test native YUGA | [Build handbook](../games/yuga-native/docs/BUILD_HANDBOOK.md) | Its task-to-file and test matrices |
+| Continue Hanuman art, abilities or trial | [Hanuman handoff](../games/yuga-native/docs/HANUMAN_HANDOFF.md) | [Panel roadmap](../games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md) and [art files](../games/yuga-native/art/hanuman/README.md) |
 | Verify current screens or package | [Active desktop handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) | Current exact export, execution, original-image and public-byte receipts |
 | Choose the next milestone | [Production roadmap](../games/yuga-native/docs/FULL_GAME_PRODUCTION_ROADMAP.md) | [Dependency/status ledger](../games/yuga-native/docs/ROADMAP_BACKLOG.json), [design master](../games/yuga-native/docs/GAME_DESIGN_MASTER.md) |
 | Use criticism, mythology, books or open-source references | [Research brief](../games/yuga-native/docs/research/RESEARCH_BRIEF.md) | The exact source/report linked in the relevant row |
