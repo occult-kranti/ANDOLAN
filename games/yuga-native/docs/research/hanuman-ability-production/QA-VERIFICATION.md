@@ -49,3 +49,9 @@ for fps in 60 120; do
 done
 cmp "$qa_dir/run-60.json" "$qa_dir/run-120.json"
 ```
+
+## Windows release execution
+
+The exact Windows ZIP opened its normal title through the bundled launcher on Windows Server 2025 x64. All five revised clips loaded. The packed-game fixture passed 111 headless assertions including target damage, shielding, vault landing and delayed impact. For this run the fixture checked the shipped PCK before and after execution in place of hashing source-only files. Physical frame pacing, Windows display output and listening remain hardware review items. [Windows summary](windows-qualification.json) · [Assertion output](windows-integration.json) · [Windows workflow](https://github.com/occult-kranti/ANDOLAN/actions/runs/45571270507)
+
+The tracked Windows summary uses LF line endings. The original Windows summary used CRLF and hashed to `19395a74588ba6c3c95109abd18aa6f6afe311b6f41dcaacfd97c197ab841b96`. The full assertion output retains SHA-256 `e404bf85af92179fd965a31f24db8283af900db2022ca71d6732b3e9b9c234c8`.
