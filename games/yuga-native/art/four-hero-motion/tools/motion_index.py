@@ -1,4 +1,5 @@
 """Index the actual animation samplers in the four GLBs for handoff and DCC import."""
+
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -13,7 +14,7 @@ def index(path):
     magic, version, length, json_length, json_type = struct.unpack_from("<4s4I", raw)
     if (magic, version, length, json_type) != (b"glTF", 2, len(raw), 0x4E4F534A):
         raise ValueError(f"Invalid GLB header in {path.name}")
-    gltf = json.loads(raw[20:20 + json_length])
+    gltf = json.loads(raw[20 : 20 + json_length])
     if any("uri" in x for x in gltf.get("buffers", []) + gltf.get("images", [])):
         raise ValueError(f"{path.name} refers to an external buffer or texture")
     actions = []
@@ -23,14 +24,16 @@ def index(path):
         joints = {ch["target"]["node"] for ch in animation["channels"]}
         start = min(s["min"][0] for s in samplers)
         end = max(s["max"][0] for s in samplers)
-        actions.append({
-            "name": animation["name"],
-            "first_key_s": round(start, 6),
-            "last_key_s": round(end, 6),
-            "key_span_s": round(end - start, 6),
-            "target_nodes": len(joints),
-            "animated_properties": props,
-        })
+        actions.append(
+            {
+                "name": animation["name"],
+                "first_key_s": round(start, 6),
+                "last_key_s": round(end, 6),
+                "key_span_s": round(end - start, 6),
+                "target_nodes": len(joints),
+                "animated_properties": props,
+            }
+        )
     return {
         "file": "models/" + path.name,
         "sha256": sha256(raw).hexdigest(),
@@ -55,4 +58,6 @@ if __name__ == "__main__":
         "heroes": result,
     }
     (PACK / "motion-index.json").write_text(json.dumps(output, indent=2) + "\n")
-    print(f"{sum(len(h['actions']) for h in result.values())} clips across {len(result)} rigs")
+    print(
+        f"{sum(len(h['actions']) for h in result.values())} clips across {len(result)} rigs"
+    )

@@ -3,7 +3,7 @@
 import math
 
 import bpy
-from mathutils import Vector
+from mathutils import Quaternion, Vector
 
 from animations import _ready, _Pose, _mix, _planted, author_animations
 
@@ -95,6 +95,28 @@ def shiva_pose(rig, clip, frame, end):
     return pose
 
 
+def finger_pad(pose, side):
+    name = "finger2-3." + side
+    origin, facing = pose.world(name)
+    return origin + facing @ Vector((0, 0.8 * pose.bones[name].length, 0))
+
+
+def cover_flute_hole(pose, target, weight):
+    # Keep the authored curled hand, adjusting only three left-index phalanges.
+    target = finger_pad(pose, "L").lerp(target, weight)
+    for _ in range(4):
+        for segment in (3, 2, 1):
+            name = f"finger2-{segment}.L"
+            pivot, orientation = pose.world(name)
+            tip = finger_pad(pose, "L")
+            if (target - tip).length_squared < 0.000004:
+                return
+            turn = (tip - pivot).rotation_difference(target - pivot)
+            if turn.angle > math.radians(18):
+                turn = Quaternion(turn.axis, math.radians(18))
+            pose.orient(name, turn @ orientation)
+
+
 def krishna_pose(rig, clip, frame, end):
     pose = _Pose(rig)
     _ready(pose, "chakram")
@@ -128,23 +150,46 @@ def krishna_pose(rig, clip, frame, end):
         melody = envelope(frame, [(0, 0.36), (5, 1), (17, 1), (23, 0.61), (end, 0)])
         pose.rotate("neck01", z=-6 * melody)
         pose.rotate("head", x=4 * melody)
-        # Left-hand X-axis is the flute's bore. Its lip hole lies left of the grip.
+        # Solve the near-end blow hole against a head-relative lower-lip landmark.
+        # Distances within the rigid bamboo stay in metres; _Pose.arm targets
+        # are normalized to this character's source skeleton stature.
+        forward, bore = (0, -1, -0.10), (1, -0.18, -0.13)
+        pose.hand_orientation("wrist.L", forward, bore)
+        hand_orientation = pose.world("wrist.L")[1]
+        head_rotation = pose.world("head")[1] @ pose.rest["head"].inverted()
+        lip = pose.world("oris01")[0] + head_rotation @ (
+            Vector((0, -0.024, 0.020)) * pose.scale
+        )
+        blow_hole = Vector((-0.248, 0.0935, -0.025))
+        held_wrist = lip - hand_orientation @ blow_hole
         pose.arm(
             "L",
-            _mix((0.28, -0.17, 1.12), (0.134, -0.079, 1.64), melody),
+            _mix((0.28, -0.17, 1.12), held_wrist / pose.scale, melody),
             (0.49, 0.025, 1.42),
-            (0, -1, 0.06),
-            (1, 0, 0.02),
+            forward,
+            bore,
         )
+        pose.grip("L", 0.80)
+        far_hole = pose.world("wrist.L")[0] + hand_orientation @ Vector(
+            (0.010, 0.0935, -0.025)
+        )
+        cover_flute_hole(pose, far_hole, melody)
+        # The opposite index reaches the third finger hole while the far hand
+        # supports the barrel. Solve its fingertip pad, so hand size is retained.
+        pose.hand_orientation("wrist.R", forward, bore)
+        pose.grip("R", 0.76)
+        index_offset = finger_pad(pose, "R") - pose.world("wrist.R")[0]
+        finger_hole = held_wrist + hand_orientation @ Vector((-0.118, 0.0935, -0.025))
+        target = (finger_hole - index_offset) / pose.scale
         pose.arm(
             "R",
-            _mix((-0.29, -0.27, 1.25), (-0.117, -0.077, 1.63), melody),
-            (-0.48, 0, 1.39),
-            (0, -1, 0.04),
-            (1, 0, 0.02),
+            _mix((-0.29, -0.27, 1.25), target, melody),
+            (-0.44, -0.20, 1.38),
+            forward,
+            bore,
         )
-        pose.grip("L", 0.55)
-        pose.grip("R", 0.55 - 0.12 * math.sin(frame * math.pi / 4) * melody)
+        pose.grip("R", 0.76 - 0.10 * math.sin(frame * math.pi / 4) * melody)
+
     else:
         sweep = envelope(frame, [(0, 0.70), (3, 1), (end * 0.47, 0.69), (end, 0)])
         if clip == "cast":
@@ -187,7 +232,10 @@ def author(rig, hero):
         action["animation_role"] = hero + " motion study"
         rig.animation_data.action = action
         previous = {}
-        for f in sorted({0, 1, end, *range(3, end, 3)}):
+        keyed_frames = {0, 1, end, *range(3, end, 3)}
+        if hero == "krishna" and clip == "cast2":
+            keyed_frames.update((5, 17))
+        for f in sorted(keyed_frames):
             pose = (shiva_pose if hero == "shiva" else krishna_pose)(rig, clip, f, end)
             for name in sorted(
                 set(pose.rot)

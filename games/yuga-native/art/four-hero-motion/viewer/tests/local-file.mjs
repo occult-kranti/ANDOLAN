@@ -48,7 +48,10 @@ try {
     await page.locator('#hero').selectOption('krishna');await ready('krishna');
     assert.equal(await page.locator('#model-file').isVisible(),false);
     assert.deepEqual(outside,[]);assert.deepEqual(errors,[]);
-    const report={browser:await browser.version(),openMode:'file:// with standard Chromium file permissions and a native File input',
+    const modelSha256=Object.fromEntries(await Promise.all(['krishna','shiva'].map(async id=>[
+        id,createHash('sha256').update(await readFile(resolve(root,'models',id+'.glb'))).digest('hex')
+    ])));
+    const report={browser:await browser.version(),openMode:'file:// with standard Chromium file permissions and a native File input',modelSha256,
         runtimeSha256:createHash('sha256').update(await readFile(resolve(root,'viewer/app.min.js'))).digest('hex'),
         arbitraryNetworkRequests:outside.length,uncaughtBrowserErrors:errors.length,krishnaMaxSampledJointRotationDegrees:Number(max.toFixed(6)),
         checks:['Mismatched GLB leaves the picker visible','Krishna loads from a user-selected local blob','Deep link selects cast3 and the rear camera',

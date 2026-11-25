@@ -6,6 +6,8 @@ The shipped classic roster and its named browser models contain 14 other heroes.
 
 The new concept sheet and preview GLB accompany this script. The inspected preview has 165 skin joints and exports all nine named actions, with the left flute and right chakra in the character design. The table below gives the intended animation endpoints and gameplay timing. The current Blender preview has its own action lengths and exporter frame offset. Compare the contact key and sampled world pose before wiring Govardhan Canopy to a match event. [New model sheet](../media/art/krishna.webp) · [Skinned preview](../models/krishna.glb) · [Blender motion source](../tools/preview_actions.py)
 
+In the exported Reed Refrain clip, the lower lip stays 1.48 mm from the blow hole at the 14 sampled poses between frames 5 and 17. Both HTTP playback and the local-file inspector exercised this corrected model. [Blender contact measurements](../evidence/rig-motion.json) · [Inspector results](../viewer/tests/browser.json)
+
 ## Character and props
 
 - Keep the bansuri in the left hand for locomotion, with the mouthpiece nearest the left cheek and enough length for the right fingertips to reach the outer stops. Give the flute a soft, pale edge under arena lighting. Carry it at a left-hip sash loop during the ultimate. Provide hand, lip, hip and right-disc sockets.
