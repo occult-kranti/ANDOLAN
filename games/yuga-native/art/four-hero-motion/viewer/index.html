@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark"><meta name="theme-color" content="#141b1b">
+  <title>Hero rig inspector · YUGA</title>
+  <link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="mast"><div class="identity"><a class="wordmark" href="../index.html" aria-label="Return to the YUGA motion atlas">YUGA</a><span class="divider"></span><h1>Rig inspector</h1></div>
+    <label class="choose">Character <select id="hero"><option value="hanuman">Hanuman</option><option value="rama">Rama</option><option value="shiva">Shiva</option><option value="krishna">Krishna</option></select></label>
+  </header>
+  <main>
+    <section class="workbench" aria-label="Character preview">
+      <div id="stage">
+        <canvas id="scene" tabindex="0" aria-label="3D character. Drag or use arrow keys to orbit. Use plus or minus to zoom and Space to play or pause."></canvas>
+        <div class="model-label"><h2 id="title">Hanuman</h2><p id="mesh-info"></p></div>
+        <div class="prompt" id="prompt"><div class="message" id="message" role="status">Opening the rendering studio…</div>
+          <label id="file-prompt" hidden>Choose a character model <input id="model-file" type="file" accept=".glb,model/gltf-binary"></label></div>
+        <div class="camera" role="group" aria-label="Camera angle">
+          <button type="button" data-view="front" aria-pressed="true">Front</button><button type="button" data-view="side" aria-pressed="false">Side</button><button type="button" data-view="rear" aria-pressed="false">Rear</button>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="time-head"><strong id="clip-title">Idle</strong><output id="clock" for="scrub">0.00 / 0.00 s</output></div>
+        <label class="sr" for="scrub">Clip time in seconds</label><input id="scrub" type="range" min="0" max="1" step="0.001" value="0" disabled>
+        <div class="transport"><button id="play" type="button" disabled>Play</button>
+          <label>Speed <select id="speed" disabled><option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label>
+          <label class="loop"><input id="loop" type="checkbox" checked disabled> Loop</label>
+        </div>
+      </div>
+    </section>
+    <aside class="panel"><h2>Animation clips</h2><div id="clips" aria-label="Animation clips"></div>
+      <details><summary>Camera controls</summary><p>Drag to orbit. Use the wheel to zoom. With the scene focused, use the arrow keys to orbit, + or − to zoom, and Space to play or pause.</p></details>
+    </aside>
+  </main>
+  <script defer src="app.min.js"></script>
+</body></html>
