@@ -5,6 +5,7 @@ impl Lab {
     fn zone(
         &mut self,
         i: usize,
+        slot: usize,
         ability: &Ability,
         pos: Point,
         power: f64,
@@ -14,7 +15,11 @@ impl Lab {
         if self.zones.len() >= self.rules.max_zones {
             self.zones.remove(0);
         }
+        let id = self.next_object();
         self.zones.push(Zone {
+            id,
+            owner: self.units[i].id.clone(),
+            slot,
             team: self.units[i].team,
             kind: ability.kind,
             mechanic,
@@ -26,11 +31,12 @@ impl Lab {
             duration: life,
         });
     }
-    fn summon(&mut self, i: usize, ability: &Ability) {
+    fn summon(&mut self, i: usize, slot: usize, ability: &Ability) {
         let caster = &self.units[i];
         let center = caster.pos;
         let team = caster.team;
         let kit = caster.kit;
+        let owner = caster.id.clone();
         for offset in [-1.3, 1.3] {
             if self.units.len() >= self.rules.max_actors {
                 return;
@@ -61,6 +67,18 @@ impl Lab {
                 unit.expires_at = Some(self.time + (ability.duration * 3.).max(6.));
                 let z = if team == "sun" { 66. } else { -66. };
                 unit.waypoint = usize::from(distance(pos, [4.5, z]) < distance(pos, [4.5, -z]));
+                self.events.push(
+                    EventKind::Ability,
+                    Source {
+                        actor: &owner,
+                        team,
+                        slot: Some(slot),
+                    },
+                    Some(&unit.id),
+                    None,
+                    pos,
+                    self.time,
+                );
                 self.units.push(unit);
             }
         }
@@ -73,6 +91,14 @@ impl Lab {
         let ability = self.heroes[actor.kit].abilities[slot].clone();
         let origin = actor.pos;
         let team = actor.team;
+        let owner = actor.id.clone();
+        let source = Source {
+            actor: &owner,
+            team,
+            slot: Some(slot),
+        };
+        self.events
+            .push(EventKind::Ability, source, None, None, origin, self.time);
         actor.yaw = yaw;
         actor.cds[slot] = ability.cooldown;
         let mut point = self
@@ -111,6 +137,7 @@ impl Lab {
                 };
                 self.shoot(
                     i,
+                    Some(slot),
                     ability.power,
                     speed,
                     radius,
@@ -140,7 +167,7 @@ impl Lab {
                                 }
                     };
                     if hit {
-                        u.hurt(ability.power);
+                        self.events.hurt(source, u, ability.power, u.pos, self.time);
                     }
                 }
             }
@@ -152,10 +179,10 @@ impl Lab {
                         && self.world.line_clear(origin, u.pos)
                 }) {
                     if ability.kind == Kind::Heal {
-                        u.hp = (u.hp + ability.power).min(u.max_hp);
+                        self.events.heal(source, u, ability.power, self.time);
                     } else {
-                        u.shield = u.shield.max(ability.power);
-                        u.ward = u.ward.max(ability.duration);
+                        self.events
+                            .ward(source, u, ability.power, ability.duration, self.time);
                     }
                 }
             }
@@ -172,7 +199,7 @@ impl Lab {
             }
             Kind::Slow => {
                 let life = ability.duration.max(1.);
-                self.zone(i, &ability, point, ability.power / life, life, None);
+                self.zone(i, slot, &ability, point, ability.power / life, life, None);
                 return true;
             }
             Kind::Pull => {
@@ -182,7 +209,7 @@ impl Lab {
                         && distance(u.pos, point) <= ability.radius
                         && self.world.line_clear(origin, u.pos)
                 }) {
-                    u.hurt(ability.power);
+                    self.events.hurt(source, u, ability.power, u.pos, self.time);
                     let d = distance(u.pos, point);
                     if d > 0.1 && u.hp > 0. {
                         let f = d.min(6.) / d;
@@ -195,9 +222,9 @@ impl Lab {
                 }
                 zone = point;
             }
-            Kind::Summon => self.summon(i, &ability),
+            Kind::Summon => self.summon(i, slot, &ability),
         }
-        self.zone(i, &ability, zone, 0., 0.7, None);
+        self.zone(i, slot, &ability, zone, 0., 0.7, None);
         true
     }
     pub fn advance_cast(&mut self, i: usize) -> bool {
@@ -211,11 +238,18 @@ impl Lab {
         }
         let ability = self.heroes[self.units[i].kit].abilities[cast.slot].clone();
         let team = self.units[i].team;
+        let owner = self.units[i].id.clone();
+        let source = Source {
+            actor: &owner,
+            team,
+            slot: Some(cast.slot),
+        };
         match cast.mechanic {
             Mechanic::DawnVolley => {
                 for spread in [-0.12, 0., 0.12] {
                     self.shoot(
                         i,
+                        Some(cast.slot),
                         ability.power,
                         62.,
                         0.5,
@@ -248,12 +282,12 @@ impl Lab {
                         && self.world.line_clear(center, u.pos)
                 }) {
                     if u.team == team {
-                        u.hp = (u.hp + 45.).min(u.max_hp);
+                        self.events.heal(source, u, 45., self.time);
                     } else {
-                        u.hurt(ability.power);
+                        self.events.hurt(source, u, ability.power, u.pos, self.time);
                     }
                 }
-                self.zone(i, &ability, center, 0., 0.7, None);
+                self.zone(i, cast.slot, &ability, center, 0., 0.7, None);
             }
             Mechanic::MithilaSanctuary => {
                 for u in self.units.iter_mut().filter(|u| {
@@ -262,11 +296,12 @@ impl Lab {
                         && distance(u.pos, cast.origin) <= ability.radius
                         && self.world.line_clear(cast.origin, u.pos)
                 }) {
-                    u.shield = u.shield.max(ability.power);
-                    u.ward = u.ward.max(ability.duration);
+                    self.events
+                        .ward(source, u, ability.power, ability.duration, self.time);
                 }
                 self.zone(
                     i,
+                    cast.slot,
                     &ability,
                     cast.origin,
                     9.,

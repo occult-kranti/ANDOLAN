@@ -42,3 +42,12 @@ dialog{position:fixed;max-height:90svh;width:min(560px,calc(100% - 28px));paddin
 
 @media(max-width:650px) and (max-height:740px){#practice-goal{max-height:110px}}
 @media(max-height:550px) and (orientation:landscape){#practice-goal{max-height:90px}}
+
+#sparring-play{display:grid;gap:4px;justify-items:start;text-align:left}
+#sparring-play small{font-weight:400;line-height:1.4;text-transform:none;letter-spacing:normal;color:var(--muted)}
+#sparring-tools{position:absolute;top:20px;left:20px;display:flex;gap:6px}
+#sparring-tools button{font-size:11px;pointer-events:auto}
+#hud[data-mode="sparring"] .team-score span{max-width:50px}
+@media(max-width:1100px){#sparring-play{grid-column:1/-1}#sparring-play small{font-size:11px}}
+@media(max-width:850px){#sparring-tools{top:96px;left:8px}}
+@media(max-width:650px){#hud[data-mode="sparring"] .bottom-hud{grid-template-columns:1fr}#hud[data-mode="sparring"] .topbar{min-width:0}#sparring-tools{top:72px}}

@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Play all fourteen heroes in Rust.** Choose **Hero sparring** in Sangam City to try the original weapons, all 42 abilities and the skinned characters in a three-person practice encounter. [Download the graphical roster](games/yuga-rust/downloads/yuga-rust-classic.zip?raw=true) · [Launch instructions](games/yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)
+
 **Play Confluence in Rust.** Choose Hanuman or Rama, lead a persistent army, or host a two-player match from the same download. The server runs the Rust simulation through Node and WebAssembly. [Download the game and room host](games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) · [Controls and hosting](games/yuga-rust/README.md) · [Rust game-source research and full port roadmap](games/yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 **Blender world elements.** Append or link 43 editable architecture, nature, foundation and sign assets. The same workflow can compile the FireRed remake’s Rust fallback geometry into a separate 36-piece Blender study. [Download and preview the libraries](games/yuga-native/art/reuse-library/README.md)

@@ -106,6 +106,7 @@ export class JungleView {
     return { root, crystal, remaining, ready };
   }
   update(snapshot: ArenaSnapshot, localId: string | null, dt: number, options: Options) {
+    for (const [id, camp] of this.camps) camp.root.enabled = snapshot.neutrals.some(neutral => neutral.campId === id);
     this.latest = snapshot;
     if (this.needsBaseline) { this.eventId = snapshot.events.at(-1)?.id ?? -1; this.needsBaseline = false; }
     const local = snapshot.actors.find(a => a.id === localId);

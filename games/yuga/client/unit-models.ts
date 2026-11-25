@@ -36,10 +36,10 @@ export class UnitModelLibrary {
   private disposed = false;
   constructor(private readonly app: pc.Application) {}
 
-  async preload(progress?: (done: number, total: number, unitId: string) => void) {
+  async preload(progress?: (done: number, total: number, unitId: string) => void, ids: readonly UnitModelId[] = UNIT_IDS) {
     let done = 0;
-    const results = await Promise.allSettled(UNIT_IDS.map(async id => { try { await this.load(id); } finally { progress?.(++done, UNIT_IDS.length, id); } }));
-    const failed = results.flatMap((r, i) => r.status === 'rejected' ? [UNIT_IDS[i]!] : []);
+    const results = await Promise.allSettled(ids.map(async id => { try { await this.load(id); } finally { progress?.(++done, ids.length, id); } }));
+    const failed = results.flatMap((r, i) => r.status === 'rejected' ? [ids[i]!] : []);
     if (failed.length) throw new Error(`Unit artwork could not load: ${failed.join(', ')}. Reload to retry.`);
   }
   private load(unitId: UnitModelId): Promise<void> {

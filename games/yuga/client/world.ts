@@ -29,7 +29,7 @@ export interface ArenaWorld {
   project(point: XYZ): ScreenPoint;
   reticle(): ScreenPoint | null;
   preloadHeroes(ids: string[], progress?: (done: number, total: number, heroId: string) => void): Promise<void>;
-  preloadUnits(progress?: (done: number, total: number, unitId: string) => void): Promise<void>;
+  preloadUnits(progress?: (done: number, total: number, unitId: string) => void, ids?:readonly UnitModelId[]): Promise<void>;
   assetDiagnostics(): ReturnType<HeroModelLibrary['diagnostics']> & { fallback: { id: string; heroId: string }[]; casts: ReturnType<CastEffects['diagnostic']>; units: ReturnType<UnitModelLibrary['diagnostics']> & { fallback: { id: string; unitId: string }[] }; jungle: ReturnType<JungleView['diagnostics']>; lighting: { mode: LightingMode; sample: ReturnType<typeof sampleDayNight>; scenery: ReturnType<ReturnType<typeof buildSangamCity>['diagnostics']> } };
   destroy(): void;
 }
@@ -527,6 +527,8 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
           releaseRemoved(projectileViews, new Set(), projectilePool);
           releaseRemoved(zoneViews, new Set(), zonePool);
           castEffects.destroy();
+          for(const pickup of pickupViews.values())pickup.destroy();
+          pickupViews.clear();
           jungle.reset();
           for (const burst of bursts) { burst.until = 0; burst.root.enabled = false; }
         }
@@ -621,7 +623,7 @@ export async function createArenaWorld(canvas: HTMLCanvasElement): Promise<Arena
     setOverview(enabled) { if (overview !== enabled) { overview = enabled; initialized = false; } },
     project,
     preloadHeroes: (ids, progress) => heroModels.preload(ids, progress),
-    preloadUnits: progress => unitModels.preload(progress),
+    preloadUnits: (progress, ids) => unitModels.preload(progress,ids),
     assetDiagnostics: () => ({ ...heroModels.diagnostics(), fallback: [...rigs.entries()].filter(([, rig]) => !rig.model && rig.tag.startsWith('hero/')).map(([id, rig]) => ({ id, heroId: rig.heroId })), casts: castEffects.diagnostic(),
       units: { ...unitModels.diagnostics(), fallback: [...[...rigs.entries()].filter(([, rig]) => !rig.model && rig.unitId).map(([id, rig]) => ({ id, unitId: rig.unitId! })), ...jungle.diagnostics().fallback] }, jungle: jungle.diagnostics(), lighting: { mode: lightingMode, sample: lightingSample, scenery: scenery.diagnostics() } }),
     reticle() {

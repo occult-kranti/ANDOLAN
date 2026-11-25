@@ -1,5 +1,7 @@
 # YUGA · Confluence in Rust
 
+**Classic hero sparring.** A second download runs all fourteen heroes’ original weapons and 42 abilities through Rust and WebAssembly in Sangam City. Extract it, serve the folder with `python3 -m http.server 8000`, open `http://localhost:8000`, select a hero and choose **Hero sparring**. [Download the graphical roster](downloads/yuga-rust-classic.zip?raw=true) · [Screenshots, controls and build](../yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)
+
 Play as **Hanuman or Rama** alongside an army fighting across three lanes. Escort troops to the enemy core. Every third wave brings cannon carts. Every fifth wave sends royal chariots into the middle lane. You can play solo or take opposing sides in a two-player room. Hanuman’s original three-guard practice is also available. [Download the game and room host](downloads/yuga-rust-confluence.zip?raw=true) · [Research, verification and roadmap](../yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 ## Launch the game

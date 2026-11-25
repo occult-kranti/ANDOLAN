@@ -22,6 +22,8 @@ pub struct Lab {
     pub time: f64,
     pub tick: u64,
     pub serial: u64,
+    object_serial: u64,
+    pub events: Events,
 }
 impl Lab {
     pub fn load(id: &str) -> Result<Self, String> {
@@ -56,10 +58,12 @@ impl Lab {
             time: 0.,
             tick: 0,
             serial: 0,
+            object_serial: 0,
+            events: Events::default(),
         })
     }
     pub fn snapshot(&self, accepted: Option<bool>) -> Value {
-        json!({"tick":self.tick,"time":self.time,"units":self.units,"projectiles":self.shots,"zones":self.zones,"accepted":accepted})
+        json!({"tick":self.tick,"time":self.time,"units":self.units,"projectiles":self.shots,"zones":self.zones,"events":self.events.entries,"accepted":accepted})
     }
     pub fn command(&mut self, input: &Input) -> Result<Value, String> {
         let i = self
@@ -86,9 +90,14 @@ impl Lab {
         }
         Ok(self.snapshot(accepted))
     }
+    pub fn next_object(&mut self) -> u64 {
+        self.object_serial += 1;
+        self.object_serial
+    }
     pub fn shoot(
         &mut self,
         i: usize,
+        slot: Option<usize>,
         damage: f64,
         speed: f64,
         radius: f64,
@@ -99,13 +108,16 @@ impl Lab {
         if self.shots.len() >= self.rules.max_projectiles {
             return;
         }
+        let id = self.next_object();
         let unit = &self.units[i];
         let (dx, dy, dz) = (
             yaw.sin() * pitch.cos(),
             pitch.sin(),
             yaw.cos() * pitch.cos(),
         );
-        self.shots.push(Shot {
+        let shot = Shot {
+            id,
+            slot,
             owner: unit.id.clone(),
             team: unit.team,
             x: unit.pos[0] + dx * 0.8,
@@ -117,7 +129,20 @@ impl Lab {
             damage,
             radius,
             life,
-        });
+        };
+        self.events.push(
+            EventKind::Shot,
+            Source {
+                actor: &unit.id,
+                team: unit.team,
+                slot,
+            },
+            None,
+            None,
+            [shot.x, shot.z],
+            self.time,
+        );
+        self.shots.push(shot);
     }
     fn advance_shots(&mut self) {
         let world = &self.world;
@@ -144,7 +169,17 @@ impl Lab {
                         .hypot(unit.pos[1] - p.z)
                         <= body + p.radius
                     {
-                        unit.hurt(p.damage);
+                        self.events.hurt(
+                            Source {
+                                actor: &p.owner,
+                                team: p.team,
+                                slot: p.slot,
+                            },
+                            unit,
+                            p.damage,
+                            [p.x, p.z],
+                            self.time,
+                        );
                         return false;
                     }
                 }
@@ -169,7 +204,7 @@ impl Lab {
         } else {
             (unit.attack, 25., 0.24, 0.6, 1.05)
         };
-        self.shoot(i, damage, speed, radius, life, unit.yaw, pitch);
+        self.shoot(i, None, damage, speed, radius, life, unit.yaw, pitch);
         self.units[i].fire_cd = interval;
     }
     fn sentinel(&mut self, i: usize) {
@@ -288,6 +323,11 @@ impl Lab {
             }
         }
         for zone in &mut self.zones {
+            let source = Source {
+                actor: &zone.owner,
+                team: zone.team,
+                slot: Some(zone.slot),
+            };
             let local_dt = DT.min(zone.life);
             zone.life -= DT;
             for unit in self.units.iter_mut().filter(|u| {
@@ -296,11 +336,13 @@ impl Lab {
                     && self.world.line_clear([zone.x, zone.z], u.pos)
             }) {
                 if zone.mechanic == Some(Mechanic::MithilaSanctuary) && unit.team == zone.team {
-                    unit.hp = (unit.hp + zone.power * local_dt).min(unit.max_hp);
+                    self.events
+                        .heal(source, unit, zone.power * local_dt, self.time);
                 }
                 if zone.kind == Kind::Slow && zone.life > 0. && unit.team != zone.team {
                     unit.slow = unit.slow.max(0.5);
-                    unit.hurt(zone.power * DT);
+                    self.events
+                        .hurt(source, unit, zone.power * DT, unit.pos, self.time);
                 }
             }
         }
@@ -382,5 +424,122 @@ mod tests {
             assert_eq!(lab.tick, 0);
         }
         assert!(Lab::load("unknown").is_err());
+    }
+
+    #[test]
+    fn receipts_report_applied_shield_and_health_damage_without_overkill() {
+        let mut lab = Lab::load("draupadi").unwrap();
+        assert!(lab.cast(0, 0, 0., 0.));
+        assert!(lab.cast(2, 2, std::f64::consts::PI, 0.));
+        let state = lab.snapshot(None);
+        let hits = state["events"].as_array().unwrap();
+        let strike = hits
+            .iter()
+            .find(|e| e["kind"] == "hit" && e["target"] == "self")
+            .unwrap();
+        assert_eq!(
+            (strike["actor"].as_str(), strike["team"].as_str()),
+            (Some("enemy"), Some("moon"))
+        );
+        assert_eq!(strike["amount"], 90.);
+        assert_eq!(strike["slot"], 2);
+        let u = &mut lab.units[0];
+        u.hp = 2.;
+        u.shield = 3.;
+        lab.units[2].cds[2] = 0.;
+        assert!(lab.cast(2, 2, std::f64::consts::PI, 0.));
+        let state = lab.snapshot(None);
+        let strikes: Vec<_> = state["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|e| e["actor"] == "enemy" && e["target"] == "self")
+            .collect();
+        assert_eq!(strikes.len(), 3);
+        assert_eq!(strikes[1]["kind"], "hit");
+        assert_eq!(strikes[1]["amount"], 5.);
+        assert_eq!(strikes[2]["kind"], "defeat");
+        assert_eq!(state["units"][0]["deaths"], 1);
+    }
+
+    #[test]
+    fn shots_zones_and_summons_keep_their_owners_and_ids() {
+        let mut lab = Lab::load("meghnad").unwrap();
+        assert!(lab.cast(0, 0, 0., -0.5));
+        let zone = &lab.zones[0];
+        let (id, pos) = (zone.id, [zone.x, zone.z]);
+        assert_eq!((zone.owner.as_str(), zone.slot), ("self", 0));
+        lab.units[2].pos = pos;
+        let state = lab
+            .command(&Input {
+                ticks: 1,
+                fire: true,
+                yaw: Some(std::f64::consts::FRAC_PI_2),
+                ..Default::default()
+            })
+            .unwrap();
+        assert_eq!(state["zones"][0]["id"], id);
+        let shot = state["projectiles"][0]["id"].as_u64().unwrap();
+        assert_ne!(shot, id);
+        assert!(state["projectiles"][0].get("slot").is_none());
+        assert!(state["events"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .any(|e| e["kind"] == "hit"
+                && e["target"] == "enemy"
+                && e["actor"] == "self"
+                && e["slot"] == 0));
+        let next = lab
+            .command(&Input {
+                ticks: 1,
+                ..Default::default()
+            })
+            .unwrap();
+        assert_eq!(next["projectiles"][0]["id"], shot);
+        let mut summoned = Lab::load("subhadra").unwrap();
+        assert!(summoned.cast(0, 2, 0., 0.));
+        let update = summoned
+            .command(&Input {
+                ticks: 6,
+                ..Default::default()
+            })
+            .unwrap();
+        let events = update["events"].as_array().unwrap();
+        for id in ["summon-1", "summon-2"] {
+            assert!(events
+                .iter()
+                .any(|e| e["kind"] == "ability" && e["target"] == id && e["slot"] == 2));
+            assert!(events
+                .iter()
+                .any(|e| e["kind"] == "shot" && e["actor"] == id && e["team"] == "sun"));
+            assert!(events
+                .iter()
+                .any(|e| e["kind"] == "hit" && e["actor"] == id && e["target"] == "enemy"));
+        }
+    }
+
+    #[test]
+    fn event_ring_is_chronological_bounded_and_never_replays_on_snapshot() {
+        let mut lab = Lab::load("rama").unwrap();
+        let state = lab
+            .command(&Input {
+                ticks: 900,
+                fire: true,
+                yaw: Some(std::f64::consts::FRAC_PI_2),
+                ..Default::default()
+            })
+            .unwrap();
+        let events = state["events"].as_array().unwrap();
+        assert_eq!(events.len(), 64);
+        assert!(events[0]["id"].as_u64().unwrap() > 1);
+        for pair in events.windows(2) {
+            assert_eq!(
+                pair[0]["id"].as_u64().unwrap() + 1,
+                pair[1]["id"].as_u64().unwrap()
+            );
+            assert!(pair[0]["time"].as_f64().unwrap() <= pair[1]["time"].as_f64().unwrap());
+        }
+        assert_eq!(lab.snapshot(None)["events"], state["events"]);
     }
 }

@@ -1,6 +1,6 @@
 # Start here: project and agent handoff
 
-**Rust game and handoff.** Start here for the playable two-hero lane match, packaged room server, and the source-backed roadmap from this build to the full roster and team game. [Play, host and rebuild](../games/yuga-rust/README.md) · [Source search and verification](../games/yuga-native/docs/rust-rebuild/deep-search/README.md)
+**Rust game and handoff.** Start here for the playable two-hero lane match, packaged room server, and fourteen-hero graphical Rust sparring. [Sparring package and controls](../games/yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md) [Play, host and rebuild](../games/yuga-rust/README.md) · [Source search and verification](../games/yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 Use the [project history library](../games/yuga-native/docs/PROJECT_HISTORY_LIBRARY.md) to recover a specific build, original brief, art study or source decision. For an art or runtime change, choose the artifact first, then follow the [production-round skill](../.agents/skills/yuga-art-production-rounds/SKILL.md).
 

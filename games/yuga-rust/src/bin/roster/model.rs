@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use std::collections::VecDeque;
 
 pub type Point = [f64; 2];
 pub const DT: f64 = 0.05;
@@ -102,7 +103,6 @@ pub struct Actor {
     pub attack: f64,
     #[serde(skip)]
     pub waypoint: usize,
-    #[serde(skip)]
     pub deaths: u32,
 }
 impl Actor {
@@ -155,6 +155,9 @@ impl Actor {
 }
 #[derive(Serialize)]
 pub struct Shot {
+    pub id: u64,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub slot: Option<usize>,
     pub owner: String,
     pub team: &'static str,
     pub x: f64,
@@ -169,6 +172,9 @@ pub struct Shot {
 }
 #[derive(Serialize)]
 pub struct Zone {
+    pub id: u64,
+    pub owner: String,
+    pub slot: usize,
     pub kind: Kind,
     pub mechanic: Option<Mechanic>,
     pub x: f64,
@@ -178,6 +184,138 @@ pub struct Zone {
     pub life: f64,
     pub duration: f64,
     pub team: &'static str,
+}
+#[derive(Clone, Copy, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum EventKind {
+    Shot,
+    Hit,
+    Defeat,
+    Ability,
+}
+
+#[derive(Serialize)]
+pub struct Event {
+    pub id: u64,
+    pub kind: EventKind,
+    pub actor: String,
+    pub team: &'static str,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub target: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub slot: Option<usize>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub amount: Option<f64>,
+    pub x: f64,
+    pub z: f64,
+    pub time: f64,
+}
+
+#[derive(Default)]
+pub struct Events {
+    pub entries: VecDeque<Event>,
+    serial: u64,
+}
+
+#[derive(Clone, Copy)]
+pub struct Source<'a> {
+    pub actor: &'a str,
+    pub team: &'static str,
+    pub slot: Option<usize>,
+}
+
+impl Events {
+    pub fn push(
+        &mut self,
+        kind: EventKind,
+        source: Source<'_>,
+        target: Option<&str>,
+        amount: Option<f64>,
+        pos: Point,
+        time: f64,
+    ) {
+        if self.entries.len() == 64 {
+            self.entries.pop_front();
+        }
+        self.serial += 1;
+        self.entries.push_back(Event {
+            id: self.serial,
+            kind,
+            actor: source.actor.into(),
+            team: source.team,
+            slot: source.slot,
+            target: target.map(str::to_owned),
+            amount,
+            x: pos[0],
+            z: pos[1],
+            time,
+        });
+    }
+
+    pub fn hurt(
+        &mut self,
+        source: Source<'_>,
+        unit: &mut Actor,
+        amount: f64,
+        pos: Point,
+        time: f64,
+    ) {
+        let hp = unit.hp;
+        let shield = unit.shield;
+        unit.hurt(amount);
+        let applied = hp - unit.hp + (shield - unit.shield);
+        if applied > 0. {
+            self.push(
+                EventKind::Hit,
+                source,
+                Some(&unit.id),
+                Some(applied),
+                pos,
+                time,
+            );
+        }
+        if hp > 0. && unit.hp <= 0. {
+            self.push(EventKind::Defeat, source, Some(&unit.id), None, pos, time);
+        }
+    }
+
+    pub fn heal(&mut self, source: Source<'_>, unit: &mut Actor, amount: f64, time: f64) {
+        let before = unit.hp;
+        unit.hp = (unit.hp + amount).min(unit.max_hp);
+        if unit.hp > before {
+            self.push(
+                EventKind::Ability,
+                source,
+                Some(&unit.id),
+                Some(unit.hp - before),
+                unit.pos,
+                time,
+            );
+        }
+    }
+
+    pub fn ward(
+        &mut self,
+        source: Source<'_>,
+        unit: &mut Actor,
+        power: f64,
+        duration: f64,
+        time: f64,
+    ) {
+        let prior = (unit.shield, unit.ward);
+        unit.shield = unit.shield.max(power);
+        unit.ward = unit.ward.max(duration);
+        if prior != (unit.shield, unit.ward) {
+            self.push(
+                EventKind::Ability,
+                source,
+                Some(&unit.id),
+                Some(unit.shield - prior.0),
+                unit.pos,
+                time,
+            );
+        }
+    }
 }
 #[derive(Default, Deserialize)]
 #[serde(default, deny_unknown_fields)]
