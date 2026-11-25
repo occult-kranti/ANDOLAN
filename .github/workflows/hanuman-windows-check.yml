@@ -1,0 +1,35 @@
+name: Verify released Hanuman Windows package
+on:
+  push:
+    branches: ['distribution/hanuman-abilities-2026-11-25']
+    paths: ['.github/workflows/hanuman-windows-check.yml']
+
+permissions:
+  contents: read
+jobs:
+  native-windows:
+    if: github.repository == 'occult-kranti/ANDOLAN'
+    runs-on: windows-2025
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+          sparse-checkout: verify-windows-package.py
+          sparse-checkout-cone-mode: false
+      - name: Get the exact released Windows ZIP
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download yuga-hanuman-abilities-2026-11-25 --repo occult-kranti/ANDOLAN --pattern yuga-native-windows-x86_64.zip --dir release
+      - name: Run archived Windows executable, title and five native abilities
+        shell: pwsh
+        run: python verify-windows-package.py release/yuga-native-windows-x86_64.zip proof
+      - name: Preserve Windows engine output and gameplay receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-hanuman-verification
+          path: proof/
+          retention-days: 14
+          if-no-files-found: warn
