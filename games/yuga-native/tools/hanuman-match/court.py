@@ -16,6 +16,8 @@ from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Matrix, Vector
 from mathutils.geometry import interpolate_bezier
 
+from temple_relief import COURSES, JALI, LOTUS, NICHE, ReliefPanels, apply_relief, atlas_image
+
 PROJECT = Path(__file__).resolve().parents[2]
 ASSETS = PROJECT / "art/hanuman/match-court-assets"
 COURT = PROJECT / "assets/environment/lanka_courtyard.glb"
@@ -289,9 +291,25 @@ def stone_panel(carving, relief, x, y, z, width=.45, height=.62):
                       (x + radius * .65, border_y, bottom + step * .019)], .0055)
 
 
-def gopuram(main, dark, fine, x, y, width, depth, height, rows):
+def gopuram(main, dark, fine, relief, x, y, width, depth, height, rows):
     main.stone(x, y, -.020, width * 1.12, depth * 1.11, height * .072, .06)
-    main.stone(x, y, height * .06, width, depth, height * .16, .07)
+    base = height * .06
+    floor_to_lintel = height * .147
+    main.stone(x, y + depth * .143, base, width, depth * .714, floor_to_lintel, .035)
+    front = y - depth * .5
+    dark.stone(x, front + depth * .276, base + .012, width * .46, .044, floor_to_lintel - .04)
+    for side in (-1, 1):
+        pillar = x + width * .337 * side
+        main.stone(pillar, y - depth * .263, base, width * .326, depth * .474, floor_to_lintel, .025)
+        relief.panel((pillar, front - .006, base + .042), (1, 0, 0), width * .288,
+                     floor_to_lintel - .079, LOTUS)
+        post = x + side * width * .196
+        fine.stone(post, front - .018, base, width * .071, .145, floor_to_lintel, .025)
+        fine.stone(post, front - .022, base + floor_to_lintel * .72, width * .101, .175,
+                   floor_to_lintel * .21, .028)
+        relief.panel((x + side * (width * .5 + .006), y, base + .040), (0, side, 0), depth * .81,
+                     floor_to_lintel - .077, JALI)
+    fine.stone(x, y, base + floor_to_lintel - .021, width * 1.045, depth * 1.03, height * .055, .042)
     for row in range(rows):
         t = row / rows
         z = height * (.21 + t * .72)
@@ -300,17 +318,12 @@ def gopuram(main, dark, fine, x, y, width, depth, height, rows):
         d = depth * (1.0 - .56 * t)
         main.stone(x, y, z, w, d, dz * .72, .052)
         fine.stone(x, y, z + dz * .72, w * 1.085, d * 1.16, dz * .18, .065)
-        count = max(3, 8 - row)
-        for i in range(count):
-            p = x + ((i + .5) / count - .5) * w * .92
-            front = y - d * .5
-            dark.stone(p, front - .015, z + dz * .16, w * .061, .030, dz * .47, .013)
-            for shift in (-1, 1):
-                post = p + w * .044 * shift
-                fine.stone(post, front - .006, z + dz * .13, w * .026, .13, dz * .37, .017)
-                fine.stone(post, front - .016, z + dz * .114, w * .041, .15, dz * .071, .015)
-            fine.stone(p, front - .031, z + dz * .49, w * .122, .145, dz * .095, .020)
-            fine.stone(p, front + .012, z + dz * .60, w * .086, .127, dz * .102, .024)
+        relief.band(x, y, z + dz * .12, w, d, dz * .51, max(2, 5 - row // 2),
+                    max(2, 4 - row // 2), NICHE, LOTUS if row % 2 else COURSES)
+        for side in (-1, 1):
+            for end in (-1, 1):
+                fine.stone(x + side * w * .425, y + end * d * .467, z + dz * .12,
+                           w * .072, d * .092, dz * .52, .021)
         if row in (0, 2):
             for side in (-1, 1):
                 fine.stone(x + side * w * .43, y, z + dz * .7, w * .075, d * 1.17, dz * .25)
@@ -318,6 +331,33 @@ def gopuram(main, dark, fine, x, y, width, depth, height, rows):
         at = x + width * .075 * (i - 2)
         fine.lathe(at, y, height * .89, ((0, width * .032), (.12 * height, width * .011),
                                         (.14 * height, width * .004)), sides=8)
+
+
+def return_pavilion(main, fine, relief):
+    """A roofed corner outside the front camera and visible from the orbit."""
+    x, y, width, depth = 12.35, 12.05, 6.20, 4.05
+    for z, edge, h in ((-.018, .15, .132), (.114, .073, .105), (.219, 0., .115)):
+        main.stone(x, y, z, width + edge * 2, depth + edge * 2, h, .029)
+    main.stone(x, y + depth * .344, .334, width * .962, depth * .244, 2.08, .037)
+    relief.band(x, y, 2.43, width, depth, .32, 6, 4, LOTUS, NICHE)
+    for z, expand, h in ((2.395, .0, .395), (2.790, .111, .11), (2.900, .181, .13), (3.030, .095, .14)):
+        fine.stone(x, y, z, width + expand * 2, depth + expand * 2, h, .041)
+    relief.band(x, y, 3.19, width * .90, depth * .82, .31, 6, 4, JALI, LOTUS)
+    main.stone(x, y, 3.167, width * .90, depth * .82, .37, .034)
+    fine.stone(x, y, 3.537, width * .96, depth * .89, .125, .033)
+
+    front = y - depth * .398
+    left = x - width * .423
+    for i in range(6):
+        px = left + i * width * .1692
+        fine.stone(px, front, 2.11, .38, .48, .31, .045)
+        fine.stone(px, front, .333, .46, .49, .129, .025)
+        main.stone(px, front, .462, .26, .29, 1.65, .033)
+    for i in range(1, 4):
+        py = front + i * depth * .261
+        fine.stone(left, py, 2.11, .43, .46, .31, .045)
+        fine.stone(left, py, .333, .48, .51, .129, .025)
+        main.stone(left, py, .462, .29, .31, 1.65, .033)
 
 
 def bell(bronze, x, y, base, scale=1.0):
@@ -568,15 +608,24 @@ def apply(scene, reference_profile):
     stage.place(petals, "Foreground pillar · lotus relief petals", fine)
 
     far, small, voids = Geometry(), Geometry(), Geometry()
+    relief = ReliefPanels()
     y_left, y_right = 14.8, 17.7
     left_tower_x = stage.x_at(.196, y_left, 1.4)
     right_tower_x = stage.x_at(.971, y_right, 1.6)
-    gopuram(far, voids, small, left_tower_x, y_left, 4.72, 3.6, 4.03, 7)
-    gopuram(far, voids, small, right_tower_x, y_right, 6.3, 4.3, 4.92, 6)
-    gopuram(far, voids, small, stage.x_at(.411, 21.1, 2.5), 21.1, 4.2, 4.4, 4.18, 5)
+    gopuram(far, voids, small, relief, left_tower_x, y_left, 4.72, 3.6, 4.03, 7)
+    gopuram(far, voids, small, relief, right_tower_x, y_right, 6.3, 4.3, 4.92, 6)
+    gopuram(far, voids, small, relief, stage.x_at(.411, 21.1, 2.5), 21.1, 4.2, 4.4, 4.18, 5)
     stage.place(far, "Distant towers · relief blocks", distance)
     stage.place(small, "Distant towers · roof tiers and finials", far_trim)
     stage.place(voids, "Distant towers · dark recesses", shade)
+    return_masonry, return_trim = Geometry(), Geometry()
+    return_pavilion(return_masonry, return_trim, relief)
+    stage.place(return_masonry, "Right return · gallery piers and plinths", distance)
+    stage.place(return_trim, "Right return · tiered stone cornice", distance)
+    atlas = atlas_image()
+    relief_mat = rock_material("Court · carved stone and recessed patina", images, (.133, .187, .224), .41)
+    apply_relief(relief_mat, atlas)
+    panel_count = relief.build(stage, relief_mat)
 
     donor = asset_prototypes()
     pillar_rows = []
@@ -665,6 +714,10 @@ def apply(scene, reference_profile):
     return {"collection": stage.collection.name, "pavers": floor_pavers,
             "courtyard_donor_sha256": COURT_SHA,
             "polyhaven_texture_count": len(images),
+            "temple_relief": {"panels": panel_count, "tiles": 4, "atlas_size": list(atlas.size),
+                              "packed_bytes": atlas.packed_file.size,
+                              "atlas_sha256": sha256(atlas.packed_file.data).hexdigest(),
+                              "source_sha256": sha256(Path(__file__).with_name("temple_relief.py").read_bytes()).hexdigest()},
             "objects": len(stage.collection.objects),
             "lights": sum(o.type == "LIGHT" for o in stage.collection.objects),
             "mesh_triangles": sum(sum(len(p.vertices) - 2 for p in o.data.polygons)

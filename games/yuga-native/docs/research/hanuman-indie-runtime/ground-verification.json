@@ -1,0 +1,263 @@
+{
+  "basis_commit": "6b505f04",
+  "engine": "Godot 4.6.3",
+  "source_sha256": {
+    "scripts/hanuman_ground_field.gd": "2a69c4a110a40f8fefd1b7cacb89a7fac3c1d0bcf169bcb9ca30454ab3d534bc",
+    "shaders/hanuman_ground_field.gdshader": "7369df47fec7345f87c861224107d1df113d393d7b1bdedaa5c4249be6458a9a",
+    "scripts/hanuman_trial_effects.gd": "d1c9d0b1e5d94c05a3d207db2cd2ff76ec9741f9d36c8dbf985575d528e17740",
+    "tests/hanuman_ground_field_cases.gd": "430d93473ad33406ad328e47898ce379a548a8c0c2a13235d45d18d1f89ffcc8",
+    "tests/hanuman_presentation_cases.gd": "34c9e2e15e006c65ba26afbfe06750974d0acf78d824661319535f8e35ef877f",
+    "tests/hanuman_combat_cases.gd": "7445c5efd7492b05b080ef77523cdd2217ab4711d750da558961d7e5b6d9481d"
+  },
+  "headless_command": "godot --headless --path games/yuga-native --fixed-fps 60 --script res://tests/hanuman_ground_field_cases.gd -- --report=REPORT.json",
+  "software_render_command": "godot --path games/yuga-native --display-driver x11 --rendering-method forward_plus --audio-driver Dummy --fixed-fps 60 --resolution 960x600 --disable-vsync --script res://tests/hanuman_ground_field_cases.gd -- --report=REPORT.json --capture=FRAME.png",
+  "software_device": "Vulkan Forward+ on llvmpipe, Xvfb :189, LP_NUM_THREADS=2",
+  "headless": {
+    "checks": [
+      {
+        "name": "one reusable batch and RG32F atlas have exactly three bounded slots",
+        "passed": true
+      },
+      {
+        "name": "sector mold stamps only once and locks its origin, exact radius and rear heading",
+        "passed": true
+      },
+      {
+        "name": "near and far ember locations store separate arrival times and one common expiry",
+        "passed": true
+      },
+      {
+        "name": "outside wedge, outer corner and unused slots store no active timestamp",
+        "passed": true
+      },
+      {
+        "name": "clock advances without rebuilding mesh, material, texture or atlas data",
+        "passed": true
+      },
+      {
+        "name": "overlapping disk starts later and retains its own round footprint",
+        "passed": true
+      },
+      {
+        "name": "third overlapping disk can reuse renderer while a fourth is bounded",
+        "passed": true
+      },
+      {
+        "name": "cancel clears only the named overlapping field and compacts visible instances",
+        "passed": true
+      },
+      {
+        "name": "retrigger rewrites a reclaimed slot with a later time",
+        "passed": true
+      },
+      {
+        "name": "reduced effects hide the batch and reject extra decorative stamps",
+        "passed": true
+      },
+      {
+        "name": "exposure expires while hidden without clearing the still-live overlapping entry",
+        "passed": true
+      },
+      {
+        "name": "last natural expiry clears the atlas and resets the reusable local clock",
+        "passed": true
+      },
+      {
+        "name": "explicit reset clears slot contents and reuses original material and atlas",
+        "passed": true
+      },
+      {
+        "name": "actual launcher opens the dedicated, imported Hanuman court",
+        "passed": true
+      },
+      {
+        "name": "real rear ability windup has an exterior warning and no painted ground",
+        "passed": true
+      },
+      {
+        "name": "real rear impact writes the authoritative anchored sector once",
+        "passed": true
+      },
+      {
+        "name": "duplicate impact and accepted exposure ticks do not repeat the upload",
+        "passed": true
+      },
+      {
+        "name": "active exposure ticks never restamp",
+        "passed": true
+      },
+      {
+        "name": "real practice pause freezes the shared shader clock",
+        "passed": true
+      },
+      {
+        "name": "real trial reset clears the old generation and stale impact cannot repaint",
+        "passed": true
+      },
+      {
+        "name": "actual Mountain Pulse position is locked through release and travel with no ground stamp",
+        "passed": true
+      },
+      {
+        "name": "actual Mountain Pulse impact paints a new disk on its real ground target",
+        "passed": true
+      },
+      {
+        "name": "authority end removes the visual even with no display-frame advance",
+        "passed": true
+      }
+    ],
+    "display_driver": "headless",
+    "event_count": 5,
+    "failed": 0,
+    "fixture_buffers": {
+      "active": 0,
+      "atlas_size": "(96, 288)",
+      "capacity": 3,
+      "clock_s": 0.0,
+      "texture_bytes": 221184,
+      "texture_updates": 9,
+      "updated_bytes": 1990656,
+      "visible_instances": 0
+    },
+    "multi_mesh_readback": false,
+    "passed": 23,
+    "script_sha256": "2a69c4a110a40f8fefd1b7cacb89a7fac3c1d0bcf169bcb9ca30454ab3d534bc",
+    "shader_sha256": "7369df47fec7345f87c861224107d1df113d393d7b1bdedaa5c4249be6458a9a"
+  },
+  "software_render": {
+    "checks": [
+      {
+        "name": "one reusable batch and RG32F atlas have exactly three bounded slots",
+        "passed": true
+      },
+      {
+        "name": "sector mold stamps only once and locks its origin, exact radius and rear heading",
+        "passed": true
+      },
+      {
+        "name": "near and far ember locations store separate arrival times and one common expiry",
+        "passed": true
+      },
+      {
+        "name": "outside wedge, outer corner and unused slots store no active timestamp",
+        "passed": true
+      },
+      {
+        "name": "clock advances without rebuilding mesh, material, texture or atlas data",
+        "passed": true
+      },
+      {
+        "name": "overlapping disk starts later and retains its own round footprint",
+        "passed": true
+      },
+      {
+        "name": "third overlapping disk can reuse renderer while a fourth is bounded",
+        "passed": true
+      },
+      {
+        "name": "cancel clears only the named overlapping field and compacts visible instances",
+        "passed": true
+      },
+      {
+        "name": "retrigger rewrites a reclaimed slot with a later time",
+        "passed": true
+      },
+      {
+        "name": "reduced effects hide the batch and reject extra decorative stamps",
+        "passed": true
+      },
+      {
+        "name": "exposure expires while hidden without clearing the still-live overlapping entry",
+        "passed": true
+      },
+      {
+        "name": "last natural expiry clears the atlas and resets the reusable local clock",
+        "passed": true
+      },
+      {
+        "name": "explicit reset clears slot contents and reuses original material and atlas",
+        "passed": true
+      },
+      {
+        "name": "actual launcher opens the dedicated, imported Hanuman court",
+        "passed": true
+      },
+      {
+        "name": "real rear ability windup has an exterior warning and no painted ground",
+        "passed": true
+      },
+      {
+        "name": "real rear impact writes the authoritative anchored sector once",
+        "passed": true
+      },
+      {
+        "name": "duplicate impact and accepted exposure ticks do not repeat the upload",
+        "passed": true
+      },
+      {
+        "name": "active exposure ticks never restamp",
+        "passed": true
+      },
+      {
+        "name": "real practice pause freezes the shared shader clock",
+        "passed": true
+      },
+      {
+        "name": "real trial reset clears the old generation and stale impact cannot repaint",
+        "passed": true
+      },
+      {
+        "name": "actual Mountain Pulse position is locked through release and travel with no ground stamp",
+        "passed": true
+      },
+      {
+        "name": "actual Mountain Pulse impact paints a new disk on its real ground target",
+        "passed": true
+      },
+      {
+        "name": "a rendered Mountain Pulse frame is captured with the active time field",
+        "passed": true
+      },
+      {
+        "name": "authority end removes the visual even with no display-frame advance",
+        "passed": true
+      }
+    ],
+    "display_driver": "X11",
+    "event_count": 5,
+    "failed": 0,
+    "fixture_buffers": {
+      "active": 0,
+      "atlas_size": "(96, 288)",
+      "capacity": 3,
+      "clock_s": 0.0,
+      "texture_bytes": 221184,
+      "texture_updates": 9,
+      "updated_bytes": 1990656,
+      "visible_instances": 0
+    },
+    "multi_mesh_readback": true,
+    "passed": 24,
+    "script_sha256": "2a69c4a110a40f8fefd1b7cacb89a7fac3c1d0bcf169bcb9ca30454ab3d534bc",
+    "shader_sha256": "7369df47fec7345f87c861224107d1df113d393d7b1bdedaa5c4249be6458a9a"
+  },
+  "capture": {
+    "filename": "ground-mountain.png",
+    "resolution": [
+      960,
+      600
+    ],
+    "sha256": "b53a479631ee3a6d8f8013e325da9a4d24eb9e7416d6c060e0affdd2fb6ec5f0",
+    "field_time_since_impact_s": 0.24
+  },
+  "presentation": {
+    "passed": 20,
+    "failed": 0
+  },
+  "combat": {
+    "passed": 39,
+    "failed": 0
+  },
+  "scope": "In-engine rendering and source-bound replay through the real launcher and trial using scripted ability InputEventAction. Buffer counts and RG32F bytes are measured in the fixture. Physical-GPU frame timings and compatibility renderer are unmeasured."
+}

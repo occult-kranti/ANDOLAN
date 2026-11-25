@@ -11,7 +11,7 @@ from pathlib import Path
 import sys
 
 import bpy
-from mathutils import Vector
+from mathutils import Quaternion, Vector
 from mathutils.kdtree import KDTree
 
 PIPELINE = Path(__file__).resolve().parents[3] / "yuga/art/pipeline"
@@ -689,11 +689,22 @@ def tail_tuft(s, mat, scene):
 
     coat = []
     names = {group.index: group.name for group in base.vertex_groups}
+    previous_tangent = previous_axis = None
     for j, center in enumerate(centers):
         first, last = max(0,j-1), min(count-1,j+1)
         tangent = (centers[last]-centers[first]).normalized()
         original_tangent = (original[last]-original[first]).normalized()
         spin = original_tangent.rotation_difference(tangent)
+        # Parallel transport the cross-section around the crest. Independently
+        # aligning tangents can flip the mesh seam nearly 180° at an inflection
+        # and pinch two otherwise round rows into an hourglass.
+        axis = spin @ (base.data.vertices[j*sides].co - original[j]).normalized()
+        if j >= crest_start:
+            transported = previous_tangent.rotation_difference(tangent) @ previous_axis
+            roll = math.atan2(tangent.dot(axis.cross(transported)), axis.dot(transported))
+            spin = Quaternion(tangent, roll) @ spin
+            axis = transported
+        previous_tangent, previous_axis = tangent, axis
         width = 1 + .33*smoothstep(14,40,j) + .05*smoothstep(61,74,j) - 1.11*smoothstep(75,84,j)
         for k in range(sides):
             vert = base.data.vertices[j*sides+k]
@@ -720,12 +731,15 @@ def tail_tuft(s, mat, scene):
     mesh_fibers(s,"Ref · close copper tail groom",coat,mat["tail"],mat["tail_light"])
 
     root, end = centers[77], centers[84]
-    control_a = end + Vector((.028,.003,-.035))
-    control_b = end + Vector((.024,-.007,-.213))
-    tip = end + Vector((.139,.014,-.155))
+    # Continue the crest's tangent into the tuft. At the hanging end, the
+    # brush turns back up and the separate locks catch the rim at different heights.
+    crest_tangent = (centers[78] - centers[76]).normalized()
+    control_a = root + crest_tangent * .124
+    control_b = end + Vector((.036, -.009, -.224))
+    tip = end + Vector((.177, .012, -.154))
 
     def plume(t):
-        u=1-t
+        u = 1 - t
         return root*u**3 + control_a*(3*u*u*t) + control_b*(3*u*t*t) + tip*t**3
 
     def plume_frame(t):
@@ -734,36 +748,66 @@ def tail_tuft(s, mat, scene):
         return a, tangent.cross(a)
 
     def volume(t):
-        return (.023 + .009*smoothstep(.05,.31,t))*(1-.983*smoothstep(.37,1,t))
+        return (.021 + .013*smoothstep(.02,.32,t)) * (1-.99*smoothstep(.31,.92,t))
 
     def pelt(u,t):
-        a,b=plume_frame(t)
-        radial=a*math.cos(TAU*u)+b*(.78*math.sin(TAU*u))
+        a,b = plume_frame(t)
+        radial = a*math.cos(TAU*u) + b*(.78*math.sin(TAU*u))
         return plume(t) + radial * volume(t)
 
-    s.cloth("Ref · rounded chestnut plume core",pelt,mat["tuft"],rows=36,columns=28,wrap=True,bone="tail_04")
-    fibers=[]
+    core_material = mat["tuft"].copy()
+    core_material.name = "Reference wardrobe · chestnut plume with copper roots"
+    nodes, links = core_material.node_tree.nodes, core_material.node_tree.links
+    coordinates = nodes.new("ShaderNodeTexCoord")
+    axes = nodes.new("ShaderNodeSeparateXYZ")
+    feather = nodes.new("ShaderNodeMapRange")
+    feather.interpolation_type = "SMOOTHERSTEP"
+    feather.inputs["From Min"].default_value = .04
+    feather.inputs["From Max"].default_value = .43
+    dye = nodes.new("ShaderNodeMixRGB")
+    dye.name = "Copper roots to chestnut tips"
+    shader = nodes.get("Principled BSDF")
+    chestnut = shader.inputs["Base Color"].links[0].from_socket
+    dye.inputs[1].default_value = (.134,.040,.013,1)
+    links.new(coordinates.outputs["UV"],axes.inputs["Vector"])
+    links.new(axes.outputs["Y"],feather.inputs["Value"])
+    links.new(feather.outputs["Result"],dye.inputs[0])
+    links.new(chestnut,dye.inputs[2])
+    links.new(dye.outputs[0],shader.inputs["Base Color"])
+    s.cloth("Ref · rounded chestnut plume core",pelt,core_material,rows=36,columns=28,wrap=True,bone="tail_04")
+    fibers = []
     strand_count = 328
-    # Quasiperiodic starters cover the volume without repeating clumps.
+    lock_count = 9
     for i in range(strand_count):
-        phase = TAU*((i*.61803398875)%1.0)
+        around = (i*.61803398875) % 1
+        group = int(around * lock_count)
+        center_angle = TAU * (group+.5) / lock_count
+        phase = TAU * around
         noise = .5+.5*math.sin(i*17.39)
-        start = .265*((i*.41421356237)%1.0)
-        flyaway = i%11 in (0,4)
-        stop = .75+.25*((i*.73205080757)%1.0) if flyaway else .64+.32*((i*.73205080757)%1.0)
-        points=[]
+        start = .27 * ((i*.41421356237) % 1)
+        flyaway = i % 11 in (0,4)
+        length_variation = (i*.73205080757) % 1
+        stop = .76 + .17*length_variation + .055*math.sin(group*2.4) + .06*flyaway
+        # Offsets diverge only beyond the dense body. Several groups turn up
+        # against the sky, with shorter chestnut locks visible below them.
+        fan = Vector((.034*math.cos(center_angle), .019*math.cos(2*center_angle),
+                      .053*math.sin(center_angle) + .016*math.cos(2*center_angle)))
+        points = []
         for step in range(15):
-            t=step/14
-            station=mix(start,stop,t)
-            a,b=plume_frame(station)
-            theta=phase+(.20*noise-.1)*t+.21*math.sin(4*t+i)*t*t
-            normal=a*math.cos(theta)+b*(.82*math.sin(theta))
-            extrusion=mix(-.004,.004+.013*noise,smoothstep(.0,.35,t))
-            flutter=a*(.010+.015*noise+.022*flyaway)*t**4*math.sin(phase+5*t)
-            points.append(plume(station)+normal*(volume(station)+extrusion)+flutter)
-        fibers.append((points,.00062+.00085*noise,[("tail_04",1.0)],int(noise>.64 or flyaway)))
+            t = step/14
+            station = mix(start,stop,t)
+            a,b = plume_frame(station)
+            theta = mix(phase,center_angle,.74*smoothstep(.17,.78,t))
+            theta += .19*math.sin(3*t+group)*t + .08*noise*t
+            normal = a*math.cos(theta) + b*(.82*math.sin(theta))
+            lift = mix(-.004,.005+.010*noise,smoothstep(.0,.34,t))
+            wisp = a*(.004+.013*flyaway)*t**3*math.sin(phase+5*t)
+            points.append(plume(station) + normal*(volume(station)+lift)
+                          + fan*smoothstep(.36,.98,station) + wisp)
+        copper = (group in (0,3,7) and noise>.38) or (flyaway and noise>.28)
+        fibers.append((points,.00061+.00065*noise,[("tail_04",1.0)],int(copper)))
     mesh_fibers(s,"Ref · layered tail tuft fibers",fibers,mat["tuft"],mat["tuft_light"])
-    return {"tuft_strands":strand_count,"guard_hairs":len(coat),
+    return {"tuft_strands":strand_count,"plume_guide_groups":lock_count,"guard_hairs":len(coat),
             "modified_tail_vertices":count*sides,"tip_rest_m":list(end)}
 
 

@@ -165,6 +165,26 @@ def rest_anatomy_symmetry(rig, body):
             "maximum_tolerance_mm": REST_MAX_TOLERANCE_MM, "regions": summary}
 
 
+def tail_crest_continuity(scene):
+    """Measure axial twist between adjacent tail rings after removing curvature."""
+    tail = scene.objects.get("Curved articulated Vayu tail")
+    if tail is None or tail.type != "MESH" or len(tail.data.vertices) != 85 * 16:
+        return {"passed": False, "reason": "Missing original 85-ring weighted tail"}
+    rings = [tail.data.vertices[i:i+16] for i in range(0,len(tail.data.vertices),16)]
+    centers = [sum((v.co for v in ring), Vector())/len(ring) for ring in rings]
+    previous_tangent = previous_axis = None
+    twists = []
+    for index in range(41,len(rings)):
+        axis = (rings[index][0].co - centers[index]).normalized()
+        tangent = (centers[min(index+1,len(rings)-1)] - centers[index-1]).normalized()
+        if previous_axis is not None:
+            carried = previous_tangent.rotation_difference(tangent) @ previous_axis
+            twists.append(math.degrees(carried.angle(axis)))
+        previous_tangent, previous_axis = tangent, axis
+    return {"crest_edges_sampled": len(twists), "max_residual_twist_degrees": round(max(twists),4),
+            "limit_degrees": 10.0, "passed": max(twists) <= 10.0}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, required=True)
@@ -192,6 +212,7 @@ def main():
     bounds = hero_bounds(scene, rig, graph)
     contacts = foot_support(scene, rig, body, graph)
     symmetry = rest_anatomy_symmetry(rig, body)
+    tail_continuity = tail_crest_continuity(scene)
     gap_summary = {side: {"samples": len(items), "minimum_gap_m": min((p["gap_m"] for p in items), default=None),
                           "maximum_gap_m": max((p["gap_m"] for p in items), default=None)}
                    for side, items in contacts.items()}
@@ -217,6 +238,8 @@ def main():
               "rest_anatomy_bilateral_samples_match": all(region["passed"] for region in symmetry["regions"].values()),
               "pose_geometry_projected": bounds["projected_vertices"] > 10000 and not bounds["vertices_behind_camera"],
               "expected_167_bones_and_11_clips": contract["bones"] == 167 and set(contract["action_key_hashes"]) == KEYFRAME_CLIPS}
+    result["tail_crest"] = tail_continuity
+    checks["tail_crest_cross_sections_continuous"] = tail_continuity["passed"]
     # The exact source rest transforms and action keys remain a separate check
     # from the new world-space pose or above-ground contact measurements.
     bpy.ops.wm.open_mainfile(filepath=str(args.baseline.resolve()), load_ui=False)

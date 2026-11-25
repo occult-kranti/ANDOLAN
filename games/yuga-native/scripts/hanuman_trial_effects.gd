@@ -3,6 +3,7 @@ extends Node3D
 ## The hit result, movement and timing remain owned by the practice controller.
 
 const BOUNDARY := preload("res://shaders/rama_ability_boundary.gdshader")
+const GroundField := preload("res://scripts/hanuman_ground_field.gd")
 const RIBBON := preload("res://shaders/rama_ribbon.gdshader")
 const PROFILES := "res://assets/design/hanuman-presentation.json"
 const AUDIO_ROOT := "res://assets/audio/"
@@ -13,6 +14,7 @@ const STAGES := ["begin", "release", "impact", "tick", "recovery", "end", "cance
 var _style: Dictionary = {}
 var _casts: Dictionary = {}
 var _voices: Array[AudioStreamPlayer3D] = []
+var _ground_field: MultiMeshInstance3D
 var _voice_index := 0
 var _generation := -1
 var _sequence := -1
@@ -52,6 +54,9 @@ func _ready() -> void:
 		voice.max_distance = 28.0
 		add_child(voice)
 		_voices.append(voice)
+	_ground_field = GroundField.new()
+	add_child(_ground_field, false, Node.INTERNAL_MODE_BACK)
+	_ground_field.set_reduced(_reduced)
 
 
 static func _stream(path: Variant) -> AudioStream:
@@ -63,6 +68,8 @@ static func _stream(path: Variant) -> AudioStream:
 
 func set_options(options: Dictionary) -> void:
 	_reduced = options.get("reduced_effects", false) == true or options.get("reduced_motion", false) == true
+	if is_instance_valid(_ground_field):
+		_ground_field.set_reduced(_reduced)
 	var volume: Variant = options.get("volume", _volume)
 	if _number(volume, 0.0, 1.0):
 		_volume = float(volume)
@@ -202,7 +209,7 @@ func _preview(event: Dictionary, style: Dictionary) -> Dictionary:
 	return {
 		"group": group, "style": style, "geometry": geometry, "warning": warning,
 		"ability_id": event.ability_id, "ribbons": [], "age": 0.0, "released": false,
-		"release_time": 0.0, "travel_s": float(timing.travel_s), "active_s": float(timing.active_s),
+		"release_time": 0.0, "travel_s": float(timing.travel_s), "active_s": float(timing.active_s), "recovery_s": float(timing.recovery_s),
 		"impacted": false, "recovered": false, "flash": 0.0,
 		"ttl": float(timing.windup_s) + float(timing.travel_s) + float(timing.recovery_s) + clampf(float(timing.get("active_s", 0.0)), 0.0, 8.0) + 1.0,
 	}
@@ -248,10 +255,6 @@ func _build_ember_field(cast: Dictionary, core: ShaderMaterial, accent: ShaderMa
 	var field := Node3D.new()
 	field.name = "EmberField"
 	group.add_child(field)
-	var wash := _material(RIBBON, cast.style.accent, 0.25)
-	wash.set_shader_parameter("luminous", 0.16)
-	cast.ribbons.append(wash)
-	_ring(field, wash, radius * 0.99, radius * 0.94, angle, 0.055)
 	# Use polar widths so both painted edges stay inside the authoritative fan.
 	for index in 2:
 		var material := core if index == 0 else accent
@@ -307,6 +310,9 @@ func _build_impact(cast: Dictionary, event: Dictionary) -> void:
 			_ring(group, material, _radius(cast.geometry) * 0.56, 0.09, PI, 0.105)
 			_build_mountain_impact(cast, material)
 		_play(style.impact_stream, cast.geometry.center, event.cast_id, style.impact_gain)
+		_ground_field.stamp(event.cast_id, cast.geometry, float(cast.recovery_s), style.color)
+	elif style.kind == "ember":
+		_ground_field.stamp(event.cast_id, cast.geometry, float(cast.active_s), style.accent)
 	var receipts: Variant = event.get("receipts", [])
 	if not receipts is Array:
 		return
@@ -364,6 +370,7 @@ func _build_shield_receipt(cast: Dictionary, pos: Vector3, material: ShaderMater
 func _process(delta: float) -> void:
 	if _suspended:
 		return
+	_ground_field.advance(delta)
 	for id in _casts.keys():
 		var cast: Dictionary = _casts[id]
 		cast.age += delta
@@ -479,6 +486,7 @@ func _play(stream: AudioStream, position: Vector3, cast_id: int, gain := 1.0) ->
 
 
 func _retire(id: int) -> void:
+	_ground_field.retire(id)
 	var group: Node3D = _casts[id].group
 	group.hide()
 	group.queue_free()
@@ -486,6 +494,8 @@ func _retire(id: int) -> void:
 
 
 func _clear() -> void:
+	if is_instance_valid(_ground_field):
+		_ground_field.clear()
 	for id in _casts.keys():
 		_retire(id)
 	for voice in _voices:
@@ -501,4 +511,5 @@ func _exit_tree() -> void:
 
 
 func report() -> Dictionary:
-	return {"profiles": _style.size(), "active": _casts.size(), "accepted": _accepted, "audio_cues": _played}
+	return {"profiles": _style.size(), "active": _casts.size(), "accepted": _accepted, "audio_cues": _played,
+		"ground_field": _ground_field.report() if is_instance_valid(_ground_field) else {}}

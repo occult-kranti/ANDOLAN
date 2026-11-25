@@ -18,6 +18,15 @@ The builder writes a packed Blender file, an unfiltered Cycles still and a JSON 
 
 The tested cloud Blender does not bundle Open Image Denoise. To produce a separately labeled presentation PNG, run the existing `tools/hanuman-art/denoise.py` script with the pinned CPU tool against the original render. All meshes, light sources and materials remain editable in the scene. [Denoiser command and provenance](../README.md#rebuild-and-render)
 
+The complete review set renders all seven views from one packed scene, filters the PNGs and compares the full frame with both the original concept and the named prior revision. It requires Python with Pillow and NumPy, Git history for the earlier revision, and the OIDN binary from the preceding link. The output also includes the unfiltered detail views and a SHA-256 manifest. [Review script](../../../tools/hanuman-match/review_set.py) · [Published image identities](review-manifest.json)
+
+```sh
+python3 games/yuga-native/tools/hanuman-match/review_set.py \
+  /tmp/yuga-hanuman-keyframe /tmp/yuga-hanuman-review \
+  --oidn /path/to/oidnDenoise --threads 4 \
+  --previous-ref 6b505f0414827732f58456778162b515797afbeb
+```
+
 ## Inspect individual parts
 
 The review renderer reads the same scene. It renders the selected region at a larger virtual frame size so near-camera anatomy retains more detail. The published detail views use 28 Cycles samples each. Available views are `face`, `grip`, `belt_hand`, `torso`, `feet`, `tail` and `alternate`.
@@ -38,6 +47,10 @@ blender -b --factory-startup -t 1 /tmp/yuga-hanuman-keyframe/hanuman-keyframe.bl
 blender -b --factory-startup -t 1 /tmp/yuga-hanuman-keyframe/hanuman-keyframe.blend \
   --python-exit-code 1 --python games/yuga-native/tools/hanuman-match/check_plate_motion.py -- \
   --report /tmp/yuga-hanuman-keyframe/plate-motion.json
+
+blender -b --factory-startup -t 1 /tmp/yuga-hanuman-keyframe/hanuman-keyframe.blend \
+  --python-exit-code 1 --python games/yuga-native/tools/hanuman-match/check_plume_motion.py -- \
+  --report /tmp/yuga-hanuman-keyframe/plume-motion.json
 ```
 
 The checker measures the left and right rest-mesh landmarks across the rig’s sagittal plane, compares the reopened scene to the R5 rig and action data, inspects packed images and external dependencies, and reports projected bounds and bare sole-to-stone measurements. [Per-region review skill](../../../../../.agents/skills/yuga-anatomy-review/SKILL.md)
@@ -53,16 +66,19 @@ The checker measures the left and right rest-mesh landmarks across the rig’s s
 | 5 · Hairline and final render | Reopened measurement found 112 sampled hairline edge points seated about 2 mm inside the scalp. The hero projections stay inside the frame. | Render the packed scene at the reference dimensions. Use the facial study and the close region views for the next sculpt reviews. |
 | 6 · Sculpt and surface review | The earlier muzzle and chin read broad in clay, the hip hand folded into a hook and the gada’s raised beads flattened its silhouette. | Mirror the cheek and nostril changes in rest space, fit the fist against the waist, cut nine flutes around the gada and reshape the rooted tail plume. |
 | 7 · Costume and light | The first integrated cloth rendered pale pink. Arm motion also pulled the rigid shell away from the inlaid detail. | Tint the cloth sheen, adjust thread relief, and bind the inlays and shell to the same spine interpolation. Check the result under the actual court lights and reopen the saved scene for contact measurements. |
+| 8 · Face, plume and court | The portrait had a flat lid line. Individual tail rings flipped at the bend, pinching the surface. The alternate shot exposed an empty edge beyond the pillar. | Lift the nasal tip, sculpt the inner eyelid and tilt the brows. Carry the ring orientation around the bend, group the plume into nine locks, and project original architectural relief onto the three towers and return gallery. |
 
 ## Verification and remaining likeness
 
-The final scene passed ten structural and symmetry checks. The rest-position mirror comparison covers 5,304 directed samples with zero measured discrepancy to six decimal places in millimeters. The check deliberately excludes the held pose. A separate verifier found zero interpenetrating face pairs between disjoint fingers or between the sampled belt hand and its clothing. It covered 1,287 hand faces, all ten digit pairs and 33 garment objects. The smallest measured skin-to-fold clearance was 0.895 mm. [Belt-hand verification script](../../../tools/hanuman-match/check_hip_hand.py) · [Hand receipt](hip-hand-verification.json)
+The final scene passed eleven structural and symmetry checks. The rest-position mirror comparison covers 5,304 directed samples with zero measured discrepancy to six decimal places in millimeters. The check deliberately excludes the held pose. A separate verifier found zero interpenetrating face pairs between disjoint fingers or between the sampled belt hand and its clothing. It covered 1,287 hand faces, all ten digit pairs and 33 garment objects. The smallest measured skin-to-fold clearance was 0.895 mm. [Belt-hand verification script](../../../tools/hanuman-match/check_hip_hand.py) · [Hand receipt](hip-hand-verification.json)
 
-Across 77 sampled poses, the largest measured displacement from adding the localized body sculpt was 18.4 mm or less. The tail segments and plume roots were sampled through 99 poses across 11 clips. The breastplate and its inlays now share a smooth weighting across four spine links. Restoring the upper arms to neutral produced zero measured plate displacement in those samples. The former plate had moved by up to 45.6 mm in the shoulder test. The final packed scene also passed an independent test that rotated each arm 20° and measured all 15,810 evaluated shell vertices. The wrist moved at least 8.87 mm, and the spine control moved the shell 141.93 mm. [Plate motion receipt](plate-motion-verification.json) [Rig, body symmetry and sole measurements](verification.json) · [Runtime checks](../../../docs/HANUMAN_HANDOFF.md)
+Across 77 sampled poses, the largest measured displacement from adding the localized body sculpt was 18.4 mm or less. The tail segments and plume roots were sampled through 99 poses across 11 clips. The breastplate and its inlays now share a smooth weighting across four spine links. Restoring the upper arms to neutral produced zero measured plate displacement in those samples. The former plate had moved by up to 45.6 mm in the shoulder test. The final packed scene also passed an independent test that rotated each arm 20° and measured all 15,810 evaluated shell vertices. The wrist moved at least 8.87 mm, and the spine control moved the shell 141.93 mm. [Plate motion receipt](plate-motion-verification.json) · [Rig, body symmetry and sole measurements](verification.json) · [Runtime checks](../../../docs/HANUMAN_HANDOFF.md)
 
-This pass narrows the jaw below the cheek, refits the nostrils, turns the gaze, and reshapes the upper arm and belt-side fist. The gada has nine radial flutes and flush-set decoration. The tail’s four-link chain carries a tapered core and independently rooted surface strands. The cloth has distinct madder warp and weft with supplementary gold thread defined in the garment UVs. The foreground tamarind uses paired leaflets on branching stems. [Before, target and current frame](hanuman-comparison.jpg) · [Earlier published keyframe](https://github.com/occult-kranti/ANDOLAN/tree/a3bfb9c2f56e53a073e73ed4e101de93bcc3c2fb/games/yuga-native/art/hanuman/match)
+The current portrait builds on the narrowed jaw at `6b505f04`. It defines the nasal bridge, medial lids, lower muzzle and closed mouth. A small portrait light is linked to the eye surfaces. At the tail crest, the prior file showed 177.76° of residual twist between adjacent cross-sections. The current crest measures 0.00° across 43 edges to the reported precision. Nine guide groups spread 328 weighted plume fibers into a fan. Across 99 sampled poses, the largest measured tail-to-plume join gap was under 0.001 mm. The tail tip moved 577 mm relative to its base during Tail Sweep. [Plume motion receipt](plume-motion-verification.json) [Face](hanuman-face-detail.png) · [Tail](hanuman-tail.png) · [Reference and successive renders](hanuman-comparison.jpg) · [Prior published art](https://github.com/occult-kranti/ANDOLAN/tree/6b505f0414827732f58456778162b515797afbeb/games/yuga-native/art/hanuman/match)
 
-The side light brings out the nose, cheek and breastplate ridges. In the comparison, the eyelids and muzzle still have softer edges than the concept. The mane sweeps in a more uniform direction, the exposed cloth has a coarser weave, and the tail tip needs a more distinct fan silhouette. The belt hand clears the cloth, but the knuckle planes still merge at this camera angle. [Face](hanuman-face-detail.png) · [Belt hand](hanuman-belt-hand.png) · [Tail](hanuman-tail.png)
+The court wraps four original carvings around shallow tower walls and a gallery return using face-local texture coordinates. The 512 × 512 relief atlas is packed in the Blender scene. The current court has 302 relief panels and 86,654 triangles across its meshes. The prior court had 110,690 triangles. These counts apply to the court collection alone. The raking-light and alternate-camera views show where the detail is visible. [Temple study](temple-relief-study.png) · [Build report](build-report.json) · [Developer sources and technique review](../../../docs/research/HANUMAN_INDIE_RENDER_TECHNIQUES.md)
+
+The concept still has finer broken-up hair, a more pronounced cheek-to-muzzle transition and more distinct knuckle planes. Check these features at the intended gameplay distance when baking the studio master. [Facial form study](hanuman-facial-form-study.png) · [Belt-side hand](hanuman-belt-hand.png)
 
 ## Reuse for the next scene
 

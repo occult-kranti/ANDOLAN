@@ -13,7 +13,7 @@ release. Its Hanuman chapter on PDF pages 12–15, turnaround direction on page 
 and courtyard sequence on page 35 informed this slice.
 The existing Godot third-person camera, native practice clock, target receivers
 and input actions determined what could be exercised in this build. The PDF’s
-account, model-access and third-party claims are background material.
+account, model-access and third-party claims are background material. [Original 42-page brief](../../../docs/handoff/Mythic-3D-Hero-Design-Pipeline.pdf)
 
 | Input | Action | Read and response | Practice tuning |
 | --- | --- | --- | --- |

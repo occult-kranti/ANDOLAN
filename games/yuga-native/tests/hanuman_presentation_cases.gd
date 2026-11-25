@@ -55,14 +55,14 @@ func _run() -> void:
 				var xz := Vector2(point.x, point.z)
 				projected = projected and xz.length() <= 5.00001 and xz.normalized().y >= .14999
 				height = maxf(height, point.y)
-	_record("paint and two rising ribbons stay inside the exact rear sector", rear != null and rear.get_child_count() == 3 and height >= 1.5 and projected)
+	_record("two rising ribbons stay inside the exact rear sector", rear != null and rear.get_child_count() == 2 and height >= 1.5 and projected)
 	effects._process(.3)
-	_record("ember wash remains translucent instead of inheriting burst alpha",
-		rear != null and float((rear.get_child(0) as MeshInstance3D).material_override.get_shader_parameter("opacity")) < .25)
+	_record("timestamp ground wash is visible without a third per-cast mesh",
+		effects.report().ground_field.visible_instances == 1 and rear.get_child_count() == 2)
 	effects.set_options({"reduced_effects": true})
 	effects._process(.05)
 	_record("reduced effects retain three locked ground boundary meshes and hide tall amber field",
-		rear != null and not rear.visible and _cue().get_child(0).visible and _cue().get_child(1).visible and _cue().get_child(2).visible)
+		rear != null and not rear.visible and effects.report().ground_field.visible_instances == 0 and _cue().get_child(0).visible and _cue().get_child(1).visible and _cue().get_child(2).visible)
 	_record("completed rear cue retires", _end() and not _cue().visible)
 	effects.set_options({"reduced_effects": false})
 

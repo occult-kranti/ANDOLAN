@@ -184,7 +184,15 @@ def configure_scene(scene, profile, args):
             data.shape = "RECTANGLE"
             data.size_y = area["height_m"]
         data.spread = math.radians(area.get("spread_degrees", 180))
-        pointed_object(data, data.name, area["location"], area["target"])
+        light = pointed_object(data, data.name, area["location"], area["target"])
+        if prefixes := area.get("receivers"):
+            receivers = [obj for obj in scene.objects if obj.name.startswith(tuple(prefixes))]
+            if not receivers:
+                raise ValueError(f"No light receivers for {data.name}")
+            collection = bpy.data.collections.new(data.name + " receivers")
+            for obj in receivers:
+                collection.objects.link(obj)
+            light.light_linking.receiver_collection = collection
 
     scene.render.engine = "CYCLES"
     scene.cycles.device = "CPU"
@@ -288,6 +296,7 @@ def main():
               "reference_sha256": REFERENCE_HASH, "profile_sha256": sha256(args.profile),
               "builder_sha256": sha256(Path(__file__)),
               "stage_source_sha256": {name: sha256(TOOLS / f"{name}.py") for name in reports},
+              "support_source_sha256": {"temple_relief.py": sha256(TOOLS / "temple_relief.py")} if "court" in reports else {},
               "stages": reports, "bone_count": len(rig.data.bones),
               "source_actions": sorted(action.name for action in bpy.data.actions),
               "resolution": [scene.render.resolution_x, scene.render.resolution_y],

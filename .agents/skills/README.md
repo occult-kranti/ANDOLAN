@@ -6,6 +6,8 @@ and [AGENTS.md](../../AGENTS.md). The lead assigns one bounded packet and
 exclusive files to each active worker; the roles do not create six GPUs or
 prove the complete game exists.
 
+For a multi-role art pass, use the [art production rounds skill](yuga-art-production-rounds/SKILL.md). It assigns one owner per output, names the reviewer, and sends the result to the [project library](../../games/yuga-native/docs/PROJECT_HISTORY_LIBRARY.md).
+
 | Worker | Skill | Use for |
 | --- | --- | --- |
 | W1 | [yuga-evidence-review](yuga-evidence-review/SKILL.md) | Sources, controlled analysis and independent actual-game review |

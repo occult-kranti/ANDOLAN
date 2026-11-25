@@ -1,0 +1,263 @@
+{
+  "engine": "Godot 4.6.3.stable.official.7d41c59c4",
+  "capture_driver": "Vulkan Forward+ through llvmpipe on X11",
+  "scripted_route": "Boot, Hanuman launcher selection, Begin Hanuman Trial, Begin Practice, normal pitch control",
+  "comparison": "Same paused hero pose, sun, following camera and floorpoint. Only HanumanContactShadow visibility changed.",
+  "picture_comparison": {
+    "width": 960,
+    "height": 540,
+    "strong_darkening_threshold_on_8bit_display_luma": 8,
+    "strong_darkening_pixels": 976,
+    "strong_darkening_bbox_xyxy_inclusive": [
+      386,
+      407,
+      442,
+      430
+    ],
+    "strong_darkening_median_luma": 11.9278,
+    "maximum_darkening_luma": 15.8556,
+    "maximum_brightening_luma": 7.2126,
+    "notes": "Temporal rendering changes elsewhere in the frame stay below the strong-darkening threshold. Measurements describe one representative grounded frame."
+  },
+  "rendered_checks": {
+    "captures": [
+      {
+        "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.962371, -0.271739), Z: (0.0, 0.271739, 0.962371), O: (0.7, 2.737095, 12.84948)]",
+        "contact_visible": true,
+        "file": "shadow-contact.png",
+        "floorpoint_px": "(552.7195, 556.9276)",
+        "sha256": "204086dd1d619daa3c10aa7ee1de66decd1bd26db6a7410fccde368f6b542c71"
+      },
+      {
+        "camera": "[X: (1.0, 0.0, 0.0), Y: (0.0, 0.962371, -0.271739), Z: (0.0, 0.271739, 0.962371), O: (0.7, 2.737095, 12.84948)]",
+        "contact_visible": false,
+        "file": "shadow-control.png",
+        "floorpoint_px": "(552.7195, 556.9276)",
+        "sha256": "d1e142ef6f52f7c593b423ac57323fd3f581a352f1eaebc9479d26f413db9827"
+      }
+    ],
+    "checks": [
+      {
+        "details": {},
+        "name": "Normal boot and Hanuman selection mount one trial footprint",
+        "passed": true
+      },
+      {
+        "details": {
+          "sun_enabled": true
+        },
+        "name": "Native shadow preference is honored by the Hanuman trial",
+        "passed": true
+      },
+      {
+        "details": {
+          "actors_casting": 1,
+          "floor_offset_m": 0.00899999961256981,
+          "opacity": 0.22
+        },
+        "name": "Single grounded preview preserves real sun and hero casters",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Begin practice reaches the actual active hero and following camera",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Matched native gameplay images save with and without the contact footprint",
+        "passed": true
+      }
+    ],
+    "display": "X11",
+    "failed": 0,
+    "passed": 5,
+    "renderer": "forward_plus",
+    "sources": {
+      "res://assets/environment/lanka_courtyard.glb": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+      "res://assets/heroes/hanuman/hanuman.glb": "9de9e032d55685dffd51734bef98c241024283c5d23767646b5c68ca782dec7e",
+      "res://scripts/hanuman_contact_shadow.gd": "aeb0aa71196a26d7313708efdf446cd79f80f126ad09d3770f99024d94b9ff77",
+      "res://scripts/hanuman_trial.gd": "0aab69f461909bc3fe61166b342806ea9972012d33b65208fad53478423c3d96",
+      "res://shaders/hanuman_contact_shadow.gdshader": "1d27c0eb27f4fb64b6a4d4a3d29f31422faf887239638b4c52061fe83068cc3b",
+      "res://tests/hanuman_contact_shadow_cases.gd": "4de5e14f960403e9014bfacec716876f11670c9112a19ac5de76b67c0af5c66b"
+    }
+  },
+  "headless_default": {
+    "captures": [],
+    "checks": [
+      {
+        "details": {},
+        "name": "Normal boot and Hanuman selection mount one trial footprint",
+        "passed": true
+      },
+      {
+        "details": {
+          "sun_enabled": true
+        },
+        "name": "Native shadow preference is honored by the Hanuman trial",
+        "passed": true
+      },
+      {
+        "details": {
+          "actors_casting": 1,
+          "floor_offset_m": 0.00899999961256981,
+          "opacity": 0.22
+        },
+        "name": "Single grounded preview preserves real sun and hero casters",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Begin practice reaches the actual active hero and following camera",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "The footprint follows actual movement on the limestone",
+        "passed": true
+      },
+      {
+        "details": {
+          "peak_y_m": 1.01742112636566
+        },
+        "name": "Actual jump softens and hides the patch, then restores it at landing",
+        "passed": true
+      },
+      {
+        "details": {
+          "opacity": 0.46
+        },
+        "name": "Disabling the sun shadow selects one stronger fallback under the feet",
+        "passed": true
+      },
+      {
+        "details": {
+          "extent_x_m": 21.9800000041723
+        },
+        "name": "The circular envelope shrinks to stay inside the actual paving edge",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Outside the known receiver the footprint is hidden",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "A raised fixture above the limestone never receives the flat shadow",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "The normal reset restores one footprint at the trial spawn",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Returning to title releases the trial footprint",
+        "passed": true
+      }
+    ],
+    "display": "headless",
+    "failed": 0,
+    "passed": 12,
+    "renderer": "forward_plus",
+    "sources": {
+      "res://assets/environment/lanka_courtyard.glb": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+      "res://assets/heroes/hanuman/hanuman.glb": "9de9e032d55685dffd51734bef98c241024283c5d23767646b5c68ca782dec7e",
+      "res://scripts/hanuman_contact_shadow.gd": "aeb0aa71196a26d7313708efdf446cd79f80f126ad09d3770f99024d94b9ff77",
+      "res://scripts/hanuman_trial.gd": "0aab69f461909bc3fe61166b342806ea9972012d33b65208fad53478423c3d96",
+      "res://shaders/hanuman_contact_shadow.gdshader": "1d27c0eb27f4fb64b6a4d4a3d29f31422faf887239638b4c52061fe83068cc3b",
+      "res://tests/hanuman_contact_shadow_cases.gd": "4de5e14f960403e9014bfacec716876f11670c9112a19ac5de76b67c0af5c66b"
+    }
+  },
+  "headless_saved_shadows_off": {
+    "captures": [],
+    "checks": [
+      {
+        "details": {},
+        "name": "Normal boot and Hanuman selection mount one trial footprint",
+        "passed": true
+      },
+      {
+        "details": {
+          "sun_enabled": false
+        },
+        "name": "Native shadow preference is honored by the Hanuman trial",
+        "passed": true
+      },
+      {
+        "details": {
+          "actors_casting": 1,
+          "floor_offset_m": 0.00899999961256981,
+          "opacity": 0.22
+        },
+        "name": "Single grounded preview preserves real sun and hero casters",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Begin practice reaches the actual active hero and following camera",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "The footprint follows actual movement on the limestone",
+        "passed": true
+      },
+      {
+        "details": {
+          "peak_y_m": 1.01742112636566
+        },
+        "name": "Actual jump softens and hides the patch, then restores it at landing",
+        "passed": true
+      },
+      {
+        "details": {
+          "opacity": 0.46
+        },
+        "name": "Disabling the sun shadow selects one stronger fallback under the feet",
+        "passed": true
+      },
+      {
+        "details": {
+          "extent_x_m": 21.9800000041723
+        },
+        "name": "The circular envelope shrinks to stay inside the actual paving edge",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Outside the known receiver the footprint is hidden",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "A raised fixture above the limestone never receives the flat shadow",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "The normal reset restores one footprint at the trial spawn",
+        "passed": true
+      },
+      {
+        "details": {},
+        "name": "Returning to title releases the trial footprint",
+        "passed": true
+      }
+    ],
+    "display": "headless",
+    "failed": 0,
+    "passed": 12,
+    "renderer": "forward_plus",
+    "sources": {
+      "res://assets/environment/lanka_courtyard.glb": "1454e03627e9a7708557f64122cf8f170d0f8365256e69fa7689e94cd3585c33",
+      "res://assets/heroes/hanuman/hanuman.glb": "9de9e032d55685dffd51734bef98c241024283c5d23767646b5c68ca782dec7e",
+      "res://scripts/hanuman_contact_shadow.gd": "aeb0aa71196a26d7313708efdf446cd79f80f126ad09d3770f99024d94b9ff77",
+      "res://scripts/hanuman_trial.gd": "0aab69f461909bc3fe61166b342806ea9972012d33b65208fad53478423c3d96",
+      "res://shaders/hanuman_contact_shadow.gdshader": "1d27c0eb27f4fb64b6a4d4a3d29f31422faf887239638b4c52061fe83068cc3b",
+      "res://tests/hanuman_contact_shadow_cases.gd": "4de5e14f960403e9014bfacec716876f11670c9112a19ac5de76b67c0af5c66b"
+    }
+  }
+}

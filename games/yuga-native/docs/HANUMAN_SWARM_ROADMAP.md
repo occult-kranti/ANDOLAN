@@ -6,6 +6,18 @@ Run two panels of two people in each production round. **Panel A** pairs the cha
 
 The temple court work supplies a new high-detail keyframe for H1. The paired skull and palm studies now have measured rest symmetry and a belt-hand pose. Continue the face from the eyelid, muzzle and chin planes in the portrait and profile. Test the rigid cuirass with shoulder lift and the tail tuft during a fast turn in H2. Compare the cloth weave and calf silhouette at gameplay distance before export. Budget the dense groom, fitted cloth, light rig and stone independently before granting any production asset promotion. [Editable keyframe, comparison and receipts](../art/hanuman/match/README.md) · [Artist practice and verified tutorials](research/hanuman-match-sources.md)
 
+## Indie rendering rounds
+
+| Round | Implemented evidence | Next decision and owner |
+| --- | --- | --- |
+| Reference and geometry | Two sculpt reviews, a matched facial clay sheet, separated locks at the tail tip, and face-local projection on the distant towers and gallery. Inspect both the hero camera and the orbit. | Character artist and environment artist compare the face, crest and silhouette at play distance before baking. [Art master and comparisons](../art/hanuman/match/README.md) |
+| Runtime presentation | The practice court has a flat contact shadow that responds to height and the shadow preference. Accepted ground impacts stamp a bounded texture. Validate pause, retrigger, expiry, edges, reset and return to title. | Combat presentation and QA owners review ground contrast with an active cue, under both shadow settings. [Technique evidence](research/HANUMAN_INDIE_RENDER_TECHNIQUES.md) |
+| Device measurement | A cloud Blender triangle count and Godot software-renderer test establish reproducible inputs for the handheld comparison. | Performance owner captures identical 1280 × 800 routes on a physical Steam Deck, recording CPU/GPU frame time distributions, effect uploads and visible artifacts before choosing a shipping preset. [Protocol and sources](research/HANUMAN_INDIE_RENDER_TECHNIQUES.md) |
+
+Use the [production-round skill](../../../.agents/skills/yuga-art-production-rounds/SKILL.md) for ownership and the [library](PROJECT_HISTORY_LIBRARY.md) to recover earlier accepted and failed art.
+
+## Remaining hero production rounds
+
 | Next round | Panel A | Panel B | What closes the round |
 | --- | --- | --- | --- |
 | H1 · Character fidelity | Artist revises muzzle, eyelids, brow and groom, using the R5 rig as the compatibility baseline. Technical animator takes the second edit on deformation and fitted drapery. | Verifier records matched source views. Presentation designer uses them to correct material and illumination, then checks silhouette at the native camera distance. | Pin the editable scene and GLB. Compare the same front, rear and close-up framing in neutral and dusk light with a native entry and shoulder-camera view. Review fur and face, bronze and cloth separation, and rear drape clearance individually. |

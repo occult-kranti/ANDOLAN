@@ -14,6 +14,7 @@ const Lighting = preload("res://scripts/production_lighting.gd")
 const COURT := "res://assets/environment/lanka_courtyard.glb"
 const Combat = preload("res://scripts/hanuman_combat.gd")
 const Effects = preload("res://scripts/hanuman_trial_effects.gd")
+const ContactShadow = preload("res://scripts/hanuman_contact_shadow.gd")
 const SPAWN := Vector3(0, .06, 9)
 const DRILL_TARGETS := [Vector3(0, .02, 4.5), Vector3(3.3, .02, 2.5), Vector3(-3.3, .02, 2.5), Vector3(0, .02, -2.8), Vector3(3.0, .02, 10.5)]
 const INPUT_SLOTS := {"primary":"fire", "ability_1":"pulse", "ability_2":"dash", "ability_3":"guardian_circle", "ultimate":"ultimate"}
@@ -71,7 +72,7 @@ func _create_world() -> bool:
 	court.name = &"AuthoredLankaCourtyard"
 	add_child(court)
 	_mount_court_collision(court)
-	_lighting()
+	var sun := _lighting()
 	var targets: Array[Node3D] = []
 	for index in range(DRILL_TARGETS.size()):
 		var target := StaticBody3D.new()
@@ -84,7 +85,7 @@ func _create_world() -> bool:
 	army = PracticeArmy.new()
 	army.name = &"TrialClock"
 	add_child(army)
-	_floor_collision()
+	var floor_body := _floor_collision()
 	if not army.configure(targets):
 		_event_status = "The practice targets could not be registered."
 		return false
@@ -110,6 +111,11 @@ func _create_world() -> bool:
 	if not hero.configure_visual(model):
 		_event_status = hero.last_error
 		return false
+	var contact_shadow := ContactShadow.new()
+	contact_shadow.name = &"HanumanContactShadow"
+	add_child(contact_shadow)
+	var paving := court.get_node_or_null("COL_Limestone_mortar") as MeshInstance3D
+	contact_shadow.configure(hero, hero.model, floor_body, paving, sun)
 	var portrait := Camera3D.new()
 	portrait.name = "TrialOverview"
 	portrait.fov = 32.0
@@ -133,7 +139,7 @@ func _mount_court_collision(node: Node3D, inherited := false) -> void:
 	for child in node.get_children():
 		if child is Node3D and not child is StaticBody3D: _mount_court_collision(child, collidable)
 
-func _floor_collision() -> void:
+func _floor_collision() -> StaticBody3D:
 	var floor := StaticBody3D.new()
 	floor.name = &"TrialFloor"
 	floor.position.y = -.25
@@ -153,14 +159,16 @@ func _floor_collision() -> void:
 		bound.shape = extent
 		body.add_child(bound)
 		add_child(body)
+	return floor
 
-func _lighting() -> void:
+func _lighting() -> DirectionalLight3D:
 	var atmosphere := WorldEnvironment.new()
 	atmosphere.environment = Environment.new()
 	add_child(atmosphere)
 	var sun := DirectionalLight3D.new()
 	add_child(sun)
 	Lighting.apply(atmosphere.environment, sun, self)
+	return sun
 
 func _load_settings() -> void:
 	var result := Bindings.read_config(Bindings.SAVE_PATH)
@@ -171,6 +179,10 @@ func _load_settings() -> void:
 	if typeof(sensitivity) in [TYPE_FLOAT, TYPE_INT] and is_finite(float(sensitivity)):
 		hero.look_sensitivity = .0024 * clampf(float(sensitivity), .35, 2.5)
 	if invert is bool: hero.invert_y = invert
+	var shadows: Variant = config.get_value("video", "shadows", true)
+	var sun := get_node_or_null("SettingSun") as DirectionalLight3D
+	if sun and shadows is bool:
+		sun.shadow_enabled = shadows
 	effects.set_options({"volume":config.get_value("audio", "volume", .7)})
 
 func _configure_combat() -> bool:

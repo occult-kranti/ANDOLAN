@@ -38,6 +38,10 @@ def mix(a, b, t):
     return a+(b-a)*t
 
 
+def brow_height(t):
+    return 1.901 + .023*sm(0,.68,t) - .006*sm(.68,1,t)
+
+
 def named(scene, starts):
     found = [
         obj for obj in scene.objects
@@ -75,7 +79,8 @@ def face_shape(p):
     brow = bell(ax,.044,.056) * bell(z,1.912,.018) * front
     nasal_bridge = bell(ax,0,.029) * bell(z,1.862,.023) * front
     nasal_wing = bell(ax,.021,.017) * bell(z,1.844,.014) * front
-    upper_muzzle = bell(ax,0,.058) * bell(z,1.827,.018) * front
+    nasal_tip = bell(ax,.009,.031) * bell(z,1.832,.019) * front
+    upper_muzzle = bell(ax,0,.065) * bell(z,1.818,.020) * front
     lip = bell(x,0,.072) * bell(z,1.794,.017) * front
     chin = bell(x,0,.057) * bell(z,1.767,.021) * front
     # Keep the high cheek and brow ridges while tapering to a narrower chin.
@@ -83,8 +88,8 @@ def face_shape(p):
     return Vector((
         x*(1.+.135*mask*lower+.141*mouth+.089*cheek-.143*jaw+.10*nasal_wing),
         y+.029*mouth-.020*cheek+.013*hollow-.012*brow-.014*nasal_bridge
-        -.010*nasal_wing-.012*upper_muzzle+.020*lip+.003*chin,
-        z-.012*mask*lower+.005*cheek-.002*brow-.006*chin,
+        -.010*nasal_wing+.015*nasal_tip-.021*upper_muzzle+.014*lip+.003*chin,
+        z-.012*mask*lower+.005*cheek-.002*brow+.012*nasal_tip-.006*chin,
     ))
 
 
@@ -144,6 +149,10 @@ def replace_body_skin(body):
                 color = tuple(mix(c,t,.44*muzzle) for c,t in zip(color,(.25,.095,.056)))
                 nose=bell(z,1.840,.015)*bell(x,0,.035)*sm(-.177,-.254,y)
                 color = tuple(mix(c,t,.38*nose) for c,t in zip(color,(.30,.086,.055)))
+                brow_t=(abs(x)-.016)/.074
+                if 0 < brow_t < 1:
+                    brow=bell(z,brow_height(brow_t),.006)*math.sin(math.pi*brow_t)**.65
+                    color=tuple(mix(c,t,.52*brow) for c,t in zip(color,(.064,.028,.016)))
             pigment.data[i].color = (*color,1)
 
 
@@ -458,9 +467,14 @@ def pigment_material(name, rgb, roughness=.71, specular=.14):
 
 def refine_eyes(scene, rig):
     """Adjust the native eye pieces, keeping the original eye-bone binding."""
-    sclera=pigment_material("Hanuman match · warm hydrated sclera",(.36,.275,.20),.33,.35)
-    iris=pigment_material("Hanuman match · dark amber iris",(.229,.103,.047),.28,.31)
-    pupil=pigment_material("Hanuman match · hydrated pupil",(.016,.009,.005),.20,.42)
+    sclera=pigment_material("Hanuman match · warm hydrated sclera",(.31,.245,.182),.37,.33)
+    iris=pigment_material("Hanuman match · dark amber iris",(.233,.104,.045),.29,.32)
+    pupil=pigment_material("Hanuman match · hydrated pupil",(.013,.008,.005),.24,.38)
+    for eye_surface in (iris,pupil):
+        shader=eye_surface.node_tree.nodes.get("Principled BSDF")
+        shader.inputs["Coat Weight"].default_value=.36
+        shader.inputs["Coat Roughness"].default_value=.12
+        shader.inputs["Coat IOR"].default_value=1.376
     lids=pigment_material("Hanuman match · warm orbital folds",(.112,.049,.023),.59,.24)
     changed=[]
     parts=(('Eye · ',sclera),('Limbal ring · ',None),('Iris · ',iris),('Pupil · ',pupil),
@@ -482,14 +496,15 @@ def refine_eyes(scene, rig):
                 reference=face_shape(point)
                 if prefix.startswith(("Orbital","Upper")):
                     reference.y-=.008*inner
-                    compression=.0026 if dz>0 else .0009
+                    medial=bell(dx*(-1 if side=="R" else 1),-.009,.013)
+                    compression=.0029+.0023*medial if dz>0 else .0015
                     reference.z-=math.copysign(compression,dz)*inner*sm(0,.004,abs(dz))
                 else:
-                    reference.y-=.006
+                    reference.y-=.005
                     if not prefix.startswith("Eye"):
                         radial=point-focus
-                        reference.x+=.0021+.14*radial.x
-                        reference.z+=.10*radial.z
+                        reference.x+=.0043+.12*radial.x
+                        reference.z+=.0017+.08*radial.z
                 vert.co=reference
             obj.data.update()
             changed.append(obj.name)
@@ -506,66 +521,66 @@ def face_marks(sculpt):
     for j in range(49):
         t=j/48
         angle=mix(-.05,math.pi+.05,t)
-        x=-.0181*math.cos(angle)
-        z=1.933+.0275*(math.cos(angle)**2)
+        x=-.0172*math.cos(angle)
+        z=1.930+.037*abs(math.cos(angle))**1.16
         pale.append(fitted(x,z,.0025))
-    sculpt.tube("Hanuman match · single joined white U",pale,.0041,ivory,"head",9,
+    sculpt.tube("Hanuman match · single joined white U",pale,.0037,ivory,"head",9,
                 lambda t:.58+.42*math.sin(math.pi*t)**.58)
-    saffron=[fitted(.00065*math.sin(t*math.pi),1.935+.026*t,.0024) for t in (j/24 for j in range(25))]
+    saffron=[fitted(0,1.933+.033*t,.0024) for t in (j/24 for j in range(25))]
     sculpt.tube("Hanuman match · fitted red center",saffron,.0053,vermilion,"head",10,
                 lambda t:.26+.74*(math.sin(math.pi*t)**.55))
-    shade=grooming_material("Hanuman match · warm angular eyebrows",(.089,.028,.013),.63)
+    shade=grooming_material("Hanuman match · warm angular eyebrows",(.077,.029,.015),.63)
     brow_fibers=Groom()
     rng=random.Random(229)
 
     def brow_point(t, side, lift, offset):
         x=side*(.016+.074*t)
-        z=1.907+.014*math.sin(math.pi*t*.79)+.002*t
+        z=brow_height(t)
         return fitted(x,z+lift,offset)
 
     for side in (-1,1):
         guide=[brow_point(j/34,side,0,.00085) for j in range(35)]
-        sculpt.tube("Hanuman match · angular brow ridge",guide,.0040,shade,"head",8,
+        sculpt.tube("Hanuman match · angular brow ridge",guide,.0035,shade,"head",8,
                     lambda t:.17+.83*math.sin(math.pi*t)**.59)
-        for j in range(140):
+        for j in range(196):
             t=rng.uniform(.02,.93)
             extent=rng.uniform(.035,.11)
             height=rng.uniform(.002,.0064)*math.sin(math.pi*t)**.5
-            root_height=rng.uniform(-.0033,.0028)
+            root_height=rng.uniform(-.0034,.0037)
             path=[brow_point(min(1,t+extent*v),side,root_height+height*v,.0015+.0018*math.sin(math.pi*v))
                   for v in (0.,.25,.5,.75,1.)]
             brow_fibers.add(path,rng.uniform(.00025,.00066),[("head",1.)])
     brow_fibers.make(sculpt,"Hanuman match · directional eyebrow hairs",shade)
-    seam=pigment_material("Hanuman match · narrow umber mouth seam",(.071,.029,.016))
-    upper=pigment_material("Hanuman match · upper lip plane",(.182,.068,.040),.72,.15)
-    lower=pigment_material("Hanuman match · lower lip plane",(.202,.083,.053),.69,.16)
+    seam=pigment_material("Hanuman match · narrow umber mouth seam",(.058,.023,.013))
+    upper=pigment_material("Hanuman match · upper lip plane",(.174,.065,.039),.74,.14)
+    lower=pigment_material("Hanuman match · lower lip plane",(.190,.075,.046),.70,.15)
 
     def lip_point(t,height,up):
         x=(t-.5)*.104
         width=math.sin(math.pi*t)**.82
-        z=1.789+(.0048 if up else -.0065)*height*width+.0012*width
-        offset=(.0009+.0017*math.sin(math.pi*height)-.0019*height)*width
+        z=1.790+(.0045 if up else -.0058)*height*width+.0018*width
+        offset=(.0007+.0010*math.sin(math.pi*height)-.0018*height)*width
         return fitted(x,z,offset)
 
     sculpt.cloth("Hanuman match · fitted upper lip",lambda t,v:lip_point(t,v,True),upper,
                  rows=7,columns=46,bone="head")
     sculpt.cloth("Hanuman match · fitted lower lip",lambda t,v:lip_point(t,v,False),lower,
                  rows=7,columns=46,bone="head")
-    line=[lip_point(j/48,0,False)+Vector((0,-.0012,0)) for j in range(49)]
-    sculpt.tube("Hanuman match · closed mouth seam",line,.00075,seam,"head",8,
+    line=[lip_point(j/48,0,False)+Vector((0,-.00065,0)) for j in range(49)]
+    sculpt.tube("Hanuman match · closed mouth seam",line,.00067,seam,"head",8,
                 lambda t:.17+.83*math.sin(math.pi*t)**.7)
 
     nostril=pigment_material("Hanuman match · shaded nostril tissue",(.064,.022,.012),.73,.12)
     sectors=24
     for side,label in ((-1,"R"),(1,"L")):
-        points=[fitted(side*.024,1.834,.00065)]
+        points=[fitted(side*.024,1.843,.00065)]
         for ring in range(1,5):
             radius=ring/4
             for j in range(sectors):
                 angle=math.tau*j/sectors
                 along=math.cos(angle)*radius
                 x=side*(.024+.0082*along)
-                z=1.834+.0033*math.sin(angle)*radius+.0027*along
+                z=1.843+.0033*math.sin(angle)*radius+.0027*along
                 points.append(fitted(x,z,.00065-.00040*radius))
         faces=[(0,1+j,1+(j+1)%sectors) for j in range(sectors)]
         for ring in range(3):
@@ -595,8 +610,8 @@ def diadem(sculpt, foundation):
     for side in (-1,1):
         def strand(t,offset):
             return fitted(side*(.011+.084*t),center_z-.010-.028*t**1.35,offset)
-        sculpt.tube("Hanuman match · diadem bead binding",[strand(j/31,.002) for j in range(32)],
-                    .0026,bronze,"head",7)
+        sculpt.tube("Hanuman match · diadem bead binding",[strand(j/31,-.001) for j in range(32)],
+                    .0016,bronze,"head",7)
         for j in range(7):
             t=.12+.135*j
             bead=strand(t,.0038)

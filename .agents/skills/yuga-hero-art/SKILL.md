@@ -87,6 +87,8 @@ for browser-based practice with skull, ribcage and hand construction. Follow the
 to produce original YUGA clay views, close-ups and pose strips. Keep study models
 in the browser unless their individual redistribution license and provenance are verified.
 
+For distant architecture, compare repeating sculpted detail with an original relief texture mapped in the local axes of each wall. Keep cornices and silhouettes three-dimensional. Review a grazing-light crop and the fixed shot, then orbit the camera to expose the returns. Record the geometry count, texture size and stage timings independently. [Hanuman temple study](../../../games/yuga-native/art/hanuman/match/temple-relief-study.png) · [Technique sources and hardware test](../../../games/yuga-native/docs/research/HANUMAN_INDIE_RENDER_TECHNIQUES.md)
+
 ## Phase 2: author and validate the candidate
 
 - Sculpt or model intentional masses and readable transitions. Inspect hair

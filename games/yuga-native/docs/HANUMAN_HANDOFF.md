@@ -17,6 +17,19 @@ The GitHub archive preserves the exact 35,824,106-byte bundle, including local c
 
 The packed temple court scene advances the generated keyframe through a new sculpt, groom, wardrobe, pose and physical environment. The current pass includes the paired muzzle and nostril sculpt, a closed belt-side fist, fluted gada and fitted gold-thread drapery. Use the posted comparison and the symmetry and contact receipts to pick the next editable surface. Keep gameplay changes tied to a separately imported and tested export. [Temple court scene and rebuild recipe](../art/hanuman/match/README.md) · [Verified Blender sources and LoopTools](research/hanuman-match-sources.md) · [Body-region review skill](../../../.agents/skills/yuga-anatomy-review/SKILL.md)
 
+## Temple art and ground presentation
+
+Open the packed Blender master to review the projected temple relief, facial sculpt, and corrected tail bend. The trial’s actor still uses its qualified gameplay rig. To see the new runtime presentation, start practice, use Lanka Dahan’s rear sweep or Mountain Pulse, vault, then watch the floor as Hanuman lands. Compare the contact shadow with the directional shadow setting on and off. [Blender outputs](../art/hanuman/match/README.md) · [Source study and coverage](research/HANUMAN_INDIE_RENDER_TECHNIQUES.md) · [Project history and preserved early studies](PROJECT_HISTORY_LIBRARY.md)
+
+See the [shadow comparison](research/hanuman-indie-runtime/shadow-verification.json) and [Mountain Pulse capture](research/hanuman-indie-runtime/ground-mountain.png) for the actual trial output.
+
+Run the dedicated native checks from the project root.
+
+```sh
+godot --headless --path games/yuga-native --script res://tests/hanuman_contact_shadow_cases.gd
+godot --headless --path games/yuga-native --script res://tests/hanuman_ground_field_cases.gd
+```
+
 ## Verification to carry forward
 
 | Verified work | Evidence |
