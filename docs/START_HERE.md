@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**World-design research.** The Elden Ring crossover review records the verified mod sources, a standalone Rust terrain-cache test, a licensed rock intake and a YUGA landmark study. The team brief connects composition work to collision and multiplayer checks. [Elden Ring-inspired world study](../games/yuga-native/docs/research/elden-ring-world-study/README.md)
+
 **Current Hanuman release.** The Rust Confluence build embeds the same enhanced character used for the new Cycles portraits and motion reel. Use the handoff to locate or rebuild the sculpt, materials, motion and game. [Play and view](../games/yuga-native/art/hanuman-hero-finish/README.md) · [Developer and artist handoff](../games/yuga-native/art/hanuman-hero-finish/HANDOFF.md) · [Next milestones](../games/yuga-native/art/hanuman-hero-finish/ROADMAP.md)
 
 **Character art and motion.** Use the four-hero studio for turnaround sheets, frame-level direction, actual Blender views, animated GLBs and film source. The handoff identifies the existing Rama and Hanuman rigs and the new Shiva and Krishna previews. [Four-hero studio](../games/yuga-native/art/four-hero-motion/README.md)

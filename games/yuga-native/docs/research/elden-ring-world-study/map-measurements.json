@@ -1,0 +1,435 @@
+{
+  "source": "games/yuga-native/assets/world/confluence-map.json",
+  "source_sha256": "d39043bfaabd9c3e173f03d68423269b5308b60c6906968315405690f844d77c",
+  "manifest_revision": 3,
+  "generator_sha256": "09a968be92c167003d2586d1518846c29854fcb369bed3b282b4659f92919475",
+  "reproduce": "python games/yuga-native/docs/research/elden-ring-world-study/map-plan.py",
+  "matplotlib_version": "3.10.8",
+  "figure": {
+    "file": "map-plan.png",
+    "sha256": "401607e216f5637447f575aa751b7f727aa628087425a21adb3a9f747d73b659",
+    "pixels": [
+      2320,
+      1328
+    ],
+    "axes": "horizontal is +Z; upward is −X; equal linear scale in metres"
+  },
+  "playable_envelope_x_min_max_z_min_max_m": [
+    -68,
+    68,
+    -128,
+    128
+  ],
+  "hero_radius_m": 0.65,
+  "lane_routes": [
+    {
+      "name": "Ghat promenade",
+      "centerline_xz_m": [
+        [
+          0,
+          -112
+        ],
+        [
+          -40,
+          -88
+        ],
+        [
+          -40,
+          88
+        ],
+        [
+          0,
+          112
+        ]
+      ],
+      "centerline_m": 269.295,
+      "clear_width_m": 8.0,
+      "spawn_to_opposite_core_via_lane_m": {
+        "sun": 277.295,
+        "moon": 277.295
+      }
+    },
+    {
+      "name": "Temple avenue",
+      "centerline_xz_m": [
+        [
+          0,
+          -112
+        ],
+        [
+          0,
+          112
+        ]
+      ],
+      "centerline_m": 224.0,
+      "clear_width_m": 8.0,
+      "spawn_to_opposite_core_via_lane_m": {
+        "sun": 232.0,
+        "moon": 232.0
+      }
+    },
+    {
+      "name": "Metro gardens",
+      "centerline_xz_m": [
+        [
+          0,
+          -112
+        ],
+        [
+          40,
+          -88
+        ],
+        [
+          40,
+          88
+        ],
+        [
+          0,
+          112
+        ]
+      ],
+      "centerline_m": 269.295,
+      "clear_width_m": 8.0,
+      "spawn_to_opposite_core_via_lane_m": {
+        "sun": 277.295,
+        "moon": 277.295
+      }
+    }
+  ],
+  "distance_method": "Sum of Euclidean X/Z distances along waypoints. Core distance adds the short segment from the opposing lane endpoint to its core, measured to marker centres. These are distances along a particular route, not hero deployment distances, timings or sightline measurements.",
+  "team_base_spawns_xz_m": {
+    "sun": [
+      0,
+      -112
+    ],
+    "moon": [
+      0,
+      112
+    ]
+  },
+  "straight_line_spawn_to_opposite_core_m": {
+    "sun": 232.0,
+    "moon": 232.0
+  },
+  "objectives": [
+    {
+      "id": "sun-tower-0",
+      "kind": "tower",
+      "xz_m": [
+        -40,
+        -68
+      ],
+      "wayfinding_only": true
+    },
+    {
+      "id": "sun-tower-1",
+      "kind": "tower",
+      "xz_m": [
+        0,
+        -68
+      ],
+      "wayfinding_only": true
+    },
+    {
+      "id": "sun-tower-2",
+      "kind": "tower",
+      "xz_m": [
+        40,
+        -68
+      ],
+      "wayfinding_only": true
+    },
+    {
+      "id": "sun-core",
+      "kind": "core",
+      "xz_m": [
+        0,
+        -120
+      ],
+      "wayfinding_only": false
+    },
+    {
+      "id": "moon-tower-0",
+      "kind": "tower",
+      "xz_m": [
+        -40,
+        68
+      ],
+      "wayfinding_only": true
+    },
+    {
+      "id": "moon-tower-1",
+      "kind": "tower",
+      "xz_m": [
+        0,
+        68
+      ],
+      "wayfinding_only": true
+    },
+    {
+      "id": "moon-tower-2",
+      "kind": "tower",
+      "xz_m": [
+        40,
+        68
+      ],
+      "wayfinding_only": true
+    },
+    {
+      "id": "moon-core",
+      "kind": "core",
+      "xz_m": [
+        0,
+        120
+      ],
+      "wayfinding_only": false
+    }
+  ],
+  "building_footprints": [
+    {
+      "id": "authority-solid-0",
+      "center_xz_m": [
+        -20,
+        -28
+      ],
+      "size_xz_m": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "authority-solid-1",
+      "center_xz_m": [
+        -20,
+        28
+      ],
+      "size_xz_m": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "authority-solid-2",
+      "center_xz_m": [
+        20,
+        -28
+      ],
+      "size_xz_m": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "authority-solid-3",
+      "center_xz_m": [
+        20,
+        28
+      ],
+      "size_xz_m": [
+        18,
+        18
+      ]
+    },
+    {
+      "id": "authority-solid-4",
+      "center_xz_m": [
+        -63,
+        -18
+      ],
+      "size_xz_m": [
+        12,
+        20
+      ]
+    },
+    {
+      "id": "authority-solid-5",
+      "center_xz_m": [
+        -63,
+        22
+      ],
+      "size_xz_m": [
+        12,
+        20
+      ]
+    },
+    {
+      "id": "authority-solid-6",
+      "center_xz_m": [
+        63,
+        -18
+      ],
+      "size_xz_m": [
+        12,
+        20
+      ]
+    },
+    {
+      "id": "authority-solid-7",
+      "center_xz_m": [
+        63,
+        22
+      ],
+      "size_xz_m": [
+        12,
+        20
+      ]
+    }
+  ],
+  "raised_deck_footprints": [
+    {
+      "id": "sun-lift-west-deck",
+      "center_xz_m": [
+        -20,
+        -88
+      ],
+      "size_xz_m": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "sun-shrine-west-deck",
+      "center_xz_m": [
+        -54,
+        -88
+      ],
+      "size_xz_m": [
+        7,
+        7
+      ]
+    },
+    {
+      "id": "sun-lift-east-deck",
+      "center_xz_m": [
+        20,
+        -88
+      ],
+      "size_xz_m": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "sun-shrine-east-deck",
+      "center_xz_m": [
+        54,
+        -88
+      ],
+      "size_xz_m": [
+        7,
+        7
+      ]
+    },
+    {
+      "id": "moon-lift-west-deck",
+      "center_xz_m": [
+        -20,
+        88
+      ],
+      "size_xz_m": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "moon-shrine-west-deck",
+      "center_xz_m": [
+        -54,
+        88
+      ],
+      "size_xz_m": [
+        7,
+        7
+      ]
+    },
+    {
+      "id": "moon-lift-east-deck",
+      "center_xz_m": [
+        20,
+        88
+      ],
+      "size_xz_m": [
+        8,
+        8
+      ]
+    },
+    {
+      "id": "moon-shrine-east-deck",
+      "center_xz_m": [
+        54,
+        88
+      ],
+      "size_xz_m": [
+        7,
+        7
+      ]
+    }
+  ],
+  "waters": [
+    {
+      "id": "lanka-sea",
+      "type": "coast",
+      "center_xz_m": [
+        -83,
+        0
+      ],
+      "size_xz_m": [
+        26,
+        260
+      ],
+      "traversal": "outside_native_actor_bounds"
+    },
+    {
+      "id": "west-reed-water",
+      "type": "swamp",
+      "center_xz_m": [
+        -60,
+        0
+      ],
+      "size_xz_m": [
+        12,
+        12
+      ],
+      "traversal": "cosmetic_wet_ground_overlay"
+    },
+    {
+      "id": "east-reed-water",
+      "type": "swamp",
+      "center_xz_m": [
+        60,
+        0
+      ],
+      "size_xz_m": [
+        12,
+        12
+      ],
+      "traversal": "cosmetic_wet_ground_overlay"
+    }
+  ],
+  "proposed_site": {
+    "name": "Offshore sanctuary",
+    "xz_m": [
+      -83,
+      45
+    ],
+    "status": "Unbuilt candidate location for the illustration only. Outside the playable bounds. The proposal adds no new geometry, collision or navigation. Its sightline has not been tested.",
+    "existing_scenery": {
+      "id": "skyline-1",
+      "preset": "lanka_shikhara",
+      "center_xz_m": [
+        -82,
+        47
+      ],
+      "size_xz_m": [
+        14,
+        17
+      ],
+      "height_m": 25,
+      "collision": "none",
+      "distance_between_centers_m": 2.236,
+      "relationship": "The proposed point lies within the existing scenic tower footprint.",
+      "design_decision": "Recompose or replace the existing scenic instance when testing a sanctuary here. Adding a second tower at this point would overlap the first."
+    }
+  },
+  "scope": "Only the proposed site is a diagram placement. Base spawns and objective positions are authored coordinates; Rust hero deployment follows Army::frontline_spawn_for."
+}

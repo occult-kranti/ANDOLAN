@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**World reference and asset study.** Explore a new temple, ghat and wetland direction for YUGA, with verified crossover-mod sources, a reusable terrain-cache experiment and a Blender environment study. [World-design brief and source decisions](games/yuga-native/docs/research/elden-ring-world-study/README.md)
+
 **Play the new Hanuman.** Extract Confluence, open `yuga-rust.html`, and choose **Hanuman practice** to learn the gada, ally shield, vault, tail sweep and Mountain Pulse. The playable model, matched Blender portraits, slow-motion study and editable art studio share the same 167-joint character. [Game download](https://github.com/occult-kranti/ANDOLAN/releases/download/yuga-four-hero-motion-studio-2026-11-25/yuga-rust-confluence.zip) · [Art, film and editable Blender scene](games/yuga-native/art/hanuman-hero-finish/README.md) · [Next five production rounds](games/yuga-native/art/hanuman-hero-finish/ROADMAP.md)
 
 **Four heroes in motion.** Study Hanuman, Shiva, Rama and Krishna with multi-angle artwork, an illustrated animator book, five films and four downloadable rigs. The offline inspector lets you orbit, pause and scrub all 48 tracks. [Character studio and downloads](games/yuga-native/art/four-hero-motion/README.md)

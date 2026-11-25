@@ -27,6 +27,8 @@ For a new lane or courtyard, check the [editable world elements](../../../games/
 
 ## Phase 1: freeze the place and gameplay purpose
 
+For an Elden Ring-inspired vista, use the [world research and team brief](../../../games/yuga-native/docs/research/elden-ring-world-study/README.md). Compare the source's framing, silhouette and approach against the current player camera. Use the project's original kits and separately licensed assets with their provenance. Treat the isolated Rust surface-cache probe as an experiment with a ray-query dependency, and reconcile any real route with the chosen runtime's authoritative collision.
+
 1. Record task ID, baseline, exclusive files, intended visible improvement,
    reference images and the route or encounter served by the element.
 2. Freeze scale, camera, day/night phase, team visibility, collision and unit
