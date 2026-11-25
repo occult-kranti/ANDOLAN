@@ -49,6 +49,16 @@ time. Shields and healing use existing caps.
    The landing and the health receipts share an authority beat. Close by
    returning Hanuman to the ordinary grounded stance.
 
+## Temple court keyframe
+
+Frame the guarding stance with both feet in the paving plane and the gada
+supported on the rear shoulder. Let the relaxed hand anchor against the belt.
+The eye line leads toward the far courtyard while the tail rises into open
+sky on the opposite side. Use the lamps and cool edge light to keep fur,
+bronze and cloth readable in a still frame. The staging can open the shot
+sequence before the existing approach and combat beats. [Editable scene and
+reference review](../art/hanuman/match/README.md)
+
 ## Motion and effects coverage
 
 Frame the Blender study as a series of cuts. Each action starts from its own

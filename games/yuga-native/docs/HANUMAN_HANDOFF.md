@@ -15,6 +15,8 @@ Open the studio file in Blender 4.3 or later for the editable 167-joint rig, ele
 
 The GitHub archive preserves the exact 35,824,106-byte bundle, including local capture originals and render receipts. A fresh GitHub download matched the archive SHA-256 `044d7760770d2aa181716e61aaf6837dda85f431ca5351ad7658e1904cc09cc2` and all 50 internal payload hashes. [Download ZIP](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/ecd4eb58f069c602bb81f8c56b74f39c0e1a0e34/YUGA-Hanuman-Studio-and-Trial.zip) · [GitHub archive](https://github.com/occult-kranti/ANDOLAN/tree/archive/yuga-hanuman-studio-2026-11-25)
 
+The packed temple court scene advances the generated keyframe through a new sculpt, groom, wardrobe, pose and physical environment. Start the next render from its source profile and the comparison review. Keep gameplay changes tied to a separately imported and tested export. [Temple court scene and rebuild recipe](../art/hanuman/match/README.md) · [Verified Blender sources and LoopTools](research/hanuman-match-sources.md) · [Body-region review skill](../../../.agents/skills/yuga-anatomy-review/SKILL.md)
+
 ## Verification to carry forward
 
 | Verified work | Evidence |

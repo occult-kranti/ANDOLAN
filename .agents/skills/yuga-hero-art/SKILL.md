@@ -1,6 +1,6 @@
 ---
 name: yuga-hero-art
-description: "Author, adapt and review YUGA hero geometry, materials, rigs and animation-ready assets. Use for W3 Rama quality, character generation, retopology, skinning and hero LOD assignments."
+description: "Author, adapt and review YUGA hero geometry, materials, rigs and animation-ready assets. Use for Hanuman reference matching, Rama quality, character generation, retopology, skinning and hero LOD assignments."
 ---
 
 # YUGA W3: hero production art
@@ -19,6 +19,13 @@ Read [AGENTS.md](../../../AGENTS.md), [start here](../../../docs/START_HERE.md),
 The [AI study](../../../games/yuga-native/docs/research/ai-pipeline-oct21/README.md)
 owns model/source distinctions; its older laptop proposal is not current VRAM.
 
+For Hanuman, read the [trial handoff](../../../games/yuga-native/docs/HANUMAN_HANDOFF.md),
+the [rotating panel roadmap](../../../games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md),
+and the [verified Blender tool intake](../../../games/yuga-native/docs/research/hanuman-match-sources.md).
+Compare the actual [generated target](../../../games/yuga-native/art/hanuman/lookdev/hanuman-imagegen-reference.png)
+with the existing [editable dusk scene](../../../games/yuga-native/art/hanuman/lookdev/README.md)
+before choosing the change.
+
 Inspect the assigned editable source and import contract before editing.
 [Hero runtime](../../../games/yuga-native/scripts/rama_hero_runtime.gd) composes
 the asset; [motion](../../../games/yuga-native/scripts/rama_motion.gd) owns
@@ -36,6 +43,47 @@ Lead assigns exclusive asset paths and owns notices/manifests and integration.
    body joins, face and material hierarchy over repeated automatic cap tuning.
 4. Preserve the original editable source and authoring history when available.
    An imported GLB reconstruction must not be called the original source scene.
+
+## Reference matching in Blender
+
+1. Save a new editable scene from the pinned master. Keep the generated still
+   beside the delivered Blender file for comparison. If an artist needs an
+   overlay during staging, remove it from the delivered scene. Record camera
+   position, focal settings, dimensions, pose, world, view transform and asset
+   hashes so the previous image can be rebuilt.
+2. Render a matched full-frame baseline. Assign form, costume and prop,
+   setting and light, and independent review to separate owners when a panel
+   is requested. First match support and silhouette from the ground up:
+   both soles, both shoulders, the held gada and the arc of the tail. Check the
+   face and fingers in crops once those landmarks read at full-frame size.
+3. Work in separate collections or scripts. Use subdivided source topology for
+   the sculpt where appropriate, then judge edge flow at eyelids, mouth,
+   knuckles and bending joints. Add cloth volume and trim with actual geometry.
+   Reserve small shader relief for pores, fabric grain and shallow engraving.
+   Test folds and layered metal for intersections from a second camera.
+4. Use short Cycles previews before spending time on a higher-sample image.
+   Hold camera and AgX settings constant for an art comparison. Keep the raw
+   render and any filtered deliverable. Save a cropped face, gripping hand and
+   grounded feet, and at least one secondary view of the actual scene. Use
+   depth, normal or object masks when a diagnosis requires them.
+5. Keep the showcase mesh, materials and court separate from the Godot export
+   until motion, appearance and budgets pass review. The anatomic placement
+   and surface breaks in the generated view are useful targets. Exact hidden
+   geometry and alternate views cannot be recovered from one RGB image.
+   Describe what the rebuilt scene actually matches and where it differs.
+
+LoopTools 4.7.7 can optionally relax temporary edge loops before skinning. Its
+[isolated install and smoke test](../../../games/yuga-native/docs/research/hanuman-match-sources.md#optional-artist-extension)
+keep the normal factory-startup build independent. Check weighted contact and
+silhouette again after any smoothing. For Godot, keep the bundled Blender
+glTF 2.0 exporter and qualify the actual GLB in the native runtime.
+
+Use the [Practice Drawing This model index](https://practicedrawingthis.com/cgi-bin/3d-models-index.cgi)
+for browser-based practice with skull, ribcage and hand construction. Follow the
+[per-region anatomy skill](../yuga-anatomy-review/SKILL.md) and its
+[Hanuman study exercises](../../../games/yuga-native/docs/research/hanuman-match-sources.md#anatomy-and-gesture-practice)
+to produce original YUGA clay views, close-ups and pose strips. Keep study models
+in the browser unless their individual redistribution license and provenance are verified.
 
 ## Phase 2: author and validate the candidate
 

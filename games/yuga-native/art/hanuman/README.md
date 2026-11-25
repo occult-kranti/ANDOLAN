@@ -17,6 +17,7 @@ It faces +Z in an upright +Y glTF coordinate frame.
 - [Asset manifest](manifest.json) pins the donor inputs, geometry counts,
   clip names and exact GLB.
 - [Build receipt](receipt.json) pins the scene, renderer and output files.
+- [Temple court keyframe reconstruction](match/README.md) includes the rebuilt portrait scene and comparison reviews.
 - [ImageGen-guided look development](lookdev/README.md) includes the actual
   Cycles render, packed editable scene, concept and madder fabric swatch.
 - [Source recipe](../../tools/hanuman-art/build.py) rebuilds geometry and
