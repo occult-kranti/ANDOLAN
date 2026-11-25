@@ -6,6 +6,8 @@ Extract the Confluence ZIP, open `yuga-rust.html`, select **Hanuman · Gada**, a
 
 Move with WASD and aim with the pointer. Hanuman can punish an enemy in front, protect a nearby ally, escape a lane through a gap, or catch someone pursuing him. His tail attack targets the space behind his facing direction. The table gives the elapsed time from input to the first effect on the 20 Hz authority. [Ability definitions](../../assets/design/hanuman-ability-kit.json) · [Combat rules](../../../yuga-rust/src/combat.rs)
 
+Two 1280 × 800 frames show Hanuman in an ordinary lane match. Mountain Pulse appears at action tick 15 during travel. Lanka Dahan appears at tick 10 during recovery, with its rear sector and the soldiers still visible. The browser recorded 18 skinned surfaces and 167 bones in both frames. [Mountain Pulse in play](media/playable-casts/mountain_pulse.png) · [Lanka Dahan in play](media/playable-casts/lanka_dahan.png) · [Pose and package receipts](media/playable-casts/cast-captures.json) · [Capture script](../../../yuga-rust/tools/capture_hanuman_cast.mjs)
+
 | Input | Ability and animation | What happens |
 | --- | --- | --- |
 | LMB | Vajra Gada · `fire` | After 0.25 s the forward sweep deals 34 damage within 3.5 m. |
@@ -42,10 +44,13 @@ python3 tools/build_web.py
 node tools/test_hanuman_release.mjs --zip dist/yuga-rust-confluence.zip
 node tools/test_practice_coach.mjs
 node tools/test_hanuman_title.mjs
+node tools/capture_hanuman_cast.mjs
 ```
 
 The release check opens the actual ZIP, decodes the playable HTML's model, title and Wasm, checks their digests, and exercises the identical room-worker module. Four modes cover 28 independent casts and 5,376 repeated previews. It tests the exact range boundary, blocked sight, airborne origin, invalid slots, nonfinite input and read-only aiming. Browser evidence covers the rendered model and physical input separately. [Release validator](../../../yuga-rust/tools/test_hanuman_release.mjs)
 
 The final 30,698,613-byte ZIP has SHA-256 `91315c2c9ea866dafda4ef10732157b456e237c538c83b1aba614555776a7000`. A real packaged host ran a 3v3 match and a duel, reached nine concurrent connections across rooms, delivered all 144 commanded frames and returned to zero rooms after disconnect. Environment-specific frame intervals appear in the receipt. [Package and rules proof](evidence/packaged-game.json) · [Host stress test](evidence/packaged-rooms.json)
+
+An independent build reproduced the ZIP byte-for-byte. The ordinary browser match passed 18 checks across both hero selections, including marching soldiers, movement, lit and animated actions, pause, audio and restart. The Hanuman run observed a committed `cast2` shield release after seven ticks. The renderer requested embedded assets and recorded zero unexpected network requests and zero page errors. [Ordinary lane test](evidence/packaged-lane.json) · [Rama control capture](media/rama-lane.png)
 
 At 1280 × 720 and 390 × 844 the title displays the illustrated face and keeps the hero chooser and both launch buttons inside the viewport. The narrower image documents the title crop on a desktop browser at phone width. The playable controls target a keyboard and mouse. [Desktop title](media/title-1280.png) · [Narrow title](media/title-390.png) · [Chromium crop and control measurements](evidence/title-qa.json)
