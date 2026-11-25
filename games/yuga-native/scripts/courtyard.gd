@@ -368,11 +368,12 @@ func _create_ui() -> void:
 	# Keep the player's practice selection across film/world scene replacement.
 	# This is session UI context, independent of saved gameplay preferences.
 	var remembered_mode: Variant = get_tree().root.get_meta("yuga_launch_mode", "world")
-	if remembered_mode is String and remembered_mode in ["world", "train"]:
+	if remembered_mode is String:
 		main_panel.set_mode(remembered_mode)
 	main_panel.mode_changed.connect(func(mode: String): get_tree().root.set_meta("yuga_launch_mode", mode))
 	main_panel.world_requested.connect(enter_confluence)
 	main_panel.train_requested.connect(start_training)
+	main_panel.hanuman_requested.connect(enter_hanuman_trial)
 	main_panel.guide_requested.connect(_open_hero)
 	main_panel.film_requested.connect(enter_combat_film)
 	main_panel.help_requested.connect(_open_help)
@@ -577,6 +578,9 @@ func enter_confluence() -> void:
 
 func enter_combat_film() -> void:
 	_begin_scene_transition(&"combat_film", main_panel.film_button)
+
+func enter_hanuman_trial() -> void:
+	_begin_scene_transition(&"hanuman_trial", main_panel.primary_button)
 
 func _ensure_scene_transition() -> Control:
 	if is_instance_valid(scene_transition): return scene_transition

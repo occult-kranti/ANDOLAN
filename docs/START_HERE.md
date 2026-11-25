@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Hanuman Trial:** Choose **Hanuman** at the native title, then **Begin Hanuman Trial**. The offline courtyard runs Hanuman’s own rig, gada, responsive four-joint tail and five profile-driven actions. See the [art handoff](../games/yuga-native/art/hanuman/README.md), [design and play script](../games/yuga-native/docs/HANUMAN_GAME_DESIGN.md), [panel review](../games/yuga-native/docs/research/hanuman-nov25/PANEL.md) and [two-panel reuse roadmap](../games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md).
+
 **Latest implementation:** [reuse into playable integration](../games/yuga-native/docs/research/reuse-production-continuation/README.md). Start there for the source-derived water garden, typed authority factory, event/socket diagnostics, MPFB native hair candidates and ordinary gate-input results. Its exact worker/root receipts take precedence over historical source summaries below. The [ten-stage guide](../games/yuga-native/docs/research/reuse-production-continuation/NEXT_TEN.md) retains dependency gates; complete hero art, full matches and physical-GPU qualification remain open.
 
 **Active desktop work:** [resume handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) → [ten screen rounds + three integration rounds](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.md) → [78-packet execution ledger](../games/yuga-native/docs/DESKTOP_FINISH_CAMPAIGN.json). The user has deferred mobile until desktop quality work is complete. The active 78-packet campaign tracks actual screen, hero, world and motion acceptance. Source checkpoints and the public UI preview have separate qualification records; the commercial graphics target remains open.
@@ -25,7 +27,7 @@ Updated 23 October 2026. Start here, then open only the subsystem assigned to yo
 
 ## The current build in one minute
 
-The active product is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`, on `game/yuga-native-production`. It has one Rama hero with a bow and four abilities shared by courtyard training and offline Confluence practice.
+The active product is **YUGA native**, an original mythology-inspired third-person game under `games/yuga-native/`. Rama’s bow and four abilities are shared by courtyard training and offline Confluence practice. The `game/yuga-hanuman-trial` branch adds a separate Hanuman training scene.
 
 **The active campaign has 17/78 accepted scoped packets and 0/13 complete rounds.** The [active handoff](../games/yuga-native/docs/ACTIVE_DESKTOP_HANDOFF.md) owns the current source, six-worker queue and exact next gates. The earlier [48-assignment screen campaign](../games/yuga-native/docs/SCREEN_CAMPAIGN.json) and [three fifteen-role visual rounds](../games/yuga-native/docs/VISUAL_ROUNDS_2_4_EXECUTION.json) retain their separate outcomes.
 

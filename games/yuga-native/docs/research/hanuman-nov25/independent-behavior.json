@@ -1,0 +1,165 @@
+{
+  "checks": [
+    {
+      "case": "valid primary receives a cast",
+      "details": {
+        "accepted": true,
+        "cast_id": 1,
+        "generation": 2,
+        "reason": "Vajra Gada · preparing"
+      },
+      "passed": true
+    },
+    {
+      "case": "primary reaches forward enemy and spares ally/rear/distant enemies",
+      "details": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "primary emits exactly one release and a single terminal end",
+      "details": {
+        "kinds": [
+          "begin",
+          "release",
+          "impact",
+          "recovery",
+          "end"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "thin wall prevents real damage",
+      "details": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "zero and nonfinite aim are rejected without receipts",
+      "details": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "out-of-range landing is rejected before beginning",
+      "details": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "clear in-range ultimate is accepted",
+      "details": {
+        "accepted": true,
+        "cast_id": 1,
+        "generation": 5,
+        "reason": "Mountain Pulse · preparing"
+      },
+      "passed": true
+    },
+    {
+      "case": "pause leaves pending ultimate and receiver state untouched",
+      "details": {
+        "kinds": [
+          "begin"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "resumed ultimate reaches enemy once and caps ally heal",
+      "details": {
+        "ally_health": 90.0,
+        "enemy_health": 25.0,
+        "kinds": [
+          "begin",
+          "release",
+          "impact",
+          "recovery",
+          "end"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "reset invalidates a started ultimate before it can damage or heal",
+      "details": {
+        "kinds": [
+          "begin",
+          "cancel",
+          "reset"
+        ],
+        "pending": [
+          "begin"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "blocked movement receiver is called once and cannot apply damage",
+      "details": {
+        "kinds": [
+          "begin",
+          "cancel"
+        ],
+        "move_count": 1
+      },
+      "passed": true
+    },
+    {
+      "case": "ward shields only its forward ally",
+      "details": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "ward expires on the receiving clock",
+      "details": {
+
+      },
+      "passed": true
+    },
+    {
+      "case": "rear embers damage once on release and only while exposed",
+      "details": {
+        "forward_health": 90.0,
+        "left_health": 58.0,
+        "remaining_health": 46.0000000000001
+      },
+      "passed": true
+    },
+    {
+      "case": "reset during a receiver callback stops stale payload and events",
+      "details": {
+        "kinds": [
+          "begin",
+          "release",
+          "cancel",
+          "reset"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "subscriber mutation cannot alter geometry or timing applied to receivers",
+      "details": {
+
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "source_sha256": {
+    "res://assets/design/hanuman-ability-kit.json": "6db7efe66e641d45d843e7b165ee0744d59f74aa277f36e2924034988c243474",
+    "res://scripts/hanuman_combat.gd": "3a43b245558cc570648a3876a68dce66b0c60c6f5db3b64a197f5875d42c164d",
+    "res://scripts/rama_practice_army.gd": "0a075ee1096c04fdbda416e5cbb932f261c7ec7aae3e14301083c90d5861f906",
+    "res://scripts/rama_practice_target.gd": "e8cd1ad14191bd47d51ed0375889ff6938bf7c17023485638c0f57b64506721d",
+    "res://scripts/target.gd": "6d96be5379232438d68c5dfc28f29e46ec239f89f485b2ff2b2f078b874295a6",
+    "res://tools/hanuman-review/behavior.gd": "8cbb86bb8053bfb76ad46100cd4a7adec4db5074af872b47f2959309991e9566"
+  }
+}

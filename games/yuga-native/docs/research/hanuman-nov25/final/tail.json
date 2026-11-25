@@ -1,0 +1,434 @@
+{
+    "checks": {
+        "all additive links stay at their profile limits": {
+            "details": {
+                "applied_deg": [
+                    3.72271871566772,
+                    5.31618642807007,
+                    6.62607908248901,
+                    7.79583692550659
+                ],
+                "cancel_settle_s": 0.0,
+                "configured": true,
+                "elapsed_s": 1.4,
+                "grounded": true,
+                "held": false,
+                "joints": [
+                    "tail_01",
+                    "tail_02",
+                    "tail_03",
+                    "tail_04"
+                ],
+                "landings": 0,
+                "last_error": "",
+                "limits_deg": [
+                    7.00000005249714,
+                    9.99999970909292,
+                    12.9999997925755,
+                    15.9999998760581
+                ],
+                "max_applied_degrees": 7.79583692550659,
+                "modifier_samples": 85,
+                "motion_kind": "moving",
+                "offsets_deg": [
+                    [
+                        -3.72917016181883,
+                        0.00172565204625468
+                    ],
+                    [
+                        -5.33283924166941,
+                        0.00723451769257899
+                    ],
+                    [
+                        -6.65910701856909,
+                        0.0255739674828266
+                    ],
+                    [
+                        -7.85575317294757,
+                        0.0912399481094914
+                    ]
+                ],
+                "overlay_weight": 1.0,
+                "resets": 1
+            },
+            "ok": true
+        },
+        "authored idle settles and shallow spawn does not count as landing": {
+            "details": {
+                "applied_deg": [
+                    6.90801462042145e-05,
+                    0.000383457518182695,
+                    0.00141784478910267,
+                    0.00468656560406089
+                ],
+                "cancel_settle_s": 0.0,
+                "configured": true,
+                "elapsed_s": 0.633333333333334,
+                "grounded": true,
+                "held": false,
+                "joints": [
+                    "tail_01",
+                    "tail_02",
+                    "tail_03",
+                    "tail_04"
+                ],
+                "landings": 0,
+                "last_error": "",
+                "limits_deg": [
+                    7.00000005249714,
+                    9.99999970909292,
+                    12.9999997925755,
+                    15.9999998760581
+                ],
+                "max_applied_degrees": 0.139949902892113,
+                "modifier_samples": 39,
+                "motion_kind": "idle",
+                "offsets_deg": [
+                    [
+                        9.42169103842865e-05,
+                        0.0
+                    ],
+                    [
+                        0.000549775043475859,
+                        0.0
+                    ],
+                    [
+                        0.00211920334406365,
+                        0.0
+                    ],
+                    [
+                        0.00730254944496136,
+                        0.0
+                    ]
+                ],
+                "overlay_weight": 0.55,
+                "resets": 1
+            },
+            "ok": true
+        },
+        "authored tail sweep owns the tail without additive motion": {
+            "details": {
+                "applied_deg": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "cancel_settle_s": 0.0,
+                "configured": true,
+                "elapsed_s": 2.18333333333333,
+                "grounded": true,
+                "held": false,
+                "joints": [
+                    "tail_01",
+                    "tail_02",
+                    "tail_03",
+                    "tail_04"
+                ],
+                "landings": 1,
+                "last_error": "",
+                "limits_deg": [
+                    7.00000005249714,
+                    9.99999970909292,
+                    12.9999997925755,
+                    15.9999998760581
+                ],
+                "max_applied_degrees": 9.74724197387695,
+                "modifier_samples": 303,
+                "motion_kind": "idle",
+                "offsets_deg": [
+                    [
+                        -0.51418069614338,
+                        3.15557237860703e-08
+                    ],
+                    [
+                        -1.11951581628928,
+                        6.87069338121456e-08
+                    ],
+                    [
+                        -1.95522574662031,
+                        1.2013910470514e-07
+                    ],
+                    [
+                        -3.16542747862373,
+                        2.10392648956876e-07
+                    ]
+                ],
+                "overlay_weight": 0.0,
+                "resets": 3
+            },
+            "ok": true
+        },
+        "cancel enters bounded neutral settling": {
+            "details": {
+                "applied_deg": [
+                    1.12343514047097e-05,
+                    0.00014403041859623,
+                    0.00109597481787205,
+                    0.00767996907234192
+                ],
+                "cancel_settle_s": 0.0,
+                "configured": true,
+                "elapsed_s": 2.79999999999999,
+                "grounded": true,
+                "held": false,
+                "joints": [
+                    "tail_01",
+                    "tail_02",
+                    "tail_03",
+                    "tail_04"
+                ],
+                "landings": 1,
+                "last_error": "",
+                "limits_deg": [
+                    7.00000005249714,
+                    9.99999970909292,
+                    12.9999997925755,
+                    15.9999998760581
+                ],
+                "max_applied_degrees": 9.74724197387695,
+                "modifier_samples": 359,
+                "motion_kind": "idle",
+                "offsets_deg": [
+                    [
+                        -1.51787948898396e-05,
+                        9.31539506699674e-13
+                    ],
+                    [
+                        -0.000204534663447679,
+                        1.25525598945778e-11
+                    ],
+                    [
+                        -0.00162222391405341,
+                        9.96035176569674e-11
+                    ],
+                    [
+                        -0.0118478760862295,
+                        7.51085702003932e-10
+                    ]
+                ],
+                "overlay_weight": 0.55,
+                "resets": 3
+            },
+            "ok": true
+        },
+        "missing role rejects without partially binding the real rig": {
+            "details": null,
+            "ok": true
+        },
+        "pause holds spring and elapsed time": {
+            "details": null,
+            "ok": true
+        },
+        "protected animation ramps down the sprint offset instead of snapping": {
+            "details": {
+                "gate_after": 0.848484848484849,
+                "gate_before": 1.0,
+                "tip_step_degrees": 1.03461313247681
+            },
+            "ok": true
+        },
+        "protected ultimate reaches its release and delayed impact with zero additive tail": {
+            "details": null,
+            "ok": true
+        },
+        "real directional run and turn drives the weighted tail": {
+            "details": {
+                "applied_deg": [
+                    2.44233369827271,
+                    3.45859503746033,
+                    4.27734327316284,
+                    4.99242830276489
+                ],
+                "cancel_settle_s": 0.0,
+                "configured": true,
+                "elapsed_s": 1.03333333333333,
+                "grounded": true,
+                "held": false,
+                "joints": [
+                    "tail_01",
+                    "tail_02",
+                    "tail_03",
+                    "tail_04"
+                ],
+                "landings": 0,
+                "last_error": "",
+                "limits_deg": [
+                    7.00000005249714,
+                    9.99999970909292,
+                    12.9999997925755,
+                    15.9999998760581
+                ],
+                "max_applied_degrees": 5.49859619140625,
+                "modifier_samples": 63,
+                "motion_kind": "moving",
+                "offsets_deg": [
+                    [
+                        -2.42809020158746,
+                        0.336994943583097
+                    ],
+                    [
+                        -3.40027990469662,
+                        0.710367314603124
+                    ],
+                    [
+                        -4.11456145130269,
+                        1.23298350781488
+                    ],
+                    [
+                        -4.59758687987729,
+                        1.99118455816631
+                    ]
+                ],
+                "overlay_weight": 1.0,
+                "resets": 1
+            },
+            "ok": true
+        },
+        "reset clears all chain inertia while held": {
+            "details": null,
+            "ok": true
+        },
+        "runtime actor attaches one four-role modifier": {
+            "details": null,
+            "ok": true
+        },
+        "sprint extends speed response and distinct outputs are applied": {
+            "details": {
+                "moving": [
+                    2.44233369827271,
+                    3.45859503746033,
+                    4.27734327316284,
+                    4.99242830276489
+                ],
+                "samples": 85,
+                "sprint": [
+                    3.72271871566772,
+                    5.31618642807007,
+                    6.62607908248901,
+                    7.79583692550659
+                ]
+            },
+            "ok": true
+        },
+        "tail sweep has zero additive motion at its gameplay contact": {
+            "details": null,
+            "ok": true
+        },
+        "ultimate keeps authored chain posing authoritative": {
+            "details": {
+                "applied_deg": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "cancel_settle_s": 0.0,
+                "configured": true,
+                "elapsed_s": 2.96666666666666,
+                "grounded": true,
+                "held": false,
+                "joints": [
+                    "tail_01",
+                    "tail_02",
+                    "tail_03",
+                    "tail_04"
+                ],
+                "landings": 1,
+                "last_error": "",
+                "limits_deg": [
+                    7.00000005249714,
+                    9.99999970909292,
+                    12.9999997925755,
+                    15.9999998760581
+                ],
+                "max_applied_degrees": 9.74724197387695,
+                "modifier_samples": 380,
+                "motion_kind": "idle",
+                "offsets_deg": [
+                    [
+                        -7.64810885589564e-07,
+                        4.69373714277472e-14
+                    ],
+                    [
+                        -1.69621804477229e-05,
+                        1.04099026702528e-12
+                    ],
+                    [
+                        -0.000203692393129821,
+                        1.25059604200797e-11
+                    ],
+                    [
+                        -0.00225128813023472,
+                        1.42242592798545e-10
+                    ]
+                ],
+                "overlay_weight": 0.0,
+                "resets": 3
+            },
+            "ok": true
+        },
+        "vault and checked landing drive separate finite responses": {
+            "details": {
+                "landing_frames": 7,
+                "report": {
+                    "applied_deg": [
+                        0.00623622443526983,
+                        0.0182310622185469,
+                        0.0431489944458008,
+                        0.0904117003083229
+                    ],
+                    "cancel_settle_s": 0.0,
+                    "configured": true,
+                    "elapsed_s": 1.46666666666667,
+                    "grounded": true,
+                    "held": false,
+                    "joints": [
+                        "tail_01",
+                        "tail_02",
+                        "tail_03",
+                        "tail_04"
+                    ],
+                    "landings": 1,
+                    "last_error": "",
+                    "limits_deg": [
+                        7.00000005249714,
+                        9.99999970909292,
+                        12.9999997925755,
+                        15.9999998760581
+                    ],
+                    "max_applied_degrees": 9.74724197387695,
+                    "modifier_samples": 248,
+                    "motion_kind": "idle",
+                    "offsets_deg": [
+                        [
+                            0.00893712910618979,
+                            1.62116857746781e-09
+                        ],
+                        [
+                            0.0268893808751758,
+                            7.03170069252148e-08
+                        ],
+                        [
+                            0.0657203003073809,
+                            1.46288050285455e-06
+                        ],
+                        [
+                            0.143110138894287,
+                            2.72362078677315e-05
+                        ]
+                    ],
+                    "overlay_weight": 0.55,
+                    "resets": 3
+                },
+                "vault_frames": 28,
+                "vault_peak_deg": 9.74724197387695
+            },
+            "ok": true
+        }
+    },
+    "failed": 0,
+    "model_sha256": "9de9e032d55685dffd51734bef98c241024283c5d23767646b5c68ca782dec7e",
+    "passed": 15,
+    "profile_sha256": "079615b83a9852b9a2b54cd5a3bfe4017021e9b43ed099386168eb101be00588"
+}

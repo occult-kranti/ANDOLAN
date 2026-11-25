@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "hero_id": "hanuman",
+  "title": "Hanuman · The Returning Leap",
+  "abilities": [
+    {
+      "id": "vajra_gada",
+      "slot": "primary",
+      "label": "Vajra Gada",
+      "description": "Sweep the mace in a short frontal arc. Step back, go behind him, or use cover.",
+      "cooldown_s": 0.6,
+      "timing": {"windup_s": 0.25, "travel_s": 0, "active_s": 0, "recovery_s": 0.30},
+      "geometry": {"kind": "sector", "anchor": "caster", "range_m": 3.5, "half_angle_cos": 0.55, "height_m": 1.4},
+      "effects": [{"kind": "damage", "team": "enemy", "amount": 34}],
+      "motion": "fire",
+      "motion_phase": 0.26,
+      "color": "ffc579"
+    },
+    {
+      "id": "vajra_kavacha",
+      "slot": "ability_1",
+      "label": "Vajra Kavacha",
+      "description": "Shield yourself and allies in the marked forward fan for three seconds. Cover separates allies from the ward.",
+      "cooldown_s": 9,
+      "timing": {"windup_s": 0.35, "travel_s": 0, "active_s": 0, "recovery_s": 0.25},
+      "geometry": {"kind": "sector", "anchor": "caster", "range_m": 5.5, "half_angle_cos": 0.4, "height_m": 1.6},
+      "effects": [{"kind": "shield", "team": "ally", "amount": 48, "duration_s": 3, "include_caster": true}],
+      "motion": "cast2",
+      "motion_phase": 0.5,
+      "color": "a6f4ce"
+    },
+    {
+      "id": "maruti_udayana",
+      "slot": "ability_2",
+      "label": "Maruti Udayana",
+      "description": "Vault forward toward the marked endpoint. Solid obstacles shorten the route. The vault deals no damage.",
+      "cooldown_s": 7,
+      "timing": {"windup_s": 0.2, "travel_s": 0.45, "active_s": 0, "recovery_s": 0.2},
+      "geometry": {"kind": "movement", "anchor": "caster", "target_range_m": 8.5, "height_m": 0.35, "clearance_m": 0.48},
+      "effects": [],
+      "motion": "cast1",
+      "motion_phase": 0.08,
+      "color": "e7cf95"
+    },
+    {
+      "id": "lanka_dahan",
+      "slot": "ability_3",
+      "label": "Lanka Dahan",
+      "description": "Fan embers behind you with your tail. Enemies in the marked sector take a burst, then damage while they stay in it.",
+      "cooldown_s": 11,
+      "timing": {"windup_s": 0.45, "travel_s": 0, "active_s": 2, "recovery_s": 0.4},
+      "geometry": {"kind": "sector", "anchor": "caster", "direction": "rear", "range_m": 5, "half_angle_cos": 0.15, "height_m": 1.5},
+      "effects": [{"kind": "damage", "team": "enemy", "amount": 28}, {"kind": "damage_rate", "team": "enemy", "amount_per_s": 8}],
+      "motion": "tail_sweep",
+      "motion_phase": 0.5,
+      "color": "ff754f"
+    },
+    {
+      "id": "mountain_pulse",
+      "slot": "ultimate",
+      "label": "Mountain Pulse",
+      "description": "Mark a clear patch of ground and send the mountain's pulse. It harms enemies and restores allies at the landing. Leave the mark or use cover.",
+      "cooldown_s": 30,
+      "timing": {"windup_s": 0.7, "travel_s": 0.45, "active_s": 0, "recovery_s": 0.5},
+      "geometry": {"kind": "disk", "anchor": "ground_target", "target_range_m": 14, "radius_m": 7, "height_m": 2.5},
+      "effects": [{"kind": "damage", "team": "enemy", "amount": 65}, {"kind": "heal", "team": "ally", "amount": 45, "include_caster": true}],
+      "motion": "mountain_pulse",
+      "motion_phase": 0.55,
+      "color": "d9ca7e"
+    }
+  ]
+}

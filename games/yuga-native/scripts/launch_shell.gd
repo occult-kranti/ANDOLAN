@@ -5,10 +5,12 @@ extends Control
 const HeroUITheme = preload("res://scripts/hero_ui_theme.gd")
 const MODE_WORLD := "world"
 const MODE_TRAIN := "train"
+const MODE_HANUMAN := "hanuman"
 const WINDOW_MINIMUM := Vector2i(960, 540)
 
 signal world_requested
 signal train_requested
+signal hanuman_requested
 signal guide_requested
 signal settings_requested
 signal help_requested
@@ -21,6 +23,7 @@ var launch_state := "ready"
 var primary_button: Button
 var world_mode_button: Button
 var train_mode_button: Button
+var hanuman_mode_button: Button
 var guide_button: Button
 var film_button: Button
 var title_wordmark: Label
@@ -112,7 +115,8 @@ func _build() -> void:
 	choices.add_child(modes)
 	world_mode_button = _button("Confluence", "ConfluenceMode", func(): set_mode(MODE_WORLD), &"selected" if selected_mode == MODE_WORLD else &"secondary")
 	train_mode_button = _button("Bow training", "TrainingMode", func(): set_mode(MODE_TRAIN), &"selected" if selected_mode == MODE_TRAIN else &"secondary")
-	for mode_button in [world_mode_button, train_mode_button]:
+	hanuman_mode_button = _button("Hanuman", "HanumanTrialMode", func(): set_mode(MODE_HANUMAN))
+	for mode_button in [world_mode_button, train_mode_button, hanuman_mode_button]:
 		mode_button.toggle_mode = true
 		mode_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		modes.add_child(mode_button)
@@ -225,7 +229,7 @@ func _reveal_resized_focus() -> void:
 		scroll.ensure_control_visible(focused)
 
 func set_mode(mode: String) -> bool:
-	if mode not in [MODE_WORLD, MODE_TRAIN] or launch_state == "loading": return false
+	if mode not in [MODE_WORLD, MODE_TRAIN, MODE_HANUMAN] or launch_state == "loading": return false
 	selected_mode = mode
 	if launch_state == "error":
 		launch_state = "ready"
@@ -243,16 +247,22 @@ func set_launch_state(state: String, message: String = "") -> bool:
 
 func _refresh() -> void:
 	var world_selected := selected_mode == MODE_WORLD
+	var hanuman_selected := selected_mode == MODE_HANUMAN
 	world_mode_button.set_pressed_no_signal(world_selected)
-	train_mode_button.set_pressed_no_signal(not world_selected)
-	for item in [world_mode_button, train_mode_button]:
+	train_mode_button.set_pressed_no_signal(selected_mode == MODE_TRAIN)
+	hanuman_mode_button.set_pressed_no_signal(hanuman_selected)
+	for item in [world_mode_button, train_mode_button, hanuman_mode_button]:
 		_style_mode(item, item.button_pressed)
 	mode_title.text = "Confluence" if world_selected else "Bow training"
 	mode_description.text = "Offline practice with local armies, three lanes and capture relays as Rama." if world_selected else "Offline practice with Rama’s bow and four abilities against courtyard targets. Reset anytime."
 	primary_button.text = ("Enter Confluence  →" if world_selected else "Begin bow training  →")
+	if hanuman_selected:
+		mode_title.text = "Hanuman Trial"
+		mode_description.text = "Practice Hanuman’s gada strikes, wind vault and protective abilities in the Lanka courtyard."
+		primary_button.text = "Begin Hanuman Trial  →"
 	var loading := launch_state == "loading"
 	for action in _actions: action.disabled = loading
-	if loading: primary_button.text = "Opening Confluence…" if world_selected else "Opening bow training…"
+	if loading: primary_button.text = "Opening " + ("bow training" if selected_mode == MODE_TRAIN else mode_title.text) + "…"
 	menu_hint.text = _status_message if not _status_message.is_empty() else ("Opening your local practice…" if loading else "Offline practice  ·  F2 help  ·  F3 abilities")
 	if launch_state == "error" and _status_message.is_empty(): menu_hint.text = "Practice could not open. Try again or choose another mode."
 	menu_hint.add_theme_color_override("font_color", HeroUITheme.GOLD if launch_state == "error" else HeroUITheme.MIST)
@@ -265,8 +275,10 @@ func _style_mode(button: Button, selected: bool) -> void:
 
 func _launch() -> void:
 	if launch_state == "loading" or not is_visible_in_tree(): return
-	if selected_mode == MODE_WORLD: world_requested.emit()
-	else: train_requested.emit()
+	match selected_mode:
+		MODE_WORLD: world_requested.emit()
+		MODE_TRAIN: train_requested.emit()
+		MODE_HANUMAN: hanuman_requested.emit()
 
 func _emit_utility(action: String) -> void:
 	if launch_state == "loading" or not is_visible_in_tree(): return

@@ -13,8 +13,9 @@ const SCENES := {
 	&"courtyard": "res://scenes/courtyard.tscn",
 	&"confluence": "res://scenes/confluence_world.tscn",
 	&"combat_film": "res://scenes/combat_film.tscn",
+	&"hanuman_trial": "res://scenes/hanuman_trial.tscn",
 }
-const TITLES := {&"courtyard": "YUGA", &"confluence": "Confluence", &"combat_film": "Confluence duel"}
+const TITLES := {&"courtyard": "YUGA", &"confluence": "Confluence", &"combat_film": "Confluence duel", &"hanuman_trial": "Hanuman Trial"}
 const OWNER_META := &"yuga_scene_transition_owner"
 
 # Disposing the overlay never waits for an uncancellable worker to finish.

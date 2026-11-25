@@ -1,0 +1,178 @@
+{
+  "checks": [
+    {
+      "case": "four consecutive local modifier roles",
+      "data": [
+        "tail_01",
+        "tail_02",
+        "tail_03",
+        "tail_04"
+      ],
+      "passed": true
+    },
+    {
+      "case": "non-chain bone is rejected before any role mutation",
+      "data": null,
+      "passed": true
+    },
+    {
+      "case": "all four joints respond while real actor runs and turns",
+      "data": {
+        "distance_m": 2.18183851242065,
+        "offsets": [
+          2.48855757713318,
+          3.55607914924622,
+          4.42668390274048,
+          5.1752758026123
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "modifier callback sees four changing finite final bone rotations",
+      "data": {
+        "callbacks": 28,
+        "turn_deg": [
+          6.52101230621338,
+          13.1943693161011,
+          15.8617572784424,
+          24.6490840911865
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "pause keeps simulated time, landing count and bend stable",
+      "data": null,
+      "passed": true
+    },
+    {
+      "case": "reset while paused clears every joint without time catch-up",
+      "data": null,
+      "passed": true
+    },
+    {
+      "case": "actual vault changes every joint and landing settles into the ground",
+      "data": {
+        "landing_max_deg": [
+          2.62397980690002,
+          4.35308122634888,
+          6.24694442749023,
+          8.51722049713135
+        ],
+        "launch": {
+          "accepted": true,
+          "cast_id": 1,
+          "generation": 2,
+          "reason": "Maruti Udayana · preparing"
+        },
+        "launch_max_deg": [
+          6.60229873657227,
+          9.1210298538208,
+          11.2548389434814,
+          12.8253183364868
+        ],
+        "max_y_m": 1.548264503479,
+        "stages": [
+          "idle",
+          "vault",
+          "landing"
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "actual rear cast protects authored tail against procedural overrides",
+      "data": {
+        "before_gate": 1.0,
+        "protected": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": true
+    },
+    {
+      "case": "cancel ends pose lock and expires bounded settling window",
+      "data": null,
+      "passed": true
+    },
+    {
+      "case": "Mountain Pulse retains its authored tail pose through release",
+      "data": null,
+      "passed": true
+    },
+    {
+      "case": "repeated resets clear action state and keep one modifier attached",
+      "data": {
+        "action": {
+
+        },
+        "earlier_resets": 3,
+        "modifier_count": 1,
+        "normal": {
+          "applied_deg": [
+            0.000164892349857837,
+            0.000771994644310325,
+            0.00247136317193508,
+            0.00705782324075699
+          ],
+          "cancel_settle_s": 0.0,
+          "configured": true,
+          "elapsed_s": 0.516666666666667,
+          "grounded": true,
+          "held": false,
+          "joints": [
+            "tail_01",
+            "tail_02",
+            "tail_03",
+            "tail_04"
+          ],
+          "landings": 1,
+          "last_error": "",
+          "limits_deg": [
+            7.00000005249714,
+            9.99999970909292,
+            12.9999997925755,
+            15.9999998760581
+          ],
+          "max_applied_degrees": 0.125611916184425,
+          "modifier_samples": 436,
+          "motion_kind": "idle",
+          "offsets_deg": [
+            [
+              0.000299804252141775,
+              0.0
+            ],
+            [
+              0.00140362659448827,
+              0.0
+            ],
+            [
+              0.004493387354849,
+              0.0
+            ],
+            [
+              0.0128324054999099,
+              0.0
+            ]
+          ],
+          "overlay_weight": 0.55,
+          "resets": 9
+        }
+      },
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "source_sha256": {
+    "res://assets/design/hanuman-tail-response.json": "2238f9222c2f2e77208e534ef73cceacb9084846991689929e11f84c637c230f",
+    "res://assets/heroes/hanuman/hanuman.glb": "76381c5c5e3a1fd6bba7367903452be7d5eb210a35b9195d411c76e651669d9d",
+    "res://scripts/hanuman_actor.gd": "2b26da882407da44a132622fc936eb342a03ae8576c438a2c9ab50145286862f",
+    "res://scripts/hanuman_trial.gd": "4eae6e559730b5ca87ea9832000634d9109ad80bd9518bea7f178d741fa9f13d",
+    "res://scripts/hero_chain_response.gd": "ff8ff96164c97a2a42d1b2f8652da0ca1b39a642a9a46c1c9c26b8dcb73b3b2c",
+    "res://tools/hanuman-review/tail_lifecycle.gd": "378b45551e318f804799a569546ddb874a03a32dd9ab940800edd2515d71b8ae"
+  }
+}

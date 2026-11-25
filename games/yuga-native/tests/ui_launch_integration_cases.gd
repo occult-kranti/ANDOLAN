@@ -57,7 +57,7 @@ func _run() -> void:
 	_record("Legacy Explore ID refers to real selected-mode primary action", court.find_child("ExploreConfluence",true,false) == shell.primary_button)
 	var actions: Array[Control] = []
 	court._focusable_children(shell,actions)
-	_record("Eight distinct launch controls are visible and reachable", actions.size() == 8)
+	_record("Nine distinct launch controls include the Hanuman option", actions.size() == 9 and shell.hanuman_mode_button in actions)
 	for dimensions in [Vector2i(960,600),Vector2i(1280,720),Vector2i(1366,768)]:
 		root.size = dimensions
 		root.content_scale_size = dimensions
@@ -137,13 +137,23 @@ func _run() -> void:
 			_record("Film round trip retains selected training and matching primary", current_scene.main_panel.selected_mode == "train" and current_scene.main_panel.primary_button.text.begins_with("Begin bow training") and root.gui_get_focus_owner() == current_scene.main_panel.primary_button)
 			var reused: Control = current_scene._ensure_scene_transition()
 			_record("Round trip reuses one persistent transition layer", reused == loader and root.find_children("YugaSceneTransitionLayer","CanvasLayer",false,false).size() == 1)
+			var returned_shell: Control = current_scene.main_panel
+			returned_shell.hanuman_mode_button.pressed.emit()
+			_record("Hanuman selection presents the trial without launching", current_scene.scene_file_path == "res://scenes/courtyard.tscn" and returned_shell.primary_button.text.begins_with("Begin Hanuman Trial"))
+			returned_shell.primary_button.pressed.emit()
+			var trial_open := await _scene("res://scenes/hanuman_trial.tscn")
+			_record("Hanuman primary loads the real dedicated trial with its own asset", trial_open and current_scene.ready_for_play and current_scene.hero.has_clip(&"tail_sweep") and current_scene.hero.has_clip(&"mountain_pulse") and not loader.visible)
+			if trial_open:
+				current_scene.find_child("ReturnToTitle", true, false).pressed.emit()
+				var trial_returned := await _scene("res://scenes/courtyard.tscn")
+				_record("Trial return restores Hanuman selection and focus", trial_returned and current_scene.main_panel.selected_mode == "hanuman" and root.gui_get_focus_owner() == current_scene.main_panel.primary_button)
 	await _finish()
 
 func _finish() -> void:
 	paused = false
 	var failures := checks.filter(func(item: Dictionary): return not item.passed)
 	var report := {"suite":"ui-launch-integration","passed":failures.is_empty(),"passed_count":checks.size()-failures.size(),"count":checks.size(),"failed":failures.size(),"checks":checks,"phases":phases,"scope":"Actual imported native scenes and threaded resource loading; no new pixel or OS-input acceptance.","sources":{}}
-	for path in ["res://scripts/courtyard.gd","res://scripts/launch_shell.gd","res://scripts/scene_transition.gd",get_script().resource_path]: report.sources[path] = FileAccess.get_sha256(path)
+	for path in ["res://scripts/courtyard.gd","res://scripts/launch_shell.gd","res://scripts/scene_transition.gd","res://scripts/hanuman_trial.gd","res://assets/heroes/hanuman/hanuman.glb",get_script().resource_path]: report.sources[path] = FileAccess.get_sha256(path)
 	if not output.is_empty():
 		var file := FileAccess.open(output,FileAccess.WRITE)
 		file.store_string(JSON.stringify(report,"\t")+"\n")
