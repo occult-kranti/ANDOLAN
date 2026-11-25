@@ -1,0 +1,27 @@
+extends SceneTree
+var errors: Array[String] = []
+func _initialize() -> void:
+	call_deferred("_run")
+func expect(condition: bool, item: String) -> void:
+	if not condition: errors.append(item)
+func _run() -> void:
+	var atlas := load("res://assets/vfx/hanuman-invocation-masks.png") as Texture2D
+	expect(atlas != null and atlas.get_width() > 0 and atlas.get_height() > 0,"Packed invocation mask")
+	var motion := load("res://assets/heroes/hanuman/hanuman-ability-motion.tres") as AnimationLibrary
+	expect(motion != null and motion.get_animation_list().size() == 5,"Revised action library")
+	for id in ["vajra_gada", "vajra_kavacha", "maruti_udayana", "lanka_dahan", "mountain_pulse", "mountain_impact"]:
+		var cue := load("res://assets/audio/hanuman-trial/%s.wav" % id) as AudioStreamWAV
+		expect(cue != null and cue.get_length() > 0, "Loaded WAV " + id)
+	for name in ["hanuman_invocation_mark", "hanuman_ground_field", "hanuman_contact_shadow"]:
+		var shade := load("res://shaders/%s.gdshader" % name) as Shader
+		expect(shade != null and not shade.code.is_empty(),"Loaded shader " + name)
+	var packed := load("res://scenes/hanuman_trial.tscn") as PackedScene
+	var trial := packed.instantiate() if packed else null
+	expect(trial != null,"Packed trial scene")
+	if trial != null:
+		root.add_child(trial)
+		expect(trial.ready_for_play and trial.hero.report().revised_motion_clips.size() == 5,"Trial runs with all five authored clips")
+		trial.queue_free()
+	print(JSON.stringify({"passed": errors.is_empty(), "errors": errors, "atlas": [atlas.get_width(), atlas.get_height()] if atlas else []}))
+	await process_frame
+	quit(0 if errors.is_empty() else 1)

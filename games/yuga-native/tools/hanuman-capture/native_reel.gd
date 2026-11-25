@@ -14,9 +14,10 @@ const RUNTIME_SOURCES := [TRIAL, "res://project.godot", "res://assets/heroes/han
 	"res://assets/design/hanuman-presentation.json", "res://assets/design/hanuman-tail-response.json",
 	"res://scripts/hanuman_trial.gd", "res://scripts/hanuman_actor.gd", "res://scripts/hanuman_trial_effects.gd",
 	"res://scripts/hanuman_combat.gd", "res://scripts/hanuman_ground_field.gd", "res://scripts/hero_chain_response.gd",
-	"res://scripts/hanuman_invocation_art.gd", "res://scripts/hanuman_contact_shadow.gd",
+	"res://scripts/hanuman_invocation_art.gd", "res://scripts/hanuman_contact_shadow.gd", "res://scripts/input_bindings.gd",
 	"res://shaders/hanuman_ground_field.gdshader", "res://shaders/hanuman_contact_shadow.gdshader",
-	"res://tools/hanuman-capture/native_reel.gd", "res://tools/hanuman-capture/encode_reel.py"]
+	"res://shaders/hanuman_invocation_mark.gdshader", "res://shaders/rama_ability_boundary.gdshader",
+	"res://shaders/rama_ribbon.gdshader", "res://tools/hanuman-capture/encode_reel.py"]
 
 var output: String
 var trial: Node3D
@@ -80,7 +81,7 @@ func _render() -> void:
 		"physics_ticks_per_second": Engine.physics_ticks_per_second, "storyboard": storyboard,
 		"capture_cameras": plan.get("shots", []), "audio_recorded": false,
 	}
-	var sources := [storyboard] + RUNTIME_SOURCES
+	var sources := [storyboard, get_script().resource_path] + RUNTIME_SOURCES
 	for id in ABILITIES + ["mountain_impact"]:
 		sources.append("res://assets/audio/hanuman-trial/%s.wav" % id)
 	for path in sources:
@@ -179,18 +180,40 @@ func _stage_camera(config: Dictionary) -> void:
 
 func _verify_beats(extended: bool, fps: int) -> String:
 	var beats := {}
+	var casts := {}
 	for event in events:
-		if event.ability_id in ABILITIES and event.kind in REQUIRED_BEATS:
-			beats.get_or_add(event.ability_id, {})[event.kind] = {
-				"frame": event.sample_frame, "time_s": float(event.sample_frame) / fps,
-				"physics_frame": event.physics_frame, "cast_id": event.cast_id,
-				"generation": event.generation,
-			}
+		if event.ability_id not in ABILITIES or event.kind not in REQUIRED_BEATS + ["cancel"]:
+			continue
+		var mark := {
+			"frame": event.sample_frame, "time_s": float(event.sample_frame) / fps,
+			"physics_frame": event.physics_frame, "cast_id": event.cast_id,
+			"generation": event.generation,
+		}
+		if not extended:
+			if event.kind in REQUIRED_BEATS:
+				beats.get_or_add(event.ability_id, {})[event.kind] = mark
+			continue
+		var key := Vector2i(event.generation, event.cast_id)
+		var cast: Dictionary = casts.get_or_add(key, {"id": event.ability_id, "beats": {}, "valid": true,
+			"last_sample": -1, "last_physics": -1, "last_sequence": -1})
+		var stage: int = cast.beats.size()
+		if event.ability_id != cast.id or stage >= REQUIRED_BEATS.size() or REQUIRED_BEATS[stage] != event.kind \
+				or event.sample_frame < 0 or event.sample_frame < cast.last_sample \
+				or event.physics_frame < cast.last_physics or event.event_seq <= cast.last_sequence:
+			cast.valid = false
+			continue
+		cast.beats[event.kind] = mark
+		cast.last_sample = event.sample_frame
+		cast.last_physics = event.physics_frame
+		cast.last_sequence = event.event_seq
+	if extended:
+		for cast: Dictionary in casts.values():
+			if cast.valid and cast.beats.size() == REQUIRED_BEATS.size():
+				beats[cast.id] = cast.beats
 	receipt["ability_beats"] = beats
 	for id in ABILITIES:
-		for beat in (REQUIRED_BEATS if extended else ["impact"]):
-			if not beats.get(id, {}).has(beat):
-				return "The input plan missed %s %s." % [id, beat]
+		if not beats.get(id, {}).has("impact"):
+			return "The input plan missed a complete ordered %s cast." % id if extended else "The input plan missed %s impact." % id
 	return ""
 
 

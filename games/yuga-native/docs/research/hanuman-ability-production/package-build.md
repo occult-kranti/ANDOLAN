@@ -30,3 +30,7 @@ python3 "$native/tools/package-native.py" \
 ```
 
 For an optional ability frame, append `--hanuman-sample /absolute/path/to/the-reviewed-frame.png`. Exporting with `--export-only` and subsequently packaging with `--package-only` lets the final frame come from the same frozen runtime. Keep the source unchanged between these phases. Each platform ZIP contains a file inventory, source and runtime identities, and engine and asset notices. For Linux, qualify an extracted ZIP through the actual launcher and trial. On Windows, track native execution separately from successful PCK and archive inspection. [Hanuman provenance](../../../art/hanuman/NOTICE.md) · [Ability sound source](../../../NOTICE/HANUMAN-ABILITY-AUDIO.json)
+
+## Published package bytes
+
+GitHub Actions reassembled the two verified archives, checked their SHA-256 values and uploaded both ZIPs and the checksum file to the Hanuman release. The clean-clone reconstruction and the service-reported asset digests matched the package checksums. [Release downloads](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-hanuman-abilities-2026-11-25) · [GitHub asset digests](github-assets.json) · [Upload run](https://github.com/occult-kranti/ANDOLAN/actions/runs/45570684219) · [Pinned distribution source and rebuild script](https://github.com/occult-kranti/ANDOLAN/tree/8091c62ccc1633565cccc8a835726b4f3f68a52b)
