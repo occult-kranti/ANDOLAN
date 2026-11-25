@@ -5,12 +5,12 @@
  <canvas inert id="arena" aria-label="Confluence practice arena" tabindex="0"></canvas>
  <section id="menu" aria-label="Practice menu">
   <div class="cover"></div><div class="title-panel"><div class="wordmark">YUGA<span class="sun" aria-hidden="true">✺</span></div>
-  <div class="title-copy"><p class="eyebrow">Three-lane arena</p><h1>The<br>Confluence</h1><p class="intro">March with the Sun army. Break the Moon line and escort your soldiers to the enemy core.</p>
+  <div class="title-copy"><p class="eyebrow">Three-lane arena</p><h1>The<br>Confluence</h1><p class="intro">Explore the arena or challenge friends in a hero-only match. Soldier waves are paused.</p>
   <label class="hero-choice" for="hero">Hero <select id="hero"><option value="hanuman">Hanuman · Gada</option><option value="rama">Rama · Bow</option></select></label>
-  <div class="entry-actions"><button id="match" disabled>Play lane match</button><button class="secondary" id="begin" disabled>Hanuman practice</button></div>
+  <div class="entry-actions"><button id="match" disabled>Explore arena</button><button class="secondary" id="begin" disabled>Hanuman practice</button></div>
   <details class="rooms"><summary>Private multiplayer</summary>
    <div id="room-controls">
-    <div><label for="room-size">Format</label><select id="room-size"><option value="1">1v1 duel</option><option value="3">3v3 teams</option></select><button id="create-room" disabled>Create room</button></div>
+    <div><label for="room-size">Format</label><select id="room-size"><option value="5">5v5 teams</option><option value="3">3v3 teams</option><option value="1">1v1 duel</option></select><button id="create-room" disabled>Create room</button></div>
     <div><label for="room-code">Room code</label><input id="room-code" maxlength="8" autocapitalize="characters" spellcheck="false" autocomplete="off"><button class="secondary" id="join-room" disabled>Join</button></div>
    </div>
    <p id="room-status" role="status"></p><button class="quiet" id="cancel-room" hidden>Leave room</button>
@@ -25,7 +25,7 @@
   <div class="help">WASD move <span>·</span> Mouse aim <span>·</span> Esc pause</div></div>
   <p id="status" role="status"></p></section>
  <section id="overlay" class="veil" role="dialog" aria-modal="true" aria-labelledby="result" aria-describedby="summary" hidden><div class="dialog"><p id="overlay-label" class="eyebrow">Hanuman · Confluence</p><h2 id="result">Practice paused</h2><p id="summary"></p><button id="resume">Resume practice</button><button id="reset" class="secondary">Restart drill</button><button id="back" class="quiet">Return to title</button></div></section>
- <dialog id="credits"><h2>Credits &amp; source</h2><p>YUGA brings its original hero rigs, troop formations and Confluence map into Rust. Rust runs the match and resolves combat. PlayCanvas renders both armies.</p>
+ <dialog id="credits"><h2>Credits &amp; source</h2><p>YUGA brings its original hero rigs and Confluence map into Rust. Rust runs the hero-only match and resolves combat. Soldier assets and wave code are retained for future work.</p>
  <p><a href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/docs/rust-rebuild" target="_blank" rel="noopener">Research and source code</a></p><details><summary>Software and art notices</summary><pre id="notices"></pre></details><button id="close-credits">Close</button></dialog>
 </main>
 <script id="payload" type="application/json">/* PAYLOAD */</script><script>/* GAME */</script></body></html>

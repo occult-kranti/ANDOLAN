@@ -12,6 +12,7 @@ use yuga_rust::{
 enum Roster {
     Duel { sun: Hero, moon: Hero },
     Squad { heroes: [Hero; 6] },
+    FiveTeam { heroes: [Hero; 10] },
 }
 
 #[derive(Default, Deserialize)]
@@ -48,8 +49,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let heroes = match roster {
         Roster::Duel { sun, moon } => vec![sun, moon],
         Roster::Squad { heroes } => heroes.to_vec(),
+        Roster::FiveTeam { heroes } => heroes.to_vec(),
     };
-    let mut game = Battle::with_roster(&world, &heroes)?;
+    let mut game = Battle::with_hero_roster(&world, &heroes)?;
     let mut accepted = vec![None; heroes.len()];
     let mut out = io::stdout().lock();
     send(&game, &mut out, &accepted)?;

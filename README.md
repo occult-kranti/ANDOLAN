@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**New YUGA 5v5 direction.** [Mandala Rift](games/yuga-native/docs/design/mandala-rift-5v5/README.md) is a proposed temple-and-jungle tactical map with a top-down sketch, an illustrated concept, shallow-water routes and paired folded-space entrances. The current Rust download runs private **5v5 hero-only** team knockouts on the existing arena; the new map, portal traversal and round-based objective are design work for a later build. Soldier waves are paused, while their assets and code are retained.
+
 **Agentic cinematography study.** A local camera-blockout experiment evaluates a public editor copy and Sirio Berati's separate MIT-licensed camera pipeline. The four-second YUGA orbit is a placeholder reference, with a reproducible setup, a caption-access report and adoption gates. [Study, clip and roadmap](games/yuga-native/art/agentic-cinematography-2026/README.md)
 
 **New five-pass game-development panel.** Combat, physics, animation, world art and art-history specialists reviewed the existing game and produced action specifications, four illustrated ability boards, an editable Hanuman Blender sequence, a curated museum reference gallery and a tested Rust/browser update. Start with the [panel handoff and evidence](games/yuga-native/docs/design/five-round-panel-2026/README.md) and its [next production roadmap](games/yuga-native/docs/design/five-round-panel-2026/NEXT.md). The art boards and Blender sequence are studies; the remaining commercial-quality game work is identified in the roadmap.
@@ -14,7 +16,7 @@
 
 **Play all fourteen heroes in Rust.** Choose **Hero sparring** in Sangam City to try the original weapons, all 42 abilities and the skinned characters in a three-person practice encounter. [Download the graphical roster](games/yuga-rust/downloads/yuga-rust-classic.zip?raw=true) · [Launch instructions](games/yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)
 
-**Play Confluence in Rust.** Choose Hanuman or Rama, lead a persistent army, or host a private 1v1 or 3v3 match from the same download. The server runs the Rust simulation through Node and WebAssembly. [Download the game and room host](games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) · [Controls and hosting](games/yuga-rust/README.md) · [Rust game-source research and full port roadmap](games/yuga-native/docs/rust-rebuild/deep-search/README.md)
+**Play Confluence in Rust.** Choose Hanuman or Rama, explore solo, or host a private 5v5, 3v3 or 1v1 hero match from the same download. The server runs the Rust simulation through Node and WebAssembly. Solo exploration has no AI opponents. [Download the game and room host](games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) · [Controls and hosting](games/yuga-rust/README.md) · [Rust game-source research and full port roadmap](games/yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 **Blender world elements.** Append or link 43 editable architecture, nature, foundation and sign assets. The same workflow can compile the FireRed remake’s Rust fallback geometry into a separate 36-piece Blender study. [Download and preview the libraries](games/yuga-native/art/reuse-library/README.md)
 

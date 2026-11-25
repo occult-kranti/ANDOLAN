@@ -56,7 +56,7 @@ mod browser {
                 }
                 1 | 2 => {
                     let hero = if mode == 1 { Hero::Hanuman } else { Hero::Rama };
-                    let Ok(game) = Battle::load(&t.world, hero, None) else {
+                    let Ok(game) = Battle::load_hero_only(&t.world, hero) else {
                         return 0;
                     };
                     t.battle = Some((game, hero));
@@ -148,7 +148,7 @@ mod browser {
         TRIAL.with_borrow_mut(|trial| {
             if let Some(t) = trial {
                 if let Some((game, hero)) = &mut t.battle {
-                    *game = Battle::load(&t.world, *hero, None).expect("validated match data");
+                    *game = Battle::load_hero_only(&t.world, *hero).expect("validated match data");
                 } else {
                     t.combat.reset();
                 }
@@ -214,7 +214,7 @@ mod room_worker {
 
     fn initialize(heroes: &[Hero]) -> i32 {
         let Ok(world) = World::load() else { return 0 };
-        let Ok(battle) = Battle::with_roster(&world, heroes) else {
+        let Ok(battle) = Battle::with_hero_roster(&world, heroes) else {
             return 0;
         };
         ROOM.with_borrow_mut(|room| {
@@ -241,12 +241,35 @@ mod room_worker {
     }
 
     #[no_mangle]
+    pub extern "C" fn team_init(
+        a: u32,
+        b: u32,
+        c: u32,
+        d: u32,
+        e: u32,
+        f: u32,
+        g: u32,
+        h: u32,
+        i: u32,
+        j: u32,
+    ) -> i32 {
+        let Some(heroes) = [a, b, c, d, e, f, g, h, i, j]
+            .into_iter()
+            .map(choice)
+            .collect::<Option<Vec<_>>>()
+        else {
+            return 0;
+        };
+        initialize(&heroes)
+    }
+
+    #[no_mangle]
     pub extern "C" fn squad_motion(seat: u32, mx: f32, mz: f32, ax: f32, az: f32) -> i32 {
         if ![mx, mz, ax, az].iter().all(|v| v.is_finite()) {
             return 0;
         }
         ROOM.with_borrow_mut(|room| {
-            let Some(room) = room.as_mut().filter(|r| r.motion.len() == 6) else {
+            let Some(room) = room.as_mut().filter(|r| matches!(r.motion.len(), 6 | 10)) else {
                 return 0;
             };
             let Some(input) = room.motion.get_mut(seat as usize) else {
@@ -266,7 +289,7 @@ mod room_worker {
             return 0;
         }
         ROOM.with_borrow_mut(|room| {
-            let Some(room) = room.as_mut().filter(|r| r.motion.len() == 6) else {
+            let Some(room) = room.as_mut().filter(|r| matches!(r.motion.len(), 6 | 10)) else {
                 return 0;
             };
             for _ in 0..ticks {

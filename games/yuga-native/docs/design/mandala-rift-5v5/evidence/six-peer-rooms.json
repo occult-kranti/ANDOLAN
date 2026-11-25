@@ -1,0 +1,34 @@
+{
+  "result": "pass",
+  "transport": "loopback WebSocket, real host, one Rust authority per active room",
+  "authority": "native Rust executable",
+  "squad_seats": 6,
+  "other_room_seats": 2,
+  "peak_connected_sockets": 9,
+  "peak_running_rooms": 2,
+  "initial_tick": 0,
+  "command_frames": 144,
+  "load_elapsed_ms": 1297,
+  "total_squad_frames": 198,
+  "max_snapshot_bytes": 18240,
+  "squad_network_bytes": 3248316,
+  "observed_frame_interval_p50_ms": 100,
+  "observed_frame_interval_p95_ms": 117,
+  "final_health": {
+    "ok": true,
+    "rooms": 0,
+    "clients": 0,
+    "running": 0
+  },
+  "checks": [
+    "Invalid team sizes rejected; all five waiting seats receive each count while the separate default duel starts.",
+    "Every seat received its local authority view plus five ordered remote players; seventh join and seat spoof were refused.",
+    "Six seats moved, cast, advanced monotonically and acknowledged 144 inputs; stale movement expired and an invalid cast consumed no sequence.",
+    "A squad departure closed precisely its room and its six seats; the other room continued, then released its sockets and authority."
+  ],
+  "hashes": {
+    "host": "e175d2b9c4ef551bd8bdede43104f6cae4c29bd002681827798ad3d041ebc97e",
+    "authority": "09256b8f36ac15964e16c717ab0af1fc64eb58dac4431f0415cc5eb3a6a4d3c9",
+    "test": "3673dffd5912cf603b93b452a07c88cabcfcbf67e7254ab822529d946b060a5c"
+  }
+}

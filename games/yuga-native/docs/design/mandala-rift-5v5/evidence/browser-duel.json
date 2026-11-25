@@ -1,0 +1,139 @@
+{
+  "scope": "Two isolated Chromium sessions and an authoritative room host",
+  "html_sha256": "fc8b623a72411928834b8c6a0590f0d9ec2b4b1b379d762c04771ed3855af2d0",
+  "zip_sha256": "677470c5c104c20c0a8b302b0e0de91a4320b5aba4187116be2256d37285f6f3",
+  "test_sha256": "57d37869af651efec0859f6e298551dbc6dffd47473326c8c92803047dc47f0d",
+  "harness_sha256": "fe042ccc741b4ff2291b72a297220dc32b3f907b0e0f4f73cb60813d0c95b166",
+  "checks": [
+    "room assigns distinct teams and renders the selected rival rig in both browsers",
+    "the Moon camera faces the opposing lane direction",
+    "guest sees Hanuman move to the position accepted by the room host",
+    "Rama’s browser receives Hanuman’s committed rear sweep",
+    "Hanuman’s browser receives the rival bow volley from Rama",
+    "each browser used one same-origin room socket",
+    "host can return to a local match after the opponent leaves",
+    "all game assets were embedded and no external requests occurred",
+    "no uncaught browser errors"
+  ],
+  "renderers": {
+    "rama": {
+      "heroBones": 164,
+      "heroClips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "run",
+        "circle_draw",
+        "circle_release",
+        "dash",
+        "dash_release",
+        "draw",
+        "piercing_draw",
+        "piercing_release",
+        "release",
+        "volley_draw",
+        "volley_release"
+      ],
+      "armyVisible": 0,
+      "armyNear": 0,
+      "armyRoles": [],
+      "objectiveCount": 0,
+      "lanes": 3
+    },
+    "hanuman": {
+      "heroBones": 167,
+      "heroClips": [
+        "cast",
+        "cast1",
+        "cast2",
+        "cast3",
+        "defeat",
+        "fire",
+        "idle",
+        "jump",
+        "mountain_pulse",
+        "run",
+        "tail_sweep"
+      ],
+      "armyVisible": 0,
+      "armyNear": 0,
+      "armyRoles": [],
+      "objectiveCount": 0,
+      "lanes": 3
+    }
+  },
+  "requests": {
+    "documents": 2,
+    "room_sockets": 2,
+    "unexpected": []
+  },
+  "page_errors": [],
+  "browser": "154.0.8037.57",
+  "seat_viewport": {
+    "width": 760,
+    "height": 480
+  },
+  "replicated_movement": {
+    "from": [
+      0,
+      -16
+    ],
+    "during": [
+      0,
+      -15
+    ],
+    "to": [
+      0,
+      -11
+    ],
+    "guest_observed": [
+      0,
+      -11
+    ]
+  },
+  "synchronized_casts": [
+    {
+      "id": "lanka_dahan",
+      "owner": "hanuman",
+      "local_release_tick": 229,
+      "remote": {
+        "owner": "hanuman",
+        "tick": 222,
+        "clip": "tail_sweep"
+      },
+      "remote_render": {
+        "frames": 1,
+        "effect": false,
+        "clip": null
+      }
+    },
+    {
+      "id": "dawn_volley",
+      "owner": "rama",
+      "local_release_tick": 391,
+      "remote": {
+        "owner": "rama",
+        "tick": 374,
+        "clip": "volley_draw"
+      },
+      "remote_render": {
+        "frames": 4,
+        "effect": true,
+        "clip": "volley_draw"
+      }
+    }
+  ],
+  "screenshot_sha256": "3d4c3f51095fec9504b008573c9fc47a6f8989665175e2a696540e88317fa067",
+  "room_messages": [
+    {
+      "type": "closed",
+      "message": "A player left the room."
+    }
+  ],
+  "passed": true
+}

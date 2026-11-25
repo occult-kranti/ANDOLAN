@@ -137,8 +137,8 @@ function beginLobby(socket, client, message) {
   if (!keysAllowed(message, joining ? ['type', 'hero', 'code'] : ['type', 'hero', 'teamSize']) || !validHero(message.hero)) {
     reject(socket, 'Choose Hanuman or Rama and supply the requested room fields.'); return;
   }
-  if (!joining && message.teamSize !== undefined && ![1, 3].includes(message.teamSize)) {
-    reject(socket, 'Choose a team size of one or three.'); return;
+  if (!joining && message.teamSize !== undefined && ![1, 3, 5].includes(message.teamSize)) {
+    reject(socket, 'Choose a team size of one, three or five.'); return;
   }
   if (client.room) { reject(socket, 'Leave the current room first.'); return; }
   let room;

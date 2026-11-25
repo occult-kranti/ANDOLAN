@@ -1,4 +1,4 @@
-// Drive the public match and room controls. All simulation reads use the public diagnostic snapshot.
+// Drive hero-only exploration and 1v1 room controls using the public diagnostic snapshot.
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -18,7 +18,7 @@ const screenshot = path.resolve(values.screenshot || path.join(root, 'dist', kin
 const game = await packageUnderTest(values.input);
 const viewport = {width: 1100, height: 720};
 const evidence = {
-  scope: values.origin ? 'Two isolated Chromium sessions and an authoritative room host' : 'Local lane match after disconnection',
+  scope: values.origin ? 'Two isolated Chromium sessions and an authoritative room host' : 'Local hero-only arena exploration',
   html_sha256: game.html_sha256, zip_sha256: game.zip_sha256,
   test_sha256: digest(await readFile(fileURLToPath(import.meta.url))),
   harness_sha256: digest(await readFile(new URL('./browser-package.mjs', import.meta.url))),
@@ -80,12 +80,12 @@ function track(context, allowedDocument, roomUrl, packets) {
 async function awaitMatch(page, hero) {
   const snap = await until(page, 'enter match as ' + hero,
     p => p.mode === 'playing' && p.state?.mode === 'match' && p.state.hero === hero &&
-      p.renderer.heroId === hero && p.renderer.armyVisible > 0 && p.renderer.frames > 0);
+      p.renderer.heroId === hero && p.state.ruleset === 'hero_skirmish' && p.renderer.armyVisible === 0 && p.renderer.frames > 0);
   const {heroBones,heroClips,armyVisible,armyNear,armyRoles,objectiveCount,lanes} = snap.renderer;
-  assert.ok(heroBones > 10 && heroClips.length >= 5 && lanes === 3 && objectiveCount >= 2);
-  assert.ok(armyVisible <= 96 && armyNear > 0 && armyNear <= 16 && armyNear <= armyVisible);
+  assert.ok(heroBones > 10 && heroClips.length >= 5 && lanes === 3);
+  assert.equal(armyVisible, 0);
   assert.equal(snap.state.abilities.length,5);
-  assert.ok(snap.state.army.cores.sun > 0 && snap.state.army.cores.moon > 0);
+  assert.equal(snap.state.army.waves_enabled, false);
   evidence.renderers[hero] = {heroBones,heroClips,armyVisible,armyNear,armyRoles,objectiveCount,lanes};
   return snap;
 }
@@ -114,7 +114,7 @@ async function aimAtEnemy(page) {
     await page.mouse.move(target.x,target.y);
     return {unit:unit.id, world:unit.xz};
   }
-  // The early Sun/Moon formation can occupy the entire camera, obscuring an enemy. Aim at the lane.
+  // Exploration has no enemies. Aiming at clear ground is sufficient to exercise a cast.
   await page.mouse.move(bounds.width * .5, bounds.height * .47);
   return {unit:null};
 }
@@ -169,13 +169,11 @@ async function localMatch(browser) {
     await page.locator('#match').click();
     const start = await awaitMatch(page,hero);
     const army = start.state.army;
-    check(new Set(army.units.map(u=>u.lane)).size === 3 && new Set(army.units.map(u=>u.team)).size===2,
-      hero+' enters a three-lane battlefield with both formations and their cores rendered');
-    const units = new Map(army.units.map(u=>[u.id,u.xz]));
-    const progressed = await until(page,'marching troops',p=>p.state.army.tick >= army.tick+4 &&
-      p.state.army.units.some(u=>units.has(u.id)&&distance(units.get(u.id),u.xz)>.04));
-    check(progressed.state.remaining_ticks < start.state.remaining_ticks && Number.isFinite(progressed.state.army.gold),
-      hero+' sees advancing troops, a running match clock and tracked gold');
+    check(start.state.solo_exploration && army.units.length === 0 && !army.waves_enabled,
+      hero+' enters solo exploration without wave units or AI opponents');
+    const progressed = await until(page,'advancing clock',p=>p.state.army.tick >= army.tick+4);
+    check(progressed.state.remaining_ticks < start.state.remaining_ticks,
+      hero+' sees a running match clock');
     if (hero==='hanuman') {
       const supported = await page.evaluate(()=>isSecureContext && 'AudioWorkletNode' in window);
       if (supported) {
@@ -211,7 +209,7 @@ async function localMatch(browser) {
     const fresh = await awaitMatch(page,hero);
     check(fresh.state.army.tick < frozen.state.army.tick && fresh.state.events.length===0 &&
       fresh.state.army.gold===0 && fresh.state.abilities.every(a=>!a.cooldown_ticks),
-      hero+' restart clears previous casts and restores the opening formation');
+      hero+' restart clears previous casts and restores the exploration state');
     await page.keyboard.press('Escape');
     await until(page,'second pause',p=>p.mode==='paused');
     await page.locator('#back').click();
@@ -275,6 +273,7 @@ async function onlineRoom(browser) {
   const host = await seat('hanuman');
   const guest = await seat('rama');
   try {
+    await host.page.locator('#room-size').selectOption('1');
     await host.page.locator('#create-room').click();
     await host.page.waitForFunction(()=>document.querySelector('#room-code').value.length>=4, undefined, {timeout:30_000});
     const code = await host.page.locator('#room-code').inputValue();

@@ -1,0 +1,329 @@
+{
+  "schema": 1,
+  "status": "design only; no runtime collision or objective implementation",
+  "name": "Mandala Rift",
+  "units": "metres in conceptual X/Z plane",
+  "orientation": "Sun south at negative Z; Moon north at positive Z",
+  "envelope": {
+    "x": [
+      -68,
+      68
+    ],
+    "z": [
+      -128,
+      128
+    ]
+  },
+  "baseline_walk_mps": 5.0,
+  "water_speed_multiplier": 0.85,
+  "water_scope": "conceptual movement modifier; not implemented",
+  "nodes": {
+    "sun_spawn": {
+      "xz": [
+        0,
+        -112
+      ]
+    },
+    "moon_spawn": {
+      "xz": [
+        0,
+        112
+      ]
+    },
+    "west_s": {
+      "xz": [
+        -40,
+        -84
+      ]
+    },
+    "west_sford": {
+      "xz": [
+        -40,
+        -32
+      ]
+    },
+    "west_jungle": {
+      "xz": [
+        -40,
+        0
+      ]
+    },
+    "west_nford": {
+      "xz": [
+        -40,
+        32
+      ]
+    },
+    "west_n": {
+      "xz": [
+        -40,
+        84
+      ]
+    },
+    "center_s": {
+      "xz": [
+        0,
+        -64
+      ]
+    },
+    "center_sgate": {
+      "xz": [
+        0,
+        -32
+      ]
+    },
+    "site_a": {
+      "xz": [
+        0,
+        0
+      ]
+    },
+    "center_ngate": {
+      "xz": [
+        0,
+        32
+      ]
+    },
+    "center_n": {
+      "xz": [
+        0,
+        64
+      ]
+    },
+    "east_s": {
+      "xz": [
+        40,
+        -84
+      ]
+    },
+    "east_sgate": {
+      "xz": [
+        40,
+        -32
+      ]
+    },
+    "site_b": {
+      "xz": [
+        40,
+        0
+      ]
+    },
+    "east_ngate": {
+      "xz": [
+        40,
+        32
+      ]
+    },
+    "east_n": {
+      "xz": [
+        40,
+        84
+      ]
+    },
+    "water_s": {
+      "xz": [
+        -20,
+        -32
+      ]
+    },
+    "water_n": {
+      "xz": [
+        -20,
+        32
+      ]
+    },
+    "temple_portal_s": {
+      "xz": [
+        12,
+        -32
+      ]
+    },
+    "pyramid_portal_s": {
+      "xz": [
+        28,
+        -32
+      ]
+    },
+    "temple_portal_n": {
+      "xz": [
+        12,
+        32
+      ]
+    },
+    "pyramid_portal_n": {
+      "xz": [
+        28,
+        32
+      ]
+    }
+  },
+  "edges": [
+    {
+      "a": "sun_spawn",
+      "b": "west_s",
+      "kind": "walk"
+    },
+    {
+      "a": "sun_spawn",
+      "b": "center_s",
+      "kind": "walk"
+    },
+    {
+      "a": "sun_spawn",
+      "b": "east_s",
+      "kind": "walk"
+    },
+    {
+      "a": "west_s",
+      "b": "west_sford",
+      "kind": "walk"
+    },
+    {
+      "a": "west_sford",
+      "b": "west_jungle",
+      "kind": "walk"
+    },
+    {
+      "a": "center_s",
+      "b": "center_sgate",
+      "kind": "walk"
+    },
+    {
+      "a": "center_sgate",
+      "b": "site_a",
+      "kind": "walk"
+    },
+    {
+      "a": "east_s",
+      "b": "east_sgate",
+      "kind": "walk"
+    },
+    {
+      "a": "east_sgate",
+      "b": "site_b",
+      "kind": "walk"
+    },
+    {
+      "a": "west_sford",
+      "b": "water_s",
+      "kind": "water"
+    },
+    {
+      "a": "water_s",
+      "b": "center_sgate",
+      "kind": "water"
+    },
+    {
+      "a": "center_sgate",
+      "b": "temple_portal_s",
+      "kind": "walk"
+    },
+    {
+      "a": "temple_portal_s",
+      "b": "pyramid_portal_s",
+      "kind": "walk"
+    },
+    {
+      "a": "temple_portal_s",
+      "b": "pyramid_portal_s",
+      "kind": "portal",
+      "travel_seconds": 1.5
+    },
+    {
+      "a": "pyramid_portal_s",
+      "b": "east_sgate",
+      "kind": "walk"
+    },
+    {
+      "a": "moon_spawn",
+      "b": "west_n",
+      "kind": "walk"
+    },
+    {
+      "a": "moon_spawn",
+      "b": "center_n",
+      "kind": "walk"
+    },
+    {
+      "a": "moon_spawn",
+      "b": "east_n",
+      "kind": "walk"
+    },
+    {
+      "a": "west_n",
+      "b": "west_nford",
+      "kind": "walk"
+    },
+    {
+      "a": "west_nford",
+      "b": "west_jungle",
+      "kind": "walk"
+    },
+    {
+      "a": "center_n",
+      "b": "center_ngate",
+      "kind": "walk"
+    },
+    {
+      "a": "center_ngate",
+      "b": "site_a",
+      "kind": "walk"
+    },
+    {
+      "a": "east_n",
+      "b": "east_ngate",
+      "kind": "walk"
+    },
+    {
+      "a": "east_ngate",
+      "b": "site_b",
+      "kind": "walk"
+    },
+    {
+      "a": "west_nford",
+      "b": "water_n",
+      "kind": "water"
+    },
+    {
+      "a": "water_n",
+      "b": "center_ngate",
+      "kind": "water"
+    },
+    {
+      "a": "center_ngate",
+      "b": "temple_portal_n",
+      "kind": "walk"
+    },
+    {
+      "a": "temple_portal_n",
+      "b": "pyramid_portal_n",
+      "kind": "walk"
+    },
+    {
+      "a": "temple_portal_n",
+      "b": "pyramid_portal_n",
+      "kind": "portal",
+      "travel_seconds": 1.5
+    },
+    {
+      "a": "pyramid_portal_n",
+      "b": "east_ngate",
+      "kind": "walk"
+    }
+  ],
+  "objectives": {
+    "A": "site_a",
+    "B": "site_b"
+  },
+  "fold_pairs": [
+    [
+      "temple_portal_s",
+      "pyramid_portal_s"
+    ],
+    [
+      "temple_portal_n",
+      "pyramid_portal_n"
+    ]
+  ],
+  "fold_rule": "bidirectional 1.5 s modelling cost; intended in-world transition timing subject to playtest"
+}

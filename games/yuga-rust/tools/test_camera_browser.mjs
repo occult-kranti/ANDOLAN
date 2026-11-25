@@ -38,6 +38,11 @@ for (const seat of [0, 1]) {
   // Sun wall position, not the opposite seat observing the Sun's run.
   assert.equal(authority.duel_start(0, 0), 1);
   const direction = seat ? 1 : -1;
+  // Hero-only matches start at ±16 m. Return to the historical ±5.4 m
+  // camera fixture before moving laterally, so the same wall is exercised.
+  for (let i = 0; i < 42; i++)
+    authority.duel_step(0, -direction, 0, 1, 0, -direction, 0, -1);
+  authority.duel_step(0, -direction * .4, 0, 1, 0, -direction * .4, 0, -1);
   for (let i = 0; i < 240; i++)
     authority.duel_step(direction, 0, 0, 1, direction, 0, 0, -1);
   states.push(snapshot(seat));
@@ -178,7 +183,7 @@ try {
   }
   const report = { test: 'Packaged camera clearance with live Rust/WASM snapshots and staged room transport',
     zip_sha256: digest(zipBytes), html_sha256: digest(html), wasm_sha256: digest(wasm),
-    chromium: browser.version(), authority_steps_per_case: 240, page_errors: [], external_requests: [], cases };
+    chromium: browser.version(), authority_steps_per_case: 283, page_errors: [], external_requests: [], cases };
   await writeFile(path.join(output, 'camera-browser.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ output, checks: cases.length, zip_sha256: report.zip_sha256 }, null, 2));
 } finally {

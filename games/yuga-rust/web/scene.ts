@@ -580,7 +580,8 @@ export async function makeScene(
       updateEffects(view.fx, null, null, 1);
       updateNock(view.fx, null, null);
     }
-    armyView.update(state.army ?? null, prev.army ?? null, t, [x, z]);
+    const showArmy = state.ruleset !== 'hero_skirmish';
+    armyView.update(showArmy ? state.army ?? null : null, showArmy ? prev.army ?? null : null, t, [x, z]);
     for (const body of soldierActors.values()) body.root.enabled = !state.army;
     for (const unit of state.army ? [] : (state.targets ?? [])) {
       let body = soldierActors.get(unit.id);

@@ -371,7 +371,8 @@ function malformedLines() {
       );
       const replies = proc.stdout.trim().split('\n').filter(Boolean);
       assert.equal(replies.length, trace.length - 1, 'malformed input must never publish partial frame');
-      if (replies.length) assert.ok(JSON.parse(replies[0]).states.every((s) => s.tick === 540));
+      // Hero-only rooms start at tick zero; malformed input must not advance or partially apply.
+      if (replies.length) assert.ok(JSON.parse(replies[0]).states.every((s) => s.tick === 0));
     }
   return cases.length;
 }

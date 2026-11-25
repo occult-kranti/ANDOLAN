@@ -655,6 +655,7 @@ struct Counters {
 
 pub struct Army {
     arena: Arena,
+    waves_enabled: bool,
     units: Vec<Unit>,
     attacks: Vec<Attack>,
     tick: u64,
@@ -668,14 +669,26 @@ pub struct Army {
 
 impl Army {
     pub fn load() -> Result<Self, String> {
+        Self::load_with_waves(true)
+    }
+
+    /// Keep the match clock and map, without spawning soldiers or siege units.
+    pub fn load_without_waves() -> Result<Self, String> {
+        Self::load_with_waves(false)
+    }
+
+    fn load_with_waves(waves_enabled: bool) -> Result<Self, String> {
         let arena = Arena::load()?;
         // Validate all combinations (3 lanes × 5 events) before a match starts.
         // Covers infantry/carts/chariots in all cyclic ordering permutations.
-        for wave in 1..=15 {
-            formation(&arena, wave)?;
+        if waves_enabled {
+            for wave in 1..=15 {
+                formation(&arena, wave)?;
+            }
         }
         let mut a = Self {
             arena,
+            waves_enabled,
             units: Vec::with_capacity(TOTAL_CAP),
             attacks: Vec::with_capacity(ALIVE_CAP),
             tick: 0,
@@ -686,7 +699,9 @@ impl Army {
             cores: [100., 100.],
             winner: None,
         };
-        a.spawn_wave();
+        if waves_enabled {
+            a.spawn_wave();
+        }
         Ok(a)
     }
     pub fn reset(&mut self) {
@@ -699,7 +714,9 @@ impl Army {
         self.totals = Counters::default();
         self.cores = [100., 100.];
         self.winner = None;
-        self.spawn_wave();
+        if self.waves_enabled {
+            self.spawn_wave();
+        }
     }
     pub fn finished(&self) -> bool {
         self.winner.is_some()
@@ -929,11 +946,29 @@ impl Army {
         }
         lane.sample(team, 0., 0.).0
     }
+
+    /// A mirrored central entry for the temporary hero-only arena.
+    pub fn skirmish_spawn_for(&self, world: &World, team: Team) -> Point {
+        let lane = &self.arena.lanes[1];
+        for back in [16., 20., 24., 28.] {
+            for side in [0., -2.8, 2.8] {
+                let (p, _) = lane.sample(team, (lane.length / 2. - back).max(0.), side);
+                if world.ground_target_allowed(p) {
+                    return p;
+                }
+            }
+        }
+        self.frontline_spawn_for(world, team)
+    }
+
     pub fn step(&mut self, world: &World) {
         if self.finished() {
             return;
         }
         self.tick += 1;
+        if !self.waves_enabled {
+            return;
+        }
         for u in &mut self.units {
             if self.tick >= u64::from(u.shield_until) {
                 u.shield = 0.;
@@ -1000,7 +1035,7 @@ impl Army {
                 "hp":u.hp,"max_hp":s.hp,"radius":s.radius,"height":s.height,"shield":u.shield,"shield_until":u.shield_until,
                 "state":u.state,"alive":u.alive(),"death_tick":u.death_tick,"attack_until":u.attack_until,"attack_duration_ticks":s.duration,"windup_ticks":s.windup,"target":u.target})
         }).collect();
-        json!({"tick":self.tick,"wave":self.wave,"wave_events":self.wave_events,"winner":self.winner,"units":units,"attacks":self.attacks,
+        json!({"tick":self.tick,"waves_enabled":self.waves_enabled,"wave":self.wave,"wave_events":self.wave_events,"winner":self.winner,"units":units,"attacks":self.attacks,
             "cores":{"sun":self.cores[0],"moon":self.cores[1]},"kills":self.totals.kills[0],"gold":self.totals.gold[0],"moon_kills":self.totals.kills[1],"moon_gold":self.totals.gold[1],"core_arrivals":self.totals.arrivals,
             "losses_by_lane":self.totals.losses,"separation_waits":self.totals.separation_waits,"rejected_formations":self.totals.rejected_groups,
             "siege":{"windups":self.totals.siege_windups,"impacts":self.totals.siege_impacts,"cancelled":self.totals.siege_cancelled,"hits":self.totals.siege_hits,

@@ -63,12 +63,13 @@ for await (const line of createInterface({ input: process.stdin, crlfDelay: Infi
     if (record(data, ['sun', 'moon']) && hero.has(data.sun) && hero.has(data.moon)) {
       roster = [data.sun, data.moon];
       if (game.duel_start(...roster.map(h => hero.get(h))) !== 1) throw Error('Invalid duel roster');
-    } else if (record(data, ['heroes']) && Array.isArray(data.heroes) && data.heroes.length === 6 && data.heroes.every(h => hero.has(h))) {
-      for (const name of ['squad_init', 'squad_motion', 'squad_advance']) {
+    } else if (record(data, ['heroes']) && Array.isArray(data.heroes) && [6, 10].includes(data.heroes.length) && data.heroes.every(h => hero.has(h))) {
+      const init = data.heroes.length === 10 ? 'team_init' : 'squad_init';
+      for (const name of [init, 'squad_motion', 'squad_advance']) {
         if (typeof game[name] !== 'function') throw Error('Missing squad authority export ' + name);
       }
       roster = data.heroes;
-      if (game.squad_init(...roster.map(h => hero.get(h))) !== 1) throw Error('Invalid squad roster');
+      if (game[init](...roster.map(h => hero.get(h))) !== 1) throw Error('Invalid squad roster');
     } else throw Error('Invalid room roster');
     seatCount = roster.length;
     await send(roster.map(() => null));

@@ -11,7 +11,8 @@ use serde_json::{json, Value};
 pub const ENTRY_TICKS: u32 = 27 * 20;
 pub const LIMIT_TICKS: u32 = 18 * 60 * 20;
 const RESPAWN_TICKS: u32 = 3 * 20;
-const MAX_SEATS: usize = 6;
+const MAX_SEATS: usize = 10;
+const SMALL_TEAM_SEATS: usize = 6;
 
 // The original duel reserved these first two receiver IDs. Both armies use small ascending IDs.
 fn receiver_id(seat: usize) -> u32 {
@@ -202,6 +203,7 @@ pub struct Battle {
     pub army: Army,
     players: Vec<Player>,
     winner: Option<&'static str>,
+    hero_only: bool,
 }
 
 impl Battle {
@@ -212,10 +214,29 @@ impl Battle {
     }
 
     pub fn with_roster(world: &World, roster: &[Hero]) -> Result<Self, String> {
-        if !matches!(roster.len(), 1 | 2 | MAX_SEATS) {
-            return Err("Expected a solo hero, two duelists or six alternating team seats".into());
+        Self::build(world, roster, false)
+    }
+
+    /// Temporary hero-only mode; the existing army rules remain available to tests and tools.
+    pub fn with_hero_roster(world: &World, roster: &[Hero]) -> Result<Self, String> {
+        Self::build(world, roster, true)
+    }
+
+    pub fn load_hero_only(world: &World, hero: Hero) -> Result<Self, String> {
+        Self::with_hero_roster(world, &[hero])
+    }
+
+    fn build(world: &World, roster: &[Hero], hero_only: bool) -> Result<Self, String> {
+        if !matches!(roster.len(), 1 | 2 | SMALL_TEAM_SEATS | MAX_SEATS) {
+            return Err(
+                "Expected a solo hero, two duelists, six or ten alternating team seats".into(),
+            );
         }
-        let mut army = Army::load()?;
+        let mut army = if hero_only {
+            Army::load_without_waves()?
+        } else {
+            Army::load()?
+        };
         let mut players = roster
             .iter()
             .enumerate()
@@ -224,7 +245,7 @@ impl Battle {
             })
             .collect::<Result<Vec<_>, _>>()?;
         // Enter the first clash through the ordinary simulation, keeping all shield clocks aligned.
-        for _ in 0..ENTRY_TICKS {
+        for _ in 0..if hero_only { 0 } else { ENTRY_TICKS } {
             army.step(world);
             for player in &mut players {
                 player.fighter.tick([0., 0.], world);
@@ -234,6 +255,7 @@ impl Battle {
             army,
             players,
             winner: None,
+            hero_only,
         };
         let mut placed = Vec::new();
         for seat in 0..game.players.len() {
@@ -255,11 +277,15 @@ impl Battle {
 
     fn spawn_position(&self, seat: usize, world: &World, occupied: &[Point]) -> Point {
         let team = self.players[seat].team;
-        let base = self.army.frontline_spawn_for(world, team);
-        if self.players.len() != MAX_SEATS {
+        let base = if self.hero_only {
+            self.army.skirmish_spawn_for(world, team)
+        } else {
+            self.army.frontline_spawn_for(world, team)
+        };
+        if self.players.len() <= 2 {
             return base;
         }
-        let side = [0., -3., 3.][seat / 2];
+        let side = [0., -3., 3., -6., 6.][seat / 2];
         let back = if team == Team::Sun { -1. } else { 1. };
         for depth in [0., 2., 4., 6., 8.] {
             for lateral in [0., -1.5, 1.5, -3., 3.] {
@@ -394,7 +420,7 @@ impl Battle {
             );
             self.collect_effects(seat, &bodies, &mut incoming);
         }
-        let team_mode = self.players.len() == MAX_SEATS;
+        let team_mode = self.players.len() > 2;
         for (i, p) in self.players.iter_mut().enumerate() {
             let body = p.fighter.body_mut();
             if team_mode {
@@ -446,8 +472,24 @@ impl Battle {
             }
         }
         self.army.step(world);
-        self.winner = self.army.winner();
-        if self.winner.is_none() && now >= LIMIT_TICKS {
+        if self.hero_only {
+            let [sun, moon] = self.hero_score();
+            let target = self.score_target();
+            if (self.players.len() > 1 && sun.max(moon) >= target && sun != moon)
+                || now >= LIMIT_TICKS
+            {
+                self.winner = Some(if sun > moon {
+                    "sun"
+                } else if moon > sun {
+                    "moon"
+                } else {
+                    "draw"
+                });
+            }
+        } else {
+            self.winner = self.army.winner();
+        }
+        if !self.hero_only && self.winner.is_none() && now >= LIMIT_TICKS {
             let cores = &self.army.snapshot()["cores"];
             let sun = cores["sun"].as_f64().unwrap();
             let moon = cores["moon"].as_f64().unwrap();
@@ -464,10 +506,29 @@ impl Battle {
     pub fn winner(&self) -> Option<&'static str> {
         self.winner
     }
+
+    fn hero_score(&self) -> [u32; 2] {
+        let mut score = [0u32; 2];
+        for player in &self.players {
+            // A team's defeats count for its opponent. Friendly fire is disabled.
+            let opponent = usize::from(player.team == Team::Sun);
+            score[opponent] = score[opponent].saturating_add(player.defeats);
+        }
+        score
+    }
+
+    fn score_target(&self) -> u32 {
+        match self.players.len() {
+            MAX_SEATS => 25,
+            SMALL_TEAM_SEATS => 20,
+            _ => 10,
+        }
+    }
+
     pub fn snapshot(&self, seat: usize) -> Option<Value> {
         let clock = self.army.tick_index();
         self.players.get(seat)?;
-        let team_mode = self.players.len() == MAX_SEATS;
+        let team_mode = self.players.len() > 2;
         let player_view = |index: usize| {
             let p = &self.players[index];
             let mut s = p.snapshot(clock);
@@ -493,6 +554,12 @@ impl Battle {
         state["army"] = self.army.snapshot();
         state["winner"] = json!(self.winner);
         state["remaining_ticks"] = json!(LIMIT_TICKS.saturating_sub(clock));
+        if self.hero_only {
+            let [sun, moon] = self.hero_score();
+            state["ruleset"] = json!("hero_skirmish");
+            state["score"] = json!({"sun": sun, "moon": moon, "target": self.score_target()});
+            state["solo_exploration"] = json!(self.players.len() == 1);
+        }
         if team_mode {
             let remote: Vec<Value> = (0..self.players.len())
                 .filter(|i| *i != seat)

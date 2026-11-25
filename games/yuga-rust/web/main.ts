@@ -298,7 +298,19 @@ function updateHud() {
   const hero = current.hero === 'rama' ? 'Rama' : 'Hanuman';
   byId('hero-name').textContent = hero;
   byId('overlay-label').textContent = hero + ' · Confluence';
-  if (army) {
+  if (army && current.ruleset === 'hero_skirmish') {
+    const seconds = Math.ceil(current.remaining_ticks * PERIOD);
+    byId('location').textContent = current.solo_exploration
+      ? 'Solo exploration'
+      : (current.actor.team === 'moon' ? 'Moon' : 'Sun') + ' · Hero skirmish' +
+        (playMode === 'online' && room ? ' · Seat ' + (room.seat + 1) + '/' + room.capacity : '');
+    byId('objective').textContent = current.solo_exploration
+      ? 'No AI opponents in this mode'
+      : 'Sun ' + current.score.sun + '  /  Moon ' + current.score.moon + ' · First to ' + current.score.target;
+    byId('match-detail').textContent = Math.floor(seconds / 60) + ':' +
+      String(seconds % 60).padStart(2, '0') +
+      (current.respawn_ticks ? '   ·   Respawn in ' + (current.respawn_ticks * PERIOD).toFixed(1) + 's' : '');
+  } else if (army) {
     const seconds = Math.ceil(current.remaining_ticks * PERIOD);
     const moon = current.actor.team === 'moon';
     byId('location').textContent = (moon ? 'Moon' : 'Sun') + ' army · Wave ' + army.wave +
@@ -411,10 +423,12 @@ function pause(complete = false) {
         : 'Practice paused';
   byId('summary').textContent = complete
     ? playingArmy
-      ? 'Final cores · Sun ' +
-        Math.ceil(current.army.cores.sun) +
-        ' / Moon ' +
-        Math.ceil(current.army.cores.moon)
+      ? current.ruleset === 'hero_skirmish'
+        ? 'Final score · Sun ' + current.score.sun + ' / Moon ' + current.score.moon
+        : 'Final cores · Sun ' +
+          Math.ceil(current.army.cores.sun) +
+          ' / Moon ' +
+          Math.ceil(current.army.cores.moon)
       : 'All three Moon guards are down. ' + practiceCoach.score + ' demonstrated.'
     : playMode === 'online'
       ? 'The room continues while this menu is open.'
@@ -686,7 +700,7 @@ function connect(create: boolean) {
       JSON.stringify({
         type: create ? 'create' : 'join',
         hero: heroSelect.value,
-        ...(create ? (roomSize.value === '3' ? { teamSize: 3 } : {}) : { code }),
+        ...(create ? { teamSize: Number(roomSize.value) } : { code }),
       }),
     );
   function closed(reason: string) {
