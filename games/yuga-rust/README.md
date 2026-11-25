@@ -1,5 +1,7 @@
 # YUGA · Confluence in Rust
 
+**Objective-mode experiment.** The source tree includes isolated [Ember Rite round and series rules](src/ritual.rs) and [tests](tests/ritual.rs), with a [design and integration roadmap](../yuga-native/docs/design/ember-rite-5v5/README.md). The downloadable game still runs the existing knockout skirmish; Ember Rite is not connected to the battle, browser, room server or published ZIP.
+
 **Optional Hanuman sculpt preview.** An [earlier tested download](downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true) uses a subtle facial-geometry candidate. That older package predates Vanara Sena; the current standard download below includes the new ability and retains the prior hero model. The preview's [build, visual and rig evidence](../yuga-native/art/hanuman-build-qa-2026/README.md) records its limits.
 
 The latest branch package includes a camera-clearance solver, a corrected interrupted vault, elevation-aware Hanuman area attacks and a timed Mountain Pulse visual. The camera solver checks the authoritative building and deck boxes; animated weapons and tail can still need framing work. The in-game rock is an interim cue, and the richer [five-action Blender study](../yuga-native/art/hanuman-motion-panel-2026/README.md) is an offline production study. [Panel results and next steps](../yuga-native/docs/design/five-round-panel-2026/README.md)

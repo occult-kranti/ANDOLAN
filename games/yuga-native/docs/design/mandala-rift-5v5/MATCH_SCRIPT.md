@@ -1,5 +1,7 @@
 # Rift Seal · proposed 5v5 match script
 
+**Superseded objective proposal.** The newer [Ember Rite round contract](../ember-rite-5v5/ROUND_AND_TECH.md) uses a carried fire vessel, revised 4 s/3.5 s/40 s interactions, first-to-13 regulation and paired overtime. The route and map study remain useful. This older script is retained as a historical design, not the current objective specification or a playable mode.
+
 This is a design for a future objective mode on Mandala Rift. The current playable Rust build is a hero-only knockout skirmish on the old map; it has no round, plant, defuse, portal or water-status logic yet. The proposed numbers are starting points for playtesting, not measured balance.
 
 ## Player-facing flow

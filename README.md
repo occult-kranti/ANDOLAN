@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Ember Rite direction.** A new [5v5 fire-vessel objective, story, hero/ability concepts and color study](games/yuga-native/docs/design/ember-rite-5v5/README.md) adapts the supplied inspiration. A separate Rust rules experiment tests ignition, quenching and overtime; the current downloadable skirmish does not yet include the objective mode or its map.
+
 **Five-hero key-art direction.** Explore a new Hanuman, Arjuna, Kali, Rama and Krishna [concept and production brief](games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/README.md). The image is an unlayered concept; the [roadmap](games/yuga-native/docs/design/dharmic-heroes-key-visual-2026/ROADMAP.md) separates art, rigging, runtime integration and performance gates. The current Rust 5v5 build still has two playable heroes.
 
 **New Hanuman ability: Vanara Sena.** Press **V** in the current Rust/PlayCanvas build to call five temporary spectral guardians around an aimed, counterable area. The server applies one timed damage field; the figures are presentation, not autonomous minions. [Ability, animation and source notes](games/yuga-native/docs/design/vanara-sena-2026/README.md) · [Game and room host](games/yuga-rust/downloads/yuga-rust-confluence.zip?raw=true)

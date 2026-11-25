@@ -1,5 +1,7 @@
 # Mandala Rift · 5v5 map and game-design handoff
 
+**Latest objective direction:** [Ember Rite](../ember-rite-5v5/README.md) replaces the earlier Rift Seal round-timing proposal with a carried-fire objective. This map remains a design study; the objective and map are not in the current playable skirmish.
+
 Mandala Rift is an original YUGA arena for five heroes against five. It combines three readable approaches, a temple courtyard, a city-edge bazaar, shallow jungle water and two mirrored folded-space links inside fictional temples and stepped sanctuaries. Soldier waves, siege vehicles and autonomous jungle minions are outside the new mode. The existing soldier art, animations and wave implementation remain available as source material for future hero equipment, visual echoes and noncombat architecture.
 
 ![Generated isometric concept of the proposed arena](concept-sketch.png)

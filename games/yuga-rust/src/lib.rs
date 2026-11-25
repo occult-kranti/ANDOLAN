@@ -7,6 +7,7 @@ pub mod combat;
 pub mod hero;
 pub mod mix;
 pub mod rama;
+pub mod ritual;
 pub mod world;
 
 #[cfg(target_arch = "wasm32")]
