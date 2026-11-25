@@ -1,5 +1,7 @@
 # YUGA full game production roadmap
 
+**Rust implementation track, 25 November 2026.** The shared offline Hanuman simulation, standalone browser build and animation exporter now have their own acceptance records. The migration sequence covers 3D terrain, a second hero, soldiers and economy, multiplayer, and desktop delivery. [Rust implementation and milestone gates](rust-rebuild/README.md) · [Playable package](../../yuga-rust/README.md)
+
 Updated 23 October 2026. This is the execution guide for the original native YUGA game. The target is the visual coherence, animation quality, combat readability and complete competitive experience requested through Deadlock, Dota 2 and Overwatch references. Those games are reference points, not an assertion that their source, artwork or server implementation has been recovered. The target remains open until the integrated game passes the gates below.
 
 The companion [game design master](GAME_DESIGN_MASTER.md) owns detailed rules, hero kits and player journeys. [ROADMAP_BACKLOG.json](ROADMAP_BACKLOG.json) owns stable task IDs, dependencies, statuses, acceptance conditions and evidence. This roadmap owns sequencing, production standards and release decisions. Change all affected records when a design decision changes; a new document alone does not complete its implementation tasks.

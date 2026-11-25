@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Play the Rust build.** Hanuman’s three-lane Confluence practice runs on the same Rust simulation in the browser and terminal. The offline browser package includes all five revised ability animations, the existing playable rig and the original world art. [Download the browser game](games/yuga-rust/downloads/yuga-rust-practice.zip?raw=true) · [Controls and build instructions](games/yuga-rust/README.md) · [Five expert rounds, source catalog and migration roadmap](games/yuga-native/docs/rust-rebuild/README.md)
+
 **Blender world elements.** Append or link 43 editable architecture, nature, foundation and sign assets. The same workflow can compile the FireRed remake’s Rust fallback geometry into a separate 36-piece Blender study. [Download and preview the libraries](games/yuga-native/art/reuse-library/README.md)
 
 This repository contains two games: **YUGA**, an original mythology-inspired native 3D game, and **ANDOLAN**, a separate browser city game.

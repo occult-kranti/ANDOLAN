@@ -1,0 +1,202 @@
+#!/usr/bin/env python3
+"""Build the same Rust drill as a self-contained, offline desktop-browser game."""
+
+import argparse
+import base64
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+from tempfile import TemporaryDirectory
+from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
+
+PROJECT = Path(__file__).resolve().parents[1]
+ROOT = PROJECT.parents[1]
+NATIVE = ROOT / "games/yuga-native"
+BROWSER = ROOT / "games/yuga"
+WEB = PROJECT / "web"
+TARGET = "wasm32-unknown-unknown"
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def capture(args):
+    return subprocess.check_output(args, cwd=PROJECT, text=True)
+
+
+def notices(workspace):
+    resolved = json.loads(
+        capture(
+            [
+                "cargo",
+                "metadata",
+                "--locked",
+                "--format-version=1",
+                "--filter-platform",
+                TARGET,
+            ]
+        )
+    )
+    blocks = {}
+    names = []
+
+    def include(label, content):
+        content = content.strip()
+        key = sha(content.encode())
+        if key not in blocks:
+            blocks[key] = content
+        names.append(f"{label} [{key[:12]}]")
+
+    for p in sorted(resolved["packages"], key=lambda p: (p["name"], p["version"])):
+        if p["name"] == "yuga-rust":
+            continue
+        folder = Path(p["manifest_path"]).parent
+        paths = sorted(
+            f
+            for f in folder.iterdir()
+            if f.is_file()
+            and f.name.lower().startswith(("license", "licence", "copying", "notice"))
+        )
+        if p.get("license_file"):
+            extra = folder / p["license_file"]
+            if extra.is_file() and extra not in paths:
+                paths.append(extra)
+        label = f"{p['name']} {p['version']} · {p.get('license') or 'upstream license file'}"
+        if not paths:
+            names.append(
+                f"{label} · registry metadata · https://crates.io/crates/{p['name']}/{p['version']}"
+            )
+        for path in paths:
+            include(label, path.read_text(errors="replace"))
+    for label, path in {
+        "PlayCanvas": ROOT / "node_modules/playcanvas/LICENSE",
+        "DM Sans": ROOT / "node_modules/@fontsource/dm-sans/LICENSE",
+        "Barlow Condensed": ROOT / "node_modules/@fontsource/barlow-condensed/LICENSE",
+        "YUGA browser models and environment": BROWSER / "THIRD_PARTY_NOTICES.md",
+        "YUGA Hanuman art": NATIVE / "art/hanuman/NOTICE.md",
+        "YUGA original cues": NATIVE / "NOTICE/HANUMAN-ABILITY-AUDIO.json",
+    }.items():
+        include(label, path.read_text())
+    text = (
+        "\n".join(names)
+        + "\n\n"
+        + "\n\n".join(f"[{key[:12]}]\n{value}" for key, value in blocks.items())
+    )
+    (workspace / "THIRD-PARTY.txt").write_text(text, encoding="utf-8")
+    return text
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=PROJECT / "dist")
+    args = parser.parse_args()
+    out = args.output.resolve()
+    out.mkdir(exist_ok=True, parents=True)
+    subprocess.run(
+        ["cargo", "build", "--locked", "--release", "--target", TARGET, "--lib"],
+        cwd=PROJECT,
+        check=True,
+    )
+    metadata = json.loads(
+        capture(["cargo", "metadata", "--no-deps", "--locked", "--format-version=1"])
+    )
+    with TemporaryDirectory(dir=out) as staging:
+        stage = Path(staging)
+        hero = stage / "hanuman.glb"
+        base = NATIVE / "assets/heroes/hanuman"
+        subprocess.run(
+            [
+                "cargo",
+                "run",
+                "--locked",
+                "--bin",
+                "hero_export",
+                "--",
+                base / "hanuman.glb",
+                base / "hanuman-ability-motion.tres",
+                hero,
+            ],
+            cwd=PROJECT,
+            check=True,
+        )
+        runner = """require('esbuild').buildSync({entryPoints:[process.argv[1]],outfile:process.argv[2],bundle:true,minify:true,legalComments:'inline',target:'es2022',logLevel:'error'});"""
+        subprocess.run(
+            ["node", "-e", runner, str(WEB / "main.ts"), str(stage / "client.js")],
+            cwd=ROOT,
+            check=True,
+        )
+        assets = {
+            "wasm": Path(metadata["target_directory"])
+            / TARGET
+            / "release/yuga_rust.wasm",
+            "hero": hero,
+            "soldier": BROWSER / "client/assets/units/soldier.glb",
+            "architecture": NATIVE / "assets/world/architecture.glb",
+            "nature": NATIVE / "assets/world/nature.glb",
+            "cover": NATIVE / "art/hanuman/match/hanuman-keyframe-denoised.png",
+            "display-font": ROOT
+            / "node_modules/@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2",
+            "body-font": ROOT
+            / "node_modules/@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2",
+        }
+        for cue in sorted((NATIVE / "assets/audio/hanuman-trial").glob("*.wav")):
+            assets["audio/" + cue.stem] = cue
+        blobs = {name: path.read_bytes() for name, path in assets.items()}
+        payload = {
+            "map": json.loads(
+                (NATIVE / "assets/world/confluence-map.json").read_text()
+            ),
+            "kit": json.loads(
+                (NATIVE / "assets/design/hanuman-ability-kit.json").read_text()
+            ),
+            "notices": notices(stage),
+            "blobs": {
+                name: base64.b64encode(raw).decode("ascii")
+                for name, raw in blobs.items()
+            },
+        }
+        script = (stage / "client.js").read_text().replace("</script", r"<\/script")
+        document = (
+            (WEB / "index.html")
+            .read_text()
+            .replace("/* STYLES */", (WEB / "style.css").read_text())
+            .replace("/* GAME */", script)
+            .replace(
+                "/* PAYLOAD */",
+                json.dumps(payload, separators=(",", ":")).replace("<", r"\u003c"),
+            )
+        )
+        filename = "yuga-rust.html"
+        (stage / filename).write_text(document, encoding="utf-8")
+        report = {
+            "rustc": capture(["rustc", "--version"]).strip(),
+            "target": TARGET,
+            "tick_hz": 20,
+            "html_sha256": sha((stage / filename).read_bytes()),
+            "blobs": {
+                key: {"bytes": len(raw), "sha256": sha(raw)}
+                for key, raw in blobs.items()
+            },
+        }
+        (stage / "build.json").write_text(json.dumps(report, indent=2) + "\n")
+        (stage / "PLAY.txt").write_text(
+            "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nBegin practice, move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Defeat all three Moon guards. Clicking an ability button selects it for your next arena click. Escape cancels targeting or pauses.\n"
+        )
+        with ZipFile(stage / "yuga-rust-practice.zip", "w") as archive:
+            for name in [filename, "PLAY.txt", "build.json", "THIRD-PARTY.txt"]:
+                archive.writestr(
+                    ZipInfo(name),
+                    (stage / name).read_bytes(),
+                    compress_type=ZIP_DEFLATED,
+                    compresslevel=7,
+                )
+        for name in [filename, "build.json", "yuga-rust-practice.zip"]:
+            os.replace(stage / name, out / name)
+        print(f"{out/filename}    {report['html_sha256']}")
+
+
+if __name__ == "__main__":
+    main()

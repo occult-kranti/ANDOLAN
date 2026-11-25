@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>YUGA · The Confluence</title>
+<style>/* STYLES */</style></head><body>
+<main id="game">
+ <canvas inert id="arena" aria-label="Confluence practice arena" tabindex="0"></canvas>
+ <section id="menu" aria-label="Practice menu">
+  <div class="cover"></div><div class="title-panel"><div class="wordmark">YUGA<span class="sun" aria-hidden="true">✺</span></div>
+  <div class="title-copy"><p class="eyebrow">Hanuman · Solo practice</p><h1>The<br>Confluence</h1><p class="intro">Defeat three Moon guards on the temple avenue. Try Hanuman’s ward on the Sun ally.</p>
+  <button id="begin" disabled>Loading arena…</button><p id="loading" role="status">Preparing the world and hero.</p></div>
+  <button class="quiet" id="credits-button">Credits &amp; source</button></div></section>
+ <section id="play" aria-label="Practice controls" hidden>
+  <div class="top"><div class="objective"><div class="eyebrow">Temple avenue</div><strong id="objective">Moon guard · 0 / 3</strong></div>
+  <div class="tools"><button id="sound" aria-label="Mute sound" aria-pressed="false">Sound on</button><button id="pause">Pause</button></div></div>
+  <div class="bottom"><div class="vitals"><span class="eyebrow">Hanuman</span><div id="vital-text"></div><div class="track"><i id="hp"></i></div></div>
+  <div class="actions" aria-label="Invocations" id="actions"></div>
+  <div class="help">WASD move <span>·</span> Mouse aim <span>·</span> Esc pause</div></div>
+  <p id="status" role="status"></p></section>
+ <section id="overlay" class="veil" role="dialog" aria-modal="true" aria-labelledby="result" aria-describedby="summary" hidden><div class="dialog"><p class="eyebrow">Hanuman · Confluence</p><h2 id="result">Practice paused</h2><p id="summary"></p><button id="resume">Resume practice</button><button id="reset" class="secondary">Restart drill</button><button id="back" class="quiet">Return to title</button></div></section>
+ <dialog id="credits"><h2>Credits &amp; source</h2><p>YUGA uses its original Confluence map, Hanuman rig, soldier models and sound. Rust runs the practice rules and collision. PlayCanvas renders the arena.</p>
+ <p><a href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/docs/rust-rebuild" target="_blank" rel="noopener">Research and source code</a></p><details><summary>Software and art notices</summary><pre id="notices"></pre></details><button id="close-credits">Close</button></dialog>
+</main>
+<script id="payload" type="application/json">/* PAYLOAD */</script><script>/* GAME */</script></body></html>

@@ -1,0 +1,385 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+main {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+body {
+  font:
+    16px DM,
+    Arial,
+    sans-serif;
+  background: #101919;
+  color: #f7efd8;
+}
+button,
+a {
+  font: inherit;
+}
+button {
+  border: 0;
+  cursor: pointer;
+  background: #e8bc6a;
+  color: #17201d;
+  padding: 0.76rem 1.1rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+button:hover {
+  filter: brightness(1.12);
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #9deed8;
+  outline-offset: 2px;
+}
+button.secondary {
+  background: #384742;
+  color: #fff3d4;
+}
+button.quiet {
+  background: transparent;
+  color: #e4ddca;
+  padding: 0.65rem 0;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 0.24em;
+}
+a {
+  color: #f0c477;
+}
+[hidden] {
+  display: none !important;
+}
+#arena,
+#menu,
+#play,
+.veil {
+  position: absolute;
+  inset: 0;
+}
+#arena {
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+#menu {
+  overflow: auto;
+  background: #101b1b;
+}
+.cover {
+  position: absolute;
+  inset: 0 0 0 24%;
+  background-position: 63% 46%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.cover:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #101b1b 0, rgba(16, 27, 27, 0.78) 10%, transparent 44%),
+    linear-gradient(0deg, rgba(9, 17, 17, 0.38), transparent 38%);
+}
+.title-panel {
+  position: relative;
+  max-width: 490px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: clamp(22px, 5vw, 74px);
+}
+.wordmark {
+  font:
+    600 26px BC,
+    Arial,
+    sans-serif;
+  letter-spacing: 0.25em;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.sun {
+  font-size: 18px;
+  color: #e8bc6a;
+}
+.title-copy {
+  margin: 28px 0;
+}
+.eyebrow {
+  color: #edc578;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font:
+    600 14px BC,
+    Arial,
+    sans-serif;
+}
+h1,
+h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+h1 {
+  font-size: clamp(52px, 7.6vw, 120px);
+  line-height: 0.91;
+  letter-spacing: -0.065em;
+  margin: 17px 0 25px;
+}
+.intro {
+  max-width: 33ch;
+  line-height: 1.52;
+  color: #e4e1d5;
+}
+.title-copy > button {
+  margin-top: 12px;
+  min-width: 180px;
+}
+.title-copy #loading {
+  font-size: 13px;
+  color: #c6c6b9;
+  max-width: 35ch;
+}
+#play {
+  pointer-events: none;
+}
+#play button {
+  pointer-events: auto;
+}
+.top,
+.bottom {
+  position: absolute;
+  left: clamp(12px, 3vw, 48px);
+  right: clamp(12px, 3vw, 48px);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.top {
+  top: clamp(12px, 3vh, 35px);
+  justify-content: space-between;
+}
+.objective,
+.tools button,
+.vitals,
+.slot,
+.help,
+#status {
+  background: #172421ed;
+  color: #fff1da;
+  border: 1px solid #9b94734f;
+  box-shadow: 0 3px 18px #0c110f2b;
+}
+.objective,
+.vitals {
+  border-radius: 3px;
+  padding: 9px 14px;
+}
+.objective strong {
+  display: block;
+  font-size: 18px;
+}
+.tools {
+  display: flex;
+  gap: 6px;
+}
+.tools button {
+  font-size: 13px;
+  padding: 8px 12px;
+}
+.bottom {
+  bottom: clamp(12px, 3vh, 32px);
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.vitals {
+  min-width: 152px;
+}
+.vitals #vital-text {
+  font-size: 14px;
+}
+.track {
+  height: 4px;
+  margin-top: 6px;
+  background: #4f6157;
+}
+.track i {
+  display: block;
+  background: #adddb6;
+  height: 100%;
+}
+.actions {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  min-width: min(390px, 100%);
+}
+.actions .slot {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  padding: 7px 8px;
+  font-size: clamp(11px, 1.2vw, 16px);
+  white-space: nowrap;
+  font-family: BC, Arial, sans-serif;
+}
+.slot kbd {
+  font:
+    600 12px DM,
+    Arial,
+    sans-serif;
+  display: block;
+  color: #eac578;
+  margin-bottom: 4px;
+}
+.slot.cool {
+  color: #c8cdbe;
+  background: #29352fec;
+}
+.slot[aria-pressed='true'] {
+  outline: 2px solid #edc578;
+  background: #3e3828;
+}
+#arena.targeting {
+  cursor: crosshair;
+}
+.help {
+  font-size: 12px;
+  padding: 6px 9px;
+  border-radius: 3px;
+}
+.help span {
+  color: #e3bd71;
+  padding: 0 3px;
+}
+#status {
+  position: absolute;
+  right: 3%;
+  top: 65px;
+  font-size: 13px;
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+#status:empty {
+  display: none;
+}
+.veil,
+dialog {
+  background: #101b19ed;
+}
+.veil {
+  display: grid;
+  place-items: center;
+}
+.dialog {
+  width: min(90vw, 385px);
+  padding: 28px;
+  display: grid;
+  gap: 10px;
+}
+.dialog h2,
+dialog h2 {
+  font-size: 2.5em;
+  margin: 0;
+}
+.dialog p {
+  margin: 0.25rem 0 0.7rem;
+}
+.dialog .quiet {
+  text-align: center;
+}
+dialog {
+  color: #f6efd8;
+  border: 1px solid #83745b;
+  width: min(92vw, 540px);
+  border-radius: 4px;
+}
+dialog p,
+dialog pre {
+  line-height: 1.45;
+}
+dialog pre {
+  max-height: 35vh;
+  overflow: auto;
+  white-space: pre-wrap;
+  font-size: 11px;
+}
+dialog button {
+  margin-top: 14px;
+}
+dialog::backdrop {
+  background: #0b1211bf;
+}
+@media (max-width: 680px) {
+  .cover {
+    inset: 0;
+    background-position: 59% 30%;
+  }
+  .cover:after {
+    background: linear-gradient(0deg, #101b1bf8 5%, #101b1bbb 45%, #101b1b30 80%);
+  }
+  .title-panel {
+    min-height: 100%;
+    max-width: unset;
+  }
+  .title-copy {
+    margin-top: 16vh;
+  }
+  .actions {
+    order: 3;
+    flex-basis: 100%;
+  }
+  .vitals {
+    min-width: 120px;
+  }
+  .help {
+    margin-left: auto;
+  }
+  .slot kbd {
+    font-size: 11px;
+  }
+  .tools button {
+    padding: 7px;
+  }
+  .top {
+    gap: 6px;
+  }
+}
+@media (max-height: 490px) {
+  .title-panel {
+    padding: 14px 30px;
+  }
+  .title-copy {
+    margin: 4px 0;
+  }
+  .title-copy h1 {
+    font-size: 44px;
+    margin: 4px 0;
+  }
+  .intro {
+    margin: 5px 0;
+  }
+  .title-copy > button {
+    margin-top: 4px;
+  }
+  .bottom {
+    bottom: 8px;
+  }
+  .help {
+    display: none;
+  }
+}

@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Rust game and handoff.** Start a Rust task with the playable package, the source-specific reuse decisions and the next migration gate. [Play and build](../games/yuga-rust/README.md) · [Five-round research and migration roadmap](../games/yuga-native/docs/rust-rebuild/README.md)
+
 Use the [project history library](../games/yuga-native/docs/PROJECT_HISTORY_LIBRARY.md) to recover a specific build, original brief, art study or source decision. For an art or runtime change, choose the artifact first, then follow the [production-round skill](../.agents/skills/yuga-art-production-rounds/SKILL.md).
 
 **Hanuman Trial:** Choose **Hanuman → Begin Hanuman Trial → Begin practice** at the native title on `game/yuga-hanuman-trial`. The offline courtyard runs Hanuman’s gada, four-joint tail and five profile-driven actions. The handoff pins the verified model, commands, receipts and next owners. [Hanuman handoff](../games/yuga-native/docs/HANUMAN_HANDOFF.md) · [Two-panel roadmap](../games/yuga-native/docs/HANUMAN_SWARM_ROADMAP.md) · [Studio bundle](https://raw.githubusercontent.com/occult-kranti/ANDOLAN/ecd4eb58f069c602bb81f8c56b74f39c0e1a0e34/YUGA-Hanuman-Studio-and-Trial.zip)

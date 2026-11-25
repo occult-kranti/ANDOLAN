@@ -1,5 +1,7 @@
 # YUGA native production track
 
+**Rust migration, 25 November 2026.** Play the Hanuman drill with the existing hero and Confluence environment. Rust owns casts, recipients, movement and cover. The export carries the revised Godot motion into the browser model. [Download and build](../yuga-rust/README.md) · [Research decisions and next milestones](docs/rust-rebuild/README.md)
+
 **Blender world elements.** Append or link 43 editable architecture, nature, foundation and sign assets. The same workflow can compile the FireRed remake’s Rust fallback geometry into a separate 36-piece Blender study. [Download and preview the libraries](art/reuse-library/README.md)
 
 **Play Hanuman’s five abilities.** Download the offline practice trial, extract the ZIP, and open `launch.sh` on Linux or `launch.bat` on Windows. Choose **Hanuman → Begin Hanuman Trial → Begin practice**. Swing the gada with **LMB**, shield with **Q**, vault with **E**, sweep with **C**, and call Mountain Pulse with **X**. The five revised animations use the existing 167-joint rig. Each has its own release sound and painted effect. [Download the native preview](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-hanuman-abilities-2026-11-25) · [Watch the 17-second gameplay reel](art/hanuman/reels/hanuman-abilities.mp4) · [View the Blender pose sheet](art/hanuman/abilities/hanuman-ability-poses.jpg) · [Release evidence and roadmap](docs/research/hanuman-ability-production/README.md)
