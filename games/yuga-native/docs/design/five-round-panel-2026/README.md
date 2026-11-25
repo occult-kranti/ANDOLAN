@@ -24,6 +24,8 @@ The supporting source librarian inspected selected chapters and papers on fixed 
 
 The branch's [downloadable Confluence ZIP](../../../../yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) has SHA-256 `83ed3b44b39719d95b3bd08da48a0e812ed869c815671c2a7165ab79917355f5`. It contains the browser game, portable room authority and third-party notices. [Build manifest](evidence/build.json) · [Launch and controls](../../../../yuga-rust/README.md)
 
+The package, Hanuman concept board and motion film were downloaded anonymously from GitHub at source commit `7ea189637cdccbce82a4d639e7bdc86e870d1626` and matched the local files by SHA-256. This handoff's publication receipt was added in a subsequent documentation-only commit. [Publication receipt](evidence/publication.json)
+
 The final locked Rust suite passed 73 tests with two existing tests ignored. The packaged browser practice passed 39 checks, including all five coach techniques and reset. Separate practice, lane and both-team duel probes checked 20 successful casts, eight denied casts and 5,376 repeated spatial samples. The package's Mountain Pulse report checks flight, impact sparks and cleanup. [Rust test log](evidence/rust-tests.txt) · [Browser report](evidence/browser-practice.json) · [Practice capture](evidence/browser-practice.png) · [Ability probes](evidence/hanuman-release.json) · [Mountain cue](evidence/mountain-cue.json)
 
 These automated browser tests used software rendering. They do not prove physical-GPU performance, public-host capacity or human competitive balance.
