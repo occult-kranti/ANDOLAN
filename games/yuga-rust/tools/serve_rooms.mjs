@@ -42,13 +42,15 @@ const MAX_CLIENTS = 64;
 const MAX_QUEUED = 4;
 const MAX_PACKET = 8192;
 const MAX_BACKLOG = 2 * 1024 * 1024;
+const AUTHORITY_BYTES_PER_SEAT = 1024 * 1024;
 const rooms = new Map();
 const clients = new Map();
 
 function send(socket, packet) {
   if (socket.readyState !== WebSocket.OPEN) return;
-  if (socket.bufferedAmount > MAX_BACKLOG) { socket.terminate(); return; }
-  socket.send(JSON.stringify(packet));
+  const body = JSON.stringify(packet);
+  if (socket.bufferedAmount + Buffer.byteLength(body) > MAX_BACKLOG) { socket.terminate(); return; }
+  socket.send(body);
 }
 function reject(socket, message) { send(socket, { type: 'error', message }); }
 function isRecord(value) { return value !== null && typeof value === 'object' && !Array.isArray(value); }
@@ -78,8 +80,9 @@ function closeRoom(room, message) {
     player.socket.close(1000, message);
   }
 }
+function seatTeam(seat) { return seat % 2 === 0 ? 'sun' : 'moon'; }
 function makePlayer(socket, hero, seat) {
-  return { socket, hero, seq: -1, motion: { movement: [0, 0], aim: [0, seat ? -1 : 1] },
+  return { socket, hero, seq: -1, motion: { movement: [0, 0], aim: [0, seatTeam(seat) === 'sun' ? 1 : -1] },
     actions: [], updated: Date.now() };
 }
 function writeChild(room, command, seqs) {
@@ -95,20 +98,23 @@ function startAuthority(room) {
   child.on('error', died);
   child.once('close', died);
   child.stdin.on('error', died);
-  let buffer = '';
+  const chunks = [];
+  let bufferedBytes = 0;
   child.stdout.setEncoding('utf8');
   child.stdout.on('data', chunk => {
     if (room.child !== child) return;
-    buffer += chunk;
-    if (buffer.length > MAX_BACKLOG) { closeRoom(room, 'Authority frame exceeded its limit.'); return; }
-    const newline = buffer.indexOf('\n');
-    if (newline < 0) return;
-    const line = buffer.slice(0, newline);
-    buffer = buffer.slice(newline + 1);
+    bufferedBytes += Buffer.byteLength(chunk);
+    if (bufferedBytes > AUTHORITY_BYTES_PER_SEAT * room.capacity) { closeRoom(room, 'Authority frame exceeded its limit.'); return; }
+    chunks.push(chunk);
+    const newline = chunk.indexOf('\n');
+    if (newline === -1) return;
     try {
-      const frame = JSON.parse(line);
-      if (!room.flight || buffer.length || !Array.isArray(frame.states) || frame.states.length !== 2 ||
-          !frame.states.every(isRecord) || !Array.isArray(frame.accepted) || frame.accepted.length !== 2) {
+      if (newline !== chunk.length - 1) throw new Error('Unexpected trailing authority data');
+      const frame = JSON.parse(chunks.join(''));
+      chunks.length = 0;
+      bufferedBytes = 0;
+      if (!room.flight || !Array.isArray(frame.states) || frame.states.length !== room.capacity ||
+          !frame.states.every(isRecord) || !Array.isArray(frame.accepted) || frame.accepted.length !== room.capacity) {
         throw new Error('Unexpected authority frame');
       }
       const { seqs } = room.flight;
@@ -122,32 +128,41 @@ function startAuthority(room) {
       }
     } catch { closeRoom(room, 'Invalid authority frame.'); }
   });
-  writeChild(room, { sun: room.players[0].hero, moon: room.players[1].hero }, [null, null]);
+  const heroes = room.players.map(player => player.hero);
+  const roster = room.capacity === 2 ? { sun: heroes[0], moon: heroes[1] } : { heroes };
+  writeChild(room, roster, heroes.map(() => null));
 }
 function beginLobby(socket, client, message) {
   const joining = message.type === 'join';
-  if (!keysAllowed(message, joining ? ['type', 'hero', 'code'] : ['type', 'hero']) || !validHero(message.hero)) {
+  if (!keysAllowed(message, joining ? ['type', 'hero', 'code'] : ['type', 'hero', 'teamSize']) || !validHero(message.hero)) {
     reject(socket, 'Choose Hanuman or Rama and supply the requested room fields.'); return;
+  }
+  if (!joining && message.teamSize !== undefined && ![1, 3].includes(message.teamSize)) {
+    reject(socket, 'Choose a team size of one or three.'); return;
   }
   if (client.room) { reject(socket, 'Leave the current room first.'); return; }
   let room;
   if (joining) {
     const code = typeof message.code === 'string' ? message.code.trim().toUpperCase() : '';
     room = rooms.get(code);
-    if (!room || room.players.length !== 1) { reject(socket, 'Room is missing or already full.'); return; }
+    if (!room || room.players.length >= room.capacity) { reject(socket, 'Room is missing or already full.'); return; }
   } else {
     if (rooms.size >= MAX_ROOMS) { reject(socket, 'Room capacity reached.'); return; }
     let code;
     do { code = randomBytes(4).toString('hex').toUpperCase(); } while (rooms.has(code));
-    room = { code, created: Date.now(), players: [], child: null, flight: null, finished: 0 };
+    room = { code, capacity: (message.teamSize ?? 1) * 2, created: Date.now(), players: [], child: null, flight: null, finished: 0 };
     rooms.set(code, room);
   }
   const seat = room.players.length;
   client.room = room;
   client.seat = seat;
   room.players.push(makePlayer(socket, message.hero, seat));
-  send(socket, { type: 'lobby', code: room.code, seat });
-  if (seat === 1) startAuthority(room);
+  const count = room.players.length;
+  room.players.forEach((player, index) => {
+    send(player.socket, { type: 'lobby', code: room.code, seat: index,
+      team: seatTeam(index), count, capacity: room.capacity });
+  });
+  if (count === room.capacity) startAuthority(room);
 }
 function acceptInput(socket, client, msg) {
   const room = client.room;

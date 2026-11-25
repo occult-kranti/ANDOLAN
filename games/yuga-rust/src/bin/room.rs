@@ -8,10 +8,10 @@ use yuga_rust::{
 };
 
 #[derive(Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Roster {
-    sun: Hero,
-    moon: Hero,
+#[serde(untagged, deny_unknown_fields)]
+enum Roster {
+    Duel { sun: Hero, moon: Hero },
+    Squad { heroes: [Hero; 6] },
 }
 
 #[derive(Default, Deserialize)]
@@ -25,15 +25,15 @@ struct Input {
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Frame {
-    players: [Input; 2],
+    players: Vec<Input>,
     ticks: u8,
 }
 
-fn send(game: &Battle, out: &mut impl Write, accepted: [Option<bool>; 2]) -> io::Result<()> {
-    serde_json::to_writer(
-        &mut *out,
-        &json!({"states":[game.snapshot(0),game.snapshot(1)],"accepted":accepted}),
-    )?;
+fn send(game: &Battle, out: &mut impl Write, accepted: &[Option<bool>]) -> io::Result<()> {
+    let states: Vec<_> = (0..accepted.len())
+        .map(|seat| game.snapshot(seat))
+        .collect();
+    serde_json::to_writer(&mut *out, &json!({"states":states,"accepted":accepted}))?;
     out.write_all(b"\n")?;
     out.flush()
 }
@@ -45,15 +45,34 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
     let roster: Roster = serde_json::from_str(&roster?)?;
     let world = World::load()?;
-    let mut game = Battle::load(&world, roster.sun, Some(roster.moon))?;
+    let heroes = match roster {
+        Roster::Duel { sun, moon } => vec![sun, moon],
+        Roster::Squad { heroes } => heroes.to_vec(),
+    };
+    let mut game = Battle::with_roster(&world, &heroes)?;
+    let mut accepted = vec![None; heroes.len()];
     let mut out = io::stdout().lock();
-    send(&game, &mut out, [None, None])?;
+    send(&game, &mut out, &accepted)?;
     for command in lines {
         let frame: Frame = serde_json::from_str(&command?)?;
-        if !(1..=4).contains(&frame.ticks) || frame.players.iter().any(|p| p.casts.len() > 4) {
+        if frame.players.len() != heroes.len()
+            || !(1..=4).contains(&frame.ticks)
+            || frame.players.iter().any(|p| {
+                p.casts.len() > 4
+                    || !p
+                        .motion
+                        .movement
+                        .iter()
+                        .chain(&p.motion.aim)
+                        .all(|v| v.is_finite())
+                    || p.casts
+                        .iter()
+                        .any(|cast| !cast.ground.iter().chain(&cast.aim).all(|v| v.is_finite()))
+            })
+        {
             return Err("Invalid room frame".into());
         }
-        let mut accepted = [None, None];
+        accepted.fill(None);
         for (seat, player) in frame.players.iter().enumerate() {
             if player.reload {
                 game.reload(seat);
@@ -62,11 +81,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 accepted[seat] = Some(game.cast(seat, *cast, &world).is_ok());
             }
         }
-        let motions = [frame.players[0].motion, frame.players[1].motion];
+        let motions: Vec<_> = frame.players.iter().map(|p| p.motion).collect();
         for _ in 0..frame.ticks {
             game.step(&motions, &world);
         }
-        send(&game, &mut out, accepted)?;
+        send(&game, &mut out, &accepted)?;
     }
     Ok(())
 }

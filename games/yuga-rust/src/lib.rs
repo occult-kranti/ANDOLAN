@@ -175,6 +175,7 @@ mod room_worker {
         world: World,
         battle: Battle,
         bytes: Vec<u8>,
+        motion: Vec<Motion>,
     }
     thread_local! {static ROOM: RefCell<Option<Room>>=const {RefCell::new(None)};}
 
@@ -191,20 +192,71 @@ mod room_worker {
         let (Some(sun), Some(moon)) = (choice(sun), choice(moon)) else {
             return 0;
         };
-        let Ok(world) = World::load() else {
+        initialize(&[sun, moon])
+    }
+
+    fn initialize(heroes: &[Hero]) -> i32 {
+        let Ok(world) = World::load() else { return 0 };
+        let Ok(battle) = Battle::with_roster(&world, heroes) else {
             return 0;
         };
-        let Ok(battle) = Battle::load(&world, sun, Some(moon)) else {
-            return 0;
-        };
-        ROOM.with_borrow_mut(|r| {
-            *r = Some(Room {
+        ROOM.with_borrow_mut(|room| {
+            *room = Some(Room {
                 world,
                 battle,
                 bytes: Vec::new(),
-            })
+                motion: vec![Motion::default(); heroes.len()],
+            });
         });
         1
+    }
+
+    #[no_mangle]
+    pub extern "C" fn squad_init(a: u32, b: u32, c: u32, d: u32, e: u32, f: u32) -> i32 {
+        let Some(heroes) = [a, b, c, d, e, f]
+            .into_iter()
+            .map(choice)
+            .collect::<Option<Vec<_>>>()
+        else {
+            return 0;
+        };
+        initialize(&heroes)
+    }
+
+    #[no_mangle]
+    pub extern "C" fn squad_motion(seat: u32, mx: f32, mz: f32, ax: f32, az: f32) -> i32 {
+        if ![mx, mz, ax, az].iter().all(|v| v.is_finite()) {
+            return 0;
+        }
+        ROOM.with_borrow_mut(|room| {
+            let Some(room) = room.as_mut().filter(|r| r.motion.len() == 6) else {
+                return 0;
+            };
+            let Some(input) = room.motion.get_mut(seat as usize) else {
+                return 0;
+            };
+            *input = Motion {
+                movement: [mx, mz],
+                aim: [ax, az],
+            };
+            1
+        })
+    }
+
+    #[no_mangle]
+    pub extern "C" fn squad_advance(ticks: u32) -> i32 {
+        if !(1..=4).contains(&ticks) {
+            return 0;
+        }
+        ROOM.with_borrow_mut(|room| {
+            let Some(room) = room.as_mut().filter(|r| r.motion.len() == 6) else {
+                return 0;
+            };
+            for _ in 0..ticks {
+                room.battle.step(&room.motion, &room.world);
+            }
+            1
+        })
     }
 
     #[no_mangle]
@@ -243,7 +295,7 @@ mod room_worker {
         maz: f32,
     ) {
         ROOM.with_borrow_mut(|r| {
-            if let Some(r) = r {
+            if let Some(r) = r.as_mut().filter(|r| r.motion.len() == 2) {
                 r.battle.step(
                     &[
                         Motion {

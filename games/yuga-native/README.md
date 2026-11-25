@@ -1,6 +1,6 @@
 # YUGA native production track
 
-**Rust migration, 25 November 2026.** A full three-lane match with Hanuman and Rama, persistent soldiers and siege, local practice and private two-player rooms now runs in Rust. [Download and controls](../yuga-rust/README.md) · [Research and port status](docs/rust-rebuild/deep-search/README.md)
+**Rust migration, 25 November 2026.** A full three-lane match with Hanuman and Rama, persistent soldiers and siege, local practice and private 1v1 and 3v3 rooms now runs in Rust. [Download and controls](../yuga-rust/README.md) · [Research and port status](docs/rust-rebuild/deep-search/README.md)
 
 **Blender world elements.** Append or link 43 editable architecture, nature, foundation and sign assets. The same workflow can compile the FireRed remake’s Rust fallback geometry into a separate 36-piece Blender study. [Download and preview the libraries](art/reuse-library/README.md)
 

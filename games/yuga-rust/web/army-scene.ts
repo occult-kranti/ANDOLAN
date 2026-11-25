@@ -61,7 +61,8 @@ export function makeArmyScene(kit: RenderKit, map: any, library?: pc.ContainerRe
   };
   const backing = kit.material('army health backing', '#232d2c');
   const plinth = kit.material('objective sandstone', '#887963');
-  const templates = new Map<string, pc.MeshInstance>();
+  type Template = { mesh: pc.Mesh; material: pc.Material };
+  const templates = new Map<string, Template>();
   if (library) {
     const native = library.instantiateRenderEntity();
     for (const type of roles)
@@ -69,12 +70,12 @@ export function makeArmyScene(kit: RenderKit, map: any, library?: pc.ContainerRe
         const key = team + '_' + type;
         const node = native.findByName(key) as pc.Entity;
         const source = node?.render?.meshInstances[0];
-        if (!source?.mesh?.morph || source.mesh.morph.targets.length !== 4)
+        if (!source?.material || !source.mesh?.morph || source.mesh.morph.targets.length !== 4)
           throw new Error('Missing native army poses for ' + key);
-        templates.set(key, source);
+        templates.set(key, { mesh: source.mesh, material: source.material });
         const distant = (native.findByName(key + '_lod') as pc.Entity)?.render?.meshInstances[0];
-        if (!distant) throw new Error('Missing distant mesh for ' + key);
-        templates.set(key + '_lod', distant);
+        if (!distant?.mesh || !distant.material) throw new Error('Missing distant mesh for ' + key);
+        templates.set(key + '_lod', { mesh: distant.mesh, material: distant.material });
       }
     // Templates hold their mesh references while individual troop slots recycle.
   }
@@ -119,7 +120,7 @@ export function makeArmyScene(kit: RenderKit, map: any, library?: pc.ContainerRe
       cores.set(team, { health, beacon });
     }
   }
-  function makeSlot(near: boolean, source: pc.MeshInstance) {
+  function makeSlot(near: boolean, source: Template) {
     const root = new pc.Entity('Lane unit', app);
     layer.addChild(root);
     const visual = new pc.Entity('Authored native body', app);

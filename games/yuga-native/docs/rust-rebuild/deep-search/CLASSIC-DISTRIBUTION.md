@@ -6,7 +6,7 @@
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:8000/`. Choose a hero on the normal roster and click **Hero sparring**. The HUD displays **RUST SPARRING**. Each of the 14 heroes has three abilities. The lobby also offers the existing classic bot match. The online mode connects to a separately hosted YUGA arena server. The dedicated two-player Rust Confluence build has its own download. [Confluence package](../../../../yuga-rust/downloads/yuga-rust-confluence.zip)
+Open `http://127.0.0.1:8000/`. Choose a hero on the normal roster and click **Hero sparring**. The HUD displays **RUST SPARRING**. Each of the 14 heroes has three abilities. The lobby also offers the existing classic bot match. The online mode connects to a separately hosted YUGA arena server. The dedicated Rust Confluence team build has its own download. [Confluence package](../../../../yuga-rust/downloads/yuga-rust-confluence.zip)
 
 ## Deploy or reproduce
 

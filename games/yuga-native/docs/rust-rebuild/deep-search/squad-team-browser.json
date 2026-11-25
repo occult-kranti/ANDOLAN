@@ -1,0 +1,249 @@
+{
+  "scope": "Packaged six-seat private team match with two independent Chromium processes and four room-protocol clients",
+  "zip_sha256": "3c477f0d77e29110e84ed5b1a1ed52d27d8cafa3e0d114903770428de53a3c28",
+  "html_sha256": "0a1adfc1bf9b06efb6a19a0dc1dae0f3ab31c675888b02807809de8dc0724aa3",
+  "test_sha256": "b3c1c1688951ae79e6c47b3d9cacc9199346d5078707ce2d4f8956bbe43c83c0",
+  "harness_sha256": "fe042ccc741b4ff2291b72a297220dc32b3f907b0e0f4f73cb60813d0c95b166",
+  "viewport": {
+    "width": 960,
+    "height": 600
+  },
+  "device_scale_factor": 0.5,
+  "checks": [
+    "the public 3v3 lobby waits for the sixth player",
+    "both HUDs identify their army and assigned team-match seat",
+    "both viewports instantiate five identified teammate/enemy hero rigs with the assigned team colors",
+    "both viewports track the independently moved Hanuman while his duplicate stays put",
+    "Moon renders the correct Sun Hanuman’s Mountain pose and effect while his teammate stays independent",
+    "the graphical clients use two same-origin room sockets and no external assets",
+    "a departing seat closes the match and both public clients return to hero selection"
+  ],
+  "errors": [],
+  "unexpected_network": [],
+  "browser_sockets": 2,
+  "casts": [
+    {
+      "cast_id": 1,
+      "tick": 822,
+      "target": [
+        1.6299100025207736e-7,
+        -0.8700032830238342
+      ]
+    },
+    {
+      "cast_id": 2,
+      "tick": 1444,
+      "target": [
+        -1.1999999284744263,
+        -8.319999694824219
+      ]
+    },
+    {
+      "cast_id": 3,
+      "tick": 2084,
+      "target": [
+        2.6492315896575747e-7,
+        -2.25
+      ]
+    }
+  ],
+  "five_seat_lobby": "Share 5042783F · 5/6 players · Sun seat 1. Waiting for 1 more.",
+  "browser": "154.0.8037.57",
+  "hud_labels": [
+    "Sun army · Wave 2 · Seat 1/6",
+    "Moon army · Wave 2 · Seat 2/6"
+  ],
+  "views": [
+    {
+      "hero": "hanuman",
+      "team": "sun",
+      "local_tick": 586,
+      "remotes": [
+        {
+          "id": 4294967294,
+          "seat": 1,
+          "hero": "rama",
+          "team": "moon",
+          "color": "#74d4ef",
+          "clip": "idle",
+          "pos": [
+            0,
+            5.400001525878906
+          ]
+        },
+        {
+          "id": 4294967292,
+          "seat": 2,
+          "hero": "hanuman",
+          "team": "sun",
+          "color": "#f3b568",
+          "clip": "idle",
+          "pos": [
+            -3,
+            -5.399993896484375
+          ]
+        },
+        {
+          "id": 4294967291,
+          "seat": 3,
+          "hero": "hanuman",
+          "team": "moon",
+          "color": "#74d4ef",
+          "clip": "idle",
+          "pos": [
+            -3,
+            5.400001525878906
+          ]
+        },
+        {
+          "id": 4294967290,
+          "seat": 4,
+          "hero": "rama",
+          "team": "sun",
+          "color": "#f3b568",
+          "clip": "idle",
+          "pos": [
+            3,
+            -5.399993896484375
+          ]
+        },
+        {
+          "id": 4294967289,
+          "seat": 5,
+          "hero": "rama",
+          "team": "moon",
+          "color": "#74d4ef",
+          "clip": "idle",
+          "pos": [
+            3,
+            5.400001525878906
+          ]
+        }
+      ]
+    },
+    {
+      "hero": "rama",
+      "team": "moon",
+      "local_tick": 606,
+      "remotes": [
+        {
+          "id": 4294967293,
+          "seat": 0,
+          "hero": "hanuman",
+          "team": "sun",
+          "color": "#f3b568",
+          "clip": "idle",
+          "pos": [
+            0,
+            -5.399993896484375
+          ]
+        },
+        {
+          "id": 4294967292,
+          "seat": 2,
+          "hero": "hanuman",
+          "team": "sun",
+          "color": "#f3b568",
+          "clip": "idle",
+          "pos": [
+            -3,
+            -5.399993896484375
+          ]
+        },
+        {
+          "id": 4294967291,
+          "seat": 3,
+          "hero": "hanuman",
+          "team": "moon",
+          "color": "#74d4ef",
+          "clip": "idle",
+          "pos": [
+            -3,
+            5.400001525878906
+          ]
+        },
+        {
+          "id": 4294967290,
+          "seat": 4,
+          "hero": "rama",
+          "team": "sun",
+          "color": "#f3b568",
+          "clip": "idle",
+          "pos": [
+            3,
+            -5.399993896484375
+          ]
+        },
+        {
+          "id": 4294967289,
+          "seat": 5,
+          "hero": "rama",
+          "team": "moon",
+          "color": "#74d4ef",
+          "clip": "idle",
+          "pos": [
+            3,
+            5.400001525878906
+          ]
+        }
+      ]
+    }
+  ],
+  "independent_hanumans": {
+    "initial": [
+      -3,
+      -5.399993896484375
+    ],
+    "placed": [
+      -1,
+      -5.399993896484375
+    ],
+    "moon_observed": {
+      "moving": [
+        -1,
+        -5.399993896484375
+      ],
+      "still": [
+        0,
+        -5.399993896484375
+      ],
+      "id": 4294967292,
+      "still_id": 4294967293
+    },
+    "sun_observed": [
+      -1,
+      -5.399993896484375
+    ]
+  },
+  "moon_presented_cast": [
+    {
+      "frame": 21,
+      "tick": 2072,
+      "seat": 0,
+      "id": 4294967293,
+      "hero": "hanuman",
+      "team": "sun",
+      "color": "#f3b568",
+      "clip": "mountain_pulse",
+      "casts": [
+        "mountain_pulse"
+      ],
+      "x": 434,
+      "y": 189,
+      "other_hanuman": {
+        "seat": 2,
+        "id": 4294967292,
+        "clip": "idle",
+        "casts": []
+      }
+    }
+  ],
+  "screenshot_sha256": "e0cf2a3238eb5ac4af7ed03cb1925593d85f5f2fb6fd3cfa6b307babb67a2efe",
+  "passed": true,
+  "health_after_cleanup": {
+    "ok": true,
+    "rooms": 0,
+    "clients": 0,
+    "running": 0
+  }
+}

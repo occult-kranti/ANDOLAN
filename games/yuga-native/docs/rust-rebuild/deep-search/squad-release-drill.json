@@ -1,0 +1,171 @@
+{
+  "scope": "Packaged HTML, desktop browser controls after disconnection, read-only Rust state and PlayCanvas presentation",
+  "input_sha256": "0a1adfc1bf9b06efb6a19a0dc1dae0f3ab31c675888b02807809de8dc0724aa3",
+  "zip_sha256": "3c477f0d77e29110e84ed5b1a1ed52d27d8cafa3e0d114903770428de53a3c28",
+  "test_sha256": "668057aa9254499b3bf4b335efe59ec329ee9f5556919680aeed403bfafe934a",
+  "harness_sha256": "fe042ccc741b4ff2291b72a297220dc32b3f907b0e0f4f73cb60813d0c95b166",
+  "viewport": {
+    "width": 1100,
+    "height": 720
+  },
+  "checks": [
+    "credits dialog exposes the bundled asset and engine notices",
+    "offline play starts the 20 Hz trial with five actions, three enemies and an ally",
+    "renderer loaded the source skin and named clips for every ability",
+    "renderer displays all map placements, three lanes, water, 16 authority solids and four native practice units",
+    "audio mute is reflected in the player control",
+    "W moves Hanuman up the central lane",
+    "Escape cancels targeting before pause without spending a cast",
+    "clicking a ready HUD ability arms it without casting",
+    "clicking the guard after selecting Mountain casts at its projected feet and clears the selection",
+    "pause freezes the authority tick and all combat events",
+    "keyboard focus stays in the pause dialog",
+    "resume restores gameplay focus and advances the same drill",
+    "paused reset clears targets, timers, shields and event history",
+    "primary strike deals 34 HP to the pointed enemy",
+    "ward applies 48 shield to Hanuman and his forward ally",
+    "keyboard and action-bar repeats during the ward lock and cooldown start no second cast",
+    "HUD explains the rejected ward input",
+    "tail impact deals 28 damage behind the hero",
+    "the tail field deals exposure damage after the sweep",
+    "captured playfield has varied rasterized imagery in the central camera region",
+    "Mountain heals the actor and eliminates two targets nine ticks after release",
+    "vault moves the actor through the air and lands on the court",
+    "the remaining target is within physical strike reach after vault",
+    "all three neutralizations show the completion dialog",
+    "complete reset clears targets, timers, shields and event history",
+    "resized trial keeps its viewport and pause control",
+    "a desktop with WebGL disabled receives an actionable graphics requirement",
+    "gameplay requested no external HTTP or WebSocket resources",
+    "no uncaught browser errors during normal play"
+  ],
+  "ability_results": {
+    "gada": {
+      "begin": 5,
+      "impact": 10,
+      "hp": 56
+    },
+    "ward": {
+      "impact": 27,
+      "shield": 48
+    },
+    "tail": {
+      "impact": 59,
+      "first_exposure": 60
+    },
+    "mountain": {
+      "release": 104,
+      "impact": 113,
+      "kills": 2,
+      "actor_hp": 300
+    },
+    "vault": {
+      "release_tick": 130,
+      "air_y": 0.6123456358909607,
+      "landed": [
+        2.335129976272583,
+        -46.82704544067383
+      ]
+    }
+  },
+  "rendered_abilities": {
+    "mountain_pulse": {
+      "clip": "mountain_pulse",
+      "normalized_time": 0.18558572351961455,
+      "clip_seconds": 0.24744763873400016,
+      "sampled_joints": 6
+    },
+    "vajra_gada": {
+      "clip": "fire",
+      "normalized_time": 0.20799998939037326,
+      "clip_seconds": 0.1525333288590112,
+      "sampled_joints": 6
+    },
+    "vajra_kavacha": {
+      "clip": "cast2",
+      "normalized_time": 0.2857142984867096,
+      "clip_seconds": 0.29523809935365364,
+      "sampled_joints": 6
+    },
+    "lanka_dahan": {
+      "clip": "tail_sweep",
+      "normalized_time": 0.22222222387790683,
+      "clip_seconds": 0.22962962427624947,
+      "sampled_joints": 6
+    },
+    "maruti_udayana": {
+      "clip": "cast1",
+      "normalized_time": 0.10389333713055074,
+      "clip_seconds": 0.10735644506555553,
+      "sampled_joints": 6
+    }
+  },
+  "external_requests": [],
+  "page_errors": [],
+  "browser": "154.0.8037.57",
+  "entry": "loopback HTTP, ZIP member, then offline (file URL blocked by managed Chromium)",
+  "renderer_at_start": {
+    "heroClips": [
+      "cast",
+      "cast1",
+      "cast2",
+      "cast3",
+      "defeat",
+      "fire",
+      "idle",
+      "jump",
+      "mountain_pulse",
+      "run",
+      "tail_sweep"
+    ],
+    "heroBones": 167,
+    "mapProps": 63,
+    "lanes": 3,
+    "waters": 3,
+    "decks": 8,
+    "visualSolidIds": [
+      "authority-solid-0",
+      "authority-solid-1",
+      "authority-solid-2",
+      "authority-solid-3",
+      "authority-solid-4",
+      "authority-solid-5",
+      "authority-solid-6",
+      "authority-solid-7",
+      "sun-lift-west-deck",
+      "sun-shrine-west-deck",
+      "sun-lift-east-deck",
+      "sun-shrine-east-deck",
+      "moon-lift-west-deck",
+      "moon-shrine-west-deck",
+      "moon-lift-east-deck",
+      "moon-shrine-east-deck"
+    ],
+    "soldierCount": 4
+  },
+  "graphics_device": {
+    "api": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+  },
+  "toolbar_target": {
+    "intended": [
+      2,
+      -48
+    ],
+    "projected": [
+      1.9999996057646783,
+      -47.9999954555993
+    ],
+    "actual": [
+      1.9999996423721313,
+      -47.999996185302734
+    ],
+    "error_m": 0.000003831424398419427
+  },
+  "gameplay_png_sha256": "420deb2c6cb6620500b2aef4cdeb62497350aab6f9a9e787ba5874c357f21e5d",
+  "central_color_bins": 84,
+  "transport_requests": {
+    "http:": 1
+  },
+  "passed": true
+}

@@ -11,7 +11,16 @@ use serde_json::{json, Value};
 pub const ENTRY_TICKS: u32 = 27 * 20;
 pub const LIMIT_TICKS: u32 = 18 * 60 * 20;
 const RESPAWN_TICKS: u32 = 3 * 20;
-const HERO_ID_BASE: u32 = u32::MAX - 2;
+const MAX_SEATS: usize = 6;
+
+// The original duel reserved these first two receiver IDs. Both armies use small ascending IDs.
+fn receiver_id(seat: usize) -> u32 {
+    match seat {
+        0 => u32::MAX - 2,
+        1 => u32::MAX - 1,
+        _ => u32::MAX - 1 - seat as u32,
+    }
+}
 type Point = [f32; 2];
 
 #[derive(Clone, Copy, Debug, Deserialize, Serialize, PartialEq, Eq)]
@@ -138,6 +147,51 @@ pub struct CastInput {
     pub aim: Point,
 }
 
+// Every fighter gets the same hero health at the start of a tick. Apply the effects after
+// every fighter has acted so a lethal hit cannot cancel another actor's same-tick release.
+#[derive(Default)]
+struct Incoming {
+    damage: f64,
+    heal: f64,
+    shield_grant: Option<(f64, u32)>,
+    shield_restore: Option<(f64, u32)>,
+}
+
+impl Incoming {
+    fn observe(&mut self, before: &Receiver, after: &Receiver, caster_team: &'static str) {
+        if before.team != caster_team {
+            self.damage += ((before.hp - after.hp) + (before.shield - after.shield)).max(0.);
+            return;
+        }
+        self.heal += (after.hp - before.hp).max(0.);
+        let shield = (after.shield, after.shield_until);
+        if after.shield > before.shield
+            || (after.shield == before.shield && after.shield_until > before.shield_until)
+        {
+            // Independently issued wards combine by maximum strength and duration, as in the kits.
+            let (power, until) = self.shield_grant.unwrap_or((0., 0));
+            self.shield_grant = Some((power.max(shield.0), until.max(shield.1)));
+        } else if after.shield < before.shield || after.shield_until < before.shield_until {
+            self.shield_restore = Some(shield);
+        }
+    }
+
+    fn support(&self, body: &mut Receiver) {
+        if body.hp <= 0. {
+            return;
+        }
+        if let Some((power, until)) = self.shield_restore {
+            body.shield = body.shield.min(power);
+            body.shield_until = if body.shield > 0. { until } else { 0 };
+        }
+        if let Some((power, until)) = self.shield_grant {
+            body.shield = body.shield.max(power);
+            body.shield_until = body.shield_until.max(until);
+        }
+        body.hp = (body.hp + self.heal).min(body.max_hp);
+    }
+}
+
 pub struct Battle {
     pub army: Army,
     players: Vec<Player>,
@@ -146,11 +200,23 @@ pub struct Battle {
 
 impl Battle {
     pub fn load(world: &World, sun: Hero, moon: Option<Hero>) -> Result<Self, String> {
-        let mut army = Army::load()?;
-        let mut players = vec![Player::new(sun, Team::Sun)?];
-        if let Some(hero) = moon {
-            players.push(Player::new(hero, Team::Moon)?);
+        let mut heroes = vec![sun];
+        heroes.extend(moon);
+        Self::with_roster(world, &heroes)
+    }
+
+    pub fn with_roster(world: &World, roster: &[Hero]) -> Result<Self, String> {
+        if !matches!(roster.len(), 1 | 2 | MAX_SEATS) {
+            return Err("Expected a solo hero, two duelists or six alternating team seats".into());
         }
+        let mut army = Army::load()?;
+        let mut players = roster
+            .iter()
+            .enumerate()
+            .map(|(seat, hero)| {
+                Player::new(*hero, if seat % 2 == 0 { Team::Sun } else { Team::Moon })
+            })
+            .collect::<Result<Vec<_>, _>>()?;
         // Enter the first clash through the ordinary simulation, keeping all shield clocks aligned.
         for _ in 0..ENTRY_TICKS {
             army.step(world);
@@ -158,34 +224,95 @@ impl Battle {
                 player.fighter.tick([0., 0.], world);
             }
         }
-        for player in &mut players {
-            player.fighter.body_mut().pos = army.frontline_spawn_for(world, player.team);
-            player
-                .fighter
-                .aim([0., if player.team == Team::Sun { 1. } else { -1. }]);
-        }
         let mut game = Self {
             army,
             players,
             winner: None,
         };
+        let mut placed = Vec::new();
         for seat in 0..game.players.len() {
-            game.refresh_targets(seat);
+            let position = game.spawn_position(seat, world, &placed);
+            let player = &mut game.players[seat];
+            player.fighter.body_mut().pos = position;
+            player
+                .fighter
+                .aim([0., if player.team == Team::Sun { 1. } else { -1. }]);
+            placed.push(position);
+        }
+        let bodies = game.receivers(game.army.tick_index());
+        for seat in 0..game.players.len() {
+            game.refresh_targets(seat, &bodies);
         }
         Ok(game)
     }
 
-    fn refresh_targets(&mut self, seat: usize) {
-        let mut targets = self.army.receivers();
-        let other_seat = 1 - seat;
-        if let Some(other) = self.players.get(other_seat) {
-            let mut body = other.fighter.body().clone();
-            body.id = HERO_ID_BASE + other_seat as u32;
-            if body.hp > 0. {
-                targets.push(body);
+    fn spawn_position(&self, seat: usize, world: &World, occupied: &[Point]) -> Point {
+        let team = self.players[seat].team;
+        let base = self.army.frontline_spawn_for(world, team);
+        if self.players.len() != MAX_SEATS {
+            return base;
+        }
+        let side = [0., -3., 3.][seat / 2];
+        let back = if team == Team::Sun { -1. } else { 1. };
+        for depth in [0., 2., 4., 6., 8.] {
+            for lateral in [0., -1.5, 1.5, -3., 3.] {
+                let point = [base[0] + side + lateral, base[1] + back * depth];
+                if world.ground_target_allowed(point)
+                    && world.clear_line(base, point)
+                    && occupied
+                        .iter()
+                        .all(|p| (p[0] - point[0]).hypot(p[1] - point[1]) >= 1.3)
+                    && self
+                        .army
+                        .targets()
+                        .all(|u| (u.xz[0] - point[0]).hypot(u.xz[1] - point[1]) >= u.radius + 0.65)
+                {
+                    return point;
+                }
             }
         }
+        base
+    }
+
+    fn receivers(&self, now: u32) -> Vec<Receiver> {
+        self.players
+            .iter()
+            .enumerate()
+            .map(|(seat, p)| {
+                let mut body = p.fighter.body().clone();
+                body.id = receiver_id(seat);
+                body.expire_shield(now);
+                body
+            })
+            .collect()
+    }
+
+    fn refresh_targets(&mut self, seat: usize, bodies: &[Receiver]) {
+        let mut targets = self.army.receivers();
+        targets.extend(
+            bodies
+                .iter()
+                .enumerate()
+                .filter(|(i, b)| *i != seat && b.hp > 0.)
+                .map(|(_, b)| b.clone()),
+        );
         self.players[seat].fighter.targets(targets);
+    }
+
+    fn collect_effects(&mut self, seat: usize, before: &[Receiver], incoming: &mut [Incoming]) {
+        let player = &self.players[seat];
+        let resolved = player.fighter.resolved();
+        self.army.apply_receivers_for(resolved, player.team);
+        // Hero projections were appended after all army representatives, in seat order.
+        let hero_receivers = resolved
+            .iter()
+            .rev()
+            .take_while(|r| r.id >= receiver_id(MAX_SEATS - 1));
+        for after in hero_receivers {
+            if let Some(target) = before.iter().position(|b| b.id == after.id) {
+                incoming[target].observe(&before[target], after, player.fighter.body().team);
+            }
+        }
     }
 
     pub fn reload(&mut self, seat: usize) -> bool {
@@ -215,7 +342,8 @@ impl Battle {
         {
             return Err("Hero unavailable".into());
         }
-        self.refresh_targets(seat);
+        let bodies = self.receivers(self.army.tick_index());
+        self.refresh_targets(seat, &bodies);
         let fighter = &mut self.players[seat].fighter;
         fighter.aim(input.aim);
         fighter.cast(input.slot, input.ground, world)
@@ -226,20 +354,11 @@ impl Battle {
             return;
         }
         let now = self.army.tick_index() + 1;
-        let mut incoming = [0.0f64; 2];
+        let bodies = self.receivers(now);
+        let mut incoming: [Incoming; MAX_SEATS] = Default::default();
         for offset in 0..self.players.len() {
             let seat = (now as usize + offset) % self.players.len();
-            self.refresh_targets(seat);
-            let opponent = 1 - seat;
-            let other_before = self.players.get(opponent).map(|p| {
-                let body = p.fighter.body();
-                body.hp
-                    + if body.shield_until > now {
-                        body.shield
-                    } else {
-                        0.
-                    }
-            });
+            self.refresh_targets(seat, &bodies);
             let p = &mut self.players[seat];
             let input = motion.get(seat).copied().unwrap_or_default();
             let living = p.fighter.body().hp > 0.;
@@ -255,41 +374,52 @@ impl Battle {
                 },
                 world,
             );
-            self.army.apply_receivers_for(p.fighter.resolved(), p.team);
-            if let Some(before) = other_before {
-                if let Some(after) = p
-                    .fighter
-                    .resolved()
-                    .iter()
-                    .find(|t| t.id == HERO_ID_BASE + opponent as u32)
-                {
-                    incoming[opponent] = (before - after.hp - after.shield).max(0.);
-                }
-            }
+            self.collect_effects(seat, &bodies, &mut incoming);
         }
-        // Both seats can finish an attack on the same tick.
-        for (seat, damage) in incoming
-            .iter()
-            .copied()
-            .enumerate()
-            .take(self.players.len())
-        {
-            let p = &mut self.players[seat];
-            let was_alive = p.fighter.body().hp > 0.;
-            p.fighter.body_mut().damage(damage);
-            if was_alive && p.fighter.body().hp <= 0. {
-                self.refresh_targets(seat);
+        let team_mode = self.players.len() == MAX_SEATS;
+        for (i, p) in self.players.iter_mut().enumerate() {
+            let body = p.fighter.body_mut();
+            if team_mode {
+                // Settle all damage against shields already present when the tick began.
+                // Then apply support to survivors. A ward shared in the same frame must not
+                // retroactively absorb already-lethal damage, even when the caster is its target.
+                incoming[i].observe(&bodies[i], body, body.team);
+                body.hp = bodies[i].hp;
+                body.shield = bodies[i].shield;
+                body.shield_until = bodies[i].shield_until;
+            }
+            body.damage(incoming[i].damage);
+            incoming[i].support(body);
+        }
+        for seat in 0..self.players.len() {
+            if bodies[seat].hp > 0. && self.players[seat].fighter.body().hp <= 0. {
+                // An interrupted Guardian Circle also releases wards on other surviving heroes.
+                let at_death = self.receivers(now);
+                self.refresh_targets(seat, &at_death);
                 let p = &mut self.players[seat];
                 p.fighter.interrupt();
-                self.army.apply_receivers_for(p.fighter.resolved(), p.team);
                 p.defeats += 1;
                 p.respawn_at = now + RESPAWN_TICKS;
-            } else if p.respawn_at != 0 && now >= p.respawn_at {
+                let mut cleanup: [Incoming; MAX_SEATS] = Default::default();
+                self.collect_effects(seat, &at_death, &mut cleanup);
+                for (i, p) in self.players.iter_mut().enumerate() {
+                    cleanup[i].support(p.fighter.body_mut());
+                }
+            } else if self.players[seat].respawn_at != 0 && now >= self.players[seat].respawn_at {
+                let occupied: Vec<_> = self
+                    .players
+                    .iter()
+                    .map(|p| p.fighter.body())
+                    .filter(|b| b.hp > 0.)
+                    .map(|b| b.pos)
+                    .collect();
+                let spawn = self.spawn_position(seat, world, &occupied);
+                let p = &mut self.players[seat];
                 let actor = p.fighter.body_mut();
                 actor.hp = actor.max_hp;
                 actor.shield = 0.;
                 actor.shield_until = 0;
-                actor.pos = self.army.frontline_spawn_for(world, p.team);
+                actor.pos = spawn;
                 if let Fighter::Bow(rama) = &mut p.fighter {
                     rama.restore_after_respawn();
                 }
@@ -317,22 +447,60 @@ impl Battle {
     }
     pub fn snapshot(&self, seat: usize) -> Option<Value> {
         let clock = self.army.tick_index();
-        let mut state = self.players.get(seat)?.snapshot(clock);
+        self.players.get(seat)?;
+        let team_mode = self.players.len() == MAX_SEATS;
+        let player_view = |index: usize| {
+            let p = &self.players[index];
+            let mut s = p.snapshot(clock);
+            if team_mode {
+                s["seat"] = json!(index);
+                s["team"] = json!(p.team);
+                s["actor"]["id"] = json!(receiver_id(index));
+                // Kits use receiver zero as the caster inside their own simulation.
+                for e in s["events"].as_array_mut().into_iter().flatten() {
+                    for r in e["receipts"].as_array_mut().into_iter().flatten() {
+                        for field in ["unit", "unit_id"] {
+                            if r[field].as_u64() == Some(0) {
+                                r[field] = json!(receiver_id(index));
+                            }
+                        }
+                    }
+                }
+            }
+            s
+        };
+        let mut state = player_view(seat);
         state["mode"] = json!("match");
         state["army"] = self.army.snapshot();
         state["winner"] = json!(self.winner);
         state["remaining_ticks"] = json!(LIMIT_TICKS.saturating_sub(clock));
-        state["opponent"] = self
-            .players
-            .get(1 - seat)
-            .map(|p| {
-                let mut other = p.snapshot(clock);
-                for k in ["abilities", "events"] {
-                    other.as_object_mut().unwrap().remove(k);
-                }
-                other
-            })
-            .unwrap_or(Value::Null);
+        if team_mode {
+            let remote: Vec<Value> = (0..self.players.len())
+                .filter(|i| *i != seat)
+                .map(player_view)
+                .collect();
+            state["opponent"] = remote
+                .iter()
+                .find(|p| p["team"] != state["team"])
+                .cloned()
+                .map(compact)
+                .unwrap_or(Value::Null);
+            state["roster"] = Value::Array(remote);
+        } else {
+            state["opponent"] = self
+                .players
+                .get(1 - seat)
+                .map(|p| compact(p.snapshot(clock)))
+                .unwrap_or(Value::Null);
+        }
         Some(state)
     }
+}
+
+fn compact(mut state: Value) -> Value {
+    if let Some(fields) = state.as_object_mut() {
+        fields.remove("abilities");
+        fields.remove("events");
+    }
+    state
 }

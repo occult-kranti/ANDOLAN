@@ -8,7 +8,13 @@
   <div class="title-copy"><p class="eyebrow">Three-lane arena</p><h1>The<br>Confluence</h1><p class="intro">March with the Sun army. Break the Moon line and escort your soldiers to the enemy core.</p>
   <label class="hero-choice" for="hero">Hero <select id="hero"><option value="hanuman">Hanuman · Gada</option><option value="rama">Rama · Bow</option></select></label>
   <div class="entry-actions"><button id="match" disabled>Play lane match</button><button class="secondary" id="begin" disabled>Hanuman practice</button></div>
-  <details class="rooms"><summary>Two-player room</summary><div id="room-controls"><button id="create-room" disabled>Create room</button><label for="room-code">Room code</label><input id="room-code" maxlength="8" autocapitalize="characters" spellcheck="false" autocomplete="off"><button id="join-room" disabled>Join</button></div><p id="room-status" role="status"></p><button class="quiet" id="cancel-room" hidden>Leave room</button></details>
+  <details class="rooms"><summary>Private multiplayer</summary>
+   <div id="room-controls">
+    <div><label for="room-size">Format</label><select id="room-size"><option value="1">1v1 duel</option><option value="3">3v3 teams</option></select><button id="create-room" disabled>Create room</button></div>
+    <div><label for="room-code">Room code</label><input id="room-code" maxlength="8" autocapitalize="characters" spellcheck="false" autocomplete="off"><button class="secondary" id="join-room" disabled>Join</button></div>
+   </div>
+   <p id="room-status" role="status"></p><button class="quiet" id="cancel-room" hidden>Leave room</button>
+  </details>
   <p id="loading" role="status">Preparing the world and heroes.</p></div>
   <button class="quiet" id="credits-button">Credits &amp; source</button></div></section>
  <section id="play" aria-label="Practice controls" hidden>

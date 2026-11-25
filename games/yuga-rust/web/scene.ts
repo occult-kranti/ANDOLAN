@@ -46,8 +46,10 @@ function figure(container: pc.ContainerResource, parent: pc.Entity) {
     .filter((mesh) => mesh.skinInstance);
   const bones = new Set(skinned.flatMap((mesh) => mesh.skinInstance!.bones));
   if (!bones.size || !tracks.has('idle')) throw new Error('Rig or idle clip missing from ' + model.name);
-  anim.baseLayer.play('idle');
-  return { model, anim, tracks, bones, clip: 'idle' };
+  const layer = anim.baseLayer;
+  if (!layer) throw new Error('Missing animation layer on ' + model.name);
+  layer.play('idle');
+  return { model, anim, layer, tracks, bones, clip: 'idle' };
 }
 
 function buildMap(
@@ -304,33 +306,13 @@ export async function makeScene(
   const visualSolidIds = buildMap(app, kit, map, architecture, nature);
   const armyView = makeArmyScene(kit, map, vehicles);
   const resources: { [key: string]: pc.ContainerResource | undefined } = { hanuman, rama };
-  const localRigs = new Map<string, ReturnType<typeof makeRig>>(),
-    remoteRigs = new Map<string, ReturnType<typeof makeRig>>();
-  const localRing = kit.ring(app.root, kit.material('Sun hero', '#f3b568', 0.48), 0.66, 0.065, 0.03, 32);
-  const remoteRing = kit.ring(
-    app.root,
-    kit.material('Moon hero', '#74d4ef', 0.58),
-    0.7,
-    0.09,
-    0.031,
-    32
-  );
-  const sunMarker = localRing.render!.meshInstances[0].material,
-    moonMarker = remoteRing.render!.meshInstances[0].material;
-  const remoteBar = kit.shape(
-    app.root,
-    'box',
-    kit.material('opponent vitals', '#142522'),
-    0,
-    0,
-    0,
-    1.1,
-    0.13,
-    0.07
-  );
-  const remoteHp = kit.shape(app.root, 'box', moonMarker, 0, 0, 0, 1, 0.074, 0.09);
-  localRing.enabled = remoteRing.enabled = remoteBar.enabled = remoteHp.enabled = false;
-  remoteBar.render!.castShadows = remoteHp.render!.castShadows = false;
+  const localRigs = new Map<string, ReturnType<typeof makeRig>>();
+  const teamColors = { sun: '#f3b568', moon: '#74d4ef' };
+  const sunMarker = kit.material('Sun hero', teamColors.sun, 0.48),
+    moonMarker = kit.material('Moon hero', teamColors.moon, 0.58),
+    vitalsBacking = kit.material('Hero vitals', '#142522');
+  const localRing = kit.ring(app.root, sunMarker, 0.66, 0.065, 0.03, 32);
+  localRing.enabled = false;
   function makeRig(id: string) {
     const resource = resources[id];
     if (!resource) throw new Error('Unbundled hero: ' + id);
@@ -368,8 +350,7 @@ export async function makeScene(
     for (const r of rigs.values()) r.holder.enabled = r === chosen;
     return chosen;
   }
-  let hero = selectRig(localRigs, 'hanuman'),
-    opponent: ReturnType<typeof makeRig> | null = null;
+  let hero = selectRig(localRigs, 'hanuman');
   for (const rule of rules.abilities)
     if (!hero.tracks.has(rule.motion)) throw new Error('Missing Hanuman stage ' + rule.motion);
   function poseRig(
@@ -390,7 +371,7 @@ export async function makeScene(
     const clip = a.hp <= 0 ? 'defeat' : (active?.motion ?? (moving ? 'run' : 'idle'));
     if (!rig.tracks.has(clip)) throw new Error('Missing ' + rig.id + ' animation ' + clip);
     if (clip !== rig.clip || reset) {
-      rig.anim.baseLayer.play(clip);
+      rig.layer.play(clip);
       rig.clip = clip;
     }
     if (active && a.hp > 0) {
@@ -401,7 +382,7 @@ export async function makeScene(
           : current;
       rig.phase = lerp(old, current, t);
       rig.anim.speed = 0;
-      rig.anim.baseLayer.activeStateCurrentTime = rig.phase * rig.tracks.get(clip)!.duration;
+      rig.layer.activeStateCurrentTime = rig.phase * rig.tracks.get(clip)!.duration;
     } else rig.anim.speed = 1;
     const targetYaw = angle(active?.aim ?? a.aim);
     rig.yaw = reset ? targetYaw : mixAngle(rig.yaw, targetYaw, Math.min(1, Math.max(dt, 0) * 18));
@@ -424,26 +405,40 @@ export async function makeScene(
     bar.render!.castShadows = hp.render!.castShadows = false;
     return { root, skin, hp, bar };
   }
+  const groundRules = new Map<string, any>(rules.abilities.map((r: any) => [r.id, r]));
+  for (const r of ramaKit?.abilities ?? []) {
+    if (r.id === 'guardian_circle')
+      groundRules.set(r.id, { ...r, geometry: { kind: 'disk', radius_m: r.radius_m } });
+    if (r.id === 'measured_step')
+      groundRules.set(r.id, { ...r, geometry: { kind: 'movement', target_range_m: r.range_m } });
+  }
   function makeHeroEffects(seat: string) {
-    const groundRules = [...rules.abilities];
-    for (const r of ramaKit?.abilities ?? []) {
-      if (r.id === 'guardian_circle')
-        groundRules.push({ ...r, geometry: { kind: 'disk', radius_m: r.radius_m } });
-      if (r.id === 'measured_step')
-        groundRules.push({ ...r, geometry: { kind: 'movement', target_range_m: r.range_m } });
-    }
     return {
-      areas: new Map<string, ReturnType<typeof makeTelegraph>>(
-        groundRules.map((r) => [r.id, makeTelegraph(kit, r, seat)])
-      ),
+      seat,
+      areas: new Map<string, ReturnType<typeof makeTelegraph>>(),
       shafts: [] as pc.Entity[],
       nock: undefined as pc.Entity | undefined,
       projectiles: 0,
       casts: [] as string[]
     };
   }
-  const localFx = makeHeroEffects('local'),
-    remoteFx = makeHeroEffects('opponent');
+  const localFx = makeHeroEffects('local');
+  function makeRemote(seat: number, id: string) {
+    const markers = new pc.Entity('Seat ' + (seat + 1) + ' vitals', app);
+    app.root.addChild(markers);
+    const ring = kit.ring(markers, sunMarker, 0.7, 0.09, 0.032, 32);
+    const bar = kit.shape(markers, 'box', vitalsBacking, 0, 0, 0, 1.1, 0.13, 0.07);
+    const hp = kit.shape(markers, 'box', sunMarker, 0, 0, 0, 1, 0.074, 0.09);
+    bar.render!.castShadows = hp.render!.castShadows = false;
+    return { seat, rig: makeRig(id), fx: makeHeroEffects('seat' + seat), markers, ring, bar, hp, state: null as any };
+  }
+  const remotes = new Map<number, ReturnType<typeof makeRemote>>();
+  function remoteStates(state: any): any[] {
+    return state.roster ?? (state.opponent ? [state.opponent] : []);
+  }
+  function seatOf(remote: any): number {
+    return remote.seat ?? (remote.actor.team === 'sun' ? 0 : 1);
+  }
   const arrowColors = new Map<string, pc.Material>();
   for (const r of ramaKit?.abilities ?? [])
     arrowColors.set(r.id, kit.material('arrow ' + r.id, '#' + r.color, 0.9));
@@ -452,8 +447,7 @@ export async function makeScene(
   let frames = 0,
     lastState: any,
     generation = -1,
-    lastMode = '',
-    lastRemote = '';
+    lastMode = '';
   function render(state: any, previous: any, alpha: number, dt: number) {
     if (!state?.actor) return;
     const id = state.hero ?? state.hero_id ?? 'hanuman',
@@ -474,28 +468,41 @@ export async function makeScene(
       localRing.setPosition(x, 0.03, z);
       setMaterial(localRing, sign === 1 ? sunMarker : moonMarker);
     }
-    const remote = state.opponent;
-    let priorRemote = prev.opponent;
-    const remoteId = remote?.hero ?? remote?.hero_id;
-    const otherReset =
-      reset || remoteId !== lastRemote || remote?.generation !== priorRemote?.generation;
-    if (otherReset || !priorRemote) priorRemote = remote;
-    lastRemote = remoteId ?? '';
-    remoteRing.enabled = remoteBar.enabled = remoteHp.enabled = !!remote;
-    if (remote) {
-      opponent = selectRig(remoteRigs, remoteId);
-      const p = poseRig(opponent, remote, priorRemote, t, dt, otherReset);
+    const roster = remoteStates(state), oldRoster = remoteStates(prev);
+    for (const remote of roster) {
+      const seat = seatOf(remote), heroId = remote.hero ?? remote.hero_id;
+      let view = remotes.get(seat);
+      if (!view) {
+        view = makeRemote(seat, heroId);
+        remotes.set(seat, view);
+      }
+      const prior = oldRoster.find((r) => seatOf(r) === seat);
+      const newPose = reset || !view.state || !prior || prior.actor.id !== remote.actor.id ||
+        prior.generation !== remote.generation || view.rig.id !== heroId;
+      if (view.rig.id !== heroId) {
+        view.rig.holder.destroy();
+        view.rig = makeRig(heroId);
+      }
+      view.state = remote;
+      view.rig.holder.enabled = view.markers.enabled = true;
+      const from = newPose ? remote : prior;
+      const p = poseRig(view.rig, remote, from, t, dt, newPose);
       const hp = clamp(remote.actor.hp / remote.actor.max_hp, 0, 1);
-      remoteRing.setPosition(p.x, 0.032, p.z);
-      remoteBar.setPosition(p.x, p.y + 2.46, p.z);
-      remoteHp.setPosition(p.x + sign * (1 - hp) * 0.5, p.y + 2.46, p.z);
-      remoteHp.setLocalScale(hp, 0.074, 0.09);
-      const enemyMarker = sign === 1 ? moonMarker : sunMarker;
-      setMaterial(remoteRing, enemyMarker);
-      setMaterial(remoteHp, enemyMarker);
-    } else {
-      if (opponent) opponent.holder.enabled = false;
-      opponent = null;
+      const marker = remote.actor.team === 'sun' ? sunMarker : moonMarker;
+      view.ring.setPosition(p.x, 0.032, p.z);
+      view.bar.setPosition(p.x, p.y + 2.46, p.z);
+      view.hp.setPosition(p.x + sign * (1 - hp) * 0.5, p.y + 2.46, p.z);
+      view.hp.setLocalScale(hp, 0.074, 0.09);
+      setMaterial(view.ring, marker);
+      setMaterial(view.hp, marker);
+      updateEffects(view.fx, remote, from, t);
+    }
+    for (const view of remotes.values()) {
+      if (!view.state || roster.includes(view.state)) continue;
+      view.rig.holder.enabled = view.markers.enabled = false;
+      view.state = null;
+      updateEffects(view.fx, null, null, 1);
+      updateNock(view.fx, null, null);
     }
     armyView.update(state.army ?? null, prev.army ?? null, t, [x, z]);
     for (const body of soldierActors.values()) body.root.enabled = !state.army;
@@ -508,7 +515,7 @@ export async function makeScene(
       body.root.setLocalPosition(unit.pos[0], 0, unit.pos[1]);
       const soldierClip = unit.alive ? 'idle' : 'defeat';
       if (soldierClip !== body.skin.clip || reset) {
-        body.skin.anim.baseLayer.play(soldierClip);
+        body.skin.layer.play(soldierClip);
         body.skin.clip = soldierClip;
       }
       body.skin.model.setLocalEulerAngles(0, Math.atan2(x - unit.pos[0], z - unit.pos[1]) * RAD, 0);
@@ -518,14 +525,14 @@ export async function makeScene(
       body.hp.setLocalPosition((1 - ratio) * 0.385, 2.122, -0.025);
     }
     updateEffects(localFx, state, prev, t);
-    updateEffects(remoteFx, remote, priorRemote, t);
     app.update(clamp(dt, 0, 0.2));
     updateNock(localFx, state, hero);
-    updateNock(remoteFx, remote, opponent);
+    for (const view of remotes.values())
+      if (view.state) updateNock(view.fx, view.state, view.rig);
     app.render();
     frames++;
     lastState = state;
-    if (!state.active) hero.phase = hero.anim.baseLayer.activeStateProgress % 1;
+    if (!state.active) hero.phase = hero.layer.activeStateProgress % 1;
   }
   function updateEffects(fx: typeof localFx, state: any, prev: any, t: number) {
     for (const e of fx.areas.values()) e.root.enabled = false;
@@ -533,8 +540,13 @@ export async function makeScene(
     for (const cast of state?.casts ?? []) {
       if (cast.field_end_tick != null && cast.age_ticks >= cast.field_end_tick) continue;
       fx.casts.push(cast.id);
-      const e = fx.areas.get(cast.id);
-      if (!e) continue;
+      let e = fx.areas.get(cast.id);
+      if (!e) {
+        const rule = groundRules.get(cast.id);
+        if (!rule) continue;
+        e = makeTelegraph(kit, rule, fx.seat);
+        fx.areas.set(cast.id, e);
+      }
       e.root.enabled = true;
       const aimed = e.geometry.kind !== 'sector',
         base = aimed ? cast.target : cast.origin;
@@ -649,6 +661,14 @@ export async function makeScene(
   }
   function diagnostics() {
     const rect = canvas.getBoundingClientRect();
+    const activeRemotes = [...remotes.values()].filter((v) => v.state).sort((a, b) => a.seat - b.seat);
+    const opponent = activeRemotes.find((v) => v.state.actor.team !== lastState.actor.team);
+    const remoteHeroes = activeRemotes.map(({ seat, rig, state, fx }) => {
+      const { actor } = state, p = rig.holder.getPosition();
+      return { seat, id: actor.id, team: actor.team, color: actor.team === 'sun' ? teamColors.sun : teamColors.moon,
+        hero: rig.id, pos: [p.x, p.z], hp: actor.hp, maxHp: actor.max_hp, clip: rig.clip,
+        casts: [...fx.casts], projectiles: fx.projectiles, nocked: !!fx.nock?.enabled };
+    });
     return {
       frames,
       mapProps: map.props.length,
@@ -661,7 +681,7 @@ export async function makeScene(
       activeClip: hero.clip,
       heroId: hero.id,
       posePhase: hero.phase,
-      poseTime: hero.anim.baseLayer.activeStateCurrentTime,
+      poseTime: hero.layer.activeStateCurrentTime,
       heroPose: hero.nodes.flatMap((bone) => {
         const q = bone.getLocalRotation();
         return [q.x, q.y, q.z, q.w];
@@ -670,23 +690,28 @@ export async function makeScene(
       visibleCasts: [...localFx.casts],
       projectiles: localFx.projectiles,
       nocked: !!localFx.nock?.enabled,
-      opponentHero: opponent?.id ?? null,
-      opponentClip: opponent?.clip ?? null,
-      opponentCasts: [...remoteFx.casts],
-      opponentProjectiles: remoteFx.projectiles,
+      remoteHeroes,
+      opponentHero: opponent?.rig.id ?? null,
+      opponentClip: opponent?.rig.clip ?? null,
+      opponentCasts: opponent ? [...opponent.fx.casts] : [],
+      opponentProjectiles: opponent?.fx.projectiles ?? 0,
       cameraForward: lastState?.actor?.team === 'moon' ? -1 : 1,
       ...armyView.diagnostics(),
       targetScreens: (lastState?.army
         ? [
             ...lastState.army.units.map((u: any) => ({ ...u, pos: u.xz })),
-            ...(lastState.opponent ? [lastState.opponent.actor] : [])
+            ...activeRemotes.map(({ state, rig, seat }) => {
+              const p = rig.holder.getPosition();
+              return { ...state.actor, seat, pos: [p.x, p.z], alive: state.actor.hp > 0 };
+            })
           ]
         : (lastState?.targets ?? [])
       ).map((u: any) => {
         camera.camera!.worldToScreen(point.set(u.pos[0], 0, u.pos[1]), screen);
         return {
           id: u.id,
-          kind: u === lastState?.opponent?.actor ? 'hero' : 'unit',
+          kind: u.seat != null ? 'hero' : 'unit',
+          seat: u.seat ?? null,
           inView:
             screen.x >= 0 &&
             screen.x <= rect.width &&

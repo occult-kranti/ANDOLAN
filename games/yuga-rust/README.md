@@ -2,13 +2,13 @@
 
 **Classic hero sparring.** A second download runs all fourteen heroes’ original weapons and 42 abilities through Rust and WebAssembly in Sangam City. Extract it, serve the folder with `python3 -m http.server 8000`, open `http://localhost:8000`, select a hero and choose **Hero sparring**. [Download the graphical roster](downloads/yuga-rust-classic.zip?raw=true) · [Screenshots, controls and build](../yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)
 
-Play as **Hanuman or Rama** alongside an army fighting across three lanes. Escort troops to the enemy core. Every third wave brings cannon carts. Every fifth wave sends royal chariots into the middle lane. You can play solo or take opposing sides in a two-player room. Hanuman’s original three-guard practice is also available. [Download the game and room host](downloads/yuga-rust-confluence.zip?raw=true) · [Research, verification and roadmap](../yuga-native/docs/rust-rebuild/deep-search/README.md)
+Play as **Hanuman or Rama** alongside an army fighting across three lanes. Escort troops to the enemy core. Every third wave brings cannon carts. Every fifth wave sends royal chariots into the middle lane. You can play solo or take opposing sides in a private duel or six-person team match. Hanuman’s original three-guard practice is also available. [Download the game and room host](downloads/yuga-rust-confluence.zip?raw=true) · [Research, verification and roadmap](../yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 ## Launch the game
 
 **Solo.** Extract the ZIP and open `yuga-rust.html` in a desktop browser with WebAssembly and WebGL 2. Choose a hero and select **Play lane match**. To try the five attacks on stationary targets, choose **Hanuman practice**. If your browser blocks local HTML, run `python3 -m http.server 8000 --bind 127.0.0.1` in the extracted folder and open `http://127.0.0.1:8000/yuga-rust.html`.
 
-**Two players on one computer or LAN.** The ZIP contains the same Rust match engine as a portable WebAssembly worker and bundles the WebSocket transport. Install Node **22.12 or newer** on the host computer. Both players need a browser. Run one of the following commands in the extracted folder.
+**Private 1v1 or 3v3, on one computer or LAN.** The ZIP contains the same Rust match engine as a portable WebAssembly worker and bundles the WebSocket transport. Install Node **22.12 or newer** on the host computer. Each player needs a browser. Run one of the following commands in the extracted folder.
 
 ```sh
 # Two browser windows on the same computer
@@ -18,7 +18,7 @@ node serve_rooms.mjs
 node serve_rooms.mjs --host 0.0.0.0
 ```
 
-On the same computer, open `http://127.0.0.1:8787`. On the LAN, both players open the host’s LAN address on port 8787. Each chooses a hero and opens **Two-player room**. The first player selects **Create room** and shares the code. The second enters the code and selects **Join**. Keep the host running until the match ends. Leaving closes the room. The in-game menu pauses controls locally while a network match continues. The GitHub download includes the server; persistent public matchmaking remains a separate deployment.
+On the same computer, open `http://127.0.0.1:8787`. On the LAN, both players open the host’s LAN address on port 8787. Each chooses a hero and opens the private room controls. The host selects **1v1 duel** or **3v3 teams**, clicks **Create room** and shares the code. The remaining players enter that code and select **Join**. The match starts at two or six players. Keep the host running until the match ends. Leaving closes the room. The in-game menu pauses controls locally while a network match continues. The GitHub download includes the server; persistent public matchmaking remains a separate deployment.
 
 ## Controls and rules
 
@@ -69,7 +69,7 @@ cargo run --release --locked --manifest-path games/yuga-rust/Cargo.toml --bin ro
 
 `drill` also accepts terminal commands such as `aim 0 1`, `cast 1 0 -52.5` and `wait 6`. For all fourteen classic hero kits, use the separate terminal roster lab. [Roster commands and comparisons](../yuga-native/docs/rust-rebuild/deep-search/ROSTER-PORT.md)
 
-The army command projects an isolated wave. The court command tests the real landmark’s support and capsule clearance. Chromium, Playwright and `unzip` are required for browser tests. Tests on managed Chromium used loopback when browser policy blocked direct file navigation. [First-generation drill ZIP](downloads/yuga-rust-practice.zip?raw=true) · [Gameplay and test documentation](../yuga-native/docs/rust-rebuild/deep-search/README.md)
+The army command projects an isolated wave. The court command tests the real landmark’s support and capsule clearance. Chromium, Playwright and `unzip` are required for browser tests. Tests on managed Chromium used loopback when browser policy blocked direct file navigation. [First-generation drill ZIP](downloads/yuga-rust-practice.zip?raw=true) · [Six-seat tests and gameplay capture](../yuga-native/docs/rust-rebuild/deep-search/SQUADS.md) · [Gameplay and test documentation](../yuga-native/docs/rust-rebuild/deep-search/README.md)
 
 | Code | Responsibility |
 | --- | --- |

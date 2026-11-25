@@ -26,7 +26,7 @@ function snapshot(seat) {
 }
 
 async function send(accepted) {
-  const states = '[' + snapshot(0) + ',' + snapshot(1) + ']';
+  const states = '[' + accepted.map((_,seat) => snapshot(seat)).join(',') + ']';
   const packet = '{"states":' + states + ',"accepted":' + JSON.stringify(accepted) + '}\n';
   if (!process.stdout.write(packet)) await once(process.stdout, 'drain');
 }
@@ -37,7 +37,7 @@ function record(value, fields) {
 }
 
 function point(value) {
-  return Array.isArray(value) && value.length === 2 && value.every(Number.isFinite);
+  return Array.isArray(value) && value.length === 2 && value.every(x => Number.isFinite(x) && Number.isFinite(Math.fround(x)));
 }
 
 function parsePlayer(player) {
@@ -55,20 +55,29 @@ function parsePlayer(player) {
   return { movement, aim, casts, reload };
 }
 
-let started = false;
+let seatCount = 0;
 for await (const line of createInterface({ input: process.stdin, crlfDelay: Infinity })) {
   const data = JSON.parse(line);
-  if (!started) {
-    if (!record(data, ['sun', 'moon']) || !hero.has(data.sun) || !hero.has(data.moon) ||
-        game.duel_start(hero.get(data.sun), hero.get(data.moon)) !== 1) throw Error('Invalid room roster');
-    started = true;
-    await send([null, null]);
+  if (!seatCount) {
+    let roster;
+    if (record(data, ['sun', 'moon']) && hero.has(data.sun) && hero.has(data.moon)) {
+      roster = [data.sun, data.moon];
+      if (game.duel_start(...roster.map(h => hero.get(h))) !== 1) throw Error('Invalid duel roster');
+    } else if (record(data, ['heroes']) && Array.isArray(data.heroes) && data.heroes.length === 6 && data.heroes.every(h => hero.has(h))) {
+      for (const name of ['squad_init', 'squad_motion', 'squad_advance']) {
+        if (typeof game[name] !== 'function') throw Error('Missing squad authority export ' + name);
+      }
+      roster = data.heroes;
+      if (game.squad_init(...roster.map(h => hero.get(h))) !== 1) throw Error('Invalid squad roster');
+    } else throw Error('Invalid room roster');
+    seatCount = roster.length;
+    await send(roster.map(() => null));
     continue;
   }
   if (!record(data, ['players', 'ticks']) || !Number.isInteger(data.ticks) || data.ticks < 1 || data.ticks > 4 ||
-      !Array.isArray(data.players) || data.players.length !== 2) throw Error('Invalid room frame');
-  const [sun, moon] = data.players.map(parsePlayer);
-  const accepted = [sun, moon].map((player, seat) => {
+      !Array.isArray(data.players) || data.players.length !== seatCount) throw Error('Invalid room frame');
+  const players = data.players.map(parsePlayer);
+  const accepted = players.map((player, seat) => {
     if (player.reload) game.duel_reload(seat);
     let result = null;
     for (const { slot, ground, aim } of player.casts) {
@@ -77,8 +86,14 @@ for await (const line of createInterface({ input: process.stdin, crlfDelay: Infi
     }
     return result;
   });
-  for (let i = 0; i < data.ticks; i++) {
-    game.duel_step(...sun.movement, ...sun.aim, ...moon.movement, ...moon.aim);
+  if (seatCount === 2) {
+    const [sun, moon] = players;
+    for (let i = 0; i < data.ticks; i++) game.duel_step(...sun.movement, ...sun.aim, ...moon.movement, ...moon.aim);
+  } else {
+    players.forEach(({movement, aim}, seat) => {
+      if (game.squad_motion(seat, ...movement, ...aim) === 0) throw Error('Invalid squad motion');
+    });
+    if (game.squad_advance(data.ticks) === 0) throw Error('Invalid squad tick count');
   }
   await send(accepted);
 }

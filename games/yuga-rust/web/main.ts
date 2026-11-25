@@ -25,6 +25,8 @@ let sequence = 0,
 let primaryHeld = false;
 const heroSelect = byId<HTMLSelectElement>('hero');
 const roomCode = byId<HTMLInputElement>('room-code');
+const roomSize = byId<HTMLSelectElement>('room-size');
+let room: { code: string; seat: number; team: string; count: number; capacity: number } | null = null;
 let elapsed = 0,
   last = 0,
   lastEvent = 0;
@@ -66,6 +68,7 @@ function observe() {
   return {
     mode,
     playMode,
+    room: room && { ...room },
     state: current ? structuredClone(current) : null,
     renderer: scene?.diagnostics(),
     input: { armedSlot, pointer: pointer?.slice() ?? null, ground: lastGround?.slice() ?? null },
@@ -264,7 +267,8 @@ function updateHud() {
   if (army) {
     const seconds = Math.ceil(current.remaining_ticks * PERIOD);
     const moon = current.actor.team === 'moon';
-    byId('location').textContent = (moon ? 'Moon' : 'Sun') + ' army · Wave ' + army.wave;
+    byId('location').textContent = (moon ? 'Moon' : 'Sun') + ' army · Wave ' + army.wave +
+      (playMode === 'online' && room ? ' · Seat ' + (room.seat + 1) + '/' + room.capacity : '');
     byId('objective').textContent =
       'Sun core ' + Math.ceil(army.cores.sun) + '  /  Moon core ' + Math.ceil(army.cores.moon);
     byId('match-detail').textContent =
@@ -594,11 +598,15 @@ function enableRooms() {
   for (const id of ['create-room', 'join-room'])
     byId<HTMLButtonElement>(id).disabled = !supported || !!socket;
   byId('cancel-room').hidden = !socket;
+  roomCode.readOnly = !!socket;
+  roomSize.disabled = !supported || !!socket;
+  heroSelect.disabled = !!socket;
   if (!supported) roomMessage('Open the game from its room server for online play.');
 }
 function leaveRoom() {
   const old = socket;
   socket = null;
+  room = null;
   if (old) {
     old.onclose = null;
     old.onerror = null;
@@ -625,7 +633,7 @@ function connect(create: boolean) {
   if (mode !== 'ready' || socket) return;
   const code = roomCode.value.trim().toUpperCase();
   if (!create && !code) {
-    roomMessage('Enter the code from the other player.');
+    roomMessage('Enter the code from the room host.');
     roomCode.focus();
     return;
   }
@@ -641,7 +649,7 @@ function connect(create: boolean) {
       JSON.stringify({
         type: create ? 'create' : 'join',
         hero: heroSelect.value,
-        ...(!create ? { code } : {}),
+        ...(create ? (roomSize.value === '3' ? { teamSize: 3 } : {}) : { code }),
       }),
     );
   function closed(reason: string) {
@@ -663,17 +671,18 @@ function connect(create: boolean) {
       return;
     }
     if (message.type === 'lobby') {
+      const team = message.team ?? (message.seat % 2 ? 'moon' : 'sun');
+      const capacity = message.capacity ?? 2, count = message.count ?? 1;
+      room = { code: message.code, seat: message.seat, team, count, capacity };
       roomCode.value = message.code;
-      roomMessage(
-        'Room ' +
-          message.code +
-          ' · ' +
-          (message.seat === 0 ? 'Sun' : 'Moon') +
-          ' seat. Waiting for the other player.',
-      );
+      const teamLabel = team === 'sun' ? 'Sun' : 'Moon';
+      roomMessage('Share ' + room.code + ' · ' + count + '/' + capacity + ' players · ' +
+        teamLabel + ' seat ' + (room.seat + 1) + '. ' +
+        (count === capacity ? 'Starting match…' : 'Waiting for ' + (capacity - count) + ' more.'));
     } else if (message.type === 'state') {
       if (mode === 'ready') {
         playMode = 'online';
+        if (room) room.count = room.capacity;
         frameReceived = performance.now();
         networkInterval = 100;
         start(false, message.state);
