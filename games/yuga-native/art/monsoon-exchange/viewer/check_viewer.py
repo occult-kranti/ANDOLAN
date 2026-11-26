@@ -80,14 +80,16 @@ def track_errors(page, failures, errors, network_failures):
 
 
 def play_film(page):
-    page.get_by_role('link', name='Watch the filmed tour').click()
-    video = page.locator('video')
-    video.wait_for(state='visible')
+    page.get_by_role("link", name="Watch the filmed tour").click()
+    video = page.locator("video")
+    video.wait_for(state="visible")
     wait_truth(page, 'document.querySelector("video").readyState >= 2')
-    width, height, duration = video.evaluate('async v => {v.muted=true; await v.play(); return [v.videoWidth,v.videoHeight,v.duration];}')
-    assert (width,height,duration)==(1280,720,16)
+    width, height, duration = video.evaluate(
+        "async v => {v.muted=true; await v.play(); return [v.videoWidth,v.videoHeight,v.duration];}"
+    )
+    assert (width, height, duration) == (1280, 720, 16)
     wait_truth(page, 'document.querySelector("video").currentTime > 0.35')
-    return {'width':width, 'height':height, 'seconds':duration, 'played':True}
+    return {"width": width, "height": height, "seconds": duration, "played": True}
 
 
 def verify(browser, url, captures, defer_film=False):
