@@ -108,7 +108,10 @@ async function installMixer(context: AudioContext, bus: GainNode, master: GainNo
   compressor.connect(master);
   mixerKind = 'browser-compressor';
   if (!context.audioWorklet || !wasmModule) return;
-  const url = URL.createObjectURL(new Blob([data.mixWorklet], { type: 'text/javascript' }));
+  // Chromium treats the blob:null URL of an extracted file as cross-origin in a worklet.
+  const fromFile = location.protocol === 'file:';
+  const url = fromFile ? 'data:text/javascript;charset=utf-8,' + encodeURIComponent(data.mixWorklet)
+    : URL.createObjectURL(new Blob([data.mixWorklet], { type: 'text/javascript' }));
   try {
     await context.audioWorklet.addModule(url);
     const node = new AudioWorkletNode(context, 'yuga-limiter', {
@@ -137,7 +140,7 @@ async function installMixer(context: AudioContext, bus: GainNode, master: GainNo
   } catch {
     /* The compressor remains connected on browsers without worklet support. */
   } finally {
-    URL.revokeObjectURL(url);
+    if (!fromFile) URL.revokeObjectURL(url);
   }
 }
 
@@ -497,6 +500,33 @@ byId('back').onclick = () => {
 };
 byId('credits-button').onclick = () => credits.showModal();
 byId('close-credits').onclick = () => credits.close();
+// The scripts-only drill has an opaque origin. Its host can remember just its mix controls.
+const rehearsalMixKey = 'yuga.ember-rite.rehearsal.mix.v1';
+type RehearsalMix = {enabled: boolean; captions: boolean; mono: boolean; master: number; effects: number; music: number};
+function validatedRehearsalMix(value: unknown): RehearsalMix | null {
+  if (!value || typeof value !== 'object') return null;
+  const settings = value as Partial<RehearsalMix>;
+  const {enabled, captions, mono, master, effects, music} = settings;
+  const level = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= 1;
+  if (typeof enabled !== 'boolean' || typeof captions !== 'boolean' || typeof mono !== 'boolean'
+      || !level(master) || !level(effects) || !level(music)) return null;
+  return {enabled, captions, mono, master, effects, music};
+}
+let rehearsalMix: RehearsalMix | null = null;
+try {rehearsalMix = validatedRehearsalMix(JSON.parse(localStorage.getItem(rehearsalMixKey) || 'null'));}
+catch { /* The open title can still remember preferences for this session. */ }
+window.addEventListener('message', (event) => {
+  const child = rehearsalFrame.contentWindow;
+  if (!child || !rehearsal.open || event.source !== child || !event.data) return;
+  if (event.data.type === 'yuga.ember.audio.read' && rehearsalMix) {
+    child.postMessage({type: 'yuga.ember.audio.restore', mix: rehearsalMix}, '*');
+  } else if (event.data.type === 'yuga.ember.audio.write') {
+    const saved = validatedRehearsalMix(event.data.mix);
+    if (!saved) return;
+    rehearsalMix = saved;
+    try {localStorage.setItem(rehearsalMixKey, JSON.stringify(saved));} catch { /* Session-only host. */ }
+  }
+});
 byId('rehearsal-button').onclick = () => {
   rehearsalFrame.srcdoc = data.rehearsal;
   rehearsal.showModal();

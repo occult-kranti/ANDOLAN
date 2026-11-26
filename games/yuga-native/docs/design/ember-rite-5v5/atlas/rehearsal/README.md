@@ -1,6 +1,6 @@
 # Ember Rite atlas rehearsal
 
-Open [the standalone rehearsal](../rehearsal.html) to walk Mandala Rift, Lanka, Ayodhya or Kurukshetra. The SVG plan, collision geometry, district landmark art, route estimates and simulation are embedded in one file. It also runs in the packaged game's sandboxed practice frame. The solo drill rehearses where and when an objective can be completed. The native and multiplayer arenas have separate geometry.
+Walk Mandala Rift, Lanka, Ayodhya or Kurukshetra in one offline file. It contains the SVG plan, collision geometry, district art, route estimates, simulation and sound. The packaged game opens the same file in its practice frame. [Open the atlas rehearsal](../rehearsal.html)
 
 ## Practice
 
@@ -12,6 +12,21 @@ Open [the standalone rehearsal](../rehearsal.html) to walk Mandala Rift, Lanka, 
 
 Use `?map=kurukshetra&exercise=retake&site=b` to link a district and exercise. Supported districts are `mandala`, `lanka`, `ayodhya` and `kurukshetra`. Exercises are `explore`, `carry` and `retake`. The sole objective-site values are `a` and `b`.
 
+## Listen
+
+Sound starts with **Enable sound**. Captions are on by default and work while muted or when a browser cannot play audio. **Sound settings** has separate master, effects and music levels, a mono mix, captions and a reset. The standalone page saves these choices when browser storage is available. The packaged practice frame remembers the mix through its parent. A fresh opening needs **Resume sound** to play a previously enabled mix.
+
+In **Explore**, open **Listening exercise** and choose **Place source here**. Walk away, turn a quarter turn with **Q/R**, and press **V** or **Play cue**. The white diamond marks the point you placed. Try a footstep in Reed Ford, or place a source on one side of the Bell screen at Ghat Mandapa and walk around it. The caption reports the audible bearing and muffling. The source stays on its original ground until you place it again or restart the drill. [Open the listening exercise](../rehearsal.html?map=mandala&exercise=explore&listen=1)
+
+| Practice cue | Maximum distance |
+| --- | --- |
+| Footstep on the source's dry floor or shallow water | 18 m |
+| Kindle windup | 30 m |
+| Hanuman's leap | 20 m |
+| Kali's Tandava | 25 m |
+
+During a drill, footsteps follow each 1.65 m of actual travel. A collision or a fold jump adds no phantom footfalls. An eligible hold starts a local windup, and releasing or interrupting it stops that attempt. The quench start has an 18 m range. A successful kindle confirms the site. Taking the defender role moves the listener and starts a fresh 40-second clock on the first move or hold. The drone, low drum, hand drum and reed enter at 0, 10, 20 and 30 elapsed seconds. Pausing or hiding the drill freezes the clock and stops playback. Separate endings accompany a confirmed quench or a completed burn. [Score and source manifest](../../../../../art/yagna-audio/manifest.json) · [Original Hanuman takeoff cue](../../../../../NOTICE/HANUMAN-ABILITY-AUDIO.json)
+
 ## Build and verify
 
 Run these commands from this directory.
@@ -19,8 +34,9 @@ Run these commands from this directory.
 ```sh
 python3 build.py
 python3 build.py --check
-node --test simulation.test.mjs
+node --test simulation.test.mjs audio.test.mjs
 node browser.test.mjs
+node audio.browser.test.mjs
 ```
 
 The builder uses Python's standard library and [the atlas audit](../audit.py) to embed [the four map sources](../maps/) and [Rust's ritual constants](../../../../../../yuga-rust/src/ritual.rs). Change authored rooms, fixed cover, water, bypasses, fold transit or cues in the map JSON. Change authoritative channel times in Rust. Rebuild and rerun the checks after either changes. The small landmark sheet derives from [the game's four district concepts](../../../../../art/ember-rite-5v5/district-landmarks.png).

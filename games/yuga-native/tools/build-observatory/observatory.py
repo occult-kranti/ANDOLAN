@@ -20,7 +20,7 @@ import threading
 import time
 from urllib.parse import unquote, urlsplit
 
-from publish_site import ATLAS_FILES, MAX_FILE, STUDIO, STUDIO_ROUTE, studio_index
+from publish_site import AUDIO_ROUTE, ATLAS_FILES, MAX_FILE, STUDIO, STUDIO_ROUTE, studio_index
 
 MAX_BYTES = 2 * 1024 * 1024
 MAX_JOBS = 256
@@ -80,7 +80,7 @@ def safe_url(value):
         if any(c.isspace() for c in value):
             raise ValueError("Unsafe HTTPS URL")
         return value
-    if value in {"viewer/", "viewer/index.html", STUDIO_ROUTE} or value in ATLAS_FILES:
+    if value in {"viewer/", "viewer/index.html", STUDIO_ROUTE, AUDIO_ROUTE, AUDIO_ROUTE.rstrip("/")} or value in ATLAS_FILES:
         return value
     if value.startswith(STUDIO_ROUTE):
         return relative_path(value)
@@ -513,11 +513,13 @@ def static_path(web, url, workspace=None):
     if len(decoded) > 1000 or any(c in decoded for c in ("\\", "\x00", "%")):
         raise ValueError("Invalid static path")
     value = decoded.lstrip("/") or "index.html"
-    if value in {"viewer/", STUDIO_ROUTE}:
+    if value in {"viewer/", STUDIO_ROUTE, AUDIO_ROUTE}:
         value += "index.html"
     if decoded.startswith("//"):
         raise ValueError("Invalid static path")
     relative_path(value)
+    if value.startswith(AUDIO_ROUTE) and value not in ATLAS_FILES:
+        raise FileNotFoundError("Unpublished audio file")
     root, source = (workspace, ATLAS_FILES[value]) if workspace and value in ATLAS_FILES else (web, value)
     if workspace and value.startswith(STUDIO_ROUTE):
         root, source = workspace / STUDIO, value.removeprefix(STUDIO_ROUTE)
@@ -563,15 +565,16 @@ def make_server(observatory, port):
                 stat = os.fstat(stream.fileno())
                 size = stat.st_size
                 etag = f'"{size:x}-{stat.st_mtime_ns:x}"'
-                art = route.startswith("/" + STUDIO_ROUTE)
-                if art and self.headers.get("If-None-Match") == etag:
+                seekable = route.startswith("/" + STUDIO_ROUTE) or (
+                    route.startswith("/" + AUDIO_ROUTE) and file.suffix in {".wav", ".flac"})
+                if seekable and self.headers.get("If-None-Match") == etag:
                     self.send_response(304)
                     self.send_header("ETag", etag)
                     self.send_header("Cache-Control", "no-cache")
                     self.end_headers()
                     return
                 start, end = 0, size - 1
-                requested = self.headers.get("Range") if art and self.headers.get("If-Range", etag) == etag else None
+                requested = self.headers.get("Range") if seekable and self.headers.get("If-Range", etag) == etag else None
                 if requested:
                     span = re.fullmatch(r"bytes=(\d*)-(\d*)", requested)
                     if span and (span[1] or span[2]):
@@ -584,8 +587,8 @@ def make_server(observatory, port):
                         return
                 count = end - start + 1
                 self.headers_for(206 if requested else 200, kind, count, standalone=route in {"/ember-rite/rehearsal.html", "/ember-rite/vertical-play.html"},
-                                 cache="no-cache" if art else "no-store")
-                if art:
+                                 cache="no-cache" if seekable else "no-store")
+                if seekable:
                     self.send_header("Accept-Ranges", "bytes")
                     self.send_header("ETag", etag)
                 if requested:
@@ -612,9 +615,9 @@ def make_server(observatory, port):
                     self.send_body(200, raw)
                 elif path.startswith("/api/"):
                     self.send_body(404, b'{"error":"Unknown API route"}')
-                elif path == "/" + STUDIO_ROUTE.rstrip("/"):
+                elif path in {"/" + STUDIO_ROUTE.rstrip("/"), "/" + AUDIO_ROUTE.rstrip("/")}:
                     self.send_response(301)
-                    self.send_header("Location", "/" + STUDIO_ROUTE)
+                    self.send_header("Location", path + "/")
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                 else:
@@ -622,7 +625,7 @@ def make_server(observatory, port):
                     kinds = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
                              ".json": "application/json; charset=utf-8", ".pdf": "application/pdf", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
                              ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".blend": "application/octet-stream",
-                             ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
+                             ".flac": "audio/flac", ".wav": "audio/wav", ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
                     if p.suffix not in kinds:
                         raise ValueError("Static type not allowed")
                     self.send_file(p, kinds[p.suffix], path)

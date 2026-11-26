@@ -5,10 +5,12 @@ import base64
 import json
 import math
 from pathlib import Path
+import re
 import sys
 
 HERE = Path(__file__).resolve().parent
 ATLAS = HERE.parent
+NATIVE = ATLAS.parents[3]
 sys.path.insert(0, str(ATLAS))
 import audit
 from footprints import project_building
@@ -50,10 +52,20 @@ def render():
                          separators=(",", ":")).replace("<", "\\u003c")
     artwork = base64.b64encode((HERE / "landmarks.webp").read_bytes()).decode("ascii")
     css = (HERE / "style.css").read_text().replace("ARTWORK_URL", "data:image/webp;base64," + artwork)
+    asset_paths = {key: NATIVE / "art" / "yagna-audio" / (key + ".flac")
+                   for key in ("drone", "low-drum", "hand-drum", "reed", "expiry", "quench")}
+    asset_paths["maruti-udayana"] = NATIVE / "assets" / "audio" / "hanuman-trial" / "maruti_udayana.wav"
+    assets = {key: base64.b64encode(path.read_bytes()).decode("ascii") for key, path in asset_paths.items()}
+    audio_json = json.dumps(assets, separators=(",", ":"))
     template = (HERE / "page.html").read_text()
-    js = (HERE / "engine.mjs").read_text() + "\n" + (HERE / "app.js").read_text()
+    # Keep the mixer module's private helpers scoped when inlining it for file:// and srcdoc.
+    exports = "{RehearsalAudio, REHEARSAL_CUE_RANGES, REHEARSAL_DEFAULT_MIX, rehearsalCueInRange}"
+    audio_module = re.sub(r"^export (?=(?:const|class|function) )", "", (HERE / "audio.mjs").read_text(), flags=re.M)
+    mixer = f"const {exports} = (() => {{\n{audio_module}\nreturn {exports};\n}})();"
+    js = "\n".join(((HERE / "engine.mjs").read_text(), mixer, (HERE / "app.js").read_text()))
     return template.replace("<!--APP_STYLE-->", "<style>\n" + css + "</style>").replace(
         "<!--ATLAS_DATA-->", '<script type="application/json" id="atlas-data">' + payload + "</script>").replace(
+        "<!--AUDIO_ASSETS-->", '<script type="application/json" id="audio-assets">' + audio_json + "</script>").replace(
         "<!--APP_CODE-->", '<script type="module">\n' + js + "</script>")
 
 
@@ -66,7 +78,7 @@ if __name__ == "__main__":
     if args.check:
         if not output.is_file() or result != output.read_bytes():
             sys.exit("Rehearsal is stale. Run rehearsal/build.py to rebuild.")
-        print("Portable rehearsal matches all four map sources, Rust timings, controls and art.")
+        print("Portable rehearsal matches the four maps, Rust timings, sound assets, controls and art.")
     else:
         output.write_bytes(result)
         print(f"Wrote {output.name} ({len(result):,} bytes).")

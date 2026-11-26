@@ -7,6 +7,7 @@ on:
       - 'games/yuga-native/tools/build-observatory/**'
       - 'games/yuga-native/docs/design/ember-rite-5v5/**'
       - 'games/yuga-native/art/mandala-map-studio/**'
+      - 'games/yuga-native/art/yagna-audio/**'
       - 'games/yuga-rust/downloads/yuga-rust-confluence.zip'
       - 'games/yuga-native/tools/production-art-stage/**'
       - 'games/yuga-native/art/production-stage-oct23/**'
@@ -51,6 +52,7 @@ jobs:
           python3 -m unittest test_balance
           python3 rehearsal/build.py --check
           node --test rehearsal/simulation.test.mjs
+          if test -f rehearsal/audio.test.mjs; then node --test rehearsal/audio.test.mjs; fi
       - name: Verify hero heights, two-cover entrances and recorded casts
         if: hashFiles('games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/build.py') != ''
         working-directory: games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play

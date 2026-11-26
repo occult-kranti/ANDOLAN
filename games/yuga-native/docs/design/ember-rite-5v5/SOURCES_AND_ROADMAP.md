@@ -29,6 +29,8 @@ An attempted Riot `playvalorant.com/en-us/how-to-play/` page returned HTTP 404 i
 
 ## Roadmap
 
+The audio panel shipped a score, tactical listening exercise and bilingual guide reads. Its roadmap assigns the next work to three disciplines. Network engineers own audience filtering, players and listening researchers establish intelligibility across devices, and musicians and performers direct the final performances. The tool register includes the rights for embedding, raw distribution and generative weights. [Playable audio design](audio/README.md) · [Round decisions and release gates](audio/roadmap.md) · [21-tool and source register](audio/tools-and-rights.md)
+
 The November map panel added archaeological field evidence from Thanesar, comparisons with Chola temple forms, Sigiriya, Patan and Dholavira, a historical route-strip reading and original design translations. Each district now has a documented decision that changed its measured layout. The drill offers a playable rehearsal while the following tasks take the objective into the networked game. [Source passages and design changes](atlas/RESEARCH_ROUNDS.md) · [Three rounds and next handoff](atlas/PANEL_ROADMAP.md)
 
 | Order | Next owner / task | Evidence required |

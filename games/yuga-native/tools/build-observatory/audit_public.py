@@ -44,7 +44,9 @@ def expected_files(root, source):
     if git(root, "show", f"{source}:{publisher_path}") != Path(publisher.__file__).read_bytes():
         raise ValueError("Use the publisher from the exact audited source")
     selected = {}
-    atlas_routes = {path: route for route, path in publisher.ATLAS_FILES.items()}
+    atlas_routes = {}
+    for route, path in publisher.ATLAS_FILES.items():
+        atlas_routes.setdefault(path, []).append(route)
     studio_prefix = publisher.STUDIO + "/"
     studio_files = set()
     if git(root, "ls-tree", source, "--", publisher.STUDIO).strip():
@@ -61,23 +63,27 @@ def expected_files(root, source):
         meta, name_bytes = entry.split(b"\t", 1)
         mode, kind, blob = meta.decode().split()
         path = name_bytes.decode()
+        routes = list(atlas_routes.get(path, ()))
         if path.startswith(studio_prefix):
             inside = path.removeprefix(studio_prefix)
-            if inside not in studio_files:
-                continue
-            name = publisher.STUDIO_ROUTE + inside
-        else:
-            name = atlas_routes.get(path, path.removeprefix(prefix))
-        if path.startswith(studio_prefix) or path in atlas_routes or publisher.approved(name):
-            if mode != "100644" or kind != "blob":
-                raise ValueError(f"Unsupported published Git object: {name}")
-            if blob not in blob_hashes:
-                with subprocess.Popen(["git", "cat-file", "blob", blob], cwd=root, stdout=subprocess.PIPE) as child:
-                    with child.stdout:
-                        blob_hashes[blob] = hash_stream(child.stdout, publisher.MAX_FILE)[0]
-                    if child.wait() != 0:
-                        raise ValueError("Unable to read committed blob")
-            selected[name] = blob_hashes[blob]
+            if inside in studio_files:
+                routes.append(publisher.STUDIO_ROUTE + inside)
+        elif path.startswith(prefix):
+            inside = path.removeprefix(prefix)
+            if publisher.approved(inside):
+                routes.append(inside)
+        if not routes:
+            continue
+        if mode != "100644" or kind != "blob":
+            raise ValueError(f"Unsupported published Git object: {path}")
+        if blob not in blob_hashes:
+            with subprocess.Popen(["git", "cat-file", "blob", blob], cwd=root, stdout=subprocess.PIPE) as child:
+                with child.stdout:
+                    blob_hashes[blob] = hash_stream(child.stdout, publisher.MAX_FILE)[0]
+                if child.wait() != 0:
+                    raise ValueError("Unable to read committed blob")
+        for route in routes:
+            selected[route] = blob_hashes[blob]
     if not publisher.REQUIRED_WEB <= selected.keys():
         raise ValueError("Incomplete committed publication")
     if publisher.ATLAS_FILES.keys() & selected.keys() and not publisher.ATLAS_FILES.keys() <= selected.keys():

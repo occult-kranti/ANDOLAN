@@ -45,8 +45,20 @@ MAX_JSON = 2 * 1024 * 1024
 MAX_FILE = 64 * 1024 * 1024
 MAX_WEB_TOTAL = 256 * 1024 * 1024
 ATLAS = "games/yuga-native/docs/design/ember-rite-5v5/atlas"
+AUDIO_ROUTE = "ember-rite/audio/"
+AUDIO = "games/yuga-native/art/yagna-audio"
 # Exact public aliases for files with a single authoring location.
 ATLAS_FILES = {
+    **{AUDIO_ROUTE + name: f"{AUDIO}/{name}" for name in (
+        "index.html", "listen.css", "listen.js", "ritual-mix.flac", "drone.flac", "low-drum.flac",
+        "hand-drum.flac", "reed.flac", "expiry.flac", "quench.flac",
+        "voice-guide/ignite-en.wav", "voice-guide/ignite-hi.wav", "voice-guide/quench-en.wav", "voice-guide/quench-hi.wav")},
+    "ember-rite/mandala-map-studio/concepts/items/rite-ember-vessel.webp":
+        "games/yuga-native/art/mandala-map-studio/concepts/items/rite-ember-vessel.webp",
+    **{f"ember-rite/four-hero-motion/viewer/fonts/{name}": f"games/yuga-native/art/four-hero-motion/viewer/fonts/{name}"
+       for name in ("barlow-condensed-latin-600-normal.woff2", "dm-sans-latin-400-normal.woff2")},
+    **{f"ember-rite/four-hero-motion/viewer/notices/{name}": f"games/yuga-native/art/four-hero-motion/viewer/notices/{name}"
+       for name in ("Barlow-Condensed-OFL.txt", "DM-Sans-OFL.txt")},
     "ember-rite/balance.json": f"{ATLAS}/balance.json",
     "ember-rite/rehearsal.html": f"{ATLAS}/rehearsal.html",
     "ember-rite/vertical-play.html": f"{ATLAS}/vertical-play/fieldbook.html",
@@ -246,6 +258,8 @@ def artifact_url(value, selected):
             raise ValueError("Referenced viewer is absent")
         return
     if value == STUDIO_ROUTE and STUDIO_ROUTE + "index.html" in selected:
+        return
+    if value in {AUDIO_ROUTE, AUDIO_ROUTE.rstrip("/")} and AUDIO_ROUTE + "index.html" in selected:
         return
     p = relative(value)
     if (p.parts[0] != "media" and value not in ATLAS_FILES and not value.startswith(STUDIO_ROUTE)) or value not in selected:

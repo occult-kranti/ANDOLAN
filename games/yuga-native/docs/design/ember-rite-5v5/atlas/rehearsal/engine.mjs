@@ -1,5 +1,6 @@
 /** Offline top-down rehearsal. Distances are metres in the atlas X/Z plane. */
 const BODY_RADIUS = 0.45;
+const FOOTSTEP_METRES = 1.65;
 const SITE_IDS = ["a", "b"];
 const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
 
@@ -158,12 +159,14 @@ export class GroundPlan {
 }
 
 export class Rehearsal {
-  constructor(plan, rules, mode = "explore", start = "atk", target = "a") {
+  constructor(plan, rules, mode = "explore", start = "atk", target = "a", onCue = null) {
     this.plan = plan;
     this.rules = rules;
     this.mode = mode;
     this.start = start;
     this.target = target;
+    this.onCue = onCue;
+    this.footstepMetres = 0;
     this.position = [...plan.data.nodes[start].xz];
     this.facing = start === "def" ? [0, -1] : [0, 1];
     this.phase = mode === "carry" ? "approach" : mode === "retake" ? "burn" : "explore";
@@ -179,14 +182,15 @@ export class Rehearsal {
       mode === "carry" ? "Carry the Ember into either site and hold to kindle." : "Walk the district or trace a route.";
   }
 
-  stopChannel() {
+  stopChannel(canceled = false) {
+    if (canceled && this.channel) this.onCue?.({type: "cancel"});
     this.channel = null;
     this.progress = 0;
   }
 
   interrupt() {
-    if (!["approach", "burn", "explore"].includes(this.phase)) return;
-    this.stopChannel();
+    if (!this.channel) return;
+    this.stopChannel(true);
     this.latched = true;
     this.message = "Interrupted. Release Interact to begin another hold.";
   }
@@ -195,9 +199,10 @@ export class Rehearsal {
     if (this.phase !== "approach" || !this.carrying) return;
     this.carrying = false;
     this.vessel = [...this.position];
-    this.stopChannel();
+    this.stopChannel(true);
     this.latched = true;
     this.message = "Vessel dropped. Hold Interact within reach to recover it.";
+    this.onCue?.({type: "drop"});
   }
 
   /** One deterministic local tick. Resolve completion before clock expiry, matching ritual.rs. */
@@ -212,31 +217,45 @@ export class Rehearsal {
       this.facing = [x / magnitude, z / magnitude];
       const wet = this.plan.surface(this.position).kind === "water";
       const stride = this.rules.speed / this.rules.hz * (wet ? this.rules.water : 1);
-      this.position = this.plan.move(this.position, this.facing.map(v => v * stride));
+      const before = this.position;
+      this.position = this.plan.move(before, this.facing.map(v => v * stride));
+      this.footstepMetres += distance(before, this.position);
+      if (this.footstepMetres >= FOOTSTEP_METRES) {
+        this.footstepMetres -= FOOTSTEP_METRES;
+        const surface = this.plan.surface(this.position).kind === "water" ? "water" : "stone";
+        this.onCue?.({type: "footstep", at: [...this.position], surface});
+      }
     }
 
     const action = this.availableAction();
     if (!hold || this.latched || !action || (action.kind === "fold" && magnitude > 0)) {
-      if (this.channel && !hold) this.message = "Hold released.";
-      this.stopChannel();
+      if (this.channel) this.message = hold ? "Hold interrupted." : "Hold released.";
+      this.stopChannel(true);
     } else if (action.kind === "recover") {
       this.carrying = true;
       this.vessel = null;
       this.latched = true;
       this.stopChannel();
       this.message = "Ember recovered.";
+      this.onCue?.({type: "recover"});
     } else {
-      if (this.channel?.key !== action.key) this.progress = 0;
-      this.channel = action;
+      if (this.channel?.key !== action.key) {
+        this.stopChannel(true);
+        this.channel = action;
+        const at = action.kind === "quench" ? this.vessel : this.position;
+        this.onCue?.({type: action.kind + "_start", at: [...at], localHold: true});
+      }
       this.progress++;
       if (this.progress >= action.duration) this.complete(action);
     }
     if (this.phase === "approach" || this.phase === "burn") {
       this.remaining--;
       if (this.remaining <= 0) {
+        const type = this.phase === "burn" ? "burned" : "expired";
         this.message = this.phase === "burn" ? "The fire completed its burn." : "The approach clock expired.";
         this.phase = "ended";
         this.stopChannel();
+        this.onCue?.({type});
       }
     }
   }
@@ -262,7 +281,6 @@ export class Rehearsal {
   }
 
   complete(action) {
-    this.stopChannel();
     this.latched = true;
     if (action.kind === "fold") {
       const gate = action.gate;
@@ -271,12 +289,15 @@ export class Rehearsal {
       const exit = this.plan.data.nodes[gate.destination];
       const landing = exit.xz.map((v, i) => v + rotated[i]);
       if (!this.plan.canStand(landing)) {
+        this.stopChannel(true);
         this.message = "Exit obstructed. You remain at the entrance.";
         return;
       }
       this.position = landing;
       this.facing = rotate(this.facing, gate.turns);
+      this.footstepMetres = 0;
       this.message = gateSign(gate, exit.label) + ". Crossing complete.";
+      this.onCue?.({type: "fold", at: [...landing]});
     } else if (action.kind === "kindle") {
       this.vessel = [...this.position];
       this.carrying = false;
@@ -284,10 +305,13 @@ export class Rehearsal {
       this.phase = "handoff";
       this.remaining = this.rules.burn;
       this.message = "Site " + action.site.toUpperCase() + " kindled. Take the defender role to rehearse this exact placement.";
+      this.onCue?.({type: "kindled", site: action.site});
     } else if (action.kind === "quench") {
       this.phase = "ended";
       this.message = "Quenched. The defenders contained the Ember.";
+      this.onCue?.({type: "quenched"});
     }
+    this.stopChannel();
   }
 
   takeDefence() {
@@ -297,10 +321,16 @@ export class Rehearsal {
     this.start = this.target === "a" ? "b" : "a";
     this.position = [...this.plan.data.nodes[this.start].xz];
     this.facing = [0, 1];
+    this.footstepMetres = 0;
     this.remaining = this.rules.burn;
     this.started = false;
     this.elapsed = 0;
     this.latched = true;
     this.message = "Retake from the opposite site. The clock starts on your first movement or interaction.";
+    this.onCue?.({type: "handoff"});
+  }
+
+  turn(quarterTurns) {
+    if (this.phase === "explore") this.facing = rotate(this.facing, quarterTurns);
   }
 }

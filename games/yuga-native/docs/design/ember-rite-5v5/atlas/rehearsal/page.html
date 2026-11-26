@@ -34,6 +34,7 @@
           <rect x="-1000" y="-1000" width="2000" height="2000" fill="url(#grid)"/>
           <g id="floors"></g><g id="guide-layer"></g><g id="marks"></g><g id="labels"></g>
           <g id="vessel"><circle class="reach" r="1.5"/><path class="spark" d="M0 -1.7 Q2 .2 1 1.2 Q-.3 2 -1.25 .7 Q-1.6 -.3 0 -1.7Z"/></g>
+          <g id="practice-marker" display="none"><title>Your practice source</title><path d="M0 -3.3 3.3 0 0 3.3 -3.3 0Z"/><circle r=".9"/></g>
           <g id="player"><circle class="player-ring" r="2.1"/><path d="M0 -3 L1.45 1.55 L0 .94 L-1.45 1.55Z"/></g>
         </svg>
         <div aria-hidden="true" class="north">N<span>↑</span></div>
@@ -41,6 +42,10 @@
       </div>
       <div class="readouts"><div><span>Position</span><strong id="position"></strong></div><div><span id="time-title">Route time</span><strong id="clock"></strong></div></div>
       <div class="legend" aria-label="Map symbols"><span><i class="floor-key"></i>Dry floor</span><span><i class="water-key"></i>Water</span><span><i class="cover-key"></i>Cover</span><span><i class="masonry-key"></i>Masonry</span><span><i class="fold-key"></i>Fold</span><span><i class="line-key"></i>Guide</span></div>
+      <div class="sound-strip">
+        <button id="sound-toggle" type="button" aria-pressed="false">Enable sound</button>
+        <div><span id="sound-status" role="status"></span><span id="sound-caption" role="status" aria-label="Sound caption" aria-atomic="true"></span></div>
+      </div>
     </section>
     <section class="brief" aria-label="Drill controls">
       <div class="brief-heading"><h2>Field drill</h2><button type="button" id="reset">Restart</button></div>
@@ -57,12 +62,31 @@
       <div class="progress-line"><progress id="progress" max="1" value="0" aria-label="Interaction progress"></progress><span id="progress-text">Ready</span></div>
       <p id="status" role="status" aria-live="polite"></p>
       <div class="operations"><button type="button" id="handoff" hidden>Rehearse this retake</button><button type="button" id="pause">Pause</button><button type="button" id="interrupt">Simulate interruption</button></div>
+      <details id="listening-lab"><summary>Listening exercise</summary>
+        <p>Place a source at your feet, then walk away or around cover. Turn in place and play its cue again.</p>
+        <label>Practice cue<select id="practice-cue"></select></label>
+        <div class="practice-buttons"><button type="button" id="place-source">Place source here</button><button type="button" id="play-source" disabled>Play cue</button></div>
+        <div class="practice-turns"><button type="button" id="turn-left">Turn left</button><button type="button" id="turn-right">Turn right</button><span id="practice-position"></span></div>
+        <p id="practice-feedback"><span id="practice-outcome" role="status"></span><span id="practice-caption" aria-hidden="true"></span></p>
+        <p class="control-hint">Q / R turn a quarter turn. V plays the cue.</p>
+      </details>
+      <details id="mix-settings"><summary>Sound settings</summary>
+        <p>The score follows the 40-second fire clock. Effects and captions follow the action.</p>
+        <div class="mix-sliders">
+          <label for="master-volume">Master</label><input id="master-volume" type="range" min="0" max="100" step="1"><output for="master-volume" id="master-readout"></output>
+          <label for="effects-volume">Effects</label><input id="effects-volume" type="range" min="0" max="100" step="1"><output for="effects-volume" id="effects-readout"></output>
+          <label for="music-volume">Music</label><input id="music-volume" type="range" min="0" max="100" step="1"><output for="music-volume" id="music-readout"></output>
+        </div>
+        <div class="mix-options"><label><input id="captions" type="checkbox"> Sound captions</label><label><input id="mono" type="checkbox"> Mono audio</label></div>
+        <button type="button" id="restore-mix">Reset sound settings</button>
+      </details>
       <details><summary>Controls and drill rules</summary><p>Focus the plan to walk with WASD or the arrow keys, or use the direction pad. Hold E or Interact at a site or fold. G drops the vessel. Hold Interact near it to pick it up. A hold stops on release. P pauses.</p><p>The guide measures the route from your selected start at full walking speed. Ramp grade is represented on the plan. Fixed cover and masonry stop the marker. At Measure Well the central sill stays dry between the two recessed basins. The clock starts with the first move or hold and pauses while this window is hidden.</p><p>Kindle anywhere on the 3 m disk. The solo handoff lets you try a defender’s retake of that exact vessel. The Quench exercise instead places a practice vessel 2 m north of the chosen site centre. This is an offline drill without opponents.</p></details>
     </section>
   </div>
   <section class="district-notes" aria-labelledby="landmark-name"><figure><div id="art" role="img"></div><figcaption id="art-caption"></figcaption></figure><div><h2 id="landmark-name"></h2><p id="landmark-cue"></p><p id="district-decision"></p></div></section>
 </main>
 <!--ATLAS_DATA-->
+<!--AUDIO_ASSETS-->
 <!--APP_CODE-->
 </body>
 </html>

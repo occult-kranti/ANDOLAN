@@ -196,6 +196,53 @@ class ObservatoryTests(unittest.TestCase):
         self.assertEqual(saved["mode"], "snapshot")
         self.assertEqual(saved["collected_at"], "2026-10-23T20:00:00+00:00")
 
+    def test_audio_desk_serves_the_public_flac_and_its_byte_ranges(self):
+        workspace = self.directory / "checkout"
+        observer = obs.Observatory(workspace, self.directory)
+        observer.web = self.directory / "web"
+        desk = obs.AUDIO_ROUTE
+        route = desk + "quench.flac"
+        source = obs.ATLAS_FILES[route]
+        audio = (Path(__file__).resolve().parents[4] / source).read_bytes()
+        self.assertEqual(audio[:4], b"fLaC")
+        file = workspace / source
+        file.parent.mkdir(parents=True)
+        file.write_bytes(audio)
+        (file.parent / "index.html").write_text("Listening desk")
+        (file.parent / "private.flac").write_bytes(b"Unpublished take")
+        web_desk = observer.web / desk
+        web_desk.mkdir(parents=True)
+        (web_desk / "private.flac").write_bytes(b"Unlisted web file")
+
+        server = obs.make_server(observer, 0)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        self.addCleanup(thread.join)
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+
+        def get(path, **headers):
+            with contextlib.closing(http.client.HTTPConnection("127.0.0.1", server.server_port, timeout=3)) as connection:
+                connection.request("GET", "/" + path, headers=headers)
+                with connection.getresponse() as response:
+                    return response.status, response.headers, response.read()
+
+        status, headers, _ = get(desk.rstrip("/"))
+        self.assertEqual((status, headers["Location"]), (301, "/" + desk))
+        self.assertEqual(get(desk)[2], b"Listening desk")
+        status, headers, body = get(route)
+        self.assertEqual((status, headers["Content-Type"], headers["Accept-Ranges"]), (200, "audio/flac", "bytes"))
+        self.assertEqual(body, audio)
+        status, headers, body = get(route, Range="bytes=0-3")
+        self.assertEqual((status, headers["Content-Type"], headers["Content-Range"], body),
+                         (206, "audio/flac", f"bytes 0-3/{len(audio)}", b"fLaC"))
+        self.assertEqual(get(desk + "private.flac")[0], 404)
+
+        for value in (desk, desk.rstrip("/"), route):
+            self.assertEqual(obs.safe_url(value), value)
+        with self.assertRaises(ValueError):
+            obs.safe_url(desk + "private.flac")
+
     def test_gpu_telemetry_is_bounded_explicit_and_has_no_network_calls(self):
         with mock.patch.object(obs.shutil, "which", return_value="/safe/nvidia-smi"), mock.patch.object(obs, "command", return_value="GPU name, 8192, 1024, 10") as run:
             gpu = obs.host_info()["gpu"]
