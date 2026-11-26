@@ -1,5 +1,7 @@
 # Start here: project and agent handoff
 
+**Mandala Rift environment art.** The atlas owns coordinates and game rules. The map studio contains the registered scene, individual meshes, paintings, survey drawings and films. Use the production guide to find an element by its shared ID and rebuild a view. [Live gallery](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/) · [Artist and developer handoff](../games/yuga-native/art/mandala-map-studio/README.md)
+
 **Ember Rite map handoff, 26 November 2026.** Play the four solo districts, or open the production dashboard for the current measurements and printable plans. For developers the panel handoff identifies the source JSON, exported geometry, executable checks, live hero changes and remaining 5v5 work. [Solo rehearsal](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Dashboard](https://occult-kranti.github.io/ANDOLAN/production/) · [Panel roadmap](../games/yuga-native/docs/design/ember-rite-5v5/atlas/PANEL_ROADMAP.md) · [Ten-player script](../games/yuga-native/docs/design/ember-rite-5v5/atlas/ENCOUNTERS.md)
 
 **Animation technical codex.** Use the [five-hero intake and roadmap](../games/yuga-native/docs/design/animation-tech-codex-2026/README.md) for the latest animation, IK, VFX, ability and performance proposals. Its source draft includes unfinished fields; it does not establish motion-capture sessions, engine compatibility or new playable abilities.

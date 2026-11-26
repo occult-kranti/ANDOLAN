@@ -6,6 +6,7 @@ on:
       - '.github/workflows/yuga-observatory.yml'
       - 'games/yuga-native/tools/build-observatory/**'
       - 'games/yuga-native/docs/design/ember-rite-5v5/**'
+      - 'games/yuga-native/art/mandala-map-studio/**'
       - 'games/yuga-rust/downloads/yuga-rust-confluence.zip'
       - 'games/yuga-native/tools/production-art-stage/**'
       - 'games/yuga-native/art/production-stage-oct23/**'
@@ -52,6 +53,12 @@ jobs:
           node --test rehearsal/simulation.test.mjs
       - name: Verify the read-only observatory and additive publisher
         run: python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v
+      - name: Verify the studio catalog, scale drawings, paintings and registered models
+        if: hashFiles('games/yuga-native/art/mandala-map-studio/catalog.json') != ''
+        run: |
+          python3 games/yuga-native/art/mandala-map-studio/src/catalog.py --check
+          python3 games/yuga-native/art/mandala-map-studio/concepts/verify.py
+          python3 games/yuga-native/art/mandala-map-studio/src/export_elements.py --check
       - name: Restore the baseline's locked browser dependencies
         working-directory: .site-baseline
         run: npm ci

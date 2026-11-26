@@ -11,6 +11,9 @@ import unittest
 
 import audit_public as auditor
 import publish_site as publisher
+import observatory
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -36,6 +39,18 @@ class PublicAuditTests(unittest.TestCase):
                 path = root / repo_path
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('Bounded fixture for ' + route)
+            studio = root / publisher.STUDIO
+            catalog = {'schema': 1, 'elements': [{'id': 'room-gate', 'plate': 'plates/room-gate.svg',
+                         'render': 'renders/room-gate.webp', 'clip': 'clips/room-gate.mp4'}]}
+            concepts = {'boards': [{'id': 'portals', 'file': 'boards/portals.webp', 'items': ['room-gate']}],
+                        'items': {'room-gate': {'file': 'items/room-gate.webp', 'board': 'portals'}}, 'hero': 'hero.webp'}
+            for name in publisher.studio_names(catalog, concepts):
+                path = studio / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(name.encode())
+            (studio / 'catalog.json').write_text(json.dumps(catalog))
+            (studio / 'concepts/index.json').write_text(json.dumps(concepts))
+            (studio / 'work-in-progress.html').write_text('studio working file')
             def git(*args):
                 return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.DEVNULL)
             git('init', '-q')
@@ -50,6 +65,31 @@ class PublicAuditTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('Preserved browser entry ' + name)
             publisher.publish(site, web, 'b' * 40, source, workspace=root)
+            self.assertFalse((site / 'production/mandala-art/work-in-progress.html').exists())
+            worker = observatory.make_server(observatory.Observatory(root, root), 0)
+            worker_thread = threading.Thread(target=worker.serve_forever, daemon=True)
+            worker_thread.start()
+            try:
+                url = f'http://127.0.0.1:{worker.server_port}/mandala-art/'
+                with urlopen(url) as r:
+                    self.assertEqual(r.read(), b'index.html')
+                with urlopen(Request(url + 'tour.mp4', headers={'Range': 'bytes=1-4'})) as r:
+                    self.assertEqual((r.status, r.headers['Content-Range'], r.read()), (206, 'bytes 1-4/8', b'our.'))
+                    tag = r.headers['ETag']
+                for headers, expected_status in [({'Range':'bytes=99-'},416), ({'If-None-Match':tag},304)]:
+                    with self.assertRaises(HTTPError) as error:
+                        urlopen(Request(url + 'tour.mp4', headers=headers))
+                    self.assertEqual(error.exception.code, expected_status)
+                with self.assertRaises(HTTPError) as refused:
+                    urlopen(url + 'work-in-progress.html')
+                self.assertEqual(refused.exception.code, 404)
+                with urlopen(Request(url + 'mandala-rift.blend', method='HEAD')) as r:
+                    self.assertEqual(r.headers['Content-Type'], 'application/octet-stream')
+                    self.assertEqual(r.read(), b'')
+            finally:
+                worker.shutdown()
+                worker.server_close()
+                worker_thread.join()
             server = ThreadingHTTPServer(('127.0.0.1', 0), partial(QuietHandler, directory=str(site)))
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()

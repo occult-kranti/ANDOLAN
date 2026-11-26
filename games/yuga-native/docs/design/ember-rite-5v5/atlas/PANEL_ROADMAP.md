@@ -4,6 +4,8 @@ Updated 26 November 2026. The release has two complementary ways to play. In the
 
 ## Three design rounds
 
+The Mandala art pass has reached its review build. Each surveyed element can now be inspected from multiple angles, compared with its painting, and imported independently. World and collision owners can start their engine pass with the signed temple thresholds, the dry ford bypass and both objective courts. Check a carrier at the edge of each site, the camera on both shoulders, and what a player can see through the southern pavilion before promoting the dressed geometry to the match. [Art handoff and source scene](../../../../art/mandala-map-studio/README.md) · [View the element studies](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/)
+
 | Round | What the specialists compared | Decision and evidence |
 | --- | --- | --- |
 | **1 · Research and diagnosis** | A source researcher read dated site descriptions, excavation reports, translations and a historical itinerary. The district designer and cartographer checked the four baseline routes. Combat design compared each playable hero’s contact and resource opportunities. | Give every new structure a local purpose and a distinct silhouette. Keep a dry route when a special crossing is held. Reduce the nearly ten-second Palace Terrace setup advantage through route geometry. Preserve the heroes’ existing strengths and improve an escort decision for Hanuman and a movement decision for Rama. [Source passages](RESEARCH_ROUNDS.md) · [Reference map studies](REFERENCES.md) · [Hero arithmetic](../HERO_BALANCE.md) |

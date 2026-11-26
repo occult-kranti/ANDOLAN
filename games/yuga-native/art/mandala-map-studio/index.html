@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0e6">
+  <meta name="description" content="Explore the making of Mandala Rift through original environment paintings, scale drawings, Blender renders and motion studies.">
+  <title>Mandala Rift — YUGA Environment Art</title>
+  <link rel="icon" href="../viewer/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./gallery.css">
+  <script type="module" src="./gallery.js"></script>
+</head>
+<body>
+  <a class="skip" href="#studies">Skip to element studies</a>
+  <header class="mast">
+    <a class="wordmark" href="../" aria-label="YUGA production observatory">YUGA</a>
+    <span class="mast-title">Environment art</span>
+    <nav aria-label="Art book"><a href="#studies">Element studies</a><a href="#boards">Concept boards</a><a href="#files">Scene files</a></nav>
+  </header>
+  <main>
+    <section class="opening" aria-labelledby="title">
+      <div class="opening-heading">
+        <div><p class="eyeline">Ember Rite</p><h1 id="title">Mandala Rift</h1></div>
+        <div class="opening-copy"><p>A temple passage folds across a river market. Walk the dry bank, cross the reed ford, or turn through the pavilion.</p><a class="film-link" href="#film">Watch the district film <span aria-hidden="true">↓</span></a></div>
+      </div>
+      <figure class="cover">
+        <a id="cover-link" href="./concepts/hero.webp" aria-label="Open the full district image"><img id="cover-image" src="./concepts/hero.webp" alt="The river district, temple pavilion and market in a panoramic environment painting" fetchpriority="high" decoding="async"></a>
+        <figcaption><span id="cover-caption">Mandala Rift · assembled district</span><a href="../ember-rite/rehearsal.html?map=mandala">Walk the floor plan</a></figcaption>
+      </figure>
+    </section>
+
+    <section id="studies" class="library" aria-labelledby="studies-title">
+      <div class="section-head"><div><p class="eyeline">Field index</p><h2 id="studies-title">Element studies</h2></div><p id="index-count" aria-live="polite">Loading the collection…</p></div>
+      <div class="toolbar"><div id="filters" role="group" aria-label="Filter by element type"></div><label class="search"><span>Search the index</span><input id="search" type="search" placeholder="Find an element" autocomplete="off"></label></div>
+      <div id="library" class="study-grid" aria-busy="true"></div>
+      <p id="empty" role="status" hidden></p>
+      <button id="more" class="button" type="button" hidden>Show more studies</button>
+    </section>
+
+    <section id="film" class="film-section" aria-labelledby="film-title">
+      <div class="section-head"><div><p class="eyeline">Blender</p><h2 id="film-title">District in motion</h2></div><a href="./tour.mp4" download>Download the film <span aria-hidden="true">↓</span></a></div>
+      <video id="district-film" controls playsinline preload="none" poster="./district.webp" aria-label="Camera tour of the assembled Mandala Rift environment"><source src="./tour.mp4" type="video/mp4"></video>
+      <figure class="lighting"><a href="./lighting/study.webp"><img src="./lighting/study.webp" alt="Physically lit Blender views of the district architecture and props" loading="lazy" decoding="async"></a><figcaption><strong>Lighting study</strong><span>Cycles · assembled geometry</span><a href="./lighting/study.webp">Open full image</a></figcaption></figure>
+    </section>
+
+    <section id="boards" class="boards-section" aria-labelledby="boards-title">
+      <div class="section-head"><div><p class="eyeline">Visual development</p><h2 id="boards-title">Concept boards</h2></div></div>
+      <div id="board-list" class="board-grid"></div>
+    </section>
+    <section id="files" class="files" aria-labelledby="files-title">
+      <div><p class="eyeline">Production files</p><h2 id="files-title">The district scene</h2></div>
+      <div class="downloads"><a href="./mandala-rift-artbook.pdf" download>Complete art book <small>.pdf</small> <span aria-hidden="true">↓</span></a><a href="./mandala-rift.blend" download>Blender source <small>.blend</small> <span aria-hidden="true">↓</span></a><a href="./mandala-rift.glb" download>3D scene <small>.glb</small> <span aria-hidden="true">↓</span></a><a href="./catalog.json">Element catalog <small>.json</small></a><a href="./models/index.json">Individual model index <small>.json</small></a><a href="./verification.json">Verification report <small>.json</small></a></div>
+    </section>
+  </main>
+  <footer><a class="wordmark" href="../">YUGA</a><a href="#title">Back to the district <span aria-hidden="true">↑</span></a></footer>
+
+  <dialog id="detail" aria-labelledby="detail-title">
+    <div class="detail-shell">
+      <div class="detail-nav"><a id="permalink" href="#studies">Link to this study</a><button id="close" type="button" autofocus>Close <span aria-hidden="true">×</span></button></div>
+      <p id="detail-kind" class="eyeline"></p><h2 id="detail-title"></h2><p id="detail-brief"></p>
+      <div id="media-options" role="group" aria-label="Study media"></div>
+      <div id="media-view" class="media-view"></div>
+      <a id="element-model" class="model-download" download></a>
+      <details id="location"><summary>Locate on the floor plan</summary><div id="locator"></div></details>
+      <details id="sources"><summary>Design sources</summary><ul id="item-sources"></ul></details>
+      <div class="detail-bottom"><button id="previous" type="button">← Previous</button><span id="position"></span><button id="next" type="button">Next →</button></div>
+    </div>
+  </dialog>
+</body>
+</html>

@@ -20,7 +20,7 @@ import threading
 import time
 from urllib.parse import unquote, urlsplit
 
-from publish_site import ATLAS_FILES
+from publish_site import ATLAS_FILES, MAX_FILE, STUDIO, STUDIO_ROUTE, studio_index
 
 MAX_BYTES = 2 * 1024 * 1024
 MAX_JOBS = 256
@@ -80,8 +80,10 @@ def safe_url(value):
         if any(c.isspace() for c in value):
             raise ValueError("Unsafe HTTPS URL")
         return value
-    if value in {"viewer/", "viewer/index.html"} or value in ATLAS_FILES:
+    if value in {"viewer/", "viewer/index.html", STUDIO_ROUTE} or value in ATLAS_FILES:
         return value
+    if value.startswith(STUDIO_ROUTE):
+        return relative_path(value)
     if not value.startswith("media/"):
         raise ValueError("Only media-relative, exact viewer or HTTPS URLs are public")
     return relative_path(value)
@@ -510,15 +512,21 @@ def static_path(web, url, workspace=None):
     decoded = unquote(urlsplit(url).path)
     if len(decoded) > 1000 or any(c in decoded for c in ("\\", "\x00", "%")):
         raise ValueError("Invalid static path")
-    value = "viewer/index.html" if decoded == "/viewer/" else decoded.lstrip("/") or "index.html"
+    value = decoded.lstrip("/") or "index.html"
+    if value in {"viewer/", STUDIO_ROUTE}:
+        value += "index.html"
     if decoded.startswith("//"):
         raise ValueError("Invalid static path")
     relative_path(value)
     root, source = (workspace, ATLAS_FILES[value]) if workspace and value in ATLAS_FILES else (web, value)
+    if workspace and value.startswith(STUDIO_ROUTE):
+        root, source = workspace / STUDIO, value.removeprefix(STUDIO_ROUTE)
+        if source not in studio_index(root):
+            raise FileNotFoundError("Unpublished art studio file")
     p = safe_existing(root / source)
     if not p.is_relative_to(safe_existing(root, directory=True)) or not p.is_file():
         raise FileNotFoundError("Static file absent")
-    if p.stat().st_size > 32 * 1024 * 1024:
+    if p.stat().st_size > (MAX_FILE if value.startswith(STUDIO_ROUTE) else 32 * 1024 * 1024):
         raise ValueError("Static file exceeds limit")
     return p
 
@@ -530,11 +538,11 @@ def make_server(observatory, port):
         def log_message(self, *_):
             pass  # Never copy arbitrary request paths or headers to logs.
 
-        def send_body(self, status, payload, kind="application/json; charset=utf-8", *, standalone=False):
+        def headers_for(self, status, kind, length, *, standalone=False, cache="no-store"):
             self.send_response(status)
             self.send_header("Content-Type", kind)
-            self.send_header("Content-Length", str(len(payload)))
-            self.send_header("Cache-Control", "no-store")
+            self.send_header("Content-Length", str(length))
+            self.send_header("Cache-Control", cache)
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
             if standalone:
@@ -543,8 +551,51 @@ def make_server(observatory, port):
             else:
                 policy = "default-src 'self'; img-src 'self' https:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'"
             self.send_header("Content-Security-Policy", policy)
+
+        def send_body(self, status, payload, kind="application/json; charset=utf-8"):
+            self.headers_for(status, kind, len(payload))
             self.end_headers()
-            self.wfile.write(payload)
+            if self.command != "HEAD":
+                self.wfile.write(payload)
+
+        def send_file(self, file, kind, route):
+            with file.open("rb") as stream:
+                stat = os.fstat(stream.fileno())
+                size = stat.st_size
+                etag = f'"{size:x}-{stat.st_mtime_ns:x}"'
+                art = route.startswith("/" + STUDIO_ROUTE)
+                if art and self.headers.get("If-None-Match") == etag:
+                    self.send_response(304)
+                    self.send_header("ETag", etag)
+                    self.send_header("Cache-Control", "no-cache")
+                    self.end_headers()
+                    return
+                start, end = 0, size - 1
+                requested = self.headers.get("Range") if art and self.headers.get("If-Range", etag) == etag else None
+                if requested:
+                    span = re.fullmatch(r"bytes=(\d*)-(\d*)", requested)
+                    if span and (span[1] or span[2]):
+                        start = int(span[1]) if span[1] else max(0, size - int(span[2]))
+                        end = min(int(span[2]), end) if span[1] and span[2] else end
+                    if not span or not (span[1] or span[2]) or start > end:
+                        self.headers_for(416, kind, 0)
+                        self.send_header("Content-Range", f"bytes */{size}")
+                        self.end_headers()
+                        return
+                count = end - start + 1
+                self.headers_for(206 if requested else 200, kind, count, standalone=route == "/ember-rite/rehearsal.html",
+                                 cache="no-cache" if art else "no-store")
+                if art:
+                    self.send_header("Accept-Ranges", "bytes")
+                    self.send_header("ETag", etag)
+                if requested:
+                    self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+                self.end_headers()
+                if self.command != "HEAD":
+                    stream.seek(start)
+                    while count and (chunk := stream.read(min(256 * 1024, count))):
+                        self.wfile.write(chunk)
+                        count -= len(chunk)
 
         def do_GET(self):
             host = self.headers.get("Host", "")
@@ -561,14 +612,20 @@ def make_server(observatory, port):
                     self.send_body(200, raw)
                 elif path.startswith("/api/"):
                     self.send_body(404, b'{"error":"Unknown API route"}')
+                elif path == "/" + STUDIO_ROUTE.rstrip("/"):
+                    self.send_response(301)
+                    self.send_header("Location", "/" + STUDIO_ROUTE)
+                    self.send_header("Content-Length", "0")
+                    self.end_headers()
                 else:
                     p = static_path(observatory.web, self.path, observatory.workspace)
                     kinds = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
                              ".json": "application/json; charset=utf-8", ".pdf": "application/pdf", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-                             ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
+                             ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".blend": "application/octet-stream",
+                             ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
                     if p.suffix not in kinds:
                         raise ValueError("Static type not allowed")
-                    self.send_body(200, p.read_bytes(), kinds[p.suffix], standalone=path == "/ember-rite/rehearsal.html")
+                    self.send_file(p, kinds[p.suffix], path)
             except (BrokenPipeError, ConnectionResetError):
                 # Navigating into the drill can cancel an in-flight status or preview response.
                 return
@@ -578,6 +635,8 @@ def make_server(observatory, port):
                 self.send_body(422, b'{"error":"Invalid state or path; inspect local source"}')
             except (OSError, subprocess.SubprocessError):
                 self.send_body(503, b'{"error":"Telemetry temporarily unavailable"}')
+
+        do_HEAD = do_GET
 
         def do_POST(self):
             self.send_body(405, b'{"error":"Read-only service"}')
