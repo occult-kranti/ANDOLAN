@@ -21,6 +21,10 @@ Updated 26 November 2026. The release has two complementary ways to play. In the
 
 These are travel-time budgets from room centres, with ordinary movement at 5 m/s and shallow water at 85% speed. A runner still needs time to find a lip placement, clear a corner and react to the opponent. Every side/site has a pair of independently reachable dry threshold centres farther apart than the 6 m diameter of a single Sena. This geometric result leaves freedom to favor a particular hero at one door. It makes no prediction about real win rates. [Inputs, distances and method](BALANCE_MATH.md) · [Detailed route traces](measurements.md)
 
+## The observer graphics test
+
+Two rendered Chromium seats on the CPU host received the complete Sena cast. The observing player lost 28 HP, but the viewport missed the five guardians during their short lifetime. Smaller render buffers and cheaper shadows still missed the visual. Drawing more frequently from network snapshots also put normal movement updates at risk. Those experiments stayed out of the published game. On two target GPUs, record presentation timestamps, the first visible guardian and the last live field tick alongside input delivery. A message in a network trace cannot tell a player when to leave the doorway. [Observed frames and cast ticks](evidence/two-seat-visual.json) · [Authority and software-rendering trials](../evidence/hero-balance-tests.json)
+
 ## Game plan and next owners
 
 | Order | Owner and implementation | Review condition |

@@ -43,5 +43,118 @@
     "games/yuga-rust/src/combat.rs": "03d0e6c97f1dc152f2c0991d19d11be6efbd6d0b72fb9eae745d735f8a181865",
     "games/yuga-rust/src/rama.rs": "391c3b19fa716d3d60367cc94f2d9b326aafb9a7d0f84304b2b4253d1be483a6",
     "games/yuga-rust/assets/vanara-sena.json": "e97101f7cf0b6b443263eedbaaef335675263da9980d48f80dfb6b16f0305c87"
+  },
+  "packaged_solo_wasm": {
+    "result": "pass",
+    "scope": "Released Wasm via the ordinary drill and solo exports",
+    "sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d",
+    "hanuman_sena": {
+      "credits": [
+        {
+          "damage": 0,
+          "heal": 12,
+          "hp_after": 102,
+          "shield_after": 0,
+          "unit": 4
+        }
+      ],
+      "tick": 12,
+      "health_after_field": 102
+    },
+    "rama_step": {
+      "tick": 15,
+      "distance_m": 4.5,
+      "ammo_after": 12
+    }
+  },
+  "two_rendered_clients": {
+    "date_utc": "2026-11-26",
+    "scope": "Two separately rendered Chromium contexts on a local Wasm room host, 760 by 480 CSS pixels each, shared CPU SwiftShader. This is a test of game presentation.",
+    "browser": "154.0.8037.57",
+    "unchanged_test": "games/yuga-rust/tools/test_vanara_two_browsers.mjs",
+    "test_sha256": "7e85d81cbecce3fdec86590be3040e6a6f8567605d4068fce920e3f263939a65",
+    "wasm_sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d",
+    "tested_release_client_js_sha256": "592906b66b2b4714071413e59106857f6590f4f93f64c8c55350bac2868d9d83",
+    "published_candidate_client_js_sha256": "592906b66b2b4714071413e59106857f6590f4f93f64c8c55350bac2868d9d83",
+    "cases": [
+      {
+        "variant": "release",
+        "actual_change": "Current skirmish renderer.",
+        "html_sha256": "bcf93e959192078f3dcda0edaf22670e57fe6431b306e23508147fc06ea0806c",
+        "test_result": "fail",
+        "failure_stage": "Observer never rendered five guardians within the field.",
+        "ordinary_mouse_target_accepted": true,
+        "wire_snapshots_with_cast": 25,
+        "max_visible_guardians": 0,
+        "sampled_rendered_frame_numbers_during_cast": [
+          35
+        ],
+        "final_defender_hp": 272.0,
+        "javascript_errors": [],
+        "report_sha256": "1859faaf0affad447c7186c518abac90c3bf6a56c8ee795a2ad2e9d8b38caa3d"
+      },
+      {
+        "variant": "scratch_gpu_budget",
+        "actual_change": "On known software rasterizers, cap the internal pixel ratio at 0.6 and disable the directional shadow pass. This run overlapped a separate browser check.",
+        "html_sha256": "5198835faae91578f2fa427297bea8e814b24269fadd91ab5539ce8467477f75",
+        "test_result": "fail",
+        "failure_stage": "Observer never rendered five guardians within the field.",
+        "ordinary_mouse_target_accepted": true,
+        "wire_snapshots_with_cast": 25,
+        "max_visible_guardians": 0,
+        "sampled_rendered_frame_numbers_during_cast": [
+          12
+        ],
+        "final_defender_hp": 272.0,
+        "javascript_errors": [],
+        "report_sha256": "c9a4d7e5b856955a3fceaaf2febf05632f05b96b3f0cb691f034ee8b845c9490"
+      },
+      {
+        "variant": "scratch_periodic_draw",
+        "actual_change": "Apply that pixel budget and use a real draw on a network snapshot when animation frames are delayed by at least 250 ms.",
+        "html_sha256": "ff8325a0d304239173f2d30b2a3003ad31d776ac9fca2aec936edf9d0fd285e1",
+        "test_result": "fail",
+        "failure_stage": "Movement did not bring Hanuman into range within 120 s. The test ended before the ability.",
+        "ordinary_mouse_target_accepted": false,
+        "wire_snapshots_with_cast": null,
+        "max_visible_guardians": null,
+        "sampled_rendered_frame_numbers_during_cast": [],
+        "final_defender_hp": null,
+        "javascript_errors": [],
+        "report_sha256": "687184ce3e4e17bcf591844964b9951d2042ef9498cceddbb647a5e3d082dfe3"
+      },
+      {
+        "variant": "scratch_cast_draw",
+        "actual_change": "Render current active effects on a delayed animation frame, clear the display when the server confirms expiry and preserve input transmission while frames are delayed.",
+        "html_sha256": "5327ca259e67559b237eb62c0a1ddc373e2455c0b161fbe8c4c6496d9cfbed72",
+        "test_result": "fail",
+        "failure_stage": "Ordinary movement and the accepted cast completed. The visible-guardian check timed out.",
+        "ordinary_mouse_target_accepted": true,
+        "wire_snapshots_with_cast": 25,
+        "max_visible_guardians": 0,
+        "sampled_rendered_frame_numbers_during_cast": [],
+        "final_defender_hp": 272.0,
+        "javascript_errors": [],
+        "report_sha256": "da1e32f318dad6dd1802cc9785039a8b34f1a95918d3ed60fc2b61c91dd2f8f7"
+      }
+    ],
+    "decision": "Keep the shipping render path. Reproduce on a supported hardware GPU with two rendered peers. Capture CPU/GPU and presentation timing through impact and expiry, verify actual movement and visible cues, then repeat before promotion.",
+    "release_wire_observation": {
+      "cast_age_ticks": [
+        2,
+        50
+      ],
+      "wire_cadence_ticks": 2,
+      "defender_hp": [
+        300,
+        272
+      ],
+      "accepted_target_distance_from_defender_m": 2.8497612447608844e-07,
+      "active_cast_visible_state_samples_recorded": 40,
+      "rendered_frame_in_all_recorded_samples": 35,
+      "rendered_frame_after_cast": 49,
+      "javascript_timer_samples": 501
+    },
+    "software_budget_run_note": "The first software-budget run overlapped another browser check. The final cast-only candidate was tested after that check completed."
   }
 }
