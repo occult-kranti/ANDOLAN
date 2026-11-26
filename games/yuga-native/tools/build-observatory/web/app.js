@@ -1,4 +1,6 @@
 const byId = (id) => document.getElementById(id);
+const published = ['occult-kranti.github.io', '127.0.0.1', 'localhost', '[::1]'].includes(location.hostname)
+  && /(?:^|\/)production\/(?:index\.html)?$/.test(location.pathname);
 const state = {data: null, paused: false, loading: false, selectedId: null, mode: 'connecting', lastJobs: '', lastDetail: '', lastAssets: '', lastMilestones: '', lastSources: '', failure: ''};
 const statusNames = {queued: 'Queued', running: 'Running', review: 'In review', complete: 'Complete', blocked: 'Blocked', failed: 'Failed', stale: 'Stale'};
 const statusOrder = {running: 0, review: 1, blocked: 2, failed: 3, stale: 4, queued: 5, complete: 6};
@@ -60,9 +62,14 @@ function renderConnection() {
   const band = document.querySelector('.connection-band');
   band.dataset.mode = state.mode;
   const labels = {connecting: 'Connecting to build worker', live: 'Live worker observation', snapshot: 'Saved snapshot — not live', stale: 'Stale worker observation — not live'};
-  set('connection-label', state.paused ? 'Updates paused — showing last observation' : labels[state.mode]);
   set('connection-age', state.data ? `Observed ${age(state.data.collected_at)} · ${date(state.data.collected_at)}` : 'Waiting for the first observation');
   const notes = {connecting: 'Checking this worker for live telemetry. A saved export will be clearly marked.', live: 'Machine availability is observed here. Public GPU services and unconnected personal devices have separate job records.', snapshot: 'The live worker is unavailable. Jobs and machine values below are historical records from this export, not current activity.', stale: 'The worker timestamp is old or missing. Refresh to request a new observation; recorded running jobs are not confirmed active.'};
+  if (published) {
+    labels.connecting = 'Opening the published snapshot';
+    notes.connecting = 'Reading the recorded jobs and worker observation.';
+    notes.snapshot = 'Jobs and machine values were recorded at the time shown. Refresh to check for a newer publication.';
+  }
+  set('connection-label', state.paused ? 'Updates paused — showing last observation' : labels[state.mode]);
   set('connection-note', state.paused ? 'Automatic requests are paused. Refresh now obtains one observation without resuming automatic updates.' : notes[state.mode]);
   set('pause-button', state.paused ? 'Resume updates' : 'Pause updates');
   byId('pause-button').setAttribute('aria-pressed', String(state.paused));
@@ -330,20 +337,37 @@ async function refresh(manual = false) {
   state.loading = true;
   byId('refresh-button').disabled = true;
   try {
-    try { state.data = await getJson('/api/status'); }
-    catch { state.data = await getJson('./status.json'); state.data.mode = 'snapshot'; }
+    let observation;
+    if (!published) {
+      try { observation = await getJson('/api/status'); }
+      catch { /* A custom host may serve a saved export without a worker. */ }
+    }
+    if (!observation) {
+      observation = await getJson('./status.json');
+      observation.mode = 'snapshot';
+    }
+    state.data = observation;
     state.failure = '';
     render();
     if (manual) set('announcer', `Observation refreshed. ${state.mode === 'live' ? 'Live worker connected.' : 'Showing a saved observation.'}`);
   } catch {
-    state.failure = 'The live worker and saved export could not be read. Check the worker connection, then refresh.';
+    state.failure = published ? 'The published snapshot could not be read. Refresh to try again.' : 'The live worker and saved export could not be read. Check the worker connection, then refresh.';
     if (state.data) { state.data.mode = 'snapshot'; renderConnection(); renderJobs(); renderDetail(); set('connection-note', 'Refresh failed. Preserved the last successful observation; current activity is not confirmed.'); }
     else { byId('error-panel').hidden = false; byId('dashboard').hidden = true; set('connection-label', 'No observation available'); set('connection-age', 'Connection failed'); set('connection-note', state.failure); set('error-message', state.failure); }
     if (manual) set('announcer', state.failure);
   } finally { state.loading = false; byId('refresh-button').disabled = false; }
 }
-function clearFilters() { byId('status-filter').value = 'all'; byId('device-filter').value = 'all'; if (state.data) { renderJobs(true); renderDetail(); } }
-byId('status-filter').addEventListener('change', () => { if (state.data) { renderJobs(true); renderDetail(); } });
+function leaveBlockedView() {
+  if (location.hash === '#blocked' && byId('status-filter').value !== 'blocked') history.replaceState(null, '', '#work');
+}
+function readBlockedView() {
+  if (location.hash !== '#blocked') return;
+  byId('status-filter').value = 'blocked';
+  if (state.data) { renderJobs(true); renderDetail(); }
+}
+function clearFilters() { byId('status-filter').value = 'all'; byId('device-filter').value = 'all'; leaveBlockedView(); if (state.data) { renderJobs(true); renderDetail(); } }
+byId('status-filter').addEventListener('change', () => { leaveBlockedView(); if (state.data) { renderJobs(true); renderDetail(); } });
+window.addEventListener('hashchange', readBlockedView);
 byId('device-filter').addEventListener('change', () => { if (state.data) { renderJobs(true); renderDetail(); } });
 byId('clear-filters').addEventListener('click', clearFilters);
 byId('empty-clear').addEventListener('click', clearFilters);
@@ -364,5 +388,7 @@ setInterval(() => {
   renderConnection();
   if (state.data && previous !== state.mode) { renderJobs(); renderDetail(); }
 }, 1000);
+readBlockedView();
+renderConnection();
 refresh();
 loadAtlas();

@@ -70,7 +70,7 @@ def audit(args):
         "started_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "arguments": {key: str(value) if isinstance(value, Path) else value for key, value in vars(args).items()},
         "auditor": digest(Path(__file__).read_bytes()),
-        "checks": [], "screenshots": [], "page_errors": [], "console_errors": [],
+        "checks": [], "screenshots": [], "page_errors": [], "console_errors": [], "live_probes": [],
         "http_errors": [], "failed_requests": [], "page_snapshots": [], "links": [],
         "limits": ["Actual public saved-snapshot dashboard in Chromium; responses were not mocked.",
                    "Native gameplay, online matches, art acceptance and physical GPU performance are not tested.",
@@ -122,7 +122,10 @@ def audit(args):
             page = context.new_page()
             page.set_default_timeout(20000)
             page.on("pageerror", lambda error: receipt["page_errors"].append(str(error)))
-            page.on("console", lambda message: receipt["console_errors"].append(message.text) if message.type == "error" else None)
+            page.on("console", lambda message: receipt["console_errors"].append(
+                {"text": message.text, "url": message.location.get("url", "")}) if message.type == "error" else None)
+            page.on("request", lambda request: receipt["live_probes"].append(request.url)
+                    if urlsplit(request.url).path == "/api/status" else None)
             page.on("response", response_seen)
             page.on("requestfailed", lambda request: receipt["failed_requests"].append({"url": request.url, "failure": request.failure}))
             for name in ("publication.json", "status.json"):
@@ -242,13 +245,25 @@ def audit(args):
                 screenshot(page, f"public-{width}-top.png")
                 screenshot(page, f"public-{width}-full.png", full_page=True)
             check("public_saved_label_after_interactions", page.locator("#connection-label").inner_text() == "Saved snapshot — not live")
+            with page.expect_response(lambda r: r.url == urljoin(args.base_url, "status.json")):
+                page.locator("#refresh-button").click()
+            page.goto(args.base_url + "#blocked", wait_until="domcontentloaded")
+            page.reload(wait_until="domcontentloaded")
+            page.get_by_text("Saved snapshot — not live", exact=True).wait_for()
+            check("blocked_link_survives_reload", page.locator("#status-filter").input_value() == "blocked"
+                  and page.locator(".job-row").count() == len(args.blocked_job))
             check("browser_loaded_pinned_snapshot", bool(receipt["page_snapshots"]) and all(
                 row.get("status") == 200 and row.get("sha256") == args.snapshot_sha256 for row in receipt["page_snapshots"]))
-            # A Pages installation has no live /api/status endpoint. Its observed
-            # HTTP404 is the designed fallback to the saved snapshot, not a JS error.
             fallback = urljoin(args.base_url, "/api/status")
-            unexpected_http = [row for row in receipt["http_errors"] if not (row["url"] == fallback and row["status"] == 404)]
+            address = urlsplit(args.base_url)
+            published = (address.hostname in {"occult-kranti.github.io", "127.0.0.1", "localhost", "::1"}
+                         and address.path.rstrip("/").endswith("/production"))
+            if published:
+                check("published_path_avoids_live_probes", not receipt["live_probes"], receipt["live_probes"])
+            unexpected_http = [row for row in receipt["http_errors"] if published or row["url"] != fallback or row["status"] != 404]
             check("no_unexpected_HTTP_errors", not unexpected_http, unexpected_http)
+            messages = [row for row in receipt["console_errors"] if published or row["url"] != fallback]
+            check("no_unexpected_console_errors", not messages, messages)
             check("no_failed_requests", not receipt["failed_requests"])
             check("no_page_JavaScript_errors", not receipt["page_errors"])
             receipt["passed"] = True

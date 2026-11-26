@@ -18,6 +18,8 @@ python3 games/yuga-native/tools/build-observatory/observatory.py serve \
 
 The preceding public Sanctum checkpoint retains its own dated run, visual previews, eight job records and receipts. Its media remains addressable in the Observatory. [Previous public data](https://github.com/occult-kranti/ANDOLAN/blob/82b1a4d310f1ea1068f23d068102b61a033b110f/games/yuga-native/tools/build-observatory/web/status.json) · [Sanctum publication evidence](https://github.com/occult-kranti/ANDOLAN/tree/82b1a4d310f1ea1068f23d068102b61a033b110f/games/yuga-native/tools/build-observatory/evidence/sanctum-publication-r1)
 
+The published Pages path reads its adjacent snapshot directly. A worker at the loopback root samples its live API. Custom hosts can supply the live API or fall back to their own snapshot. Bookmark the blocked-work view to follow outstanding defects across reloads. [Blocked work](https://occult-kranti.github.io/ANDOLAN/production/#blocked)
+
 ## Earlier art runs
 
 The [reuse into playable integration run](research/reuse-production-continuation/README.md) used ignored state `.local-swarm/observatory-reuse-production-continuation` on loopback port **8768**. Its jobs separate integrated banks/camera, the typed authority factory, diagnostics and rejected hair appearances.

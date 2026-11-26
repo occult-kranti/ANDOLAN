@@ -12,6 +12,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import threading
+from urllib.parse import urlsplit
 
 from playwright.sync_api import sync_playwright
 
@@ -205,6 +206,37 @@ def run(output):
         page.locator('#retry-button').click()
         page.wait_for_timeout(100)
         check('null_context_rejected', page.locator('#error-panel').is_visible())
+        page.close()
+        saved = copy.deepcopy(fixture)
+        saved['mode'] = 'snapshot'
+        saved['jobs'][0]['status'] = 'blocked'
+        for host, probes in [(base, False), ('http://custom-observatory.test', True)]:
+            page = browser.new_page()
+            api_requests = []
+            def delivery(route):
+                path = urlsplit(route.request.url).path
+                if path == '/api/status':
+                    api_requests.append(path)
+                    route.fulfill(status=404, body='No live API for this custom host')
+                elif path == '/production/status.json':
+                    route.fulfill(status=200, content_type='application/json', body=json.dumps(saved))
+                elif path == '/production/ember-rite/balance.json':
+                    route.fulfill(status=200, content_type='application/json', body=json.dumps(timings))
+                else:
+                    route.fulfill(response=page.request.get(base + '/' + path.removeprefix('/production/').lstrip('/')))
+            page.route(host + '/**', delivery)
+            page.goto(host + '/production/#blocked')
+            page.reload()
+            page.get_by_text('Saved snapshot — not live', exact=True).wait_for()
+            with page.expect_response(lambda response: response.url.endswith('/production/status.json')):
+                page.locator('#refresh-button').click()
+            kind = 'custom_host' if probes else 'published_path'
+            check(kind + '_direct_or_fallback', bool(api_requests) == probes)
+            check(kind + '_reloaded_blocked_link', page.locator('#status-filter').input_value() == 'blocked'
+                  and page.locator('.job-row').count() == 1)
+            page.locator('#clear-filters').click()
+            check(kind + '_clears_blocked_link', page.url.endswith('#work') and page.locator('.job-row').count() == 3)
+            page.close()
         browser.close()
     server.shutdown()
     check('no_page_javascript_errors', errors == [])

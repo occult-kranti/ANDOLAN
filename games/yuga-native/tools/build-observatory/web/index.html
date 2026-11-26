@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#171c19">
   <meta name="description" content="YUGA production observatory: actual build jobs, source assets, machine availability and the next production gate.">
   <title>YUGA — Production observatory</title>
+  <link rel="icon" href="./viewer/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./app.js"></script>
 </head>
@@ -52,7 +53,7 @@
       <section class="machine-strip" aria-labelledby="machines-title"><h2 id="machines-title">Where work runs</h2><dl><div><dt>Cloud CPU</dt><dd id="cpu-observation">Awaiting observation</dd></div><div><dt>System memory</dt><dd id="memory-observation">Awaiting observation</dd></div><div><dt>Attached GPU</dt><dd id="gpu-observation">Awaiting observation</dd></div></dl><p id="gpu-note">Public GPU jobs are recorded individually; they do not imply an attached GPU.</p></section>
 
       <section id="work" class="work-section" aria-labelledby="work-title">
-        <div class="section-heading"><div><h2 id="work-title">Production work</h2><p id="queue-summary">Loading the work queue.</p></div><a href="#roadmap">See next gates</a></div>
+        <div id="blocked" class="section-heading"><div><h2 id="work-title">Production work</h2><p id="queue-summary">Loading the work queue.</p></div><a href="#roadmap">See next gates</a></div>
         <div class="work-layout">
           <div class="queue-area">
             <div class="filters"><div><label for="status-filter">Status</label><select id="status-filter"><option value="all">All statuses</option><option value="running">Running</option><option value="queued">Queued</option><option value="review">In review</option><option value="complete">Complete</option><option value="blocked">Blocked</option><option value="failed">Failed</option><option value="stale">Stale</option></select></div><div><label for="device-filter">Compute</label><select id="device-filter"><option value="all">All compute</option></select></div><button id="clear-filters" type="button" class="quiet-button">Clear filters</button></div>
