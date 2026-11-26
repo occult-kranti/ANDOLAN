@@ -1,5 +1,7 @@
 # Ember Rite · map and hero production handoff
 
+The four-expert vertical panel delivered the all-district cover register and the Mandala flight and cast lab. Next comes the server adapter, second-client replay and human pressure tests at both sites. [Three-round decisions, build gates and owners](vertical-play/README.md) · [Hero and map comparisons](vertical-play/research.md)
+
 Updated 26 November 2026. The release has two complementary ways to play. In the solo map rehearsal a player can carry, kindle or quench in any of four districts. In the Confluence knockout rooms up to ten people can play Hanuman or Rama with their revised kits. The next integration brings the actual vessel, playspace and duty swap to that same room host. [Open solo rehearsal](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Download game and host](../../../../../yuga-rust/downloads/yuga-rust-confluence.zip?raw=true) · [Production dashboard](https://occult-kranti.github.io/ANDOLAN/production/)
 
 ## Three design rounds

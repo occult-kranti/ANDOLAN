@@ -1,5 +1,7 @@
 # Ember Rite map atlas
 
+The vertical edition adds a walking court study for all four maps, two signed hiding spots per physical entry and sampled flight and projectile sections on Mandala. [Open the court study](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/vertical-play.html) · [Complete designer handoff](vertical-play/README.md) · [Printable cover plans](vertical-play/mandala-cover-atlas.pdf)
+
 **Mandala Rift art book.** All 15 rooms and 26 connections have individual paintings, measured sections and Blender camera studies. The library also covers the six pieces of cover, three landmarks, two vessels and the pavilion down to its 62 building parts. [Browse the map art](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/) · [Editable assets and production handoff](../../../../art/mandala-map-studio/README.md)
 
 In a five-against-five round, one team carries the Ember toward either sanctum. Choosing the other site is costly once the vessel catches. A defender has forty seconds to cross the district, find the vessel where it was placed, and complete a 3.5-second pour. Use the solo rehearsal to learn those routes and the atlas to stage the first ten-player tests. [Play the four maps](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Round rules](../ROUND_AND_TECH.md) · [Ten-player encounter script](ENCOUNTERS.md)

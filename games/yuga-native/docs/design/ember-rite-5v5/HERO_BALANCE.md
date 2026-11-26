@@ -1,5 +1,7 @@
 # Heroes at the threshold
 
+The vertical supplement gives each Ember hero a numerical field profile and a counter at a named site. It also measures the four available rigged models, caps team effect stacking, and tests Hanuman and Rama from their existing skirmish kits. [Hero heights and team plays](atlas/vertical-play/hero-abilities.md) · [Profiles](atlas/vertical-play/heroes.json)
+
 Hanuman is the pick to try when a wounded vessel escort and an opponent meet at one doorway. Rama is the pick to try when a team needs to hold a second angle during a rotation. Both heroes can play either side. Their new actions run in the Rust Confluence skirmish and private rooms. The four Ember Rite districts supply rehearsals for the proposed objective match. Human pick rates, win rates and preferred lineups for those districts are still unknown. [Playable build](../../../../yuga-rust/README.md) · [District atlas](atlas/README.md)
 
 ## Round 1 · Find the missed opportunity

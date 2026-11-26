@@ -546,7 +546,7 @@ def make_server(observatory, port):
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
             if standalone:
-                # The portable route drill contains its own SVG, CSS and script.
+                # The two portable map drills embed their own SVG, CSS, images and script.
                 policy = "sandbox allow-scripts; default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
             else:
                 policy = "default-src 'self'; img-src 'self' https:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'"
@@ -583,7 +583,7 @@ def make_server(observatory, port):
                         self.end_headers()
                         return
                 count = end - start + 1
-                self.headers_for(206 if requested else 200, kind, count, standalone=route == "/ember-rite/rehearsal.html",
+                self.headers_for(206 if requested else 200, kind, count, standalone=route in {"/ember-rite/rehearsal.html", "/ember-rite/vertical-play.html"},
                                  cache="no-cache" if art else "no-store")
                 if art:
                     self.send_header("Accept-Ranges", "bytes")

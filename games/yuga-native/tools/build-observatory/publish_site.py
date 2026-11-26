@@ -49,6 +49,10 @@ ATLAS = "games/yuga-native/docs/design/ember-rite-5v5/atlas"
 ATLAS_FILES = {
     "ember-rite/balance.json": f"{ATLAS}/balance.json",
     "ember-rite/rehearsal.html": f"{ATLAS}/rehearsal.html",
+    "ember-rite/vertical-play.html": f"{ATLAS}/vertical-play/fieldbook.html",
+    **{f"ember-rite/{file}": f"{ATLAS}/vertical-play/{file}" for file in (
+        "ember-rite-fieldbook.pdf", "mandala-cover-atlas.pdf", "companion-courts.pdf", "mandala-ghat.svg",
+        "mandala-bazaar.svg", "mandala-entrances.svg", "mandala-staging.svg")},
     "ember-rite/yuga-map-atlas.pdf": f"{ATLAS}/blueprints/yuga-map-atlas.pdf",
     "ember-rite/overview.jpg": f"{ATLAS}/massing/overview.jpg",
     **{f"ember-rite/{district}-architecture.svg": f"{ATLAS}/blueprints/{district}-architecture.svg"

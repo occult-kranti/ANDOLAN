@@ -51,6 +51,17 @@ jobs:
           python3 -m unittest test_balance
           python3 rehearsal/build.py --check
           node --test rehearsal/simulation.test.mjs
+      - name: Verify hero heights, two-cover entrances and recorded casts
+        if: hashFiles('games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/build.py') != ''
+        working-directory: games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play
+        run: |
+          python3 architecture.py --check-vectors --cross-check-panels
+          python3 elements.py --check
+          python3 sister_courts.py --check
+          python3 physics.py --check
+          python3 build.py --check
+          python3 -m unittest discover -p 'test_*.py'
+          node --test fieldbook.test.mjs
       - name: Verify the read-only observatory and additive publisher
         run: python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v
       - name: Verify the studio catalog, scale drawings, paintings and registered models
