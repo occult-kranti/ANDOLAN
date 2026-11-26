@@ -1,5 +1,7 @@
 # ANDOLAN / YUGA
 
+**Inspect the rebuilt Dust II.** Compare the original paving and jade ground at both sites, open the complete local map in Blender, or play the separately compiled Nexuiz remake. The study identifies the Rust Counter-Strike and Call of Duty projects we tested and how their tools can serve YUGA. [Illustrated study and files](games/yuga-native/docs/research/dust2-map-lab/README.md) · [Rebuild commands](games/yuga-native/tools/source-map-lab/README.md)
+
 **Find cover or take the high route in Ember Rite.** Walk 27 entrances across eight ritual courts. Compare a standing hide with a crouched one, follow Hanuman under the pavilion beam, or see where a returning chakra meets stone. The fieldbook also records hero heights, mobile setup and four team combos. [Open the interactive plans](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/vertical-play.html) · [Read the design and test scripts](games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/README.md)
 
 **Explore Mandala Rift in pictures and motion.** Follow the path from Spice Gate to the reed ford, see both sides of a folded temple doorway, or take the Quarter-turn Pavilion apart. The art book pairs each of the district’s 53 elements with a painting, a measured drawing, a Blender study, a film and a reusable model. [Open the art gallery](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/) · [Environment art and source files](games/yuga-native/art/mandala-map-studio/README.md)

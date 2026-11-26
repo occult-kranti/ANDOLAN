@@ -131,16 +131,17 @@ inference remain separate work.
 
 ### Native design-contract repair
 
-The hero catalogue retains its original design-only scope. The design master
-link/pin now includes the newer Ember Rite competitive-direction preface from
-commits `59f9cea` and `d5dc24b`. The original design body, catalogue mechanics,
-roster and simulation pins are unchanged. This does not turn catalogue proposals
-or Route Lab marker facing metadata into verified gameplay, collision or Unreal
-integration.
-The frozen `production-6v6` contract still verifies the exact pre-preface
+The original design-only hero catalogue still binds the exact pre-preface
 master bytes from `c6f3b49`, preserved in
 `games/yuga-native/tests/fixtures/contracts/production-6v6-v1-design-master.md`.
-Neither its revision nor its descriptor, wire metadata or old evidence changed.
+The design master at `83a67acf` differed from that snapshot only by the dated
+Ember Rite competitive-direction preface introduced by `59f9cea` and updated by
+`d5dc24b`. The live design can continue evolving. The TypeScript roster and
+simulation pins remain tied to their live sources. The catalogue bytes and
+its downstream Arjuna authoring receipts are unchanged. The frozen
+`production-6v6` contract verifies the same historical bytes without changing
+its descriptor, revision or wire catalogue. Neither validates playable 5v5,
+native collision, or Unreal integration.
 
 The Route Lab interchange directory carries `.gdignore` so headless Godot
 native-game imports do not depend on configuring Blender. Copy the GLB to a

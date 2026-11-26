@@ -1,0 +1,145 @@
+{
+  "captured_utc": "2026-11-26",
+  "server": {
+    "product": "Valve Counter-Strike: Global Offensive Dedicated Server",
+    "patch_version": "1.38.8.1",
+    "source_revision": 8413246,
+    "app": 740,
+    "binary_depot": 740,
+    "binary_manifest": "6998097922547485721",
+    "content_depot": 731,
+    "content_manifest": "1224088799001669801",
+    "binary_identity_sha256": {
+      "srcds_linux": "55b1d783bbad4973c94f00bfcbdd1376cea9b333f6d8fe9bae6c171c6d6260a0",
+      "bin/engine.so": "ed3a9112c8b8888cba700f3adc97de8a04364eac8fce4643c6efd5cace82ccdc",
+      "csgo/bin/server.so": "7de235c31b2d645c5106cbd7358da3f3ac7964e87f870c4fe6ea31d93a714386"
+    },
+    "live_probe": {
+      "file": "yuga_map_audit.nut",
+      "sha256": "21559826b0c4fd27c8c031dbc82d1cf22f1cf7079f267a18155a21d46e33c9bb",
+      "query": "Squirrel Entities.FindByClassname on the running server after map load"
+    },
+    "execution": "Debian QEMU i386 user-mode 10.0.13 and private i386 glibc 2.41 on x86_64",
+    "arguments": [
+      "-game",
+      "csgo",
+      "-console",
+      "-usercon",
+      "-insecure",
+      "-nomaster",
+      "-nobreakpad",
+      "-norestart",
+      "-ip",
+      "127.0.0.1",
+      "-port",
+      "28719",
+      "+sv_lan",
+      "1",
+      "+tv_enable",
+      "0",
+      "+bot_quota",
+      "0",
+      "+map",
+      "<level>"
+    ]
+  },
+  "mount": {
+    "numbered_stock_vpks": 21,
+    "original_vpk_index_entries": 133676,
+    "mounted_vpk_index_entries": 40793,
+    "all_crc_verified_map_external_files": 3114,
+    "startup_database": [
+      "botchatter.db",
+      "botprofile.db",
+      "botprofilecoop.db",
+      "navplace.db"
+    ],
+    "source_1_server_installation": "Steam app 740",
+    "compatible_visual_client": "Steam app 730, csgo_legacy"
+  },
+  "runs": [
+    {
+      "variant": "original",
+      "level_basename": "de_dust2",
+      "durable_bsp": "native/original/csgo/maps/de_dust2.bsp",
+      "bsp_bytes": 325735952,
+      "bsp_sha256": "b91be410539fbbfc16300423f1e19c024f12addf1429c8cb2f72b53fe0fd6bcc",
+      "nav_bytes": 579121,
+      "nav_sha256": "82d46fb7d3618514e9897d87e5666c0c3f483c4a82060aac03313afad864b649",
+      "console_sha256": "30e97a4ffd1f56befa744a8e530d348a34ef7c89259dd71d834233e06819aac2",
+      "local_log": "evidence/srcds/de_dust2.log",
+      "console_evidence": [
+        "#Game.dll loaded for \"Counter-Strike: Global Offensive\"",
+        "NET_CloseAllSockets",
+        "---- Host_NewGame ----",
+        "Initializing Steam libraries for LAN server",
+        "version : 1.38.8.1/13881 1575/8853 insecure  [INVALID_STEAMID]",
+        "udp/ip  : 127.0.0.1:28719",
+        "map     : de_dust2",
+        "players : 0 humans, 0 bots (20/0 max) (hibernating)",
+        "\"sv_lan\" = \"1\" ( def. \"0\" )                                                      - Server is a lan server ( no heartbeat, no authentication, no non-class C address",
+        "YUGA_ENTITY func_bomb_target 2",
+        "YUGA_ENTITY info_player_terrorist 15",
+        "YUGA_ENTITY info_player_counterterrorist 15",
+        "Host_ShutdownServer"
+      ],
+      "warnings": {
+        "missing_global_particle_libraries": 27,
+        "undefined_nav_callouts": 0,
+        "steam_client_session_available": false,
+        "workshop_web_key_supplied": false,
+        "fatal_game_load_errors": 0
+      },
+      "live_entities": {
+        "func_bomb_target": 2,
+        "info_player_terrorist": 15,
+        "info_player_counterterrorist": 15
+      },
+      "process_exit_code": 0
+    },
+    {
+      "variant": "jade",
+      "level_basename": "de_dust2_jade",
+      "durable_bsp": "native/jade/csgo/maps/de_dust2.bsp",
+      "bsp_bytes": 444484740,
+      "bsp_sha256": "8849ddc5e1b8961f8d8d022fd86c0078402e7b7a553c5ce7469c85a592a99f7a",
+      "nav_bytes": 579121,
+      "nav_sha256": "5e69f5b7c76bbfb385b38635f5bbd8906e3601e3452383a0a89af92b5aa8812a",
+      "console_sha256": "8e29a8837ead8395f3689cc120c03be16a7bd0059294356549a2b531f7e1eec7",
+      "local_log": "evidence/srcds/de_dust2_jade.log",
+      "console_evidence": [
+        "#Game.dll loaded for \"Counter-Strike: Global Offensive\"",
+        "NET_CloseAllSockets",
+        "---- Host_NewGame ----",
+        "Initializing Steam libraries for LAN server",
+        "version : 1.38.8.1/13881 1575/8853 insecure  [INVALID_STEAMID]",
+        "udp/ip  : 127.0.0.1:28719",
+        "map     : de_dust2_jade",
+        "players : 0 humans, 0 bots (20/0 max) (hibernating)",
+        "\"sv_lan\" = \"1\" ( def. \"0\" )                                                      - Server is a lan server ( no heartbeat, no authentication, no non-class C address",
+        "YUGA_ENTITY func_bomb_target 2",
+        "YUGA_ENTITY info_player_terrorist 15",
+        "YUGA_ENTITY info_player_counterterrorist 15",
+        "Host_ShutdownServer"
+      ],
+      "warnings": {
+        "missing_global_particle_libraries": 27,
+        "undefined_nav_callouts": 0,
+        "steam_client_session_available": false,
+        "workshop_web_key_supplied": false,
+        "fatal_game_load_errors": 0
+      },
+      "live_entities": {
+        "func_bomb_target": 2,
+        "info_player_terrorist": 15,
+        "info_player_counterterrorist": 15
+      },
+      "process_exit_code": 0
+    }
+  ],
+  "scope": "Local native BSP and NAV loading. The server reached the named maps with no joined clients or bots. The Blender visual comparison is a separate artifact.",
+  "initial_diagnostics": {
+    "original_without_bot_database_undefined_nav_callouts": 26,
+    "extra_mounted_lookup_bytes": 44828
+  }
+}

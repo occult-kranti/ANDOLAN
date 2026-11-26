@@ -30,6 +30,10 @@ FAMILIES = {"bolt": "projectile", "line": "projectile", "burst": "forward_fan",
 SOURCE_PATHS = {"browser_roster": "games/yuga/shared/heroes.ts",
                 "simulation": "games/yuga/shared/simulation.ts",
                 "design_master": "games/yuga-native/docs/GAME_DESIGN_MASTER.md"}
+# v1 describes the original design, not the later Ember Rite rehearsal. Resolve
+# only its historical design label to byte-exact evidence. The live browser
+# roster and simulation source pins remain mandatory.
+DESIGN_MASTER_SNAPSHOT = "games/yuga-native/tests/fixtures/contracts/production-6v6-v1-design-master.md"
 
 
 def reject_constant(value):
@@ -118,12 +122,14 @@ def validate(data, root=ROOT, baseline=None):
     for key, expected_path in SOURCE_PATHS.items():
         require(isinstance(sources, dict) and sources.get(key + "_path") == expected_path,
                 key + " source must use the fixed repository path")
-        actual = root / expected_path
+        source_path = DESIGN_MASTER_SNAPSHOT if key == "design_master" else expected_path
+        actual = root / source_path
         if not actual.is_file():
-            errors.append("source missing: " + expected_path)
+            errors.append("source missing: " + source_path)
         else:
+            payload = actual.read_bytes()
             require(isinstance(sources, dict) and sources.get(key + "_sha256") ==
-                    hashlib.sha256(actual.read_bytes()).hexdigest(), key + " source hash is stale")
+                    hashlib.sha256(payload).hexdigest(), key + " source hash is stale")
     limits = data.get("limits", {})
     for key, expected in {"heroes": 14, "ability_slots": 42, "primary_entries": 14,
                           "max_concurrent_demo_casts": 4, "max_effect_lifetime_s": 12.0}.items():

@@ -60,6 +60,26 @@ def run():
     reject("silent whole-hero health buff", lambda d: d["heroes"][0]["browser_baseline"].update(health=999), "browser baseline changed")
     reject("stale source hash", lambda d: d["source_contract"].update(browser_roster_sha256="0"*64), "source hash is stale")
     reject("arbitrary source path", lambda d: d["source_contract"].update(browser_roster_path="../../outside"), "fixed repository path")
+    reject("stale historical design pin", lambda d: d["source_contract"].update(design_master_sha256="0"*64), "design_master source hash is stale")
+    with tempfile.TemporaryDirectory(prefix="yuga-legacy-design-") as temp:
+        fake_root = Path(temp)
+        for source in (*checker.SOURCE_PATHS.values(), checker.DESIGN_MASTER_SNAPSHOT):
+            output = fake_root / source
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_bytes((ROOT / source).read_bytes())
+        live_design = fake_root / checker.SOURCE_PATHS["design_master"]
+        live_design.write_text("A later independent production design is not v1 evidence.")
+        record("live design can evolve without changing historical catalogue v1",
+               not checker.validate(base, fake_root, browser))
+        historical_design = fake_root / checker.DESIGN_MASTER_SNAPSHOT
+        historical_design.write_bytes(historical_design.read_bytes() + b"\nUnreviewed mechanics.")
+        errors = checker.validate(base, fake_root, browser)
+        record("changed historical corpus fails exact SHA-256 validation",
+               "design_master source hash is stale" in errors)
+        historical_design.unlink()
+        errors = checker.validate(base, fake_root, browser)
+        record("missing immutable source fails without falling back to live design",
+               "source missing: " + checker.DESIGN_MASTER_SNAPSHOT in errors)
     reject("incorrect coordinate convention", lambda d: d["units"].update(up_axis="+Z"), "coordinate/time units")
     reject("falsely accepted production art", lambda d: d["scope"].update(production_art_accepted=True), "design-only scope")
     reject("catalogue claims native damage authority", lambda d: demo(d).update(applies_gameplay=True), "presentation must not claim")
