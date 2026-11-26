@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[3]
 NATIVE = ROOT / "games/yuga-native"
 CATALOG = NATIVE / "assets/contracts/native-contracts-v1.json"
 SCHEMA = NATIVE / "assets/contracts/native-envelope-v1.schema.json"
+PRODUCTION_DESIGN_SOURCE = "games/yuga-native/docs/GAME_DESIGN_MASTER.md"
+# Exact historical bytes from c6f3b49. The wire catalogue retains its original
+# source label; the live design master has since gained a distinct 5v5 preface.
+PRODUCTION_DESIGN_SNAPSHOT = NATIVE / "tests/fixtures/contracts/production-6v6-v1-design-master.md"
 
 
 def digest(path):
@@ -27,11 +31,21 @@ def main():
     data = json.loads(CATALOG.read_text())
     schema = json.loads(SCHEMA.read_text())
     check("three_exact_profiles", [p["id"] for p in data["profiles"]] == ["browser-p2-3v3", "native-offline-triad", "production-6v6"])
-    map_sources = ["games/yuga/shared/map.ts", "games/yuga-native/assets/world/confluence-map.json", "games/yuga-native/docs/GAME_DESIGN_MASTER.md"]
+    map_sources = ["games/yuga/shared/map.ts", "games/yuga-native/assets/world/confluence-map.json", PRODUCTION_DESIGN_SOURCE]
+
+    def source_for(profile, path):
+        if profile["id"] == "production-6v6" and path == PRODUCTION_DESIGN_SOURCE:
+            return PRODUCTION_DESIGN_SNAPSHOT.resolve()
+        return (ROOT / path).resolve()
+
     for profile, source in zip(data["profiles"], map_sources):
-        check(profile["id"] + "_map_pin", digest(ROOT / source) == profile["map_sha256"], {"source": source, "scope": profile["map_digest_scope"]})
+        resolved_map = source_for(profile, source)
+        map_is_local = resolved_map.is_relative_to(ROOT) and resolved_map.is_file()
+        check(profile["id"] + "_map_pin", map_is_local and digest(resolved_map) == profile["map_sha256"],
+              {"source": source, "resolved_source": str(resolved_map.relative_to(ROOT)) if map_is_local else None,
+               "scope": profile["map_digest_scope"]})
         for path, sha in profile["content_sources"].items():
-            resolved = (ROOT / path).resolve()
+            resolved = source_for(profile, path)
             valid_path = resolved.is_relative_to(ROOT) and resolved.is_file()
             check(profile["id"] + "_content_" + path, valid_path and digest(resolved) == sha)
         canonical = json.dumps(profile["content_sources"], sort_keys=True, separators=(",", ":")).encode()
@@ -97,7 +111,13 @@ def main():
     check("schema_pose_requires_pitch_and_lifetimes", all(k in definitions["entity"]["required"] for k in ["generation", "pitch", "discontinuity", "ack_input"]))
     check("schema_v1_closed_records", all(d.get("additionalProperties") is False for k, d in definitions.items() if k != "replay_record"))
     check("schema_no_external_resource_loading", "http" not in json.dumps(definitions))
-    report = {"passed": all(c["passed"] for c in checks), "checks": checks, "source_sha256": {str(p.relative_to(ROOT)): digest(p) for p in [CATALOG, SCHEMA, Path(__file__).resolve(), NATIVE / "scripts/native_contracts.gd"]}, "scope": "Source pin and contract/schema consistency. No runtime migration, network, render or collision authority evidence."}
+    evidence_paths = [CATALOG, SCHEMA, Path(__file__).resolve(),
+                      NATIVE / "scripts/native_contracts.gd", PRODUCTION_DESIGN_SNAPSHOT]
+    evidence_hashes = {str(path.relative_to(ROOT)): digest(path) for path in evidence_paths
+                       if path.resolve().is_relative_to(ROOT) and path.is_file()}
+    report = {"passed": all(c["passed"] for c in checks), "checks": checks,
+              "source_sha256": evidence_hashes,
+              "scope": "Source pin and contract/schema consistency. No runtime migration, network, render or collision authority evidence."}
     if args.report:
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(report, indent=2) + "\n")

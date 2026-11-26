@@ -1,5 +1,7 @@
 # Who carries the light?
 
+Use the vertical script for a ten-player observer run with named hero pairings, alternate door assignments, mobile setup, airtime counters and edge-of-disk pours. It includes thresholds and a recording form. [Round director’s script](vertical-play/encounters.md)
+
 Four seconds in the open is a long time to ask of a teammate. The carrier chooses a patch of floor at the sanctum. The other four decide where to show themselves, which approach to hold, and which way out to leave open. Once the vessel is alight, defenders face the same problem. Anyone can pour the water, and someone else has to make the time. The script calls for ordinary movement and can be rehearsed with duplicate Hanuman and Rama picks once a playable graybox exists. Its clock and interaction rules come from the standalone Rust experiment. [Round contract](../ROUND_AND_TECH.md) · [Rust rules](../../../../../yuga-rust/src/ritual.rs)
 
 ## What each district stands to lose

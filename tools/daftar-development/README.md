@@ -128,3 +128,20 @@ external buffers, wrong scale, moved/missing spawns, stale evidence and path esc
 The authored route and balance checks retain their own scope. Full game execution,
 engine collision/navigation, GPU profiling, Unreal import/render and live model
 inference remain separate work.
+
+### Native design-contract repair
+
+The hero catalogue retains its original design-only scope. The design master
+link/pin now includes the newer Ember Rite competitive-direction preface from
+commits `59f9cea` and `d5dc24b`. The original design body, catalogue mechanics,
+roster and simulation pins are unchanged. This does not turn catalogue proposals
+or Route Lab marker facing metadata into verified gameplay, collision or Unreal
+integration.
+The frozen `production-6v6` contract still verifies the exact pre-preface
+master bytes from `c6f3b49`, preserved in
+`games/yuga-native/tests/fixtures/contracts/production-6v6-v1-design-master.md`.
+Neither its revision nor its descriptor, wire metadata or old evidence changed.
+
+The Route Lab interchange directory carries `.gdignore` so headless Godot
+native-game imports do not depend on configuring Blender. Copy the GLB to a
+separate lab scene if you want to exercise a manual engine import.

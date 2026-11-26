@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+from functools import lru_cache
 import hashlib
 import ipaddress
 import json
@@ -48,11 +49,109 @@ ATLAS = "games/yuga-native/docs/design/ember-rite-5v5/atlas"
 ATLAS_FILES = {
     "ember-rite/balance.json": f"{ATLAS}/balance.json",
     "ember-rite/rehearsal.html": f"{ATLAS}/rehearsal.html",
+    "ember-rite/vertical-play.html": f"{ATLAS}/vertical-play/fieldbook.html",
+    **{f"ember-rite/{file}": f"{ATLAS}/vertical-play/{file}" for file in (
+        "ember-rite-fieldbook.pdf", "mandala-cover-atlas.pdf", "companion-courts.pdf", "mandala-ghat.svg",
+        "mandala-bazaar.svg", "mandala-entrances.svg", "mandala-staging.svg")},
     "ember-rite/yuga-map-atlas.pdf": f"{ATLAS}/blueprints/yuga-map-atlas.pdf",
     "ember-rite/overview.jpg": f"{ATLAS}/massing/overview.jpg",
     **{f"ember-rite/{district}-architecture.svg": f"{ATLAS}/blueprints/{district}-architecture.svg"
        for district in ("mandala", "lanka", "ayodhya", "kurukshetra")},
 }
+STUDIO = "games/yuga-native/art/mandala-map-studio"
+STUDIO_ROUTE = "mandala-art/"
+STUDIO_FIXED = {"index.html", "gallery.js", "gallery.css", "catalog.json", "concepts/index.json",
+                "district.webp", "tour.mp4", "lighting/study.webp", "mandala-rift.blend", "mandala-rift.glb",
+                "models/index.json", "verification.json", "mandala-rift-artbook.pdf"}
+STUDIO_ID = re.compile(r"[a-z0-9][a-z0-9_-]{0,119}\Z")
+
+
+def studio_names(catalog, concepts):
+    """Return the complete public art book from its two authored manifests."""
+    if not isinstance(catalog, dict) or catalog.get("schema") != 1 or not isinstance(concepts, dict):
+        raise ValueError("Invalid studio catalog or concept index")
+    elements = catalog.get("elements")
+    if not isinstance(elements, list) or not elements:
+        raise ValueError("Missing studio elements")
+    names = set(STUDIO_FIXED)
+    ids = set()
+    for item in elements:
+        key = item.get("id") if isinstance(item, dict) else None
+        if not isinstance(key, str) or not STUDIO_ID.fullmatch(key) or key in ids:
+            raise ValueError("Invalid or duplicate studio element")
+        ids.add(key)
+        names.add(f"models/{key}.glb")
+        for field, directory, suffix in (("plate", "plates", "svg"), ("render", "renders", "webp"), ("clip", "clips", "mp4")):
+            expected = f"{directory}/{key}.{suffix}"
+            if item.get(field) != expected:
+                raise ValueError(f"Incorrect {field} for {key}")
+            names.add(expected)
+        if assembly := item.get("assembly"):
+            if not isinstance(assembly, dict) or set(assembly) != {"plate", "clip", "parts"}:
+                raise ValueError("Invalid assembly media")
+            for field, suffix in (("plate", ".webp"), ("clip", ".mp4"), ("parts", ".json")):
+                asset = relative(assembly[field])
+                if len(asset.parts) != 2 or asset.parts[0] != "assembly" or asset.suffix != suffix:
+                    raise ValueError("Invalid assembly file")
+                names.add(assembly[field])
+
+    def concept_file(file):
+        path = relative(file)
+        if path.suffix != ".webp" or not all(re.fullmatch(r"[a-zA-Z0-9_-]+(?:\.webp)?", part) for part in path.parts):
+            raise ValueError("Expected a relative concept WebP")
+        names.add("concepts/" + file)
+
+    if hero := concepts.get("hero"):
+        concept_file(hero if isinstance(hero, str) else hero["file"])
+    for value in (hero.get("brief_file") if isinstance(hero, dict) else None, concepts.get("route_paintings_file")):
+        if value:
+            path = relative(value)
+            if len(path.parts) != 1 or path.suffix != ".json":
+                raise ValueError("Expected concept source JSON")
+            names.add("concepts/" + value)
+    boards, items = concepts.get("boards"), concepts.get("items", {})
+    if not isinstance(boards, list) or not isinstance(items, dict):
+        raise ValueError("Invalid concept board or item list")
+    board_ids = set()
+    for board in boards:
+        if not isinstance(board, dict) or not isinstance(board.get("id"), str) or board["id"] in board_ids:
+            raise ValueError("Invalid or duplicate concept board")
+        if not set(board.get("items", [])) <= ids:
+            raise ValueError("Unknown element on a concept board")
+        concept_file(board.get("file"))
+        board_ids.add(board["id"])
+    for key, item in items.items():
+        if key not in ids or not isinstance(item, dict) or (item.get("board") and item["board"] not in board_ids):
+            raise ValueError("Invalid individual concept reference")
+        concept_file(item.get("file"))
+    for key, related in concepts.get("route_boards", {}).items():
+        if key not in ids or not isinstance(related, list) or not set(related) <= board_ids:
+            raise ValueError("Invalid route concept references")
+    return frozenset(names)
+
+
+def studio_file(root, name):
+    path = root / relative(name)
+    safe_root(path.parent)
+    if path.is_symlink() or not path.is_file():
+        raise ValueError(f"Missing regular studio file: {name}")
+    return path
+
+
+@lru_cache(maxsize=8)
+def _studio_index(root, catalog_stat, concept_stat):
+    def read(name):
+        path = studio_file(root, name)
+        if path.stat().st_size > MAX_JSON:
+            raise ValueError("Studio index exceeds JSON bound")
+        return json.loads(path.read_bytes())
+    return studio_names(read("catalog.json"), read("concepts/index.json"))
+
+
+def studio_index(root):
+    # Cache the allowlist, never the art bytes. A new manifest takes effect on the next request.
+    stats = [studio_file(root, name).stat() for name in ("catalog.json", "concepts/index.json")]
+    return _studio_index(root, *((s.st_mtime_ns, s.st_size, s.st_ino) for s in stats))
 
 
 def relative(value):
@@ -146,8 +245,10 @@ def artifact_url(value, selected):
         if "viewer/index.html" not in selected:
             raise ValueError("Referenced viewer is absent")
         return
+    if value == STUDIO_ROUTE and STUDIO_ROUTE + "index.html" in selected:
+        return
     p = relative(value)
-    if (p.parts[0] != "media" and value not in ATLAS_FILES) or value not in selected:
+    if (p.parts[0] != "media" and value not in ATLAS_FILES and not value.startswith(STUDIO_ROUTE)) or value not in selected:
         raise ValueError("Artifact must reference an approved existing file")
 
 
@@ -205,6 +306,10 @@ def publish(site, web, baseline_ref, source_ref, workspace=None):
             if file.is_symlink() or not file.is_file():
                 raise ValueError(f"Missing regular atlas file for {route}")
             selected[route] = file
+        studio = workspace / STUDIO
+        if studio.exists():
+            safe_root(studio)
+            selected.update({STUDIO_ROUTE + name: studio_file(studio, name) for name in studio_index(studio)})
     if not REQUIRED_WEB.issubset(selected):
         raise ValueError("Dashboard entry files or status snapshot are missing")
     if "viewer/index.html" in selected and not VIEWER_NOTICES.issubset(selected):

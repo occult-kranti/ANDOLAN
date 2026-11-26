@@ -1,0 +1,3211 @@
+{
+  "schema": 1,
+  "district": "mandala",
+  "axes": [
+    "east",
+    "north",
+    "up"
+  ],
+  "rules": {
+    "hz": 20,
+    "approach": 2000,
+    "kindle": 80,
+    "quench": 70,
+    "burn": 800,
+    "reach": 1.5,
+    "siteRadius": 3.0,
+    "speed": 5.0,
+    "water": 0.85,
+    "prepare_ticks": 400,
+    "capsule_radius_m": 0.45,
+    "standing_m": 1.8,
+    "crouched_m": 1.32,
+    "wind": {
+      "id": "vayu_flight",
+      "height_m": 4.0,
+      "horizontal_mps": 5.0,
+      "ascent_mps": 4.0,
+      "active_ticks": 48,
+      "path_m": 12.0,
+      "gravity_mps2": 9.8,
+      "charges": 1,
+      "cooldown_ticks": 320
+    },
+    "projectiles": {
+      "kodanda": {
+        "hero": "Rama",
+        "speed": 60.0,
+        "reach": 40.0,
+        "radius": 0.22,
+        "tell": 0.18,
+        "contact": 28,
+        "socket_m": 1.5609278679,
+        "cooldown_s": 0.4
+      },
+      "gandiva_line": {
+        "hero": "Arjuna",
+        "speed": 48.0,
+        "reach": 30.0,
+        "radius": 0.18,
+        "tell": 0.4,
+        "contact": 32,
+        "socket_m": 1.5,
+        "cooldown_s": 1.2
+      },
+      "sudarshana_return": {
+        "hero": "Krishna",
+        "speed": 16.0,
+        "reach": 12.0,
+        "radius": 0.25,
+        "tell": 0.25,
+        "contact": 30,
+        "socket_m": 1.35,
+        "cooldown_s": 9.0,
+        "return_speed": 20.0
+      }
+    },
+    "climb_mps": 2.2
+  },
+  "barriers": [
+    {
+      "duty": "attack",
+      "north_m": -40.0,
+      "centre_limit_m": -40.45,
+      "full_height": true
+    },
+    {
+      "duty": "defence",
+      "north_m": 40.0,
+      "centre_limit_m": 40.45,
+      "full_height": true
+    }
+  ],
+  "pads": [
+    {
+      "id": "spice-loft",
+      "title": "Spice Loft",
+      "duty": "attack",
+      "room": "atk",
+      "center_xyz": [
+        5.2,
+        -114.5,
+        2.4
+      ],
+      "size_xz": [
+        3.2,
+        3.2
+      ],
+      "height_m": 2.4,
+      "approach_xyz": [
+        3.0,
+        -114.5,
+        0.0
+      ],
+      "top_entry_xyz": [
+        4.25,
+        -114.5,
+        2.4
+      ],
+      "egress_xyz": [
+        7.450000000000001,
+        -114.5,
+        0.0
+      ],
+      "climb_ticks": 28,
+      "access": "West ladder",
+      "egress": "East drop to the same court",
+      "edge_xyz": [
+        6.15,
+        -114.5,
+        2.4
+      ],
+      "edge_step_ticks": 6,
+      "descent_ticks": 20,
+      "spawn_to_top_s": 2.2,
+      "release_to_site": {
+        "a": {
+          "live_s": 29.538,
+          "dry_via": [
+            "atk",
+            "temple_s",
+            "a"
+          ]
+        },
+        "b": {
+          "live_s": 34.46,
+          "dry_via": [
+            "atk",
+            "temple_s",
+            "mid",
+            "b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cloth-loft",
+      "title": "Cloth Loft",
+      "duty": "attack",
+      "room": "yard_s",
+      "center_xyz": [
+        52.0,
+        -69.2,
+        3.2
+      ],
+      "size_xz": [
+        4.2,
+        3.6
+      ],
+      "height_m": 3.2,
+      "approach_xyz": [
+        49.3,
+        -69.2,
+        0.0
+      ],
+      "top_entry_xyz": [
+        50.55,
+        -69.2,
+        3.2
+      ],
+      "egress_xyz": [
+        54.75,
+        -69.2,
+        0.0
+      ],
+      "climb_ticks": 35,
+      "access": "West ladder",
+      "egress": "East drop to the same court",
+      "edge_xyz": [
+        53.45,
+        -69.2,
+        3.2
+      ],
+      "edge_step_ticks": 6,
+      "descent_ticks": 22,
+      "spawn_to_top_s": 17.7,
+      "release_to_site": {
+        "a": {
+          "live_s": 27.918,
+          "dry_via": [
+            "yard_s",
+            "pyramid_s",
+            "temple_s",
+            "a"
+          ]
+        },
+        "b": {
+          "live_s": 20.814,
+          "dry_via": [
+            "yard_s",
+            "pyramid_s",
+            "b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "water-loft",
+      "title": "Water Loft",
+      "duty": "defence",
+      "room": "def",
+      "center_xyz": [
+        -5.2,
+        114.5,
+        2.4
+      ],
+      "size_xz": [
+        3.2,
+        3.2
+      ],
+      "height_m": 2.4,
+      "approach_xyz": [
+        -7.4,
+        114.5,
+        0.0
+      ],
+      "top_entry_xyz": [
+        -6.15,
+        114.5,
+        2.4
+      ],
+      "egress_xyz": [
+        -2.95,
+        114.5,
+        0.0
+      ],
+      "climb_ticks": 28,
+      "access": "West ladder",
+      "egress": "East drop to the same court",
+      "edge_xyz": [
+        -4.25,
+        114.5,
+        2.4
+      ],
+      "edge_step_ticks": 6,
+      "descent_ticks": 20,
+      "spawn_to_top_s": 3.0,
+      "release_to_site": {
+        "a": {
+          "live_s": 26.978,
+          "dry_via": [
+            "def",
+            "temple_n",
+            "a"
+          ]
+        },
+        "b": {
+          "live_s": 31.282,
+          "dry_via": [
+            "def",
+            "temple_n",
+            "mid",
+            "b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "scale-loft",
+      "title": "Scale Loft",
+      "duty": "defence",
+      "room": "yard_n",
+      "center_xyz": [
+        52.0,
+        69.2,
+        3.2
+      ],
+      "size_xz": [
+        4.2,
+        3.6
+      ],
+      "height_m": 3.2,
+      "approach_xyz": [
+        49.3,
+        69.2,
+        0.0
+      ],
+      "top_entry_xyz": [
+        50.55,
+        69.2,
+        3.2
+      ],
+      "egress_xyz": [
+        54.75,
+        69.2,
+        0.0
+      ],
+      "climb_ticks": 35,
+      "access": "West ladder",
+      "egress": "East drop to the same court",
+      "edge_xyz": [
+        53.45,
+        69.2,
+        3.2
+      ],
+      "edge_step_ticks": 6,
+      "descent_ticks": 22,
+      "spawn_to_top_s": 16.6,
+      "release_to_site": {
+        "a": {
+          "live_s": 27.916,
+          "dry_via": [
+            "yard_n",
+            "pyramid_n",
+            "temple_n",
+            "a"
+          ]
+        },
+        "b": {
+          "live_s": 20.656,
+          "dry_via": [
+            "yard_n",
+            "pyramid_n",
+            "b"
+          ]
+        }
+      }
+    }
+  ],
+  "openings": [
+    {
+      "duty": "attack",
+      "site": "a",
+      "start_room": "atk",
+      "baseline_s": 26.587,
+      "setup_room": "atk",
+      "setup_xy": [
+        3.0,
+        -40.45
+      ],
+      "start_xyz": [
+        3.0,
+        -40.45,
+        0.0
+      ],
+      "safe_setup_s": 15.489,
+      "live_s": 11.098,
+      "saved_s": 15.489,
+      "dry_via": [
+        "atk",
+        "temple_s",
+        "a"
+      ],
+      "prep_budget_s": 20,
+      "ten_second_live_s": 16.587,
+      "ten_second_start_xyz": [
+        -7.0,
+        -63.0868,
+        0.0
+      ],
+      "fold_permitted": {
+        "baseline_s": 26.587,
+        "live_s": 11.098,
+        "rooms": [
+          "atk",
+          "temple_s",
+          "a"
+        ],
+        "link_kinds": [
+          "walk",
+          "walk"
+        ]
+      }
+    },
+    {
+      "duty": "attack",
+      "site": "b",
+      "start_room": "atk",
+      "baseline_s": 31.509,
+      "setup_room": "atk",
+      "setup_xy": [
+        3.0,
+        -40.45
+      ],
+      "start_xyz": [
+        3.0,
+        -40.45,
+        0.0
+      ],
+      "safe_setup_s": 15.489,
+      "live_s": 16.02,
+      "saved_s": 15.489,
+      "dry_via": [
+        "atk",
+        "temple_s",
+        "mid",
+        "b"
+      ],
+      "prep_budget_s": 20,
+      "ten_second_live_s": 21.509,
+      "ten_second_start_xyz": [
+        -7.0,
+        -63.0868,
+        0.0
+      ],
+      "fold_permitted": {
+        "baseline_s": 28.32,
+        "live_s": 12.831,
+        "rooms": [
+          "atk",
+          "temple_s",
+          "pyramid_s",
+          "b"
+        ],
+        "link_kinds": [
+          "walk",
+          "fold",
+          "walk"
+        ]
+      }
+    },
+    {
+      "duty": "defence",
+      "site": "a",
+      "start_room": "def",
+      "baseline_s": 24.825,
+      "setup_room": "def",
+      "setup_xy": [
+        8.5206,
+        40.45
+      ],
+      "start_xyz": [
+        8.5206,
+        40.45,
+        0.0
+      ],
+      "safe_setup_s": 14.552,
+      "live_s": 10.272,
+      "saved_s": 14.552,
+      "dry_via": [
+        "def",
+        "temple_n",
+        "a"
+      ],
+      "prep_budget_s": 20,
+      "ten_second_live_s": 14.825,
+      "ten_second_start_xyz": [
+        5.0,
+        62.5153,
+        0.0
+      ],
+      "fold_permitted": {
+        "baseline_s": 24.825,
+        "live_s": 10.272,
+        "rooms": [
+          "def",
+          "temple_n",
+          "a"
+        ],
+        "link_kinds": [
+          "walk",
+          "walk"
+        ]
+      }
+    },
+    {
+      "duty": "defence",
+      "site": "b",
+      "start_room": "def",
+      "baseline_s": 29.128,
+      "setup_room": "def",
+      "setup_xy": [
+        8.5206,
+        40.45
+      ],
+      "start_xyz": [
+        8.5206,
+        40.45,
+        0.0
+      ],
+      "safe_setup_s": 14.552,
+      "live_s": 14.576,
+      "saved_s": 14.552,
+      "dry_via": [
+        "def",
+        "temple_n",
+        "mid",
+        "b"
+      ],
+      "prep_budget_s": 20,
+      "ten_second_live_s": 19.128,
+      "ten_second_start_xyz": [
+        5.0,
+        62.5153,
+        0.0
+      ],
+      "fold_permitted": {
+        "baseline_s": 26.401,
+        "live_s": 11.849,
+        "rooms": [
+          "def",
+          "temple_n",
+          "pyramid_n",
+          "b"
+        ],
+        "link_kinds": [
+          "walk",
+          "fold",
+          "walk"
+        ]
+      }
+    }
+  ],
+  "traces": [
+    {
+      "id": "a-dry-shot",
+      "title": "Across the bell apron",
+      "site": "a",
+      "hero": "Rama",
+      "kind": "kodanda",
+      "origin_xyz": [
+        0.0,
+        -3.5,
+        1.5609
+      ],
+      "target_xyz": [
+        0.0,
+        3.5,
+        1.45
+      ],
+      "points": [
+        [
+          0,
+          0.0,
+          -3.5,
+          1.5609
+        ],
+        [
+          4,
+          0.0,
+          -3.5,
+          1.5609
+        ],
+        [
+          5,
+          0.0,
+          -0.5004,
+          1.5134
+        ],
+        [
+          6,
+          0.0,
+          2.3405,
+          1.4684
+        ]
+      ],
+      "events": [
+        {
+          "tick": 4,
+          "type": "release",
+          "id": "kodanda",
+          "xyz": [
+            0.0,
+            -3.5,
+            1.5609
+          ]
+        },
+        {
+          "tick": 6,
+          "type": "contact",
+          "id": "opposing-guard",
+          "xyz": [
+            0.0,
+            2.3405,
+            1.4684
+          ],
+          "leg": "out",
+          "amount": 28
+        }
+      ],
+      "ticks": 6,
+      "verdict": "Contact with opposing-guard"
+    },
+    {
+      "id": "a-disc-return",
+      "title": "Guarded outstroke and late return contact",
+      "site": "a",
+      "hero": "Krishna",
+      "kind": "sudarshana_return",
+      "origin_xyz": [
+        -0.5,
+        -4.5,
+        1.35
+      ],
+      "target_xyz": [
+        -0.5,
+        7.5,
+        1.35
+      ],
+      "points": [
+        [
+          0,
+          -0.5,
+          -4.5,
+          1.35
+        ],
+        [
+          5,
+          -0.5,
+          -4.5,
+          1.35
+        ],
+        [
+          6,
+          -0.5,
+          -3.7,
+          1.35
+        ],
+        [
+          7,
+          -0.5,
+          -2.9,
+          1.35
+        ],
+        [
+          8,
+          -0.5,
+          -2.1,
+          1.35
+        ],
+        [
+          9,
+          -0.5,
+          -1.3,
+          1.35
+        ],
+        [
+          10,
+          -0.5,
+          -0.5,
+          1.35
+        ],
+        [
+          11,
+          -0.5,
+          0.3,
+          1.35
+        ],
+        [
+          12,
+          -0.5,
+          1.1,
+          1.35
+        ],
+        [
+          13,
+          -0.5,
+          1.9,
+          1.35
+        ],
+        [
+          14,
+          -0.5,
+          2.7,
+          1.35
+        ],
+        [
+          15,
+          -0.5,
+          3.5,
+          1.35
+        ],
+        [
+          16,
+          -0.5,
+          4.3,
+          1.35
+        ],
+        [
+          17,
+          -0.5,
+          5.1,
+          1.35
+        ],
+        [
+          18,
+          -0.5,
+          5.9,
+          1.35
+        ],
+        [
+          19,
+          -0.5,
+          6.7,
+          1.35
+        ],
+        [
+          20,
+          -0.5,
+          7.5,
+          1.35
+        ],
+        [
+          21,
+          -0.5,
+          6.5,
+          1.35
+        ],
+        [
+          22,
+          -0.5,
+          5.5,
+          1.35
+        ],
+        [
+          23,
+          -0.5,
+          4.5,
+          1.35
+        ],
+        [
+          24,
+          -0.5,
+          3.5,
+          1.35
+        ],
+        [
+          25,
+          -0.5,
+          2.5,
+          1.35
+        ],
+        [
+          26,
+          -0.5,
+          1.5,
+          1.35
+        ],
+        [
+          27,
+          -0.5,
+          0.5,
+          1.35
+        ],
+        [
+          28,
+          -0.5,
+          -0.5,
+          1.35
+        ],
+        [
+          29,
+          -0.5,
+          -1.5,
+          1.35
+        ],
+        [
+          30,
+          -0.5,
+          -2.5,
+          1.35
+        ],
+        [
+          31,
+          -0.5,
+          -3.5,
+          1.35
+        ],
+        [
+          32,
+          -0.5,
+          -4.5,
+          1.35
+        ]
+      ],
+      "events": [
+        {
+          "tick": 5,
+          "type": "release",
+          "id": "sudarshana_return",
+          "xyz": [
+            -0.5,
+            -4.5,
+            1.35
+          ]
+        },
+        {
+          "tick": 10,
+          "type": "shield-contact",
+          "id": "shielded-guard",
+          "xyz": [
+            -0.5,
+            -1.0,
+            1.35
+          ],
+          "leg": "out",
+          "amount": 30
+        },
+        {
+          "tick": 20,
+          "type": "turn",
+          "id": "frozen-release-anchor",
+          "xyz": [
+            -0.5,
+            7.5,
+            1.35
+          ]
+        },
+        {
+          "tick": 24,
+          "type": "contact",
+          "id": "late-crosser",
+          "xyz": [
+            -0.5,
+            3.6394,
+            1.35
+          ],
+          "leg": "return",
+          "amount": 30
+        },
+        {
+          "tick": 32,
+          "type": "return",
+          "id": "cast-anchor",
+          "xyz": [
+            -0.5,
+            -4.5,
+            1.35
+          ]
+        }
+      ],
+      "ticks": 32,
+      "verdict": "Returned to the release anchor"
+    },
+    {
+      "id": "b-dry-shot",
+      "title": "Across the weighbeam apron",
+      "site": "b",
+      "hero": "Rama",
+      "kind": "kodanda",
+      "origin_xyz": [
+        40.0,
+        -3.5,
+        1.5609
+      ],
+      "target_xyz": [
+        40.0,
+        3.5,
+        1.45
+      ],
+      "points": [
+        [
+          0,
+          40.0,
+          -3.5,
+          1.5609
+        ],
+        [
+          4,
+          40.0,
+          -3.5,
+          1.5609
+        ],
+        [
+          5,
+          40.0,
+          -0.5004,
+          1.5134
+        ],
+        [
+          6,
+          40.0,
+          2.3405,
+          1.4684
+        ]
+      ],
+      "events": [
+        {
+          "tick": 4,
+          "type": "release",
+          "id": "kodanda",
+          "xyz": [
+            40.0,
+            -3.5,
+            1.5609
+          ]
+        },
+        {
+          "tick": 6,
+          "type": "contact",
+          "id": "opposing-guard",
+          "xyz": [
+            40.0,
+            2.3405,
+            1.4684
+          ],
+          "leg": "out",
+          "amount": 28
+        }
+      ],
+      "ticks": 6,
+      "verdict": "Contact with opposing-guard"
+    },
+    {
+      "id": "b-disc-return",
+      "title": "Guarded outstroke and late return contact",
+      "site": "b",
+      "hero": "Krishna",
+      "kind": "sudarshana_return",
+      "origin_xyz": [
+        39.5,
+        -4.5,
+        1.35
+      ],
+      "target_xyz": [
+        39.5,
+        7.5,
+        1.35
+      ],
+      "points": [
+        [
+          0,
+          39.5,
+          -4.5,
+          1.35
+        ],
+        [
+          5,
+          39.5,
+          -4.5,
+          1.35
+        ],
+        [
+          6,
+          39.5,
+          -3.7,
+          1.35
+        ],
+        [
+          7,
+          39.5,
+          -2.9,
+          1.35
+        ],
+        [
+          8,
+          39.5,
+          -2.1,
+          1.35
+        ],
+        [
+          9,
+          39.5,
+          -1.3,
+          1.35
+        ],
+        [
+          10,
+          39.5,
+          -0.5,
+          1.35
+        ],
+        [
+          11,
+          39.5,
+          0.3,
+          1.35
+        ],
+        [
+          12,
+          39.5,
+          1.1,
+          1.35
+        ],
+        [
+          13,
+          39.5,
+          1.9,
+          1.35
+        ],
+        [
+          14,
+          39.5,
+          2.7,
+          1.35
+        ],
+        [
+          15,
+          39.5,
+          3.5,
+          1.35
+        ],
+        [
+          16,
+          39.5,
+          4.3,
+          1.35
+        ],
+        [
+          17,
+          39.5,
+          5.1,
+          1.35
+        ],
+        [
+          18,
+          39.5,
+          5.9,
+          1.35
+        ],
+        [
+          19,
+          39.5,
+          6.7,
+          1.35
+        ],
+        [
+          20,
+          39.5,
+          7.5,
+          1.35
+        ],
+        [
+          21,
+          39.5,
+          6.5,
+          1.35
+        ],
+        [
+          22,
+          39.5,
+          5.5,
+          1.35
+        ],
+        [
+          23,
+          39.5,
+          4.5,
+          1.35
+        ],
+        [
+          24,
+          39.5,
+          3.5,
+          1.35
+        ],
+        [
+          25,
+          39.5,
+          2.5,
+          1.35
+        ],
+        [
+          26,
+          39.5,
+          1.5,
+          1.35
+        ],
+        [
+          27,
+          39.5,
+          0.5,
+          1.35
+        ],
+        [
+          28,
+          39.5,
+          -0.5,
+          1.35
+        ],
+        [
+          29,
+          39.5,
+          -1.5,
+          1.35
+        ],
+        [
+          30,
+          39.5,
+          -2.5,
+          1.35
+        ],
+        [
+          31,
+          39.5,
+          -3.5,
+          1.35
+        ],
+        [
+          32,
+          39.5,
+          -4.5,
+          1.35
+        ]
+      ],
+      "events": [
+        {
+          "tick": 5,
+          "type": "release",
+          "id": "sudarshana_return",
+          "xyz": [
+            39.5,
+            -4.5,
+            1.35
+          ]
+        },
+        {
+          "tick": 10,
+          "type": "shield-contact",
+          "id": "shielded-guard",
+          "xyz": [
+            39.5,
+            -1.0,
+            1.35
+          ],
+          "leg": "out",
+          "amount": 30
+        },
+        {
+          "tick": 20,
+          "type": "turn",
+          "id": "frozen-release-anchor",
+          "xyz": [
+            39.5,
+            7.5,
+            1.35
+          ]
+        },
+        {
+          "tick": 24,
+          "type": "contact",
+          "id": "late-crosser",
+          "xyz": [
+            39.5,
+            3.6394,
+            1.35
+          ],
+          "leg": "return",
+          "amount": 30
+        },
+        {
+          "tick": 32,
+          "type": "return",
+          "id": "cast-anchor",
+          "xyz": [
+            39.5,
+            -4.5,
+            1.35
+          ]
+        }
+      ],
+      "ticks": 32,
+      "verdict": "Returned to the release anchor"
+    },
+    {
+      "id": "a-screen-blocked",
+      "title": "Standing release into full cover",
+      "site": "a",
+      "hero": "Rama",
+      "kind": "kodanda",
+      "origin_xyz": [
+        -6.8,
+        -6.7,
+        1.561
+      ],
+      "target_xyz": [
+        -6.8,
+        -0.5,
+        1.561
+      ],
+      "points": [
+        [
+          0,
+          -6.8,
+          -6.7,
+          1.561
+        ],
+        [
+          4,
+          -6.8,
+          -6.7,
+          1.561
+        ],
+        [
+          5,
+          -6.8,
+          -5.72,
+          1.561
+        ]
+      ],
+      "events": [
+        {
+          "tick": 4,
+          "type": "release",
+          "id": "kodanda",
+          "xyz": [
+            -6.8,
+            -6.7,
+            1.561
+          ]
+        },
+        {
+          "tick": 5,
+          "type": "occluded",
+          "id": "bell-screen",
+          "xyz": [
+            -6.8,
+            -5.72,
+            1.561
+          ]
+        }
+      ],
+      "ticks": 5,
+      "verdict": "Stopped by bell-screen"
+    },
+    {
+      "id": "a-screen-elevated",
+      "title": "High release over full cover",
+      "site": "a",
+      "hero": "Arjuna",
+      "kind": "gandiva_line",
+      "origin_xyz": [
+        -6.8,
+        -6.7,
+        3.65
+      ],
+      "target_xyz": [
+        -6.8,
+        -0.5,
+        3.65
+      ],
+      "points": [
+        [
+          0,
+          -6.8,
+          -6.7,
+          3.65
+        ],
+        [
+          8,
+          -6.8,
+          -6.7,
+          3.65
+        ],
+        [
+          9,
+          -6.8,
+          -4.3,
+          3.65
+        ],
+        [
+          10,
+          -6.8,
+          -1.9,
+          3.65
+        ],
+        [
+          11,
+          -6.8,
+          -1.13,
+          3.65
+        ]
+      ],
+      "events": [
+        {
+          "tick": 8,
+          "type": "release",
+          "id": "gandiva_line",
+          "xyz": [
+            -6.8,
+            -6.7,
+            3.65
+          ]
+        },
+        {
+          "tick": 11,
+          "type": "contact",
+          "id": "airborne-opponent",
+          "xyz": [
+            -6.8,
+            -1.13,
+            3.65
+          ],
+          "leg": "out",
+          "amount": 32
+        }
+      ],
+      "ticks": 11,
+      "verdict": "Contact with airborne-opponent"
+    },
+    {
+      "id": "b-cabinet-blocked",
+      "title": "Standing release into full cover",
+      "site": "b",
+      "hero": "Rama",
+      "kind": "kodanda",
+      "origin_xyz": [
+        46.8,
+        -1.2,
+        1.561
+      ],
+      "target_xyz": [
+        46.8,
+        6.0,
+        1.561
+      ],
+      "points": [
+        [
+          0,
+          46.8,
+          -1.2,
+          1.561
+        ],
+        [
+          4,
+          46.8,
+          -1.2,
+          1.561
+        ],
+        [
+          5,
+          46.8,
+          -0.22,
+          1.561
+        ]
+      ],
+      "events": [
+        {
+          "tick": 4,
+          "type": "release",
+          "id": "kodanda",
+          "xyz": [
+            46.8,
+            -1.2,
+            1.561
+          ]
+        },
+        {
+          "tick": 5,
+          "type": "occluded",
+          "id": "dye-cabinet",
+          "xyz": [
+            46.8,
+            -0.22,
+            1.561
+          ]
+        }
+      ],
+      "ticks": 5,
+      "verdict": "Stopped by dye-cabinet"
+    },
+    {
+      "id": "b-cabinet-elevated",
+      "title": "High release over full cover",
+      "site": "b",
+      "hero": "Arjuna",
+      "kind": "gandiva_line",
+      "origin_xyz": [
+        46.8,
+        -1.2,
+        3.65
+      ],
+      "target_xyz": [
+        46.8,
+        6.0,
+        3.65
+      ],
+      "points": [
+        [
+          0,
+          46.8,
+          -1.2,
+          3.65
+        ],
+        [
+          8,
+          46.8,
+          -1.2,
+          3.65
+        ],
+        [
+          9,
+          46.8,
+          1.2,
+          3.65
+        ],
+        [
+          10,
+          46.8,
+          3.6,
+          3.65
+        ],
+        [
+          11,
+          46.8,
+          5.37,
+          3.65
+        ]
+      ],
+      "events": [
+        {
+          "tick": 8,
+          "type": "release",
+          "id": "gandiva_line",
+          "xyz": [
+            46.8,
+            -1.2,
+            3.65
+          ]
+        },
+        {
+          "tick": 11,
+          "type": "contact",
+          "id": "airborne-opponent",
+          "xyz": [
+            46.8,
+            5.37,
+            3.65
+          ],
+          "leg": "out",
+          "amount": 32
+        }
+      ],
+      "ticks": 11,
+      "verdict": "Contact with airborne-opponent"
+    },
+    {
+      "id": "a-trace-table-low",
+      "title": "Low flying disc against the trace table",
+      "site": "a",
+      "hero": "Krishna",
+      "kind": "sudarshana_return",
+      "origin_xyz": [
+        1.25,
+        -7.05,
+        1.35
+      ],
+      "target_xyz": [
+        7.95,
+        -7.05,
+        1.35
+      ],
+      "points": [
+        [
+          0,
+          1.25,
+          -7.05,
+          1.35
+        ],
+        [
+          5,
+          1.25,
+          -7.05,
+          1.35
+        ],
+        [
+          6,
+          2.05,
+          -7.05,
+          1.35
+        ],
+        [
+          7,
+          2.2,
+          -7.05,
+          1.35
+        ]
+      ],
+      "events": [
+        {
+          "tick": 5,
+          "type": "release",
+          "id": "sudarshana_return",
+          "xyz": [
+            1.25,
+            -7.05,
+            1.35
+          ]
+        },
+        {
+          "tick": 7,
+          "type": "occluded",
+          "id": "a-trace-table",
+          "xyz": [
+            2.2,
+            -7.05,
+            1.35
+          ]
+        }
+      ],
+      "ticks": 7,
+      "verdict": "Stopped by a-trace-table"
+    },
+    {
+      "id": "a-trace-table-high",
+      "title": "Elevated aim clears the trace table",
+      "site": "a",
+      "hero": "Arjuna",
+      "kind": "gandiva_line",
+      "origin_xyz": [
+        1.25,
+        -7.05,
+        2.15
+      ],
+      "target_xyz": [
+        6.95,
+        -7.05,
+        2.15
+      ],
+      "points": [
+        [
+          0,
+          1.25,
+          -7.05,
+          2.15
+        ],
+        [
+          8,
+          1.25,
+          -7.05,
+          2.15
+        ],
+        [
+          9,
+          3.65,
+          -7.05,
+          2.15
+        ],
+        [
+          10,
+          6.05,
+          -7.05,
+          2.15
+        ],
+        [
+          11,
+          6.222,
+          -7.05,
+          2.15
+        ]
+      ],
+      "events": [
+        {
+          "tick": 8,
+          "type": "release",
+          "id": "gandiva_line",
+          "xyz": [
+            1.25,
+            -7.05,
+            2.15
+          ]
+        },
+        {
+          "tick": 11,
+          "type": "contact",
+          "id": "elevated-guard",
+          "xyz": [
+            6.222,
+            -7.05,
+            2.15
+          ],
+          "leg": "out",
+          "amount": 32
+        }
+      ],
+      "ticks": 11,
+      "verdict": "Contact with elevated-guard"
+    },
+    {
+      "id": "b-bale-bench-low",
+      "title": "Low flying disc against the bale bench",
+      "site": "b",
+      "hero": "Krishna",
+      "kind": "sudarshana_return",
+      "origin_xyz": [
+        42.9,
+        -7.55,
+        1.35
+      ],
+      "target_xyz": [
+        49.6,
+        -7.55,
+        1.35
+      ],
+      "points": [
+        [
+          0,
+          42.9,
+          -7.55,
+          1.35
+        ],
+        [
+          5,
+          42.9,
+          -7.55,
+          1.35
+        ],
+        [
+          6,
+          43.7,
+          -7.55,
+          1.35
+        ],
+        [
+          7,
+          44.05,
+          -7.55,
+          1.35
+        ]
+      ],
+      "events": [
+        {
+          "tick": 5,
+          "type": "release",
+          "id": "sudarshana_return",
+          "xyz": [
+            42.9,
+            -7.55,
+            1.35
+          ]
+        },
+        {
+          "tick": 7,
+          "type": "occluded",
+          "id": "b-bale-bench",
+          "xyz": [
+            44.05,
+            -7.55,
+            1.35
+          ]
+        }
+      ],
+      "ticks": 7,
+      "verdict": "Stopped by b-bale-bench"
+    },
+    {
+      "id": "b-bale-bench-high",
+      "title": "Elevated aim clears the bale bench",
+      "site": "b",
+      "hero": "Arjuna",
+      "kind": "gandiva_line",
+      "origin_xyz": [
+        42.9,
+        -7.55,
+        2.15
+      ],
+      "target_xyz": [
+        48.6,
+        -7.55,
+        2.15
+      ],
+      "points": [
+        [
+          0,
+          42.9,
+          -7.55,
+          2.15
+        ],
+        [
+          8,
+          42.9,
+          -7.55,
+          2.15
+        ],
+        [
+          9,
+          45.3,
+          -7.55,
+          2.15
+        ],
+        [
+          10,
+          47.7,
+          -7.55,
+          2.15
+        ],
+        [
+          11,
+          47.872,
+          -7.55,
+          2.15
+        ]
+      ],
+      "events": [
+        {
+          "tick": 8,
+          "type": "release",
+          "id": "gandiva_line",
+          "xyz": [
+            42.9,
+            -7.55,
+            2.15
+          ]
+        },
+        {
+          "tick": 11,
+          "type": "contact",
+          "id": "elevated-guard",
+          "xyz": [
+            47.872,
+            -7.55,
+            2.15
+          ],
+          "leg": "out",
+          "amount": 32
+        }
+      ],
+      "ticks": 11,
+      "verdict": "Contact with elevated-guard"
+    },
+    {
+      "id": "a-return-screen",
+      "title": "A late screen breaks the return",
+      "site": "a",
+      "hero": "Krishna",
+      "kind": "sudarshana_return",
+      "origin_xyz": [
+        -3.0,
+        2.0,
+        1.35
+      ],
+      "target_xyz": [
+        9.0,
+        2.0,
+        1.35
+      ],
+      "points": [
+        [
+          0,
+          -3.0,
+          2.0,
+          1.35
+        ],
+        [
+          5,
+          -3.0,
+          2.0,
+          1.35
+        ],
+        [
+          6,
+          -2.2,
+          2.0,
+          1.35
+        ],
+        [
+          7,
+          -1.4,
+          2.0,
+          1.35
+        ],
+        [
+          8,
+          -0.6,
+          2.0,
+          1.35
+        ],
+        [
+          9,
+          0.2,
+          2.0,
+          1.35
+        ],
+        [
+          10,
+          1.0,
+          2.0,
+          1.35
+        ],
+        [
+          11,
+          1.8,
+          2.0,
+          1.35
+        ],
+        [
+          12,
+          2.6,
+          2.0,
+          1.35
+        ],
+        [
+          13,
+          3.4,
+          2.0,
+          1.35
+        ],
+        [
+          14,
+          4.2,
+          2.0,
+          1.35
+        ],
+        [
+          15,
+          5.0,
+          2.0,
+          1.35
+        ],
+        [
+          16,
+          5.8,
+          2.0,
+          1.35
+        ],
+        [
+          17,
+          6.6,
+          2.0,
+          1.35
+        ],
+        [
+          18,
+          7.4,
+          2.0,
+          1.35
+        ],
+        [
+          19,
+          8.2,
+          2.0,
+          1.35
+        ],
+        [
+          20,
+          9.0,
+          2.0,
+          1.35
+        ],
+        [
+          21,
+          8.0,
+          2.0,
+          1.35
+        ],
+        [
+          22,
+          7.0,
+          2.0,
+          1.35
+        ],
+        [
+          23,
+          6.925,
+          2.0,
+          1.35
+        ]
+      ],
+      "events": [
+        {
+          "tick": 5,
+          "type": "release",
+          "id": "sudarshana_return",
+          "xyz": [
+            -3.0,
+            2.0,
+            1.35
+          ]
+        },
+        {
+          "tick": 20,
+          "type": "turn",
+          "id": "frozen-release-anchor",
+          "xyz": [
+            9.0,
+            2.0,
+            1.35
+          ]
+        },
+        {
+          "tick": 23,
+          "type": "occluded",
+          "id": "a-counter-screen",
+          "xyz": [
+            6.925,
+            2.0,
+            1.35
+          ]
+        }
+      ],
+      "ticks": 23,
+      "verdict": "Stopped by a-counter-screen"
+    },
+    {
+      "id": "south-fold-chakra",
+      "title": "The return disc meets the south threshold",
+      "site": "b",
+      "hero": "Krishna",
+      "kind": "sudarshana_return",
+      "origin_xyz": [
+        12.0,
+        -37.4,
+        1.35
+      ],
+      "target_xyz": [
+        12.0,
+        -30.0,
+        1.35
+      ],
+      "points": [
+        [
+          0,
+          12.0,
+          -37.4,
+          1.35
+        ],
+        [
+          5,
+          12.0,
+          -37.4,
+          1.35
+        ],
+        [
+          6,
+          12.0,
+          -36.6,
+          1.35
+        ],
+        [
+          7,
+          12.0,
+          -35.8,
+          1.35
+        ],
+        [
+          8,
+          12.0,
+          -35.6,
+          1.35
+        ]
+      ],
+      "events": [
+        {
+          "tick": 5,
+          "type": "release",
+          "id": "sudarshana_return",
+          "xyz": [
+            12.0,
+            -37.4,
+            1.35
+          ]
+        },
+        {
+          "tick": 8,
+          "type": "occluded",
+          "id": "fold-face-temple_s",
+          "xyz": [
+            12.0,
+            -35.6,
+            1.35
+          ]
+        }
+      ],
+      "ticks": 8,
+      "verdict": "Stopped by fold-face-temple_s"
+    },
+    {
+      "id": "north-fold-arrow",
+      "title": "The arrow meets the north threshold",
+      "site": "b",
+      "hero": "Rama",
+      "kind": "kodanda",
+      "origin_xyz": [
+        12.0,
+        37.4,
+        1.561
+      ],
+      "target_xyz": [
+        12.0,
+        30.0,
+        1.561
+      ],
+      "points": [
+        [
+          0,
+          12.0,
+          37.4,
+          1.561
+        ],
+        [
+          4,
+          12.0,
+          37.4,
+          1.561
+        ],
+        [
+          5,
+          12.0,
+          35.57,
+          1.561
+        ]
+      ],
+      "events": [
+        {
+          "tick": 4,
+          "type": "release",
+          "id": "kodanda",
+          "xyz": [
+            12.0,
+            37.4,
+            1.561
+          ]
+        },
+        {
+          "tick": 5,
+          "type": "occluded",
+          "id": "fold-face-temple_n",
+          "xyz": [
+            12.0,
+            35.57,
+            1.561
+          ]
+        }
+      ],
+      "ticks": 5,
+      "verdict": "Stopped by fold-face-temple_n"
+    },
+    {
+      "id": "pavilion-crown-arrow",
+      "title": "Upward shot beneath the pavilion",
+      "site": "b",
+      "hero": "Rama",
+      "kind": "kodanda",
+      "origin_xyz": [
+        28.0,
+        -32.0,
+        1.561
+      ],
+      "target_xyz": [
+        28.0,
+        -32.0,
+        8.0
+      ],
+      "points": [
+        [
+          0,
+          28.0,
+          -32.0,
+          1.561
+        ],
+        [
+          4,
+          28.0,
+          -32.0,
+          1.561
+        ],
+        [
+          5,
+          28.0,
+          -32.0,
+          4.01
+        ]
+      ],
+      "events": [
+        {
+          "tick": 4,
+          "type": "release",
+          "id": "kodanda",
+          "xyz": [
+            28.0,
+            -32.0,
+            1.561
+          ]
+        },
+        {
+          "tick": 5,
+          "type": "occluded",
+          "id": "pavilion-course-1-cornice",
+          "xyz": [
+            28.0,
+            -32.0,
+            4.01
+          ]
+        }
+      ],
+      "ticks": 5,
+      "verdict": "Stopped by pavilion-course-1-cornice"
+    },
+    {
+      "id": "a-wind",
+      "title": "Rise over the bell apron",
+      "site": "a",
+      "hero": "Hanuman",
+      "kind": "vayu_flight",
+      "origin_xyz": [
+        0.0,
+        -3.0,
+        0.0
+      ],
+      "target_xyz": [
+        0.0,
+        3.0,
+        0.0
+      ],
+      "points": [
+        [
+          0,
+          0.0,
+          -3.0,
+          0.0
+        ],
+        [
+          1,
+          0.0,
+          -2.75,
+          0.2
+        ],
+        [
+          2,
+          0.0,
+          -2.5,
+          0.4
+        ],
+        [
+          3,
+          0.0,
+          -2.25,
+          0.6
+        ],
+        [
+          4,
+          0.0,
+          -2.0,
+          0.8
+        ],
+        [
+          5,
+          0.0,
+          -1.75,
+          1.0
+        ],
+        [
+          6,
+          0.0,
+          -1.5,
+          1.2
+        ],
+        [
+          7,
+          0.0,
+          -1.25,
+          1.4
+        ],
+        [
+          8,
+          0.0,
+          -1.0,
+          1.6
+        ],
+        [
+          9,
+          0.0,
+          -0.75,
+          1.8
+        ],
+        [
+          10,
+          0.0,
+          -0.5,
+          2.0
+        ],
+        [
+          11,
+          0.0,
+          -0.25,
+          2.2
+        ],
+        [
+          12,
+          0.0,
+          0.0,
+          2.4
+        ],
+        [
+          13,
+          0.0,
+          0.25,
+          2.6
+        ],
+        [
+          14,
+          0.0,
+          0.5,
+          2.8
+        ],
+        [
+          15,
+          0.0,
+          0.75,
+          3.0
+        ],
+        [
+          16,
+          0.0,
+          1.0,
+          3.2
+        ],
+        [
+          17,
+          0.0,
+          1.25,
+          3.4
+        ],
+        [
+          18,
+          0.0,
+          1.5,
+          3.6
+        ],
+        [
+          19,
+          0.0,
+          1.75,
+          3.8
+        ],
+        [
+          20,
+          0.0,
+          2.0,
+          4.0
+        ],
+        [
+          21,
+          0.0,
+          2.25,
+          4.0
+        ],
+        [
+          22,
+          0.0,
+          2.5,
+          4.0
+        ],
+        [
+          23,
+          0.0,
+          2.75,
+          4.0
+        ],
+        [
+          24,
+          0.0,
+          3.0,
+          4.0
+        ],
+        [
+          25,
+          0.0,
+          3.0,
+          3.9755
+        ],
+        [
+          26,
+          0.0,
+          3.0,
+          3.9265
+        ],
+        [
+          27,
+          0.0,
+          3.0,
+          3.853
+        ],
+        [
+          28,
+          0.0,
+          3.0,
+          3.755
+        ],
+        [
+          29,
+          0.0,
+          3.0,
+          3.6325
+        ],
+        [
+          30,
+          0.0,
+          3.0,
+          3.4855
+        ],
+        [
+          31,
+          0.0,
+          3.0,
+          3.314
+        ],
+        [
+          32,
+          0.0,
+          3.0,
+          3.118
+        ],
+        [
+          33,
+          0.0,
+          3.0,
+          2.8975
+        ],
+        [
+          34,
+          0.0,
+          3.0,
+          2.6525
+        ],
+        [
+          35,
+          0.0,
+          3.0,
+          2.383
+        ],
+        [
+          36,
+          0.0,
+          3.0,
+          2.089
+        ],
+        [
+          37,
+          0.0,
+          3.0,
+          1.7705
+        ],
+        [
+          38,
+          0.0,
+          3.0,
+          1.4275
+        ],
+        [
+          39,
+          0.0,
+          3.0,
+          1.06
+        ],
+        [
+          40,
+          0.0,
+          3.0,
+          0.668
+        ],
+        [
+          41,
+          0.0,
+          3.0,
+          0.2515
+        ],
+        [
+          42,
+          0.0,
+          3.0,
+          0.0
+        ],
+        [
+          43,
+          0.0,
+          3.0,
+          0.0
+        ],
+        [
+          44,
+          0.0,
+          3.0,
+          0.0
+        ],
+        [
+          45,
+          0.0,
+          3.0,
+          0.0
+        ],
+        [
+          46,
+          0.0,
+          3.0,
+          0.0
+        ]
+      ],
+      "events": [
+        {
+          "tick": 0,
+          "type": "launch",
+          "id": "vayu_flight",
+          "xyz": [
+            0.0,
+            -3.0,
+            0.0
+          ]
+        },
+        {
+          "tick": 42,
+          "type": "grounded",
+          "id": "surveyed-floor",
+          "xyz": [
+            0.0,
+            3.0,
+            0.0
+          ]
+        }
+      ],
+      "ticks": 46,
+      "verdict": "Grounded after 6.00 m of horizontal thrust",
+      "peak_feet_m": 4.0,
+      "horizontal_path_m": 6.0
+    },
+    {
+      "id": "b-wind",
+      "title": "Rise over the weighbeam apron",
+      "site": "b",
+      "hero": "Hanuman",
+      "kind": "vayu_flight",
+      "origin_xyz": [
+        40.0,
+        -3.0,
+        0.0
+      ],
+      "target_xyz": [
+        40.0,
+        3.0,
+        0.0
+      ],
+      "points": [
+        [
+          0,
+          40.0,
+          -3.0,
+          0.0
+        ],
+        [
+          1,
+          40.0,
+          -2.75,
+          0.2
+        ],
+        [
+          2,
+          40.0,
+          -2.5,
+          0.4
+        ],
+        [
+          3,
+          40.0,
+          -2.25,
+          0.6
+        ],
+        [
+          4,
+          40.0,
+          -2.0,
+          0.8
+        ],
+        [
+          5,
+          40.0,
+          -1.75,
+          1.0
+        ],
+        [
+          6,
+          40.0,
+          -1.5,
+          1.2
+        ],
+        [
+          7,
+          40.0,
+          -1.25,
+          1.4
+        ],
+        [
+          8,
+          40.0,
+          -1.0,
+          1.6
+        ],
+        [
+          9,
+          40.0,
+          -0.75,
+          1.8
+        ],
+        [
+          10,
+          40.0,
+          -0.5,
+          2.0
+        ],
+        [
+          11,
+          40.0,
+          -0.25,
+          2.2
+        ],
+        [
+          12,
+          40.0,
+          0.0,
+          2.4
+        ],
+        [
+          13,
+          40.0,
+          0.25,
+          2.6
+        ],
+        [
+          14,
+          40.0,
+          0.5,
+          2.8
+        ],
+        [
+          15,
+          40.0,
+          0.75,
+          3.0
+        ],
+        [
+          16,
+          40.0,
+          1.0,
+          3.2
+        ],
+        [
+          17,
+          40.0,
+          1.25,
+          3.4
+        ],
+        [
+          18,
+          40.0,
+          1.5,
+          3.6
+        ],
+        [
+          19,
+          40.0,
+          1.75,
+          3.8
+        ],
+        [
+          20,
+          40.0,
+          2.0,
+          4.0
+        ],
+        [
+          21,
+          40.0,
+          2.25,
+          4.0
+        ],
+        [
+          22,
+          40.0,
+          2.5,
+          4.0
+        ],
+        [
+          23,
+          40.0,
+          2.75,
+          4.0
+        ],
+        [
+          24,
+          40.0,
+          3.0,
+          4.0
+        ],
+        [
+          25,
+          40.0,
+          3.0,
+          3.9755
+        ],
+        [
+          26,
+          40.0,
+          3.0,
+          3.9265
+        ],
+        [
+          27,
+          40.0,
+          3.0,
+          3.853
+        ],
+        [
+          28,
+          40.0,
+          3.0,
+          3.755
+        ],
+        [
+          29,
+          40.0,
+          3.0,
+          3.6325
+        ],
+        [
+          30,
+          40.0,
+          3.0,
+          3.4855
+        ],
+        [
+          31,
+          40.0,
+          3.0,
+          3.314
+        ],
+        [
+          32,
+          40.0,
+          3.0,
+          3.118
+        ],
+        [
+          33,
+          40.0,
+          3.0,
+          2.8975
+        ],
+        [
+          34,
+          40.0,
+          3.0,
+          2.6525
+        ],
+        [
+          35,
+          40.0,
+          3.0,
+          2.383
+        ],
+        [
+          36,
+          40.0,
+          3.0,
+          2.089
+        ],
+        [
+          37,
+          40.0,
+          3.0,
+          1.7705
+        ],
+        [
+          38,
+          40.0,
+          3.0,
+          1.4275
+        ],
+        [
+          39,
+          40.0,
+          3.0,
+          1.06
+        ],
+        [
+          40,
+          40.0,
+          3.0,
+          0.668
+        ],
+        [
+          41,
+          40.0,
+          3.0,
+          0.2515
+        ],
+        [
+          42,
+          40.0,
+          3.0,
+          0.0
+        ],
+        [
+          43,
+          40.0,
+          3.0,
+          0.0
+        ],
+        [
+          44,
+          40.0,
+          3.0,
+          0.0
+        ],
+        [
+          45,
+          40.0,
+          3.0,
+          0.0
+        ],
+        [
+          46,
+          40.0,
+          3.0,
+          0.0
+        ]
+      ],
+      "events": [
+        {
+          "tick": 0,
+          "type": "launch",
+          "id": "vayu_flight",
+          "xyz": [
+            40.0,
+            -3.0,
+            0.0
+          ]
+        },
+        {
+          "tick": 42,
+          "type": "grounded",
+          "id": "surveyed-floor",
+          "xyz": [
+            40.0,
+            3.0,
+            0.0
+          ]
+        }
+      ],
+      "ticks": 46,
+      "verdict": "Grounded after 6.00 m of horizontal thrust",
+      "peak_feet_m": 4.0,
+      "horizontal_path_m": 6.0
+    },
+    {
+      "id": "pavilion-wind",
+      "title": "The lintel limits ascent",
+      "site": "b",
+      "hero": "Hanuman",
+      "kind": "vayu_flight",
+      "origin_xyz": [
+        28.0,
+        -32.0,
+        0.0
+      ],
+      "target_xyz": [
+        28.0,
+        -32.0,
+        0.0
+      ],
+      "points": [
+        [
+          0,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          1,
+          28.0,
+          -32.0,
+          0.2
+        ],
+        [
+          2,
+          28.0,
+          -32.0,
+          0.4
+        ],
+        [
+          3,
+          28.0,
+          -32.0,
+          0.6
+        ],
+        [
+          4,
+          28.0,
+          -32.0,
+          0.8
+        ],
+        [
+          5,
+          28.0,
+          -32.0,
+          1.0
+        ],
+        [
+          6,
+          28.0,
+          -32.0,
+          1.2
+        ],
+        [
+          7,
+          28.0,
+          -32.0,
+          1.4
+        ],
+        [
+          8,
+          28.0,
+          -32.0,
+          1.6
+        ],
+        [
+          9,
+          28.0,
+          -32.0,
+          1.8
+        ],
+        [
+          10,
+          28.0,
+          -32.0,
+          2.0
+        ],
+        [
+          11,
+          28.0,
+          -32.0,
+          2.2
+        ],
+        [
+          12,
+          28.0,
+          -32.0,
+          2.4
+        ],
+        [
+          13,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          14,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          15,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          16,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          17,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          18,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          19,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          20,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          21,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          22,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          23,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          24,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          25,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          26,
+          28.0,
+          -32.0,
+          2.4298
+        ],
+        [
+          27,
+          28.0,
+          -32.0,
+          2.4053
+        ],
+        [
+          28,
+          28.0,
+          -32.0,
+          2.3563
+        ],
+        [
+          29,
+          28.0,
+          -32.0,
+          2.2828
+        ],
+        [
+          30,
+          28.0,
+          -32.0,
+          2.1848
+        ],
+        [
+          31,
+          28.0,
+          -32.0,
+          2.0623
+        ],
+        [
+          32,
+          28.0,
+          -32.0,
+          1.9153
+        ],
+        [
+          33,
+          28.0,
+          -32.0,
+          1.7438
+        ],
+        [
+          34,
+          28.0,
+          -32.0,
+          1.5478
+        ],
+        [
+          35,
+          28.0,
+          -32.0,
+          1.3273
+        ],
+        [
+          36,
+          28.0,
+          -32.0,
+          1.0823
+        ],
+        [
+          37,
+          28.0,
+          -32.0,
+          0.8128
+        ],
+        [
+          38,
+          28.0,
+          -32.0,
+          0.5188
+        ],
+        [
+          39,
+          28.0,
+          -32.0,
+          0.2003
+        ],
+        [
+          40,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          41,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          42,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          43,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          44,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          45,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          46,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          47,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          48,
+          28.0,
+          -32.0,
+          0.0
+        ],
+        [
+          49,
+          28.0,
+          -32.0,
+          0.0
+        ]
+      ],
+      "events": [
+        {
+          "tick": 0,
+          "type": "launch",
+          "id": "vayu_flight",
+          "xyz": [
+            28.0,
+            -32.0,
+            0.0
+          ]
+        },
+        {
+          "tick": 13,
+          "type": "ceiling",
+          "id": "pavilion-course-1-cornice",
+          "xyz": [
+            28.0,
+            -32.0,
+            2.4
+          ]
+        },
+        {
+          "tick": 40,
+          "type": "grounded",
+          "id": "surveyed-floor",
+          "xyz": [
+            28.0,
+            -32.0,
+            0.0
+          ]
+        }
+      ],
+      "ticks": 49,
+      "verdict": "Grounded after 0.00 m of horizontal thrust",
+      "peak_feet_m": 2.4298,
+      "horizontal_path_m": 0.0
+    }
+  ],
+  "cover_crosscheck": [
+    {
+      "entrance": "a-bank",
+      "cover": "a-gauge-locker",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-bank",
+      "cover": "bell-screen",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-temple_s",
+      "cover": "bell-screen",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-temple_s",
+      "cover": "a-trace-table",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 3,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-temple_n",
+      "cover": "a-gauge-locker",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-temple_n",
+      "cover": "a-float-case",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 4,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-mid",
+      "cover": "a-river-screen",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "a-mid",
+      "cover": "a-trace-table",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 3,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "b-pyramid_s",
+      "cover": "b-receipt-shutter",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "b-pyramid_s",
+      "cover": "b-bale-bench",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 6,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "b-pyramid_n",
+      "cover": "b-cart-chest",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 6,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "b-pyramid_n",
+      "cover": "b-stamp-screen",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 0,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "b-mid",
+      "cover": "b-market-register",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 6,
+      "rays_per_stance": 9
+    },
+    {
+      "entrance": "b-mid",
+      "cover": "b-measure-post",
+      "visible_ground": 0,
+      "visible_reverse": 0,
+      "visible_air": 1,
+      "rays_per_stance": 9
+    }
+  ],
+  "source_sha256": {
+    "games/yuga-native/docs/design/ember-rite-5v5/atlas/maps/mandala.json": "52574c462698584b770bc1fca97c41642329f7785379c0803b5204fb2ca70290",
+    "games/yuga-native/docs/design/ember-rite-5v5/atlas/massing/mandala.glb": "d6da6f4758542823fe49a7be54b04c30e54f6e2ec38cc23111d6068b67590892",
+    "games/yuga-native/assets/design/rama-ability-kit.json": "4d7a6ddb3873ff1c09470bf24dd6a65b3da3ff853388d29884e575c52ce65eb9",
+    "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/heroes.json": "71d15b108f737a7662a64d1ed2e891e812923fb76192ad5d043e5836d0aa6178",
+    "games/yuga-rust/src/ritual.rs": "5e44e5cd9ab9fb01cc152512a559ad1320e821cf7137721eb1eeb98425c520cc",
+    "games/yuga-native/docs/design/ember-rite-5v5/atlas/massing/architecture.py": "6ddfe548ed2f15994649e421e1e5df1f3a71287bbb9dc54d3205ea4777a9d091",
+    "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/architecture.json": "20132352093293a099821e2eacfe567ae53eaead72f6bbcc2ddb036e7ed65624"
+  }
+}

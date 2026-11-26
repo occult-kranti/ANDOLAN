@@ -59,7 +59,9 @@ export function checkGlb(bytes, manifest) {
   for (const index of roots) {
     const node = gltf.nodes[index];
     require(!node.children?.length && Number.isInteger(node.mesh) && gltf.meshes[node.mesh], 'The Route Lab expects direct mesh roots.');
-    for (const primitive of gltf.meshes[node.mesh].primitives ?? []) {
+    const primitives = gltf.meshes[node.mesh].primitives;
+    require(Array.isArray(primitives) && primitives.length > 0, 'A Route Lab mesh has no primitives.');
+    for (const primitive of primitives) {
       const accessor = gltf.accessors?.[primitive.attributes?.POSITION];
       require(accessor?.type === 'VEC3' && accessor.componentType === 5126 && !accessor.sparse && !accessor.normalized
         && Number.isInteger(accessor.count) && accessor.count > 0 && accessor.count <= 100000, 'Unsupported or invalid position accessor.');
@@ -68,6 +70,7 @@ export function checkGlb(bytes, manifest) {
       const start = view.byteOffset ?? 0, relative = accessor.byteOffset ?? 0, stride = view.byteStride ?? 12;
       require([start, relative, stride].every(Number.isInteger) && start >= 0 && relative >= 0 && stride >= 12 && stride <= 252 && stride % 4 === 0
         && relative + (accessor.count - 1) * stride + 12 <= view.byteLength && start + view.byteLength <= gltf.buffers[0].byteLength, 'Position accessor escapes the embedded buffer.');
+      require(start % 4 === 0 && relative % 4 === 0, 'Misaligned GLB position coordinates.');
       positionSamples += accessor.count;
       require(positionSamples <= 500000, 'Geometry exceeds the small prototype check bound.');
       for (let vertex = 0; vertex < accessor.count; vertex++) {
@@ -84,12 +87,24 @@ export function checkGlb(bytes, manifest) {
   require(minimum.every((value, i) => near(value, expectedMinimum[i])) && maximum.every((value, i) => near(value, expectedMaximum[i])), 'Measured GLB bounds do not match the metre-scale Route Lab.');
   const spawns = gltf.nodes.filter(node => typeof node.extras?.spawn_id === 'string');
   require(spawns.length === 10 && manifest.spawns.length === 10, 'Expected ten spawn markers.');
+  require(new Set(manifest.spawns.map(spawn => spawn.id)).size === 10, 'Duplicate spawn IDs in the manifest.');
+  const teams = new Map([['south', 0], ['north', 0]]);
   for (const expected of manifest.spawns) {
+    require(teams.has(expected.team) && expected.id.startsWith(`spawn_${expected.team}_`)
+      && expected.facing_north === (expected.team === 'south')
+      && Number.isFinite(expected.north) && (expected.team === 'south' ? expected.north < 0 : expected.north > 0)
+      && near(expected.ground_height_m, 0.12, 0.001), 'Spawn team, facing or ground-height metadata differs from the Route Lab plan.');
+    teams.set(expected.team, teams.get(expected.team) + 1);
     const matches = spawns.filter(node => node.extras.spawn_id === expected.id);
     require(matches.length === 1, 'Missing or duplicated spawn marker.');
-    const position = transform([0, 0, 0], matches[0]);
-    require(near(position[0], expected.east, 0.001) && near(position[2], -expected.north, 0.001), 'Spawn coordinate does not match the plan-to-GLB axis mapping.');
+    const marker = matches[0];
+    require(marker.extras.daftar_role === 'spawn_visual_only' && marker.extras.prototype_only === true, 'Spawn marker must remain visual-only.');
+    const position = transform([0, 0, 0], marker);
+    // The Blender cylinder origin sits at 0.85 m, not at the 0.12 m pad surface.
+    require(near(position[0], expected.east, 0.001) && near(position[1], 0.85, 0.001)
+      && near(position[2], -expected.north, 0.001), 'Spawn coordinate does not match the plan-to-GLB axis mapping.');
   }
+  require([...teams.values()].every(count => count === 5), 'Expected five spawn markers per team.');
   return { nodes: gltf.nodes.length, meshes: gltf.meshes.length, positionSamples,
     gltfBoundsMinM: minimum.map(value => Number(value.toFixed(6))), gltfBoundsMaxM: maximum.map(value => Number(value.toFixed(6))),
     spawnMarkersVerified: spawns.length };

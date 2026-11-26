@@ -1,5 +1,7 @@
 # Ember Rite · maps, modes and progression
 
+For court widths, floor and overhead heights, legal cover and the pre-round climb decision, use the registered map sheets and their signed sightlines. [Eight court plans](atlas/vertical-play/door-register.md) · [Mandala interaction register](atlas/vertical-play/element-register.md) · [Opening and cast study](atlas/vertical-play/physics.md)
+
 Standard competitive Ember Rite is a hero-only 5v5 design. Players can tour all four districts in the solo browser rehearsal and play private knockout in the Rust release. Objective multiplayer proceeds through the authority and playtest gates below. [Try a district](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html)
 
 ## Modes

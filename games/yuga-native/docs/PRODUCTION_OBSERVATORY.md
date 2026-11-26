@@ -2,6 +2,8 @@
 
 ## Ember Rite map and hero balance
 
+The Mandala Rift art book opens the district film, individual element studies, scale drawings, motion clips and editable scene files. Each study offers a reusable GLB with a surveyed local origin. A study link such as `#element=room-atk` opens Spice Gate directly. On a local worker use `/mandala-art/`. The publisher takes the same files from the studio catalog and concept index. [Environment art book](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/) · [Spice Gate study](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/#element=room-atk)
+
 The current handoff follows four two-site maps and the playable Hanuman and Rama skirmish changes through three panel rounds. Select a map in the Observatory to compare the site entry leads, dry rotation and remaining quench time, then rehearse the route or print the floorplans. The figures come from the route graph. Human pick rates, round outcomes and performance on players’ hardware still need playtests. [Public dashboard](https://occult-kranti.github.io/ANDOLAN/production/#atlas) · [Route drill](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Printable atlas](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/yuga-map-atlas.pdf)
 
 The selector reads the same generated timing file on GitHub Pages and on a local worker. The publisher copies that file, the standalone drill, the PDF, the massing overview and the four individual SVG architecture sheets from their canonical atlas locations. The dashboard receipt binds their byte lengths and SHA‑256 digests to the publication commit. The queue links the architectural sources, balance decisions and next playtests. The separate Rust download contains the skirmish. [Atlas and floorplans](design/ember-rite-5v5/atlas/README.md) · [Balance model](design/ember-rite-5v5/atlas/BALANCE_MATH.md) · [Research](design/ember-rite-5v5/atlas/RESEARCH_ROUNDS.md) · [Hero decisions](design/ember-rite-5v5/HERO_BALANCE.md) · [Panel roadmap](design/ember-rite-5v5/atlas/PANEL_ROADMAP.md) · [Game download](../../yuga-rust/downloads/yuga-rust-confluence.zip?raw=true)
@@ -95,6 +97,14 @@ That October checkpoint delivered the observer, source intake and bounded render
 
 ## Publication and maintenance
 
-On `game/yuga-hanuman-trial`, a push touching an Ember Rite design file, the current Rust ZIP or the dashboard runs the dedicated Pages workflow. It rebuilds the preserved game and lab baseline at `176b6f8e71fcffd3d570d96e66643d8cb9893603`, checks every pre-existing file digest, and publishes the dashboard under `/production/`. The publication receipt gives the actual deployed source and the file census. [Additive Pages workflow](../../../.github/workflows/yuga-observatory.yml) · [Public receipt](https://occult-kranti.github.io/ANDOLAN/production/publication.json)
+On `game/yuga-hanuman-trial`, a push touching the Mandala art studio, an Ember Rite design file, the current Rust ZIP or the dashboard runs the dedicated Pages workflow. It rebuilds the preserved game and lab baseline at `176b6f8e71fcffd3d570d96e66643d8cb9893603`, checks every pre-existing file digest, and publishes the dashboard under `/production/`. The publication receipt gives the actual deployed source and the file census. [Additive Pages workflow](../../../.github/workflows/yuga-observatory.yml) · [Public receipt](https://occult-kranti.github.io/ANDOLAN/production/publication.json)
+
+With Python Playwright and Chromium installed, the gallery audit opens each study, presents an actual video frame, decodes its artwork and checks the registered model download. It also exercises the gallery at desktop and phone widths. Set the output to a fresh directory for each run. To check the live worker, replace the URL with `http://127.0.0.1:8769/mandala-art/`. [Local geometry and motion verification](../art/mandala-map-studio/src/verify_studio.py) · [Browser audit](../tools/build-observatory/audit_studio.py)
+
+```sh
+python3 games/yuga-native/tools/build-observatory/audit_studio.py \
+  --base-url https://occult-kranti.github.io/ANDOLAN/production/mandala-art/ \
+  --output /tmp/mandala-published-browser
+```
 
 After an observable job result, emit its CLI record and export `web/status.json`. Then publish a reviewed snapshot. Never keep an abandoned process or anonymous demo marked running indefinitely, and never run a heartbeat loop that outlives its actual owner just to make the dashboard appear busy.

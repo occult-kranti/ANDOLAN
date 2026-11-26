@@ -71,3 +71,51 @@ test('artifact paths cannot escape the reviewed package directory', t => {
   fs.writeFileSync(path.join(temporary, 'manifest.json'), JSON.stringify(changed));
   assert.throws(() => checkPackage(temporary), /direct children/);
 });
+
+test('all visual spawns retain their team, plan orientation, pad height and marker origin', () => {
+  for (const edit of [
+    spawns => { spawns[9] = { ...spawns[0] }; },
+    spawns => { spawns[0].facing_north = false; },
+    spawns => { spawns[0].north *= -1; },
+    spawns => { spawns[0].ground_height_m = 0.85; },
+  ]) {
+    const changed = structuredClone(manifest);
+    edit(changed.spawns);
+    assert.throws(() => checkGlb(original, changed), /Duplicate spawn IDs|Spawn team, facing or ground-height/);
+  }
+  assert.throws(() => checkGlb(changedJson(value => {
+    const marker = value.nodes.find(node => node.extras?.spawn_id === 'spawn_south_01');
+    marker.translation[1] += 0.1;
+  }), manifest), /Spawn coordinate/);
+  assert.throws(() => checkGlb(changedJson(value => {
+    const marker = value.nodes.find(node => node.extras?.spawn_id === 'spawn_south_01');
+    marker.extras.prototype_only = false;
+  }), manifest), /visual-only/);
+});
+
+test('empty meshes and misaligned vertex coordinates do not silently pass', () => {
+  assert.throws(() => checkGlb(changedJson(value => {
+    value.meshes[value.nodes[0].mesh].primitives = [];
+  }), manifest), /no primitives/);
+  assert.throws(() => checkGlb(changedJson(value => {
+    const accessor = value.accessors[value.meshes[value.nodes[0].mesh].primitives[0].attributes.POSITION];
+    const { bufferView } = accessor;
+    value.bufferViews[bufferView].byteOffset = (value.bufferViews[bufferView].byteOffset ?? 0) + 1;
+  }), manifest), /Misaligned/);
+});
+
+test('repeated validation is deterministic and a failed read does not taint the next run', () => {
+  const baseline = checkPackage();
+  const corrupt = Buffer.from(original);
+  corrupt.writeUInt32LE(original.length + 4, 8);
+  for (let iteration = 0; iteration < 32; iteration++) {
+    assert.throws(() => checkGlb(corrupt, manifest), /declared length/);
+    assert.deepEqual(checkPackage(), baseline);
+  }
+});
+
+test('Godot does not auto-import the offline Blender interchange directory', () => {
+  const sentinel = fs.lstatSync(path.join(root, '.gdignore'));
+  assert.equal(sentinel.isFile(), true);
+  assert.equal(sentinel.isSymbolicLink(), false);
+});

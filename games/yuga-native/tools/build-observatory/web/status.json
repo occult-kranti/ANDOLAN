@@ -1,14 +1,14 @@
 {
   "source": {
     "branch": "game/yuga-hanuman-trial",
-    "commit": "00ac8565de04023d389b45d29f987d457c1a38d5",
+    "commit": "fa16eba4f0c9ebb067cd0070feb13e74d0661634",
     "dirty": false
   },
   "host": {
     "logical_cpus": 5,
     "quota_cpus": 4.0,
     "memory_total_bytes": 34359738368,
-    "memory_available_bytes": 24541024256,
+    "memory_available_bytes": 24473919488,
     "gpu": {
       "available": false,
       "devices": [],
@@ -17,12 +17,12 @@
   },
   "schema_version": 1,
   "mode": "snapshot",
-  "collected_at": "2026-11-26T00:22:34+00:00",
+  "collected_at": "2026-11-26T01:39:35+00:00",
   "run": {
     "id": "ember-rite-map-and-hero-balance",
-    "title": "Ember Rite · Maps and hero balance",
-    "updated_at": "2026-11-26T00:22:34+00:00",
-    "summary": "Rehearse the ancient two-site ritual in four districts. The Rust skirmish lets up to ten players try Hanuman’s escort heal and Rama’s earned arrow. The next build brings the vessel and round rules into the same room host."
+    "title": "Ember Rite · Mandala Rift",
+    "updated_at": "2026-11-26T01:39:35+00:00",
+    "summary": "Walk all eight ritual courts and replay the 19 vertical plays in Mandala Rift. The art library and the original solo routes remain available. The next multiplayer gate joins the 20-second preparation, grounded vessel and legal cover to two actual clients."
   },
   "jobs": [
     {
@@ -290,6 +290,122 @@
       "verification": {
         "kind": "explicit_record"
       }
+    },
+    {
+      "id": "mandala-environment-art",
+      "title": "Build and render the Mandala Rift district",
+      "stage": "Environment art and verification",
+      "owner": "District, concept, camera, cartography and gallery artists",
+      "device": "Cloud CPU and hosted image generation",
+      "model": "Blender, Cycles, ImageGen and FFmpeg",
+      "status": "complete",
+      "summary": "53 named places, routes and props each have a concept painting, an orthographic drawing, four Blender views, a camera study and an individual GLB. The district includes a tour, a Cycles lighting study and a 62-part pavilion assembly.",
+      "next_step": "Use the standalone model origins to instance a first corridor in the authoritative district. Measure visibility, collision and the cost of the rendered scene on target hardware.",
+      "outputs": [
+        {
+          "label": "Explore the complete district art book",
+          "kind": "gallery",
+          "path": "games/yuga-native/art/mandala-map-studio/index.html",
+          "url": "mandala-art/"
+        },
+        {
+          "label": "Printable 55-page art book",
+          "kind": "pdf",
+          "path": "games/yuga-native/art/mandala-map-studio/mandala-rift-artbook.pdf",
+          "url": "mandala-art/mandala-rift-artbook.pdf"
+        },
+        {
+          "label": "Play the district tour",
+          "kind": "film",
+          "path": "games/yuga-native/art/mandala-map-studio/tour.mp4",
+          "url": "mandala-art/tour.mp4"
+        },
+        {
+          "label": "Open the physical lighting study",
+          "kind": "image",
+          "path": "games/yuga-native/art/mandala-map-studio/lighting/study.webp",
+          "url": "mandala-art/lighting/study.webp"
+        },
+        {
+          "label": "Download the assembled Blender scene",
+          "kind": "download",
+          "path": "games/yuga-native/art/mandala-map-studio/mandala-rift.blend",
+          "url": "mandala-art/mandala-rift.blend"
+        },
+        {
+          "label": "Open the registered element model index",
+          "kind": "data",
+          "path": "games/yuga-native/art/mandala-map-studio/models/index.json",
+          "url": "mandala-art/models/index.json"
+        },
+        {
+          "label": "Inspect the pavilion assembly film",
+          "kind": "film",
+          "path": "games/yuga-native/art/mandala-map-studio/assembly/pavilion.mp4",
+          "url": "mandala-art/assembly/pavilion.mp4"
+        },
+        {
+          "label": "Review the geometry, artwork and motion checks",
+          "kind": "report",
+          "path": "games/yuga-native/art/mandala-map-studio/verification.json",
+          "url": "mandala-art/verification.json"
+        }
+      ],
+      "updated_at": "2026-11-26T01:00:12+00:00",
+      "started_at": null,
+      "finished_at": "2026-11-26T01:00:12+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
+    },
+    {
+      "id": "ember-rite-vertical-play",
+      "title": "Survey eight ritual courts and test vertical hero play",
+      "stage": "Map design and verification",
+      "owner": "Architecture, hero, physics and competitive design panel",
+      "device": "Cloud CPU",
+      "model": "Python fixed-tick simulation, registered Blender meshes and Chromium",
+      "status": "complete",
+      "summary": "Eight courts have 54 entrance-specific hiding positions across 27 physical thresholds. The interactive design study replays 19 casts and flights. The 40-page fieldbook collects heights, team combos, source evidence, ten-player scenarios and map sheets.",
+      "next_step": "Join staging, collision and the ritual to one private server. Replay a grounded recovery and the two offset Bazaar crossings with two clients, then run the ten-player script.",
+      "outputs": [
+        {
+          "label": "Walk the courts and replay the casts",
+          "kind": "gallery",
+          "path": "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/fieldbook.html",
+          "url": "ember-rite/vertical-play.html"
+        },
+        {
+          "label": "Download the complete 40-page fieldbook",
+          "kind": "pdf",
+          "path": "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/ember-rite-fieldbook.pdf",
+          "url": "ember-rite/ember-rite-fieldbook.pdf"
+        },
+        {
+          "label": "Mandala surveyed cover plans",
+          "kind": "pdf",
+          "path": "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/mandala-cover-atlas.pdf",
+          "url": "ember-rite/mandala-cover-atlas.pdf"
+        },
+        {
+          "label": "Six companion courts",
+          "kind": "pdf",
+          "path": "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/companion-courts.pdf",
+          "url": "ember-rite/companion-courts.pdf"
+        },
+        {
+          "label": "Preparation territories and lofts",
+          "kind": "image",
+          "path": "games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/mandala-staging.svg",
+          "url": "ember-rite/mandala-staging.svg"
+        }
+      ],
+      "updated_at": "2026-11-26T01:39:35+00:00",
+      "started_at": null,
+      "finished_at": "2026-11-26T01:39:35+00:00",
+      "verification": {
+        "kind": "explicit_record"
+      }
     }
   ],
   "milestones": [
@@ -312,6 +428,12 @@
       "evidence": "The balance tables exercise an interrupted quench and a closed middle room. The blueprint, rehearsal, room-role checks and next production gates are linked in this checkpoint."
     },
     {
+      "id": "V1",
+      "title": "Measure site cover, climbs and aerial casts",
+      "status": "complete",
+      "evidence": "A four-expert, three-round study measured 27 entrances, four lofts, 19 trajectories and 53 art subjects. Two window sizes exercised the complete ground and replay controls."
+    },
+    {
       "id": "G1",
       "title": "Bring Mandala Rift into the room host",
       "status": "queued",
@@ -321,7 +443,7 @@
       "id": "G2",
       "title": "Test paired folds and camera clearance",
       "status": "queued",
-      "evidence": "Inspect both shoulders and fold returns. On two hardware-rendered clients, record the first visible guardian, field expiry and movement during a cast."
+      "evidence": "On two hardware-rendered clients, verify the 4.23 m pavilion beam, fold returns and camera clearance at both corrected Bazaar double-file crossings."
     },
     {
       "id": "G3",
@@ -333,10 +455,18 @@
       "id": "G4",
       "title": "Rehearse, then play both sides with people",
       "status": "queued",
-      "evidence": "Record team, side, sample size, approach choice and round outcome for human matches. Keep favorable roles where the opponent has a workable answer."
+      "evidence": "Run the ten-seat Ember script on both sides. Record loft choice, time to first contest, crouched vs standing shelters, audible cast recognition and A/B retake outcomes."
     }
   ],
   "assets": [
+    {
+      "id": "mandala-art-studio",
+      "title": "Mandala Rift · assembled district",
+      "status": "Blender environment study",
+      "image_url": "mandala-art/district.webp",
+      "model_url": "mandala-art/mandala-rift.glb",
+      "summary": "Explore 53 environment studies and 14 painted concept boards. The separate scene files preserve the surveyed origin of each piece."
+    },
     {
       "id": "district-massing",
       "title": "Four-district massing overview",

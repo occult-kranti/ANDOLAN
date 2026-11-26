@@ -1,5 +1,7 @@
 # Ember Rite · YUGA tactical objective direction
 
+The vertical design study gives both sites in every district two shelter choices per entrance. Mandala also has measured flight, arrow and chakra paths, a 20-second mobile preparation phase, and a two-team rehearsal script. [Design fieldbook](atlas/vertical-play/README.md) · [All site entrances](atlas/vertical-play/door-register.md)
+
 Ember Rite adapts the user's **“plant the fire”** brief into an original 5v5, two-site objective on the proposed Mandala Rift map. Attackers carry a protected ember and kindle a site; defenders interrupt or quench it. This is a **fictional ritual-inspired game mechanic**, not a description of an actual religious ceremony. Ten proposed hero concepts, a prologue and seasonal ideas supply the surrounding fiction.
 
 - [Round rules, timing and authority contract](ROUND_AND_TECH.md)

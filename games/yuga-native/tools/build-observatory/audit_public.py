@@ -26,6 +26,17 @@ def digest(raw):
 def git(root, *args):
     return subprocess.check_output(["git", *args], cwd=root)
 
+def hash_stream(stream, limit, keep=False):
+    total, sha, body = 0, hashlib.sha256(), bytearray()
+    while chunk := stream.read(256 * 1024):
+        total += len(chunk)
+        if total > limit:
+            raise ValueError("Publication file exceeds byte limit")
+        sha.update(chunk)
+        if keep:
+            body.extend(chunk)
+    return {"bytes": total, "sha256": sha.hexdigest()}, bytes(body)
+
 
 def expected_files(root, source):
     prefix = "games/yuga-native/tools/build-observatory/web/"
@@ -34,24 +45,45 @@ def expected_files(root, source):
         raise ValueError("Use the publisher from the exact audited source")
     selected = {}
     atlas_routes = {path: route for route, path in publisher.ATLAS_FILES.items()}
-    for entry in git(root, "ls-tree", "-rz", source, "--", prefix, *atlas_routes).split(b"\0"):
+    studio_prefix = publisher.STUDIO + "/"
+    studio_files = set()
+    if git(root, "ls-tree", source, "--", publisher.STUDIO).strip():
+        def manifest(name):
+            raw = git(root, "show", f"{source}:{studio_prefix}{name}")
+            if len(raw) > publisher.MAX_JSON:
+                raise ValueError("Studio manifest exceeds bound")
+            return json.loads(raw)
+        studio_files = publisher.studio_names(manifest("catalog.json"), manifest("concepts/index.json"))
+    blob_hashes = {}
+    for entry in git(root, "ls-tree", "-rz", source, "--", prefix, studio_prefix, *atlas_routes).split(b"\0"):
         if not entry:
             continue
         meta, name_bytes = entry.split(b"\t", 1)
         mode, kind, blob = meta.decode().split()
         path = name_bytes.decode()
-        name = atlas_routes.get(path, path.removeprefix(prefix))
-        if path in atlas_routes or publisher.approved(name):
+        if path.startswith(studio_prefix):
+            inside = path.removeprefix(studio_prefix)
+            if inside not in studio_files:
+                continue
+            name = publisher.STUDIO_ROUTE + inside
+        else:
+            name = atlas_routes.get(path, path.removeprefix(prefix))
+        if path.startswith(studio_prefix) or path in atlas_routes or publisher.approved(name):
             if mode != "100644" or kind != "blob":
                 raise ValueError(f"Unsupported published Git object: {name}")
-            raw = git(root, "cat-file", "blob", blob)
-            if len(raw) > publisher.MAX_FILE:
-                raise ValueError("Committed file exceeds publication bound")
-            selected[name] = digest(raw)
+            if blob not in blob_hashes:
+                with subprocess.Popen(["git", "cat-file", "blob", blob], cwd=root, stdout=subprocess.PIPE) as child:
+                    with child.stdout:
+                        blob_hashes[blob] = hash_stream(child.stdout, publisher.MAX_FILE)[0]
+                    if child.wait() != 0:
+                        raise ValueError("Unable to read committed blob")
+            selected[name] = blob_hashes[blob]
     if not publisher.REQUIRED_WEB <= selected.keys():
         raise ValueError("Incomplete committed publication")
     if publisher.ATLAS_FILES.keys() & selected.keys() and not publisher.ATLAS_FILES.keys() <= selected.keys():
         raise ValueError("Incomplete committed atlas publication")
+    if not all(publisher.STUDIO_ROUTE + name in selected for name in studio_files):
+        raise ValueError("Incomplete committed art studio publication")
     if sum(item["bytes"] for item in selected.values()) > publisher.MAX_WEB_TOTAL:
         raise ValueError("Committed publication exceeds total bound")
     snapshot = json.loads(git(root, "show", f"{source}:{prefix}status.json"))
@@ -70,12 +102,11 @@ def fetch(base, route, expected=None):
         with urlopen(request, timeout=45) as response:
             row.update(http_status=response.status, final_url=response.url,
                        content_type=response.headers.get("Content-Type"))
-            raw = response.read(publisher.MAX_FILE + 1)
-        if len(raw) > publisher.MAX_FILE:
-            raise ValueError("Response exceeds publication bound")
-        row.update(digest(raw))
+            keep = route in {"production/publication.json", "production/status.json"}
+            actual, raw = hash_stream(response, publisher.MAX_JSON if keep else publisher.MAX_FILE, keep=keep)
+        row.update(actual)
         if expected is not None:
-            row["matches_expected"] = digest(raw) == expected
+            row["matches_expected"] = actual == expected
     except Exception as error:
         row["failure"] = f"{type(error).__name__}: {error}"
     return row, raw

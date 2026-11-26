@@ -9,6 +9,7 @@ on:
       - '!games/yuga-native/tools/build-observatory/**'
       - 'games/yuga/shared/**'
       - 'games/yuga/server/**'
+      - 'tools/daftar-development/**'
       - 'games/yuga/tests/projectile-lifetime.test.ts'
       - 'package-lock.json'
       - 'tools/cloud/setup-native.sh'
@@ -20,6 +21,7 @@ on:
       - '!games/yuga-native/tools/build-observatory/**'
       - 'games/yuga/shared/**'
       - 'games/yuga/server/**'
+      - 'tools/daftar-development/**'
       - 'games/yuga/tests/projectile-lifetime.test.ts'
       - 'package-lock.json'
       - 'tools/cloud/setup-native.sh'
@@ -45,6 +47,11 @@ jobs:
           cache: npm
       - name: Install locked authority dependencies
         run: npm ci
+      - name: Check the isolated Route Lab package and its edge cases
+        if: ${{ hashFiles('tools/daftar-development/check.mjs') != '' }}
+        run: |
+          node tools/daftar-development/check.mjs
+          node --test tools/daftar-development/check.test.mjs
       - name: Verify isolated offline reuse adapters
         run: |
           npm ci --prefix games/yuga-native/tools/reuse-art --ignore-scripts
