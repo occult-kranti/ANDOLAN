@@ -1,0 +1,5 @@
+# Mandala Rift original paintings
+
+This branch holds the 15 lossless master PNGs for the YUGA river district. The panorama sets the lighting and materials. Fourteen additional boards cover its 53 named subjects. The complete prompt, original output hash, crop rectangle and description for each subject are recorded alongside the art. [Open the studio](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/) · [Prompt and crop index](prompts/index.json) · [Original PNG files](originals/)
+
+The runtime and environment studio live on the game branch. This edition records the exact art source at commit 2a2739b5ff969a433b8075529005602961aa906b. Its packaging workflow produces an offline studio and a separate painting edition containing all original boards and all 53 individually cropped lossless PNGs. [Game and studio source](https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/art/mandala-map-studio) · [Download this edition](https://github.com/occult-kranti/ANDOLAN/releases/tag/yuga-mandala-rift-art-2026-11-26)

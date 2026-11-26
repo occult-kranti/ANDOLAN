@@ -1,0 +1,73 @@
+name: Publish Mandala Rift art edition
+on:
+  push:
+    branches: [art/mandala-rift-painting-masters]
+  workflow_dispatch:
+concurrency:
+  group: yuga-mandala-rift-art-edition
+  cancel-in-progress: false
+permissions: {}
+env:
+  GAME_COMMIT: 390c9fad92f07467200faf15506a13d5d7606ecb
+  ART_COMMIT: 2a2739b5ff969a433b8075529005602961aa906b
+  EDITION: yuga-mandala-rift-art-2026-11-26
+jobs:
+  edition:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the lossless originals
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          path: paintings
+          persist-credentials: false
+      - name: Check out the artist-reviewed game snapshot
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          path: game
+          ref: ${{ env.GAME_COMMIT }}
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Validate the catalog and assemble both editions
+        shell: bash
+        run: |
+          set -euo pipefail
+          studio=game/games/yuga-native/art/mandala-map-studio
+          mkdir -p exports
+          test "$(git -C game rev-parse HEAD)" = "$GAME_COMMIT"
+          test "$(git -C game rev-parse HEAD^)" = "$ART_COMMIT"
+          cmp paintings/prompts/index.json "$studio/concepts/index.json"
+          cmp paintings/prompts/hero-brief.json "$studio/concepts/hero-brief.json"
+          cmp paintings/prompts/route-boards.json "$studio/concepts/route-boards.json"
+          if ! /usr/bin/python3 -c 'from PIL import Image'; then
+            sudo apt-get update
+            sudo apt-get install -y --no-install-recommends python3-pil
+          fi
+          /usr/bin/python3 "$studio/src/catalog.py" --check
+          /usr/bin/python3 "$studio/concepts/verify.py"
+          /usr/bin/python3 "$studio/src/export_elements.py" --check
+          /usr/bin/python3 "$studio/src/package.py" --ref "$ART_COMMIT" --out exports/mandala-rift-art-studio.zip
+          /usr/bin/python3 "$studio/src/package.py" --painting-masters-from paintings/originals --out exports/mandala-rift-painting-masters.zip
+          cp "$studio/mandala-rift-artbook.pdf" exports/
+          (cd exports && sha256sum mandala-rift-art-studio.zip mandala-rift-artbook.pdf mandala-rift-painting-masters.zip > SHA256SUMS.txt)
+      - name: Publish the verified downloads
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if draft=$(gh release view "$EDITION" --json isDraft --jq .isDraft 2>/dev/null); then
+            if [[ "$draft" == false ]]; then
+              gh release download "$EDITION" --pattern SHA256SUMS.txt --dir already-published
+              cmp already-published/SHA256SUMS.txt exports/SHA256SUMS.txt
+              exit 0
+            fi
+          else
+            gh release create "$EDITION" --draft --latest=false --target "$GAME_COMMIT" \
+              --title "YUGA · Mandala Rift environment art and films" --notes-file paintings/RELEASE.md
+          fi
+          gh release upload "$EDITION" exports/* --clobber
+          gh release edit "$EDITION" --draft=false --latest=false

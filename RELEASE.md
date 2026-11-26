@@ -1,0 +1,5 @@
+Mandala Rift is YUGA’s temple-and-river district. This edition pairs each of its 53 named rooms, routes, props and structures with a painting, measured drawing, four-angle Blender sheet, motion study and individual model. The Quarter-turn Pavilion has an additional 62-piece animated breakdown. [Browse the web gallery](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/) · [Watch the tour](https://occult-kranti.github.io/ANDOLAN/production/mandala-art/tour.mp4)
+
+**Download mandala-rift-art-studio.zip** for the editable Blender scene, the district GLB and its 53 reusable models, the complete art book, drawings, motion studies, exact image prompts and the source survey. Extract the archive and open **READ-ME-FIRST.txt**. The PDF also downloads separately. **mandala-rift-painting-masters.zip** contains the original panorama, the 14 original PNG boards and lossless individual PNGs for all 53 subjects.
+
+The public solo rehearsal uses the measured floor and rules. The new detailed scene is available for art review and engine integration. [Walk the map](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html?map=mandala)
