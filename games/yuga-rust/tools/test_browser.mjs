@@ -101,7 +101,7 @@ async function reset(mode) {
   const p = await until('reset from ' + mode, p => p.mode === 'playing' &&
     p.state.generation === before.state.generation + 1 &&
     p.state.defeated === 0 && p.state.actor.hp === 275 && p.state.abilities.every(a=>!a.cooldown_ticks) &&
-    p.state.targets.every(t=>t.hp === t.max_hp));
+    p.state.targets.every(t=>t.team === 'sun' ? t.hp === 90 && t.max_hp === 120 : t.hp === t.max_hp));
   check(p.state.events.length === 0 && p.state.actor.shield === 0 && !p.state.active, mode + ' reset clears targets, timers, shields and event history');
 }
 

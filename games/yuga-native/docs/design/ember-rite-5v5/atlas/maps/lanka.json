@@ -15,6 +15,7 @@
     "fruit": {"label":"Fruit Stalls","xz":[27,3],"size":[14,12],"y":2},
     "b":     {"label":"Ashoka Garden","xz":[47,-8],"size":[22,20],"y":1},
     "crown": {"label":"Crown Gate","xz":[-32,47],"size":[16,14],"y":5},
+    "gallery": {"label":"Rain Gallery","xz":[-23,26],"size":[18,14],"y":5},
     "bell":  {"label":"Bell Pier","xz":[3,39],"size":[16,14],"y":6},
     "wall":  {"label":"Garden Wall","xz":[42,39],"size":[16,16],"y":2},
     "def":   {"label":"Upland Gate","xz":[0,74],"size":[16,14],"y":3}
@@ -35,6 +36,9 @@
     {"from":"def","to":"crown","kind":"ramp","width":7,"via":[[-19,68],[-24,51]]},
     {"from":"def","to":"bell","kind":"ramp","width":6,"via":[[7,59]]},
     {"from":"def","to":"wall","kind":"ramp","width":7,"via":[[25,65],[36,48]]},
+    {"from":"a","to":"gallery","kind":"walk","width":6,"via":[[-44,19],[-35,26],[-31,26]]},
+    {"from":"gallery","to":"bell","kind":"ramp","width":6,"via":[[-14,26],[-8,32],[1,33]]},
+    {"from":"bell","to":"fruit","kind":"ramp","width":6,"via":[[16,35],[21,21],[27,17]]},
     {"from":"crown","to":"a","kind":"walk","width":7,"via":[[-50,43],[-50,26]]},
     {"from":"bell","to":"mid","kind":"ramp","width":6,"via":[[0,24],[0,16]]},
     {"from":"wall","to":"b","kind":"ramp","width":7,"via":[[51,28],[51,10]]}
@@ -48,6 +52,21 @@
     {"label":"Salt bay wall","xz":[-4,-38],"size":[3,2.5],"height":2.2},
     {"label":"Net locker","xz":[8,43],"size":[3,3],"height":2.3}
   ],
+  "architecture": {
+    "node": "gallery",
+    "name": "Rain Gallery",
+    "form": "pillared_hall",
+    "footprint": [
+      9,
+      14
+    ],
+    "height": 5,
+    "tiers": 3,
+    "opening": 6,
+    "axis_deg": 90,
+    "source_id": "L1",
+    "play": "Three bays repeat along an open-sided walk. Count the bays to call a crossing above the salt road before Bell Pier."
+  },
   "section":{"title":"Causeway down to the garden","route":["a","mid","fruit","b"]},
   "artifacts": [
     {"label":"Split beacon","node":"a","cue":"Two stone vanes frame the high site. See the split above the roof before choosing Jetty Gate."},

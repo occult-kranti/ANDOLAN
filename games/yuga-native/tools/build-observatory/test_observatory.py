@@ -49,6 +49,19 @@ class ObservatoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             obs.workspace_path(self.directory)
 
+    def test_resume_restores_outputs_and_rechecks_worker_liveness(self):
+        obs.update_state(self.directory, self.job(status="running", heartbeat_ttl_seconds=30))
+        saved = obs.Observatory(self.workspace, self.directory).snapshot("snapshot")
+        fresh = obs.state_directory(self.workspace, Path(self.temp.name) / "fresh")
+        obs.resume_snapshot(fresh, saved)
+        restored = obs.read_json(fresh / "state.json")
+        self.assertEqual(restored["jobs"][0]["status"], "stale")
+        self.assertNotIn("verification", restored["jobs"][0])
+        self.assertNotIn("host", restored)
+        self.assertEqual(restored["run"], saved["run"])
+        with self.assertRaises(ValueError):
+            obs.resume_snapshot(fresh, saved)
+
     def test_record_validation_rejects_unknown_status_identifier_fields(self):
         for record in (self.job(status="magic"), self.job(job_id="../secret"), self.job(secret="hidden"), self.job(summary=12)):
             with self.subTest(record=record), self.assertRaises(ValueError):

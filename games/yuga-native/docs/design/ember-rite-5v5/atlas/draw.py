@@ -6,6 +6,7 @@ import math
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import textwrap
 import xml.etree.ElementTree as ET
@@ -13,6 +14,9 @@ import xml.etree.ElementTree as ET
 from audit import DRY, audit_geometry, hits_rect, network, shortest
 
 ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / 'massing'))
+from architecture import Architecture, PALETTE, threshold_glyph, world_xy
+
 ORDER = ("mandala", "lanka", "ayodhya", "kurukshetra")
 W, H = 1440, 1030
 INK, MUTED, LINE = "#203c40", "#455f61", "#a8b8ae"
@@ -145,6 +149,14 @@ def map_view(svg, defs, data, frame, bounds, key, inset=None):
         for dx, dy in [pts[0], pts[-1]]:
             add(canvas, "polygon", points=f"{dx},{dy-5} {dx+5},{dy} {dx},{dy+5} {dx-5},{dy}",
                 fill=FLOOR, stroke=FOLD, stroke_width=1.6)
+            for stroke in threshold_glyph(e["quarter_turns"]):
+                path(canvas,[(dx+12+u*5,dy+10-v*5) for u,v in stroke],FOLD,1.6)
+    feature = data["architecture"]
+    node = nodes[feature["node"]]
+    fw,fd = feature["footprint"]
+    footprint = [view.xy(world_xy(fw*i/2,fd*j/2,node,feature["axis_deg"]))
+                 for i,j in [(-1,-1),(1,-1),(1,1),(-1,1),(-1,-1)]]
+    path(canvas,footprint,"#816142",1.5,stroke_dasharray="9 3 2 3")
     for item in data["cover"]:
         view.footprint(canvas, item, "url(#hatch)", stroke=INK, stroke_width=1)
     for ray in data["sightlines"]:
@@ -218,7 +230,8 @@ def draw_section(svg, data, left, top, width, height):
 
 def legend(svg, data):
     entries = [("floor","Dry floor"), ("cover","Solid cover"), ("ramp","Ramp"),
-               ("sight","Test sightline"), ("ring","3 m kindle / 4.5 m apron")]
+               ("sight","Test sightline"), ("ring","3 m kindle / 4.5 m apron"),
+               ("building","Building study")]
     kinds = {e["kind"] for e in data["links"]}
     if "water" in kinds:
         entries.insert(3, ("water","Shallow water"))
@@ -234,6 +247,8 @@ def legend(svg, data):
         elif k == "ring":
             circle(svg,x+9,y-4,5,"none",stroke=FIRE,stroke_width=1.2)
             circle(svg,x+9,y-4,9,"none",stroke=FIRE,stroke_width=1.1,stroke_dasharray="2 2")
+        elif k == "building":
+            rect(svg,x,y-10,21,12,"none",stroke="#816142",stroke_width=1.5,stroke_dasharray="9 3 2 3")
         else:
             color, dash = {"fold":(FOLD,"5 3"),"ramp":(RISE,"6 3"),"sight":("#355a86","6 3 1 3")}[k]
             line(svg,x,y-4,x+23,y-4,color,2,stroke_dasharray=dash)
@@ -253,7 +268,7 @@ def sheet(data, page):
     rect(svg,0,0,W,H,PAPER)
     rect(svg,0,0,W,8,INK)
     kicker(svg,44,43,"YUGA    /    Ember Rite")
-    words(svg,1396,43,f"LEVEL DESIGN     /     SHEET {page:02d} OF 08",13,MUTED,MONO,text_anchor="end",
+    words(svg,1396,43,f"LEVEL DESIGN     /     SHEET {page:02d} OF 12",13,MUTED,MONO,text_anchor="end",
           letter_spacing=1.1)
     words(svg,42,100,data["title"],48,INK,SERIF)
     words(svg,45,139,data["subtitle"],19,MUTED)
@@ -309,7 +324,7 @@ def field_sheet(data, page, links, covers):
     rect(svg,0,0,W,H,PAPER)
     rect(svg,0,0,W,8,INK)
     kicker(svg,44,43,"YUGA    /    Ember Rite")
-    words(svg,1396,43,f"LEVEL DESIGN     /     SHEET {page:02d} OF 08",13,MUTED,MONO,
+    words(svg,1396,43,f"LEVEL DESIGN     /     SHEET {page:02d} OF 12",13,MUTED,MONO,
           text_anchor="end",letter_spacing=1.1)
     words(svg,42,100,data["title"] + "  /  Encounter notes",43,INK,SERIF)
     words(svg,44,139,"Carry the vessel, draw a response, and leave a route back to the fire.",19,MUTED)
@@ -407,6 +422,236 @@ def field_sheet(data, page, links, covers):
     return ET.tostring(svg,encoding="utf-8",xml_declaration=True) + b"\n"
 
 
+def polygon(svg, points, fill, stroke=INK, width=.7, **attributes):
+    area=sum(p[0]*q[1]-p[1]*q[0] for p,q in zip(points,points[1:]+points[:1]))
+    if abs(area) > .025:
+        return add(svg,"polygon",points=" ".join(f"{x:.2f},{y:.2f}" for x,y in points),
+                   fill=fill,stroke=stroke,stroke_width=width,stroke_linejoin="round",**attributes)
+
+
+def cut_profile(part, axis, value):
+    """Intersect a convex course with a true cutting plane from the mesh edges."""
+    points = set()
+    for face in part.faces:
+        for i,j in zip(face,face[1:]+face[:1]):
+            a,b=part.vertices[i],part.vertices[j]
+            da,db=a[axis]-value,b[axis]-value
+            if abs(da)<1e-7:
+                points.add(tuple(round(v,7) for v in a))
+            if da*db < 0:
+                points.add(tuple(round(v+da/(da-db)*(w-v),7) for v,w in zip(a,b)))
+    if len(points)<3:
+        return []
+    u,v=[i for i in range(3) if i!=axis]
+    cx=sum(p[u] for p in points)/len(points)
+    cy=sum(p[v] for p in points)/len(points)
+    return sorted(points,key=lambda p:math.atan2(p[v]-cy,p[u]-cx))
+
+
+def dimension(svg, p, q, offset, label):
+    dx,dy=q[0]-p[0],q[1]-p[1]
+    length=math.hypot(dx,dy)
+    ux,uy=dx/length,dy/length
+    nx,ny=-uy,ux
+    a=(p[0]+nx*offset,p[1]+ny*offset)
+    b=(q[0]+nx*offset,q[1]+ny*offset)
+    line(svg,*a,*b,MUTED,.9)
+    for old,end in [(p,a),(q,b)]:
+        line(svg,*old,end[0]+nx*3,end[1]+ny*3,MUTED,.7)
+        line(svg,end[0]-3*ux-2*nx,end[1]-3*uy-2*ny,end[0]+3*ux+2*nx,end[1]+3*uy+2*ny,INK,1)
+    x,y=(a[0]+b[0])/2,(a[1]+b[1])/2
+    theta=math.degrees(math.atan2(dy,dx))
+    if theta>90: theta-=180
+    if theta<=-90: theta+=180
+    words(svg,x,y-4,label,12,INK,MONO,text_anchor="middle",transform=f"rotate({theta:g} {x:g} {y:g})",
+          stroke=PAPER,stroke_width=2.7,paint_order="stroke")
+
+
+def detail_plan(svg, arch, frame):
+    left,top,w,h=frame
+    rect(svg,left,top,w,h,BOARD,stroke=LINE)
+    angle=math.radians(arch.bearing)
+    c,s=math.cos(angle),math.sin(angle)
+    a,b=arch.w/2,arch.d/2
+    scale=min((w-138)/(2*(a*abs(c)+b*abs(s))),(h-106)/(2*(a*abs(s)+b*abs(c))))
+    mx,my=left+w/2,top+h/2
+    def project(p):
+        x,y=p[:2]
+        return mx+scale*(x*c+y*s),my-scale*(-x*s+y*c)
+    # Grid ticks describe plan registration. Feature coordinates retain their survey datum.
+    for direction,center,extent in [(0,mx,w),(1,my,h)]:
+        for step in range(-math.ceil(extent/scale/4),math.ceil(extent/scale/4)+1):
+            val=center+step*2*scale
+            if direction==0 and left<val<left+w:
+                line(svg,val,top,val,top+h,"#c1d2c9",.7)
+            elif direction==1 and top<val<top+h:
+                line(svg,left,val,left+w,val,"#c1d2c9",.7)
+    outline=[project(v) for v in [(-a,-b),(a,-b),(a,b),(-a,b)]]
+    polygon(svg,outline,FLOOR,LINE)
+    cut_height=min(.95,arch.height*.24)
+    # Top faces below the cut show the material and terrace steps. Solids pierced
+    # by the horizontal cut use the darker section ink.
+    surfaces=[]
+    for part in arch.parts:
+        for face in part.faces:
+            pts=[part.vertices[i] for i in face]
+            if max(p[2] for p in pts)<=cut_height:
+                surfaces.append((sum(p[2] for p in pts)/len(pts),part.material,pts))
+    for _,mat,pts in sorted(surfaces,key=lambda s:s[0]):
+        polygon(svg,[project(v) for v in pts],PALETTE[mat],MUTED,.55)
+    for part in arch.parts:
+        pts=cut_profile(part,2,cut_height)
+        if pts:
+            polygon(svg,[project(v) for v in pts],INK,INK,.6)
+    path(svg,outline+[outline[0]],MUTED,1.4,stroke_dasharray="5 3")
+    p,q=project((-a,-b)),project((a,-b))
+    dimension(svg,p,q,22,f"{arch.w:g} m")
+    dimension(svg,project((a,-b)),project((a,b)),24,f"{arch.d:g} m")
+    p,q=project((0,-b)),project((0,b))
+    path(svg,[p,q],FIRE,1.7,stroke_dasharray="6 3")
+    ux,uy=(q[0]-p[0])/(arch.d*scale),(q[1]-p[1])/(arch.d*scale)
+    for marker_pos,letter in [(p,"I"),(q,"II")]:
+        circle(svg,*marker_pos,9,PAPER,stroke=FIRE,stroke_width=1.3)
+        words(svg,*[marker_pos[0],marker_pos[1]+4],letter,10,FIRE,MONO,text_anchor="middle")
+    mid=(mx+ux*12,my+uy*12)
+    arrow=[mid,(mid[0]-7*ux-3.5*uy,mid[1]-7*uy+3.5*ux),
+           (mid[0]-7*ux+3.5*uy,mid[1]-7*uy-3.5*ux)]
+    polygon(svg,arrow,FIRE,FIRE)
+    # Section mark crosses the building at its central transverse station.
+    sta,sb=project((-a,arch.cut_axial)),project((a,arch.cut_axial))
+    line(svg,*sta,*sb,"#486989",1.2,stroke_dasharray="8 3 2 3")
+    nx,ny=left+w-27,top+35
+    words(svg,nx,ny-11,"N",12,INK,MONO,text_anchor="middle")
+    polygon(svg,[(nx,ny-6),(nx+5,ny+10),(nx,ny+6),(nx-5,ny+10)],INK)
+    line(svg,left+16,top+h-17,left+16+2*scale,top+h-17,INK,2)
+    words(svg,left+16,top+h-23,"2 m",12,INK,MONO)
+    words(svg,left+w-13,top+h-13,f"Plan cut  +{cut_height:.2f} m",11,MUTED,MONO,text_anchor="end")
+
+
+def detail_elevation(svg, arch, frame, sliced=False):
+    left,top,w,h=frame
+    rect(svg,left,top,w,h,"#f0ede1",stroke=LINE)
+    under=arch.water_level-.28 if arch.water_level is not None else 0
+    scale=min((w-139)/arch.w,(h-80)/(arch.height-under))
+    mx=left+w/2
+    baseline=top+(h+(arch.height+under)*scale)/2
+    def project(v):
+        return mx+v[0]*scale,baseline-v[2]*scale
+    if sliced:
+        for part in arch.parts:
+            pts=cut_profile(part,1,arch.cut_axial)
+            if pts:
+                fill=PALETTE[part.material] if part.material=="Water" else "#6e746b"
+                polygon(svg,[project(v) for v in pts],fill,INK,.8)
+    else:
+        faces=[]
+        for part in arch.parts:
+            for face in part.faces:
+                vertices=[part.vertices[i] for i in face]
+                faces.append((sum(p[1] for p in vertices)/len(vertices),part.material,vertices))
+        for _,mat,vertices in sorted(faces,key=lambda f:-f[0]):
+            polygon(svg,[project(v) for v in vertices],PALETTE[mat],MUTED,.65)
+    line(svg,left+12,baseline,left+w-12,baseline,MUTED,.8,stroke_dasharray="5 3")
+    words(svg,left+12,baseline-5,f"{arch.level:+g} m",12,MUTED,MONO)
+    if sliced and arch.water_level is not None:
+        py=baseline-scale*arch.water_level
+        line(svg,left+12,py,left+w-12,py,WATER,1,stroke_dasharray="3 3")
+        words(svg,left+12,py+13,f"{arch.water_level+arch.level:+g} m",12,WATER,MONO)
+    if not sliced:
+        end=mx+arch.w*scale/2
+        dimension(svg,(end,baseline),(end,baseline-arch.height*scale),23,f"{arch.height:g} m")
+        if arch.clear_height:
+            dimension(svg,(mx,baseline),(mx,baseline-arch.clear_height*scale),-16,
+                      f"{arch.clear_height:.2f} m clear")
+    else:
+        p=(mx-arch.opening*scale/2,baseline)
+        q=(mx+arch.opening*scale/2,baseline)
+        dimension(svg,p,q,-19 if arch.water_level is not None else 18,f"{arch.opening:g} m clear")
+    if arch.water_level is None and sliced:
+        words(svg,left+w-13,top+h-13,f"Axial station  {arch.cut_axial+arch.d/2:.2f} m from I",12,MUTED,MONO,text_anchor="end")
+
+
+def architecture_sheet(data,page,links):
+    arch=Architecture(data)
+    svg=ET.Element("svg",{"xmlns":"http://www.w3.org/2000/svg","width":str(W),"height":str(H),
+                          "viewBox":f"0 0 {W} {H}","role":"img","aria-labelledby":"title description"})
+    add(svg,"title",id="title").text=data["title"]+" — "+arch.name+" plan, elevation and transverse section"
+    add(svg,"desc",id="description").text=arch.play+" The plan is north up, uses metres, and locates two opposed thresholds."
+    rect(svg,0,0,W,H,PAPER)
+    rect(svg,0,0,W,8,INK)
+    kicker(svg,44,43,"YUGA    /    Ember Rite")
+    words(svg,1396,43,f"LEVEL DESIGN     /     SHEET {page:02d} OF 12",13,MUTED,MONO,text_anchor="end",letter_spacing=1.1)
+    words(svg,42,100,arch.name,47,INK,SERIF)
+    host = data["architecture"]["node"]
+    number = codes(data["nodes"])[host]
+    words(svg,44,139,f'{data["title"]}  /  map station {number}, {arch.node["label"]}  /  {arch.form.replace("_"," ")}',19,MUTED)
+    line(svg,44,159,1396,159,INK,1.3)
+    kicker(svg,44,189,"Threshold plan   /   north up")
+    kicker(svg,723,189,"Elevation   /   from entrance I")
+    detail_plan(svg,arch,(44,203,647,341))
+    detail_elevation(svg,arch,(723,203,673,341))
+    p,q=arch.thresholds
+    words(svg,44,570,f"I  ({p[0]:g}, {p[1]:g})     II  ({q[0]:g}, {q[1]:g})     map X, Z in metres",14,INK,MONO)
+    words(svg,723,570,f"Bearing I → II   {arch.bearing%360:03g}°      II → I   {(arch.bearing+180)%360:03g}°",14,INK,MONO)
+    line(svg,44,593,1396,593,LINE)
+    kicker(svg,44,621,"Transverse section   /   marked line")
+    kicker(svg,723,621,"Route register")
+    detail_elevation(svg,arch,(44,637,647,274),sliced=True)
+    node_id=data["architecture"]["node"]
+    nodes=data["nodes"]
+    dry=network([e for e in links if e.kind in DRY])
+    branches={}
+    ax=(math.sin(math.radians(arch.bearing)),math.cos(math.radians(arch.bearing)))
+    for link in data["links"]:
+        if link["kind"] not in DRY or node_id not in (link["from"],link["to"]):
+            continue
+        a,b=link["from"],link["to"]
+        neighbor=b if a==node_id else a
+        line_points=edge_points(nodes,link)
+        point=line_points[1] if a==node_id else line_points[-2]
+        tx,ty=point[0]-arch.node["xz"][0],point[1]-arch.node["xz"][1]
+        branches[neighbor]=(tx*ax[0]+ty*ax[1])/math.hypot(tx,ty)
+    sequence=[nodes[k]["label"] for k in sorted(branches,key=branches.get)]
+    stages=[sequence[0],arch.node["label"],sequence[-1]] if len(sequence)>=2 else [arch.node["label"],*sequence]
+    words(svg,723,658," → ".join(stages),22,INK,SERIF)
+    for i,row in enumerate(textwrap.wrap(arch.play,78)):
+        words(svg,723,687+i*21,row,15,MUTED)
+    folds=[e for e in data["links"] if e["kind"]=="fold"]
+    if folds:
+        for i,e in enumerate(folds):
+            y=762+i*72
+            a,b=e["from"],e["to"]
+            duration,_,_=shortest(dry,a,b,set(("atk","def","a","b"))-{a,b})
+            turn=e["quarter_turns"]*90
+            words(svg,723,y,nodes[a]["label"]+" ⇄ "+nodes[b]["label"],18,INK,SERIF)
+            words(svg,723,y+22,f"Outbound {turn:+g}°   /   return {-turn:+g}°   ·   {e['seconds']:g} s fold   ·   {duration:.1f} s dry",14,FOLD,MONO)
+            words(svg,723,y+43,e["cue"],13,MUTED)
+    else:
+        blocked={"atk","def"}
+        walk,_,_=shortest(dry,"a","b",blocked)
+        any_route,_,_=shortest(network(links),"a","b",blocked)
+        words(svg,723,764,"A → B change of site",19,INK,SERIF)
+        words(svg,723,790,f"{walk:.1f} s dry   /   {any_route:.1f} s with optional routes",15,INK,MONO)
+        water_edges=[e for e in data["links"] if e["kind"]=="water"]
+        if water_edges:
+            e=next((e for e in water_edges if node_id in (e["from"],e["to"])),water_edges[0])
+            low,high=[nodes[e[key]] for key in ("from","to")]
+            words(svg,723,829,"Wading approach   /   landing floor datums",14,MUTED)
+            words(svg,723,853,f"{low['label']}  {low['y']:+g} m    →    {high['label']}  {high['y']:+g} m",15,INK)
+        else:
+            words(svg,723,838,"Both exits join ordinary dry routes.",15,MUTED)
+    if arch.water_level is None:
+        note=f"Passage {arch.opening:g} m wide. Full-width headroom {arch.clear_height:.2f} m above the dry threshold."
+    else:
+        note=f"Dry deck {arch.level:+g} m. Side-basin water study {arch.level+arch.water_level:+g} m. The central route stays open to the sky."
+    words(svg,44,938,note,14,MUTED)
+    line(svg,44,963,1396,963,INK,1)
+    words(svg,44,990,f"Architectural reference {arch.source_id}   ·   Route-strip reference C1   ·   All dimensions are YUGA design values.",14,MUTED)
+    words(svg,1396,990,"Original district study    /    metres",12,MUTED,MONO,text_anchor="end")
+    ET.indent(svg,space="  ")
+    return ET.tostring(svg,encoding="utf-8",xml_declaration=True)+b"\n"
+
+
 def make_pdf(directory, sheets):
     # Inkscape embeds glyphs as text, keeping the print atlas searchable and zoomable.
     from pypdf import PdfWriter
@@ -417,11 +662,12 @@ def make_pdf(directory, sheets):
             subprocess.run(["inkscape", str(source), "--export-filename=" + str(pdf)], check=True,
                            env={**os.environ, "SOURCE_DATE_EPOCH":"0"})
             writer.append(pdf, import_outline=False)
-            if index % 2 == 0:
+            if index % 3 == 0:
                 title = json.loads((ROOT / "maps" / f"{source.stem}.json").read_text())["title"]
                 outline = writer.add_outline_item(title, index)
             else:
-                writer.add_outline_item("Encounter notes", index, parent=outline)
+                writer.add_outline_item("Encounter notes" if index % 3 == 1 else "Architectural detail",
+                                        index, parent=outline)
         writer.add_metadata({"/Title":"YUGA | Ember Rite map atlas","/Author":"YUGA level design"})
         with (directory / "yuga-map-atlas.pdf").open("wb") as out:
             writer.write(out)
@@ -437,9 +683,10 @@ def main():
     for index, key in enumerate(ORDER):
         data = json.loads((ROOT / "maps" / f"{key}.json").read_text())
         links, covers = audit_geometry(data)
-        page = 2 * index + 1
+        page = 3 * index + 1
         for stem, drawing in ((key, sheet(data, page)),
-                              (key + "-encounters", field_sheet(data, page + 1, links, covers))):
+                              (key + "-encounters", field_sheet(data, page + 1, links, covers)),
+                              (key + "-architecture", architecture_sheet(data, page + 2, links))):
             output = args.out / f"{stem}.svg"
             output.write_bytes(drawing)
             files.append(output)

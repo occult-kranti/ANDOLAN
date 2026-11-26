@@ -13,11 +13,11 @@ Ember Rite adapts the user's **“plant the fire”** brief into an original 5v5
 
 ## What exists now
 
-The current Rust/PlayCanvas download is still a **hero-only knockout skirmish** with playable Hanuman and Rama, private 1v1/3v3/5v5 rooms and no wave minions. The proposed two-site map and objective are **not in that match, its UI, server protocol or published ZIP**. Krishna has a development rig and Arjuna has designs in a separate older roster; the other proposed heroes are not new Rust-match integrations. The earlier [Rift Seal](../mandala-rift-5v5/MATCH_SCRIPT.md) script is retained as a historical proposal; Ember Rite is the new objective direction.
+Open **Ember Rite map rehearsal** on the game title, launch `ember-rite.html` from the download, or play the standalone drill online. It follows the four drawn districts on foot. Private Confluence rooms still score hero knockouts. Hanuman and Rama received complementary ability additions in that Rust simulation. The other roster entries are design proposals or art studies. [Play rehearsal](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Hero niches, counters and tests](HERO_BALANCE.md) · [Panel roadmap](atlas/PANEL_ROADMAP.md)
 
 This update adds a standalone, deterministic [Rust rules experiment](../../../../yuga-rust/src/ritual.rs) and [boundary tests](../../../../yuga-rust/tests/ritual.rs). It can evaluate a complete round and a first-to-13 series **from trusted test observations**, but it is not connected to actual player movement, combat, online snapshots, rendering, animations or audio. Map geometry, spatial visibility, channel input, no-respawn enforcement and events require an authoritative adapter. The current camera is third person; first-person view is a separate experiment, not an existing mode.
 
-The full Rust suite passed **96 tests with two ignored**, including ten focused objective tests. A separate `wasm32-unknown-unknown` release build compiled successfully with Rust 1.88.0; that compilation does not expose or test an online mode. [Test log](evidence/rust-tests.txt) · [Wasm build log](evidence/wasm-build.txt)
+The original round-rules milestone recorded 96 passing tests and two ignored cases. The new panel lists release checks for the revised map and hero builds separately. [Original Rust record](evidence/rust-tests.txt) · [Current panel and verification](atlas/PANEL_ROADMAP.md)
 
 ## Design choices
 

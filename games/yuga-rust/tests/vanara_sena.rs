@@ -27,6 +27,32 @@ fn health(combat: &Combat, id: u32) -> f64 {
 }
 
 #[test]
+fn the_default_drill_can_demonstrate_an_ally_only_sena_without_hitting_a_guard() {
+    let world = World::load().unwrap();
+    let mut combat = Combat::load().unwrap();
+    // The eastern rim includes the wounded escort and misses all three guards.
+    combat.cast(SLOT, [3.9, -51.5], &world).unwrap();
+    advance_combat(&mut combat, &world, 12);
+    let state = combat.snapshot();
+    let impact = state["events"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|e| e["kind"] == "impact")
+        .unwrap();
+    let receipts = impact["receipts"].as_array().unwrap();
+    assert_eq!(receipts.len(), 1);
+    assert_eq!(receipts[0]["unit"], 4);
+    assert_eq!(receipts[0]["heal"], 12.);
+    assert_eq!(receipts[0]["damage"], 0.);
+    advance_combat(&mut combat, &world, 40);
+    assert_near(health(&combat, 4), 102.);
+    assert_near(combat.actor().hp, 275.);
+    combat.reset();
+    assert_near(health(&combat, 4), 90.);
+}
+
+#[test]
 fn zone_has_authoritative_timing_damage_radius_and_friendly_fire_boundaries() {
     let world = World::load().unwrap();
     let mut combat = Combat::load().unwrap();
@@ -146,23 +172,31 @@ fn opponents_can_leave_the_zone_and_cover_blocks_its_damage() {
     combat.set_receivers(vec![
         Receiver::new(1, "moon", behind_corner, 100., 100.),
         Receiver::new(2, "moon", [-8., -20.], 100., 100.),
+        Receiver::new(3, "sun", behind_corner, 50., 100.),
+        Receiver::new(4, "sun", [-8., -20.], 50., 100.),
     ]);
     combat.cast(SLOT, center, &world).unwrap();
     advance_combat(&mut combat, &world, 52);
     assert_near(health(&combat, 1), 100.);
     assert_near(health(&combat, 2), 72.);
+    assert_near(health(&combat, 3), 50.);
+    assert_near(health(&combat, 4), 62.);
 }
 
 #[test]
 fn interrupted_windup_cannot_damage_and_does_not_refund_cooldown() {
     let world = World::load().unwrap();
     let mut combat = Combat::load().unwrap();
-    combat.set_receivers(vec![Receiver::new(1, "moon", TARGET, 100., 100.)]);
+    combat.set_receivers(vec![
+        Receiver::new(1, "moon", TARGET, 100., 100.),
+        Receiver::new(2, "sun", TARGET, 50., 100.),
+    ]);
     combat.cast(SLOT, TARGET, &world).unwrap();
     advance_combat(&mut combat, &world, 11);
     combat.interrupt();
     advance_combat(&mut combat, &world, 52);
     assert_near(health(&combat, 1), 100.);
+    assert_near(health(&combat, 2), 50.);
     let snapshot = combat.snapshot();
     assert!(snapshot["casts"].as_array().unwrap().is_empty());
     assert!(

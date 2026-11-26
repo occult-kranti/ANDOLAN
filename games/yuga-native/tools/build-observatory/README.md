@@ -6,6 +6,8 @@ The [build-farm guide](../../docs/GAME_BUILD_FARM.md), [job runner](../local-swa
 
 ## Start a recorded run
 
+To open the current Ember Rite checkpoint, seed a new worker with `resume --snapshot` and then use `serve`. The seeding step retains saved outcomes and drops process and heartbeat claims from the previous machine. [Current commands, public atlas and snapshot](../../docs/PRODUCTION_OBSERVATORY.md#ember-rite-map-and-hero-balance)
+
 From the repository root:
 
 ```sh
@@ -79,7 +81,7 @@ Completion is explicit and requires a nonempty summary plus at least one evidenc
 }
 ```
 
-Use `complete` only for the named job's verified scope. A job completion does not accept a whole game milestone. Output `path` is a safe repository-relative display path; the server does not read arbitrary repository files from it. Output `url` is either `media/...`, the exact `viewer/` or `viewer/index.html` route, or HTTPS without user credentials. Producers must retain the actual evidence separately and have another owner assess it.
+Use `complete` for a named job's verified output. Output `path` is a repository-relative display path. Public URLs can point to `media/...`, the existing source viewer, the exact Ember Rite public files in `publish_site.ATLAS_FILES`, or a credential-free HTTPS address.
 
 ## Add stages, assets and reuse sources
 
@@ -100,6 +102,8 @@ Use `complete` only for the named job's verified scope. A job completion does no
 ```
 
 ## Publish an honest saved snapshot
+
+For the Ember Rite checkpoint, pass `--workspace "$PWD"` to `publish_site.py`. The publisher maps the exact atlas outputs to `production/ember-rite/`. The local dashboard serves the same files directly from the checkout. A saved snapshot links the original Git revision of documents and the Rust package, so a later change can be reviewed against the evidence of that run.
 
 ```sh
 python3 games/yuga-native/tools/build-observatory/observatory.py export \

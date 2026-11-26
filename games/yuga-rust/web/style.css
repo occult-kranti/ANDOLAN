@@ -119,6 +119,11 @@ a {
 .title-copy {
   margin: 28px 0;
 }
+.title-links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.5rem;
+}
 .eyebrow {
   color: #edc578;
   letter-spacing: 0.13em;
@@ -330,6 +335,26 @@ dialog button {
 }
 dialog::backdrop {
   background: #0b1211bf;
+}
+#map-rehearsal[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  width: min(1360px, 98vw);
+  height: 96dvh;
+  max-width: 98vw;
+  max-height: 96dvh;
+  padding: 8px;
+}
+#close-rehearsal {
+  justify-self: end;
+  min-height: 44px;
+  margin: 0;
+}
+#rehearsal-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 @media (max-width: 680px) {
   .cover {

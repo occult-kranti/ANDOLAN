@@ -1,13 +1,13 @@
 # Ember Rite · maps, modes and progression
 
-These are proposals, not modes or maps added to the current playable package. All standard competitive formats use 5v5 hero-only play; paused lane/jungle minions are not reintroduced. The existing practice and knockout formats remain available in the current Rust prototype until an objective mode is separately integrated.
+Standard competitive Ember Rite is a hero-only 5v5 design. Players can tour all four districts in the solo browser rehearsal and play private knockout in the Rust release. Objective multiplayer proceeds through the authority and playtest gates below. [Try a district](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html)
 
 ## Modes
 
 | Mode | Intended audience and rules | Gate before availability |
 | --- | --- | --- |
 | **Private Ember Rite** | Ten invited players; first to 13, with paired overtime, sides swap, no in-round respawn. Allow duplicate selections while the roster is small. | Server-owned round/objective, all-ten-seat browser capture, join/start/reset/end, reconnect and disconnect policy, visibility and anti-replay checks. |
-| **Ember Practice** | Learn carry/drop, interact, interruption, quench and a fake. A solo drill can use a stationary target first; bots are a later separate feature and must obey the same authority. | Accessible tutorials and real input/receipt captures; believable bot movement is not implied by scripted dummy targets. |
+| **Ember rehearsal** | Available solo. Choose a duty, carry, drop, recover, kindle and quench on the drawn district. Use keyboard or touch. | Next exercise adds an opposing human, real combat interruptions and audience-specific event receipts on the room host. |
 | **Quick Rite** | Proposed first-to-seven variant with six-round halftime and paired overtime. It shares the same 100-second approach, 4-second ignition, 40-second burn and 3.5-second quench until independently balanced. | Playtest queue times, player comprehension and both-side balance; 6–6 must not instantly end at 7–6. |
 | **Competitive Rite** | Same readable objective and counterplay as private play, with ranking introduced only after the basic match works. Matchmaking should not sell gameplay power. | Stable regional service, placement/match integrity, anti-cheat/privacy review, reporting, accessibility and real-hardware/WAN evidence. |
 | **Existing knockout** | The shipped interim hero-only skirmish. It has no planting objective, rounds or Mandala Rift map. | Keep release and mode labels accurate while the new mode is developed. |

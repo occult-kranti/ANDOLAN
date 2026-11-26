@@ -32,6 +32,10 @@ class PublicAuditTests(unittest.TestCase):
                 'schema_version': 1, 'mode': 'snapshot', 'collected_at': '2026-10-24T00:00:00+00:00',
                 'source': {'commit': 'a' * 40, 'dirty': False},
                 'jobs': [], 'assets': [], 'milestones': [], 'sources': []}))
+            for route, repo_path in publisher.ATLAS_FILES.items():
+                path = root / repo_path
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('Bounded fixture for ' + route)
             def git(*args):
                 return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.DEVNULL)
             git('init', '-q')
@@ -45,7 +49,7 @@ class PublicAuditTests(unittest.TestCase):
                 path = site / name
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('Preserved browser entry ' + name)
-            publisher.publish(site, web, 'b' * 40, source)
+            publisher.publish(site, web, 'b' * 40, source, workspace=root)
             server = ThreadingHTTPServer(('127.0.0.1', 0), partial(QuietHandler, directory=str(site)))
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
@@ -53,6 +57,7 @@ class PublicAuditTests(unittest.TestCase):
                 base = f'http://127.0.0.1:{server.server_port}/'
                 accepted = auditor.audit(root, source, 'b' * 40, base, root / 'accepted')
                 self.assertTrue(accepted['passed'], accepted['checks'])
+                self.assertTrue(publisher.ATLAS_FILES.keys() <= accepted['expected_files'].keys())
                 # Actual delivered file changes while both Git and the publisher receipt remain frozen.
                 (site / 'production/app.js').write_text('Stale or tampered deployed JavaScript')
                 rejected = auditor.audit(root, source, 'b' * 40, base, root / 'rejected')

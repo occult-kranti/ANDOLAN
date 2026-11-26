@@ -380,7 +380,8 @@ impl Combat {
             Receiver::new(1, "moon", [0., -52.5], 90., 90.),
             Receiver::new(2, "moon", [0., -58.], 90., 90.),
             Receiver::new(3, "moon", [2., -48.], 90., 90.),
-            Receiver::new(4, "sun", [1., -51.5], 90., 90.),
+            // The drill escort begins wounded so an ally-only recovery can be practiced.
+            Receiver::new(4, "sun", [1., -51.5], 90., 120.),
         ];
         self.aim = [0., 1.];
         self.height = 0.0;
@@ -534,6 +535,30 @@ impl Combat {
             "cast_id":c.id,"id":self.kit.abilities[c.slot].id,"slot":c.slot,"tick":self.now,
             "origin":c.origin,"target":c.target,"aim":c.aim,"receipts":receipts}),
         );
+    }
+
+    /// In team play several healers can see the same missing HP before the tick settles.
+    pub(crate) fn settle_sena_heal(&mut self, recipient: u32, share: f64, health_after: f64) {
+        let impact = self
+            .events
+            .iter_mut()
+            .rev()
+            .take_while(|e| e["tick"] == self.now)
+            .find(|e| e["kind"] == "impact" && e["id"] == "vanara_sena");
+        if let Some(receipts) = impact.and_then(|e| e["receipts"].as_array_mut()) {
+            receipts.retain_mut(|r| {
+                let proposed = r["heal"].as_f64().unwrap_or(0.);
+                if r["unit"] != recipient || proposed <= 0. {
+                    return true;
+                }
+                if share <= 0. {
+                    return false;
+                }
+                r["heal"] = json!(proposed * share);
+                r["hp_after"] = json!(health_after);
+                true
+            });
+        }
     }
 
     fn payload(&mut self, c: &Cast, world: &World, ongoing: bool) -> Vec<Value> {
@@ -1037,6 +1062,6 @@ mod tests {
         s.cast(0, s.actor.pos, &w).unwrap();
         advance(&mut s, &w, 11);
         assert_eq!(s.snapshot()["defeated"], 3);
-        assert_eq!(s.targets[3].hp, 90.);
+        assert_eq!(s.targets[3].hp, 120.);
     }
 }

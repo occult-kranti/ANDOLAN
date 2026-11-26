@@ -1,10 +1,12 @@
 name: Add YUGA production observatory to the public site
 on:
   push:
-    branches: [game/yuga-native-production]
+    branches: [game/yuga-native-production, game/yuga-hanuman-trial]
     paths:
       - '.github/workflows/yuga-observatory.yml'
       - 'games/yuga-native/tools/build-observatory/**'
+      - 'games/yuga-native/docs/design/ember-rite-5v5/**'
+      - 'games/yuga-rust/downloads/yuga-rust-confluence.zip'
       - 'games/yuga-native/tools/production-art-stage/**'
       - 'games/yuga-native/art/production-stage-oct23/**'
       - 'games/yuga-native/art/source-kits/production-reuse-oct23/**'
@@ -39,6 +41,15 @@ jobs:
           node-version: '24'
           cache: npm
           cache-dependency-path: .site-baseline/package-lock.json
+      - name: Check Ember Rite floorplans, balance and route rehearsal
+        if: github.ref_name == 'game/yuga-hanuman-trial' || hashFiles('games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal/build.py') != ''
+        working-directory: games/yuga-native/docs/design/ember-rite-5v5/atlas
+        run: |
+          python3 audit.py --check
+          python3 balance.py --check
+          python3 -m unittest test_balance
+          python3 rehearsal/build.py --check
+          node --test rehearsal/simulation.test.mjs
       - name: Verify the read-only observatory and additive publisher
         run: python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v
       - name: Restore the baseline's locked browser dependencies
@@ -57,6 +68,7 @@ jobs:
           python3 games/yuga-native/tools/build-observatory/publish_site.py \
             --site .site-baseline/dist/site \
             --web games/yuga-native/tools/build-observatory/web \
+            --workspace "$GITHUB_WORKSPACE" \
             --baseline-ref "$SITE_BASELINE_REF" \
             --source-ref "$GITHUB_SHA"
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

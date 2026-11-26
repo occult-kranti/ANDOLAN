@@ -190,6 +190,26 @@ function renderAssets() {
     list.append(article);
   }
 }
+function renderAtlasDocuments() {
+  const documents = byId('atlas-documents');
+  const outputs = array(state.data.jobs).flatMap((job) => array(job.outputs));
+  const titles = {
+    'PANEL_ROADMAP.md': 'Panel roadmap',
+    'RESEARCH_ROUNDS.md': 'District research',
+    'HERO_BALANCE.md': 'Hero balance',
+    'yuga-rust-confluence.zip': 'Rust skirmish download',
+  };
+  const links = [];
+  for (const [file, label] of Object.entries(titles)) {
+    const output = outputs.find((item) => typeof item.path === 'string' && item.path.endsWith('/' + file) && safeUrl(item.url));
+    if (output) links.push([label, output.url]);
+  }
+  const signature = JSON.stringify(links);
+  if (documents.dataset.links === signature) return;
+  documents.dataset.links = signature;
+  documents.replaceChildren(...links.map(([label, url]) => link(label, url)));
+  documents.hidden = links.length === 0;
+}
 function renderMilestones() {
   const milestones = array(state.data.milestones);
   const signature = JSON.stringify([milestones, state.mode]);
@@ -235,23 +255,75 @@ function render() {
   set('source-commit', text(data.source?.commit, 'Not observed').slice(0, 12));
   set('source-branch', text(data.source?.branch, 'Branch not observed'));
   set('source-dirty', data.source?.dirty === true ? 'Local changes' : data.source?.dirty === false ? 'Clean checkout' : 'Working state not reported');
-  renderConnection(); renderHost(); renderDeviceOptions(); renderJobs(); renderDetail(); renderAssets(); renderMilestones(); renderSources();
+  renderConnection(); renderHost(); renderDeviceOptions(); renderJobs(); renderDetail(); renderAssets(); renderMilestones(); renderSources(); renderAtlasDocuments();
 }
-async function getJson(url) {
+async function requestJson(url) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 6000);
   try {
     const response = await fetch(url, {cache: 'no-store', credentials: 'same-origin', signal: controller.signal});
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    const record = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
-    if (!record(data) || data.schema_version !== 1 || !Array.isArray(data.jobs) || !record(data.run) || !['live', 'snapshot'].includes(data.mode)) throw new Error('Unsupported observation format');
-    if (data.jobs.some((job) => !record(job) || typeof job.id !== 'string' || !job.id.trim() || (job.outputs !== undefined && (!Array.isArray(job.outputs) || job.outputs.some((output) => !record(output)))))) throw new Error('Invalid job records');
-    if (new Set(data.jobs.map((job) => job.id)).size !== data.jobs.length) throw new Error('Duplicate job identity');
-    for (const key of ['assets', 'milestones', 'sources']) if (data[key] !== undefined && (!Array.isArray(data[key]) || data[key].some((row) => !record(row)))) throw new Error('Invalid observation records');
-    for (const key of ['host', 'source']) if (data[key] !== undefined && !record(data[key])) throw new Error('Invalid observation context');
-    return data;
+    return await response.json();
   } finally { clearTimeout(timeout); }
+}
+async function getJson(url) {
+  const data = await requestJson(url);
+  const record = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (!record(data) || data.schema_version !== 1 || !Array.isArray(data.jobs) || !record(data.run) || !['live', 'snapshot'].includes(data.mode)) throw new Error('Unsupported observation format');
+  if (data.jobs.some((job) => !record(job) || typeof job.id !== 'string' || !job.id.trim() || (job.outputs !== undefined && (!Array.isArray(job.outputs) || job.outputs.some((output) => !record(output)))))) throw new Error('Invalid job records');
+  if (new Set(data.jobs.map((job) => job.id)).size !== data.jobs.length) throw new Error('Duplicate job identity');
+  for (const key of ['assets', 'milestones', 'sources']) if (data[key] !== undefined && (!Array.isArray(data[key]) || data[key].some((row) => !record(row)))) throw new Error('Invalid observation records');
+  for (const key of ['host', 'source']) if (data[key] !== undefined && !record(data[key])) throw new Error('Invalid observation context');
+  return data;
+}
+let atlasMaps = [];
+const seconds = (value) => `${Math.abs(value).toFixed(1)} s`;
+function showMap() {
+  const map = atlasMaps.find((entry) => entry.id === byId('atlas-map').value);
+  if (!map) return;
+  const plate = byId('atlas-plate');
+  if (/^[a-z0-9-]+$/.test(map.id)) {
+    byId('atlas-play').href = `./ember-rite/rehearsal.html?map=${encodeURIComponent(map.id)}`;
+    plate.href = `./ember-rite/${map.id}-architecture.svg`;
+    plate.textContent = `Open ${map.title} architecture sheet (SVG)`;
+    plate.hidden = false;
+  } else {
+    byId('atlas-play').href = './ember-rite/rehearsal.html';
+    plate.hidden = true;
+  }
+  const lead = (value) => value === 0 ? 'Level' : `${seconds(value)} · ${value > 0 ? 'defense' : 'attack'}`;
+  byId('atlas-metrics').replaceChildren(
+    field(`A · ${map.sites.a.label} entry lead`, lead(map.sites.a.defender_lead_s)),
+    field(`B · ${map.sites.b.label} entry lead`, lead(map.sites.b.defender_lead_s)),
+    field('Dry rotation', seconds(map.retake_dry_s)),
+    field('Fastest rotation', seconds(map.retake_any_s)),
+    field('Quench margin', `${map.retake_margin_s < 0 ? '−' : ''}${seconds(map.retake_margin_s)}`),
+  );
+  const closure = map.retake_mid_closed_s === null ? 'Closing mid cuts the dry rotation.' :
+    `Closing mid takes the dry rotation to ${seconds(map.retake_mid_closed_s)}.`;
+  const margin = map.retake_after_late_interrupt_s;
+  set('atlas-tradeoff', `${closure} A dry rotation with one late quench interruption finishes ${seconds(margin)} ${margin < 0 ? 'past the deadline' : 'before the deadline'}.`);
+}
+async function loadAtlas() {
+  try {
+    const {maps, walk_mps} = await requestJson('./ember-rite/balance.json');
+    if (!Number.isFinite(walk_mps) || !Array.isArray(maps) || !maps.length || maps.some((map) =>
+      !map?.id || !map.title || !map.sites?.a?.label || !map.sites?.b?.label ||
+      (map.retake_mid_closed_s !== null && !Number.isFinite(map.retake_mid_closed_s)) ||
+      ![map.retake_dry_s, map.retake_any_s, map.retake_margin_s, map.retake_after_late_interrupt_s,
+        map.sites.a.defender_lead_s, map.sites.b.defender_lead_s].every(Number.isFinite))) throw new Error('Invalid map measurements');
+    const select = byId('atlas-map'), selected = select.value;
+    atlasMaps = maps;
+    select.replaceChildren(...maps.map((map) => new Option(map.title, map.id)));
+    if (maps.some((map) => map.id === selected)) select.value = selected;
+    showMap();
+    byId('atlas-data').hidden = false;
+    set('atlas-status', `${maps.length} measured plans · graph estimates at ${walk_mps} m/s`);
+  } catch {
+    byId('atlas-data').hidden = true;
+    byId('atlas-play').href = './ember-rite/rehearsal.html';
+    set('atlas-status', 'Route measurements are unavailable. Refresh now to retry or open the blueprints.');
+  }
 }
 async function refresh(manual = false) {
   if (state.loading || (state.paused && !manual)) return;
@@ -275,8 +347,10 @@ byId('status-filter').addEventListener('change', () => { if (state.data) { rende
 byId('device-filter').addEventListener('change', () => { if (state.data) { renderJobs(true); renderDetail(); } });
 byId('clear-filters').addEventListener('click', clearFilters);
 byId('empty-clear').addEventListener('click', clearFilters);
-byId('refresh-button').addEventListener('click', () => refresh(true));
-byId('retry-button').addEventListener('click', () => refresh(true));
+byId('atlas-map').addEventListener('change', showMap);
+for (const button of ['refresh-button', 'retry-button']) {
+  byId(button).addEventListener('click', () => { refresh(true); loadAtlas(); });
+}
 byId('pause-button').addEventListener('click', () => {
   state.paused = !state.paused;
   renderConnection();
@@ -291,3 +365,4 @@ setInterval(() => {
   if (state.data && previous !== state.mode) { renderJobs(); renderDetail(); }
 }, 1000);
 refresh();
+loadAtlas();

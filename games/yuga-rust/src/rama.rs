@@ -11,6 +11,7 @@ type Point = [f32; 2];
 // Original player.gd constants. The kit spends an arrow only after an accepted primary draw.
 const MAGAZINE: u8 = 12;
 const RELOAD_TICKS: u32 = 32;
+const STEP_NOCK_DISTANCE_M: f32 = 3.0;
 const KIT: &str = include_str!("../../yuga-native/assets/design/rama-ability-kit.json");
 const MUZZLES: &str = include_str!("../assets/rama-muzzles.json");
 const STAGES: [(&str, &str, &str); 5] = [
@@ -190,7 +191,7 @@ pub struct Rama {
 }
 impl Rama {
     pub fn load() -> Result<Self, String> {
-        let kit: Kit = serde_json::from_str(KIT).map_err(|e| e.to_string())?;
+        let mut kit: Kit = serde_json::from_str(KIT).map_err(|e| e.to_string())?;
         let muzzles: BTreeMap<String, [f32; 3]> =
             serde_json::from_str(MUZZLES).map_err(|e| e.to_string())?;
         if kit.schema_version != 1
@@ -201,7 +202,7 @@ impl Rama {
         {
             return Err("Invalid native Rama kit".into());
         }
-        for (index, r) in kit.abilities.iter().enumerate() {
+        for (index, r) in kit.abilities.iter_mut().enumerate() {
             if r.id != STAGES[index].0
                 || r.release() == 0
                 || r.unlock() <= r.release()
@@ -209,6 +210,11 @@ impl Rama {
                 || (r.speed_mps > 0. && (r.max_hits == 0 || !muzzles.contains_key(&r.id)))
             {
                 return Err(format!("Invalid Rama action {}", r.id));
+            }
+            if r.id == "measured_step" {
+                r.description.push_str(&format!(
+                    " Complete a step of at least {STEP_NOCK_DISTANCE_M} m to recover one spent arrow."
+                ));
             }
         }
         let mut s = Self {
@@ -595,6 +601,18 @@ impl Rama {
                         (flight as f64 * 0.05 / r.movement_s).min(1.) as f32,
                     );
                     self.actor.pos = w.move_actor(self.actor.pos, sub(next, self.actor.pos));
+                    if flight == ticks(r.movement_s) && self.ammo < MAGAZINE {
+                        let distance = len(sub(self.actor.pos, c.step_from));
+                        if distance >= STEP_NOCK_DISTANCE_M {
+                            self.ammo += 1;
+                            self.record(
+                                "step_nock",
+                                c,
+                                vec![],
+                                json!({"ammo_after": self.ammo, "distance_m": distance}),
+                            );
+                        }
+                    }
                 } else if c.slot == 3 && flight > 0 && age <= ticks(r.windup_s + r.active_s) {
                     let receipts = self.ward(c, &r, w, r.heal_per_s * 0.05);
                     if !receipts.is_empty() {
@@ -759,6 +777,67 @@ mod tests {
         }
         advance(&mut r, &w, 32);
         assert!(r.casts.is_empty());
+    }
+    #[test]
+    fn a_completed_step_recovers_one_arrow_after_collision_and_only_when_spent() {
+        let (mut r, w) = setup();
+        r.ammo = MAGAZINE - 2;
+        r.set_aim([1., 0.]);
+        r.cast(2, [0., 0.], &w).unwrap();
+        advance(&mut r, &w, 6);
+        assert!(r.actor().pos[0] > STEP_NOCK_DISTANCE_M);
+        assert_eq!(r.ammo, MAGAZINE - 2);
+        advance(&mut r, &w, 1);
+        assert_eq!(r.ammo, MAGAZINE - 1);
+        assert!(r.cast(2, [0., 0.], &w).is_err());
+        advance(&mut r, &w, 93);
+        let nocks: Vec<_> = r
+            .events
+            .iter()
+            .filter(|e| e["kind"] == "step_nock")
+            .collect();
+        assert_eq!(nocks.len(), 1);
+        assert_eq!(nocks[0]["distance_m"], 4.5);
+        assert_eq!(nocks[0]["ammo_after"], MAGAZINE - 1);
+
+        // Left wall at x = -11 cuts a real dash short without rejecting the cast.
+        r.set_position([-8.5, -28.]);
+        r.set_aim([-1., 0.]);
+        r.cast(2, [0., 0.], &w).unwrap();
+        advance(&mut r, &w, 100);
+        let traveled = (-8.5 - r.actor().pos[0]).abs();
+        assert!(traveled > 0.25 && traveled < STEP_NOCK_DISTANCE_M);
+        assert_eq!(r.ammo, MAGAZINE - 1);
+
+        r.set_position([0., 0.]);
+        r.cast(2, [0., 0.], &w).unwrap();
+        advance(&mut r, &w, 6);
+        r.interrupt();
+        advance(&mut r, &w, 94);
+        assert_eq!(r.ammo, MAGAZINE - 1);
+        r.cast(2, [0., 0.], &w).unwrap();
+        advance(&mut r, &w, 100);
+        assert_eq!(r.ammo, MAGAZINE);
+        r.cast(2, [0., 0.], &w).unwrap();
+        advance(&mut r, &w, 7);
+        assert_eq!(r.ammo, MAGAZINE);
+        assert_eq!(
+            r.events.iter().filter(|e| e["kind"] == "step_nock").count(),
+            2
+        );
+
+        // Approach the arena's east boundary with exactly, then just under, 3 m left.
+        let east = w.move_actor([65., 0.], [20., 0.])[0];
+        for (clearance, expected) in [(3., MAGAZINE), (2.99, MAGAZINE - 1)] {
+            r.reset();
+            r.ammo = MAGAZINE - 1;
+            r.set_position([east - clearance, 0.]);
+            r.set_aim([1., 0.]);
+            r.cast(2, [east, 0.], &w).unwrap();
+            advance(&mut r, &w, 7);
+            assert_eq!(r.actor().pos[0], east);
+            assert_eq!(r.ammo, expected);
+        }
     }
     #[test]
     fn interrupt_cleans_fields_and_arrows_and_rejected_input_preserves_cooldowns() {

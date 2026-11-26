@@ -33,13 +33,15 @@ def expected_files(root, source):
     if git(root, "show", f"{source}:{publisher_path}") != Path(publisher.__file__).read_bytes():
         raise ValueError("Use the publisher from the exact audited source")
     selected = {}
-    for entry in git(root, "ls-tree", "-rz", source, "--", prefix).split(b"\0"):
+    atlas_routes = {path: route for route, path in publisher.ATLAS_FILES.items()}
+    for entry in git(root, "ls-tree", "-rz", source, "--", prefix, *atlas_routes).split(b"\0"):
         if not entry:
             continue
         meta, name_bytes = entry.split(b"\t", 1)
         mode, kind, blob = meta.decode().split()
-        name = name_bytes.decode().removeprefix(prefix)
-        if publisher.approved(name):
+        path = name_bytes.decode()
+        name = atlas_routes.get(path, path.removeprefix(prefix))
+        if path in atlas_routes or publisher.approved(name):
             if mode != "100644" or kind != "blob":
                 raise ValueError(f"Unsupported published Git object: {name}")
             raw = git(root, "cat-file", "blob", blob)
@@ -48,6 +50,8 @@ def expected_files(root, source):
             selected[name] = digest(raw)
     if not publisher.REQUIRED_WEB <= selected.keys():
         raise ValueError("Incomplete committed publication")
+    if publisher.ATLAS_FILES.keys() & selected.keys() and not publisher.ATLAS_FILES.keys() <= selected.keys():
+        raise ValueError("Incomplete committed atlas publication")
     if sum(item["bytes"] for item in selected.values()) > publisher.MAX_WEB_TOTAL:
         raise ValueError("Committed publication exceeds total bound")
     snapshot = json.loads(git(root, "show", f"{source}:{prefix}status.json"))

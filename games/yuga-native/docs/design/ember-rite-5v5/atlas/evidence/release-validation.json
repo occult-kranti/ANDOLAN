@@ -1,0 +1,165 @@
+{
+  "scope": "Solo Ember Rite floorplan rehearsal and private Confluence knockout skirmish. Loopback clients and software rendering.",
+  "package": {
+    "bytes": 33628937,
+    "sha256": "aeec80932ecf51f0f9a04d7e53d3bb4042138920586036df843800249f93222c",
+    "members": [
+      "yuga-rust.html",
+      "ember-rite.html",
+      "PLAY.txt",
+      "build.json",
+      "THIRD-PARTY.txt",
+      "serve_rooms.mjs",
+      "room-wasm.mjs",
+      "yuga-rust.wasm"
+    ],
+    "html_sha256": "9156d2222a20f9ae0969b199f1bb675c0b301dfe1a44cb02549f7ca6857cc8a8",
+    "wasm_sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d",
+    "rehearsal_sha256": "2193c0b199da5085f57e625853a27ed9a096ceea81da61c9721328f1def21003",
+    "blueprints_sha256": "dbf55cdc16aa045d32873216105517fe191e37584c3b2aedf3898c7ce6f7cb7d"
+  },
+  "maps": {
+    "dry_opening_pairs": 16,
+    "independent_route_time_comparisons": 56,
+    "architecture_models": 4,
+    "floor_models": 4,
+    "links": 91,
+    "rooms": 60,
+    "blueprint_pages": 12,
+    "solo_simulation_tests": 8
+  },
+  "checks": {
+    "offline_game_title": {
+      "result": "pass",
+      "entry": "loopback HTTP, ZIP member, then offline (file URL blocked by managed Chromium)",
+      "drill_hash": "2193c0b199da5085f57e625853a27ed9a096ceea81da61c9721328f1def21003",
+      "html_sha256": "9156d2222a20f9ae0969b199f1bb675c0b301dfe1a44cb02549f7ca6857cc8a8",
+      "districts_tested_through_title": [
+        "Lanka",
+        "Kurukshetra"
+      ],
+      "opaque_frame": true,
+      "fresh_drill_and_focus_on_return": true
+    },
+    "one_rendered_nine_socket_peers": {
+      "result": "pass",
+      "scope": "one Chromium client and nine WebSocket peers on a loopback Wasm host",
+      "browser": "154.0.8037.57",
+      "remote_heroes": 9,
+      "visible_wave_units": 0,
+      "target_score": 25,
+      "before_position": [
+        0,
+        -16
+      ],
+      "after_position": [
+        0,
+        -11
+      ],
+      "html_sha256": "9156d2222a20f9ae0969b199f1bb675c0b301dfe1a44cb02549f7ca6857cc8a8",
+      "errors": [],
+      "external_requests": []
+    },
+    "native_to_wasm_parity": {
+      "result": "pass",
+      "scope": "native room versus packaged Wasm authority, ten seats, no rendered clients",
+      "compared_frames": 91,
+      "compared_seat_snapshots": 910,
+      "numeric_fields": 5417245,
+      "max_absolute_error": 0,
+      "accepted_casts": 180,
+      "lowest_hero_hp": 0,
+      "sena_accepted": 5,
+      "sena_damage_observed": true,
+      "native_sha256": "4c41cf8864d81b790e5da772630468a2141b29105059ebb017cb1ae3ea42bfb5",
+      "wasm_sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d"
+    },
+    "ten_socket_peers": {
+      "scope": "ten WebSocket peers and the extracted local Wasm room host; no browser rendering or public network",
+      "result": "pass",
+      "seats": 10,
+      "teams": {
+        "sun": 5,
+        "moon": 5
+      },
+      "unique_ids": 10,
+      "zero_wave_units": true,
+      "each_peer_remote_heroes": 9,
+      "target_score": 25,
+      "sample_ticks": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "sample_frames": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "wasm_sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d",
+      "disconnect_closes_room": true
+    },
+    "sena_wire": {
+      "result": "pass",
+      "scope": "ten loopback WebSocket peers against the extracted Wasm host; no rendered browsers or WAN",
+      "seats": 10,
+      "hero": "hanuman",
+      "ability": "vanara_sena",
+      "slot": 5,
+      "target": [
+        0,
+        3
+      ],
+      "release_ticks": 12,
+      "end_ticks": 52,
+      "damage": 27.99999999999909,
+      "all_nine_remote_views_received_cast": true,
+      "rama_slot_rejected_without_aim_change": true,
+      "duplicate_sequence_rejected": true,
+      "no_wave_units": true,
+      "wasm_sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d",
+      "html_sha256": "9156d2222a20f9ae0969b199f1bb675c0b301dfe1a44cb02549f7ca6857cc8a8",
+      "host_sha256": "2c8166a52d08f28c64d639732c718d9e1c53e8f5af475ed45733aefac1335641",
+      "worker_sha256": "ad53186415eff527e86d153ef4022476b3a4f19ec166985ab6c8de842c975d4a",
+      "test_sha256": "720555a371c3b5fd2bf4efc1500d21ba32b0617952393aa3cb33000afdcc1345",
+      "disconnect_closes_room": true
+    },
+    "wasm_hero_ability_examples": {
+      "result": "pass",
+      "scope": "Released Wasm via the ordinary drill and solo exports",
+      "sha256": "0e5791698ef4f9ad62c807940fa7b7f23205bde3b8e4bbad348bbab90e77ed3d",
+      "hanuman_sena": {
+        "credits": [
+          {
+            "damage": 0,
+            "heal": 12,
+            "hp_after": 102,
+            "shield_after": 0,
+            "unit": 4
+          }
+        ],
+        "tick": 12,
+        "health_after_field": 102
+      },
+      "rama_step": {
+        "tick": 15,
+        "distance_m": 4.5,
+        "ammo_after": 12
+      }
+    }
+  }
+}

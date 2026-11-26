@@ -107,6 +107,9 @@ def read_links(plan, bounds):
         if kind == "fold":
             (time,) = numbers([item["seconds"]], 1, ref + " transition")
             require(isclose(time, 1.5, abs_tol=EPS), ref + ": expected 1.5 s transition")
+            turns = item.get("quarter_turns")
+            require(type(turns) is int and abs(turns) == 1 and nonempty(item.get("cue")),
+                    ref + ": a folded threshold needs a signed quarter-turn and a local cue")
         else:
             require("seconds" not in item, ref + ": traversable links derive time from geometry")
             speed = WALK_MPS * (WATER_FACTOR if kind == "water" else 1)
@@ -128,6 +131,12 @@ def audit_geometry(plan):
         require(rect_distance(room[:2], bounds) == rect_distance(room[2:], bounds) == 0, key + ": room outside bounds")
         rooms.append(room)
     require(len({n["label"].casefold() for n in nodes.values()}) == len(nodes), "duplicate room label")
+    architecture = plan["architecture"]
+    require(architecture.get("node") in nodes.keys() - {"a", "b", "atk", "def"} and
+            all(nonempty(architecture.get(key)) for key in ("name", "play", "source_id")),
+            "architectural study needs a non-objective host room, a source and a game function")
+    (bearing,) = numbers([architecture["axis_deg"]], 1, "architectural bearing")
+    require(0 <= bearing < 360, "architectural bearing must be clockwise from north")
     clear_radius = SITE_RADIUS + REACH
     for key in ("a", "b"):
         require(min(nodes[key]["size"]) >= 2 * clear_radius, key + ": edge within objective apron")

@@ -1,6 +1,6 @@
 # Start here: project and agent handoff
 
-**Designing the 5v5 objective maps.** Start with the [Ember Rite atlas](../games/yuga-native/docs/design/ember-rite-5v5/atlas/README.md) for the four plans, editable geometry and build order. The [table rehearsal](../games/yuga-native/docs/design/ember-rite-5v5/atlas/ENCOUNTERS.md) follows all ten player roles through a contested ignition. The map models are offline design studies.
+**Ember Rite map handoff, 26 November 2026.** Play the four solo districts, or open the production dashboard for the current measurements and printable plans. For developers the panel handoff identifies the source JSON, exported geometry, executable checks, live hero changes and remaining 5v5 work. [Solo rehearsal](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Dashboard](https://occult-kranti.github.io/ANDOLAN/production/) · [Panel roadmap](../games/yuga-native/docs/design/ember-rite-5v5/atlas/PANEL_ROADMAP.md) · [Ten-player script](../games/yuga-native/docs/design/ember-rite-5v5/atlas/ENCOUNTERS.md)
 
 **Animation technical codex.** Use the [five-hero intake and roadmap](../games/yuga-native/docs/design/animation-tech-codex-2026/README.md) for the latest animation, IK, VFX, ability and performance proposals. Its source draft includes unfinished fields; it does not establish motion-capture sessions, engine compatibility or new playable abilities.
 

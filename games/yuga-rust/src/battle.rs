@@ -429,6 +429,7 @@ impl Battle {
             self.collect_effects(seat, &bodies, &mut incoming);
         }
         let team_mode = self.players.len() > 2;
+        let mut concurrent_heals = Vec::new();
         for (i, p) in self.players.iter_mut().enumerate() {
             let body = p.fighter.body_mut();
             if team_mode {
@@ -441,7 +442,24 @@ impl Battle {
                 body.shield_until = bodies[i].shield_until;
             }
             body.damage(incoming[i].damage);
+            let hp_after_damage = body.hp;
             incoming[i].support(body);
+            if team_mode && incoming[i].heal > 0. {
+                let restored = body.hp - hp_after_damage;
+                if incoming[i].damage > 0. || restored < incoming[i].heal {
+                    // Credit simultaneous landings in proportion to their eligible healing.
+                    // The final body determines the HP available after lethal damage or a cap.
+                    let share = (restored / incoming[i].heal).clamp(0., 1.);
+                    concurrent_heals.push((receiver_id(i), share, body.hp));
+                }
+            }
+        }
+        for (recipient, share, health_after) in concurrent_heals {
+            for player in &mut self.players {
+                if let Fighter::Gada(kit) = &mut player.fighter {
+                    kit.settle_sena_heal(recipient, share, health_after);
+                }
+            }
         }
         for seat in 0..self.players.len() {
             if bodies[seat].hp > 0. && self.players[seat].fighter.body().hp <= 0. {
@@ -602,6 +620,172 @@ fn compact(mut state: Value) -> Value {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn sena_aids_each_eligible_teammate_once_and_publishes_the_same_impact_to_observers() {
+        let world = World::load().unwrap();
+        for side in [0, 1] {
+            let mut game = Battle::with_hero_roster(&world, &[Hero::Hanuman; 10]).unwrap();
+            for (seat, pos, hp) in [
+                (side, [0., 0.], 180.),
+                (side + 2, [3., 0.], 200.),
+                (side + 4, [-2., 0.], 296.),
+                (side + 6, [0., 3.01], 200.),
+                (1 - side, [0., -2.], 200.),
+            ] {
+                let body = game.players[seat].fighter.body_mut();
+                body.pos = pos;
+                body.hp = hp;
+            }
+            let command = CastInput {
+                slot: 5,
+                ground: [0., 0.],
+                aim: [0., 1.],
+            };
+            game.cast(side, command, &world).unwrap();
+            assert!(game.cast(side, command, &world).is_err());
+            for _ in 0..11 {
+                game.step(&[], &world);
+            }
+            assert_eq!(game.players[side + 2].fighter.body().hp, 200.);
+            game.step(&[], &world);
+            let local = game.snapshot(side).unwrap();
+            let ally = game.snapshot(side + 2).unwrap();
+            let observed = ally["roster"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|p| p["seat"] == side)
+                .unwrap();
+            assert_eq!(local["events"], observed["events"]);
+            let impact = local["events"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["kind"] == "impact")
+                .unwrap();
+            let receipts = impact["receipts"].as_array().unwrap();
+            assert_eq!(receipts.len(), 3);
+            for (seat, healed) in [(side + 2, 12.), (side + 4, 4.)] {
+                let receipt = receipts
+                    .iter()
+                    .find(|r| r["unit"] == receiver_id(seat))
+                    .unwrap();
+                assert_eq!(receipt["heal"], healed);
+                assert_eq!(
+                    receipt["hp_after"],
+                    game.snapshot(seat).unwrap()["actor"]["hp"]
+                );
+            }
+            assert_eq!(ally["actor"]["hp"], 212.);
+            assert_eq!(game.players[1 - side].fighter.body().hp, 188.);
+            for _ in 0..40 {
+                game.step(&[], &world);
+            }
+            assert_eq!(game.players[side].fighter.body().hp, 180.);
+            assert_eq!(game.players[side + 2].fighter.body().hp, 212.);
+            assert_eq!(game.players[side + 4].fighter.body().hp, 300.);
+            assert_eq!(game.players[side + 6].fighter.body().hp, 200.);
+            assert!((game.players[1 - side].fighter.body().hp - 172.).abs() < 1e-7);
+        }
+    }
+
+    #[test]
+    fn simultaneous_sena_receipts_share_the_cap_and_omit_lethal_targets() {
+        let world = World::load().unwrap();
+        let mut game = Battle::with_hero_roster(&world, &[Hero::Hanuman; 10]).unwrap();
+        for (seat, pos, hp) in [
+            (0, [-2., 0.], 300.),
+            (2, [2., 0.], 300.),
+            (4, [0., 0.], 20.),
+            (6, [-2.8, 0.5], 296.),
+            (8, [1., 0.], 200.),
+            (1, [0., -2.], 300.),
+        ] {
+            let body = game.players[seat].fighter.body_mut();
+            body.pos = pos;
+            body.hp = hp;
+        }
+        let mut command = CastInput {
+            slot: 5,
+            ground: [0., 0.],
+            aim: [0., 1.],
+        };
+        for seat in [0, 2] {
+            game.cast(seat, command, &world).unwrap();
+        }
+        for _ in 0..7 {
+            game.step(&[], &world);
+        }
+        command.slot = 0;
+        game.cast(1, command, &world).unwrap();
+        for _ in 0..5 {
+            game.step(&[], &world);
+        }
+        assert_eq!(game.players[4].fighter.body().hp, 0.);
+        assert_eq!(game.players[6].fighter.body().hp, 300.);
+        assert_eq!(game.players[8].fighter.body().hp, 190.);
+        for seat in [0, 2] {
+            let state = game.snapshot(seat).unwrap();
+            let event = state["events"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|e| e["kind"] == "impact")
+                .unwrap();
+            let receipts = event["receipts"].as_array().unwrap();
+            assert!(receipts.iter().all(|r| r["unit"] != receiver_id(4)));
+            for (target, credit, hp_after) in [(6, 2., 300.), (8, 12., 190.)] {
+                let receipt = receipts
+                    .iter()
+                    .find(|r| r["unit"] == receiver_id(target))
+                    .unwrap();
+                assert_eq!(receipt["heal"], credit);
+                assert_eq!(receipt["hp_after"], hp_after);
+            }
+        }
+    }
+
+    #[test]
+    fn a_step_refund_reaches_the_rama_seat_and_remote_roster_on_either_side() {
+        let world = World::load().unwrap();
+        for seat in [0, 1] {
+            let mut game = Battle::with_hero_roster(&world, &[Hero::Rama; 10]).unwrap();
+            game.players[seat].fighter.body_mut().pos = [0., 0.];
+            let mut command = CastInput {
+                slot: 0,
+                ground: [0., 0.],
+                aim: [1., 0.],
+            };
+            game.cast(seat, command, &world).unwrap();
+            for _ in 0..8 {
+                game.step(&[], &world);
+            }
+            assert_eq!(game.snapshot(seat).unwrap()["ammo"], 11);
+            command.slot = 2;
+            game.cast(seat, command, &world).unwrap();
+            assert!(game.cast(seat, command, &world).is_err());
+            for _ in 0..7 {
+                game.step(&[], &world);
+            }
+            let local = game.snapshot(seat).unwrap();
+            let observer = game.snapshot(1 - seat).unwrap();
+            let remote = observer["roster"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .find(|p| p["seat"] == seat)
+                .unwrap();
+            assert_eq!(local["ammo"], 12);
+            assert_eq!(local["ammo"], remote["ammo"]);
+            assert_eq!(local["events"], remote["events"]);
+            assert!(remote["events"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .any(|e| e["kind"] == "step_nock"));
+        }
+    }
 
     #[test]
     fn unknown_hero_action_does_not_change_aim_or_state() {

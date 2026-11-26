@@ -17,7 +17,9 @@
     "sill": {"label":"Mill Sill","xz":[48,-9],"size":[12,10],"y":1},
     "ford": {"label":"Reed Lip","xz":[68,-8],"size":[10,10],"y":0},
     "records": {"label":"Seal Porch","xz":[-18,11],"size":[14,12],"y":3},
+    "bund": {"label":"Flood Bench","xz":[-13,34],"size":[12,9],"y":3},
     "tally": {"label":"Tally Steps","xz":[20,15],"size":[12,12],"y":1},
+    "roll": {"label":"Roll Call","xz":[-44,58],"size":[15,12],"y":3},
     "archive": {"label":"Archive","xz":[-34,42],"size":[16,12],"y":4},
     "mill": {"label":"Winnow Shed","xz":[36,39],"size":[16,12],"y":1}
   },
@@ -31,13 +33,16 @@
     {"from":"mid","to":"records","width":6,"kind":"ramp","via":[[-6,5],[-12,5]]},
     {"from":"records","to":"a","width":6,"kind":"ramp","via":[[-31,11],[-35,18]]},
     {"from":"mid","to":"tally","width":6,"kind":"ramp","via":[[8,4],[14,13]]},
+    {"from":"records","to":"bund","width":5,"kind":"walk","via":[[-21,17],[-26,20],[-26,27],[-19,33]]},
+    {"from":"bund","to":"tally","width":5,"kind":"ramp","via":[[-4,34],[2,31],[6,25],[10,21],[14,19]]},
     {"from":"tally","to":"b","width":6,"kind":"walk","via":[[31,15],[39,11]]},
     {"from":"furrow","to":"sill","width":6,"kind":"ramp","via":[[42,-26],[48,-22]]},
     {"from":"sill","to":"b","width":5,"kind":"walk","via":[[50,0]]},
     {"from":"furrow","to":"ford","width":5,"kind":"walk","via":[[58,-31],[67,-20]]},
     {"from":"ford","to":"b","width":5,"kind":"water","via":[[68,8],[63,12]]},
-    {"from":"def","to":"archive","width":6,"kind":"ramp","via":[[-18,50],[-28,49]]},
-    {"from":"archive","to":"a","width":6,"kind":"walk","via":[[-39,34],[-40,27]]},
+    {"from":"def","to":"roll","width":6,"kind":"ramp","via":[[-15,62],[-32,62]]},
+    {"from":"roll","to":"archive","width":6,"kind":"ramp","via":[[-41,51],[-34,51],[-34,49]]},
+    {"from":"archive","to":"a","width":6,"kind":"walk","via":[[-34,34],[-40,30],[-40,27]]},
     {"from":"def","to":"tally","width":6,"kind":"ramp","via":[[4,37],[16,31]]},
     {"from":"def","to":"mill","width":6,"kind":"ramp","via":[[18,53],[29,45]]},
     {"from":"mill","to":"b","width":6,"kind":"walk","via":[[40,29],[45,24]]}
@@ -50,6 +55,21 @@
     {"label":"Threshing Bin","xz":[43,5],"size":[3,2],"height":1.1},
     {"label":"Drying Wall","xz":[55,17.5],"size":[4.5,2.4],"height":2.3}
   ],
+  "architecture": {
+    "node": "archive",
+    "name": "Register Gate",
+    "form": "gatehouse",
+    "footprint": [
+      12,
+      10
+    ],
+    "height": 6,
+    "tiers": 2,
+    "opening": 6,
+    "axis_deg": 0,
+    "source_id": "K1",
+    "play": "Two threshold frames bracket the central passage. Defenders choose an Archive sightline after the turn through Roll Call."
+  },
   "section": {"title":"Weir to field via the palace crest","route":["weir","a","records","mid","tally","b"]},
   "artifacts": [
     {"label":"Seal Die","node":"a","cue":"One square die cast into the palace parapet marks A from either ramp."},

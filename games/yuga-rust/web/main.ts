@@ -9,6 +9,8 @@ const menu = byId('menu'),
   play = byId('play'),
   overlay = byId('overlay');
 const credits = byId<HTMLDialogElement>('credits');
+const rehearsal = byId<HTMLDialogElement>('map-rehearsal');
+const rehearsalFrame = byId<HTMLIFrameElement>('rehearsal-frame');
 const keyNames = ['LMB', 'Q', 'E', 'C', 'X', 'V'];
 const practiceCoach = new PracticeCoach();
 const keys = new Set<string>();
@@ -362,17 +364,22 @@ function updateHud() {
       if (ev.kind === 'begin') cue('rama/draw_' + ev.id);
       if (ev.kind === 'release') cue('rama/release_' + ev.id);
       if (ev.kind === 'impact' && ev.receipts?.length) cue('rama/contact');
+      if (ev.kind === 'step_nock') say('Measured Step · 1 arrow recovered');
     } else if (ev.kind === 'release') cue(ev.id);
     if (ev.kind === 'impact') {
       if (ev.id === 'mountain_pulse') cue('mountain_impact');
-      if (ev.receipts?.length)
-        say(current.abilities[ev.slot].label + ' · ' + ev.receipts.length + ' affected');
+      if (ev.receipts?.length) {
+        const aided = ev.id === 'vanara_sena' && ev.receipts.some((receipt: { heal: number }) => receipt.heal > 0);
+        say(current.abilities[ev.slot].label + ' · ' + ev.receipts.length + ' affected' +
+          (aided ? ' · ally in formation' : ''));
+      }
     }
   }
   if (playMode === 'drill') byId('match-detail').textContent = practiceCoach.hint(keyNames);
 }
 
 function start(restart: boolean, networkState?: any) {
+  if (rehearsal.open) rehearsal.close();
   practiceCoach.reset();
   if (restart) wasm.trial_reset();
   current = networkState || readState();
@@ -490,6 +497,14 @@ byId('back').onclick = () => {
 };
 byId('credits-button').onclick = () => credits.showModal();
 byId('close-credits').onclick = () => credits.close();
+byId('rehearsal-button').onclick = () => {
+  rehearsalFrame.srcdoc = data.rehearsal;
+  rehearsal.showModal();
+};
+byId('close-rehearsal').onclick = () => rehearsal.close();
+rehearsal.addEventListener('close', () => {
+  rehearsalFrame.removeAttribute('srcdoc');
+});
 byId('sound').onclick = () => {
   muted = !muted;
   syncSound();
@@ -542,7 +557,7 @@ overlay.addEventListener('keydown', (e) => {
   }
 });
 window.addEventListener('keydown', (e) => {
-  if (credits.open || e.altKey || e.ctrlKey || e.metaKey) return;
+  if (credits.open || rehearsal.open || e.altKey || e.ctrlKey || e.metaKey) return;
   if (e.code === 'Escape' && !e.repeat) {
     if (mode === 'playing') {
       e.preventDefault();

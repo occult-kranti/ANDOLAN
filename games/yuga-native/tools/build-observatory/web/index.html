@@ -13,8 +13,8 @@
   <a class="skip-link" href="#work">Skip to production work</a>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="YUGA production observatory home">YUGA<span>Production observatory</span></a>
-    <nav aria-label="Page sections"><a href="#work">Work queue</a><a href="#artifacts">Artifacts</a><a href="#roadmap">Next gates</a></nav>
-    <a class="repository-link" href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-native-production" target="_blank" rel="noopener noreferrer">Source repository</a>
+    <nav aria-label="Page sections"><a href="#atlas">Map atlas</a><a href="#work">Work queue</a><a href="#artifacts">Artifacts</a><a href="#roadmap">Next gates</a></nav>
+    <a class="repository-link" href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial" target="_blank" rel="noopener noreferrer">Source repository</a>
   </header>
 
   <main id="top">
@@ -30,6 +30,23 @@
       <section class="production-intro" aria-labelledby="run-title">
         <div class="run-copy"><h1 id="run-title">The next piece of YUGA</h1><p id="run-summary">Reading actual jobs and their outputs.</p><div class="source-line"><span>Source</span><code id="source-commit">Not observed</code><span id="source-branch"></span><span id="source-dirty"></span></div></div>
         <figure class="current-art"><div class="art-placeholder" id="lead-placeholder">Actual output previews appear here after an artifact is recorded.</div><img id="lead-image" alt="" hidden><figcaption><span id="lead-caption">No preview selected</span><span id="lead-status">Pending observation</span></figcaption></figure>
+      </section>
+
+      <section id="atlas" class="atlas-section" aria-labelledby="atlas-title">
+        <div class="section-heading"><div><h2 id="atlas-title">Ember Rite map atlas</h2><p>Compare opening arrivals and site rotations for the two-site, five-a-side ritual.</p></div></div>
+        <div class="atlas-actions"><a id="atlas-play" class="atlas-primary" href="./ember-rite/rehearsal.html">Rehearse a route</a><a href="./ember-rite/yuga-map-atlas.pdf">Open printable blueprints (PDF)</a><a href="./ember-rite/balance.json">View timing data (JSON)</a></div>
+        <p id="atlas-status" role="status">Loading the route measurements.</p>
+        <div id="atlas-data" hidden>
+          <label for="atlas-map">Map</label>
+          <select id="atlas-map" aria-controls="atlas-readout"></select>
+          <a id="atlas-plate" hidden>Open district drawing (SVG)</a>
+          <div id="atlas-readout" aria-live="polite" aria-atomic="true">
+            <dl id="atlas-metrics"></dl>
+            <p id="atlas-tradeoff" class="atlas-method"></p>
+          </div>
+          <details class="atlas-method"><summary>How to read these timings</summary><p>Entry leads compare the best dry approach from each spawn. Rotations measure travel between the two sites. The quench margin is the time left after a dry rotation and a full quench on the regulation fire clock.</p></details>
+        </div>
+        <nav id="atlas-documents" class="atlas-documents" aria-label="Map and hero evidence" hidden></nav>
       </section>
 
       <section class="machine-strip" aria-labelledby="machines-title"><h2 id="machines-title">Where work runs</h2><dl><div><dt>Cloud CPU</dt><dd id="cpu-observation">Awaiting observation</dd></div><div><dt>System memory</dt><dd id="memory-observation">Awaiting observation</dd></div><div><dt>Attached GPU</dt><dd id="gpu-observation">Awaiting observation</dd></div></dl><p id="gpu-note">Public GPU jobs are recorded individually; they do not imply an attached GPU.</p></section>

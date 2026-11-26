@@ -1,6 +1,6 @@
 # YUGA · Confluence in Rust
 
-**Objective-mode experiment.** The source tree includes isolated [Ember Rite round and series rules](src/ritual.rs) and [tests](tests/ritual.rs), with a [design and integration roadmap](../yuga-native/docs/design/ember-rite-5v5/README.md). The downloadable game still runs the existing knockout skirmish; Ember Rite is not connected to the battle, browser, room server or published ZIP.
+**Ember Rite map rehearsal.** On the game title choose **Ember Rite map rehearsal**, open the extracted `ember-rite.html`, or use the online link. Learn each district and carry, kindle or quench at a precise spot. The private multiplayer server runs the Confluence knockout rules with playable Hanuman and Rama. Bringing the ten-seat host and the standalone Ember Rite round rules together is the next map milestone. [Play the rehearsal](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Map atlas](../yuga-native/docs/design/ember-rite-5v5/atlas/README.md) · [Authority contract](src/ritual.rs)
 
 **Optional Hanuman sculpt preview.** An [earlier tested download](downloads/yuga-rust-hanuman-sculpt-preview.zip?raw=true) uses a subtle facial-geometry candidate. That older package predates Vanara Sena; the current standard download below includes the new ability and retains the prior hero model. The preview's [build, visual and rig evidence](../yuga-native/art/hanuman-build-qa-2026/README.md) records its limits.
 
@@ -8,7 +8,7 @@ The latest branch package includes a camera-clearance solver, a corrected interr
 
 **Classic hero sparring.** A second download runs all fourteen heroes’ original weapons and 42 abilities through Rust and WebAssembly in Sangam City. Extract it, serve the folder with `python3 -m http.server 8000`, open `http://localhost:8000`, select a hero and choose **Hero sparring**. [Download the graphical roster](downloads/yuga-rust-classic.zip?raw=true) · [Screenshots, controls and build](../yuga-native/docs/rust-rebuild/deep-search/CLASSIC-DISTRIBUTION.md)
 
-Play as **Hanuman or Rama** in a private hero-only match: five against five, three against three, or one against one. Explore the existing arena alone or try Hanuman’s three stationary practice targets. Soldier waves are paused; their existing code and visual assets are preserved for possible reuse. [Download the game and room host](downloads/yuga-rust-confluence.zip?raw=true) · [Proposed 5v5 map, match script and next steps](../yuga-native/docs/design/mandala-rift-5v5/README.md)
+Play as **Hanuman or Rama** in a private hero-only match: five against five, three against three, or one against one. Explore the existing arena alone or try Hanuman’s three stationary practice targets. Soldier waves are paused; their existing code and visual assets are preserved for possible reuse. [Download the game and room host](downloads/yuga-rust-confluence.zip?raw=true) · [Four objective maps, match script and next steps](../yuga-native/docs/design/ember-rite-5v5/atlas/PANEL_ROADMAP.md)
 
 ## Launch the game
 
@@ -36,15 +36,15 @@ Move with **WASD** or the arrow keys. Aim at the ground with the mouse. A shortc
 | --- | --- | --- |
 | LMB | Vajra Gada strikes in front. | Kodanda draws and releases an arrow. Hold for repeated fire. |
 | Q | Vajra Kavacha shields allies in front and the caster. | Piercing Dawn can strike successive enemies on its path. |
-| E | Maruti Udayana vaults toward clear ground. | Measured Step moves through a short clear lane. |
+| E | Maruti Udayana vaults toward clear ground. | Measured Step keeps your aim and recovers one spent arrow after a completed step of at least 3 m. |
 | C | Lanka Dahan sweeps behind the caster and leaves a burning sector. | Guardian Circle shields and heals allies occupying its marked area. |
 | X | Mountain Pulse marks a delayed impact that damages enemies and heals allies. | Dawn Volley commits to three firing lanes and releases three staggered arrows. |
-| V | Vanara Sena calls five brief spectral guardians around the targeted ground area; enemies can leave or use cover. | — |
+| V | Vanara Sena aids wounded teammates when the formation lands and pressures enemies who stay inside. | — |
 | R | — | Reload the twelve-arrow magazine. An attempted primary shot on an empty magazine also starts a reload. |
 
-Vanara Sena is an authoritative, temporary ground-area ability: select clear ground within 10 m, then after a 0.6 s windup it deals 12 initial enemy damage and up to 16 more over two seconds within a 3 m radius. The five figures are visual manifestations of that one field, not autonomous NPCs. Cover and team checks still apply; Hanuman has no invulnerability during the cast, and defeat interrupts it. [Design, animation and source notes](../yuga-native/docs/design/vanara-sena-2026/README.md)
+Aim Vanara Sena at clear ground within 10 m. The five guardian echoes land after 0.6 s. Each wounded teammate in sight within 3 m receives up to 12 HP once. Enemies in the same circle take 12 damage on arrival and up to 16 more if they stay for both seconds. Hanuman can be interrupted during the cast. Rama's Measured Step checks the distance he actually travels after collision, so a short step at a wall can still reposition him while his quiver stays as it was. [Balance and map scenarios](../yuga-native/docs/design/ember-rite-5v5/HERO_BALANCE.md) · [Vanara animation and source notes](../yuga-native/docs/design/vanara-sena-2026/README.md)
 
-The current interim mode awards a point to the opposing team for each hero knockout. The target is 25 in 5v5, 20 in 3v3 and 10 in 1v1; eliminated heroes respawn after three seconds. A simultaneous tie at the target continues until a team leads. At the 18-minute limit, the higher score wins and a tie is a draw. There are no lane waves or autonomous jungle units. This is not yet the proposed [round-based two-site objective mode](../yuga-native/docs/design/mandala-rift-5v5/MATCH_SCRIPT.md), and Mandala Rift is not yet the playable map.
+The current interim mode awards a point to the opposing team for each hero knockout. The target is 25 in 5v5, 20 in 3v3 and 10 in 1v1; eliminated heroes respawn after three seconds. A simultaneous tie at the target continues until a team leads. At the 18-minute limit, the higher score wins and a tie is a draw. There are no lane waves or autonomous jungle units. These rooms use Confluence. Mandala Rift and its three companion districts are available in [solo Ember Rite rehearsal](../yuga-native/docs/design/ember-rite-5v5/atlas/README.md).
 
 ## Build and test
 

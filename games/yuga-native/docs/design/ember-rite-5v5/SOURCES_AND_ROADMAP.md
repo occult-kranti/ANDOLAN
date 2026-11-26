@@ -29,6 +29,8 @@ An attempted Riot `playvalorant.com/en-us/how-to-play/` page returned HTTP 404 i
 
 ## Roadmap
 
+The November map panel added archaeological field evidence from Thanesar, comparisons with Chola temple forms, Sigiriya, Patan and Dholavira, a historical route-strip reading and original design translations. Each district now has a documented decision that changed its measured layout. The drill offers a playable rehearsal while the following tasks take the objective into the networked game. [Source passages and design changes](atlas/RESEARCH_ROUNDS.md) · [Three rounds and next handoff](atlas/PANEL_ROADMAP.md)
+
 | Order | Next owner / task | Evidence required |
 | --- | --- | --- |
 | 1 | **Game design:** validate this rule contract, interaction timing, 13-round duration and side-swap language against actual play goals. | Reviewed state diagram, complete tick precedence, tutorial examples, no unresolved contradictory wins. |

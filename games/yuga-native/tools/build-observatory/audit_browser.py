@@ -14,11 +14,21 @@ import re
 from urllib.parse import urljoin, urlsplit
 from urllib.request import getproxies
 
-from playwright.sync_api import sync_playwright
-
-
 def digest(raw):
     return {"bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+
+
+def allowed_output_link(url, base_url):
+    """Allow hosted media and this repository's report pages, not arbitrary origins."""
+    parsed, origin = urlsplit(url), urlsplit(base_url)
+    if parsed.username or parsed.password or parsed.scheme not in {"http", "https"}:
+        return False
+    if (parsed.scheme, parsed.netloc) == (origin.scheme, origin.netloc):
+        return True
+    return (parsed.scheme == "https" and parsed.netloc == "github.com"
+            and parsed.path.startswith("/occult-kranti/ANDOLAN/blob/")
+            and not parsed.query and "%" not in parsed.path
+            and not any(part in {".", ".."} for part in parsed.path.split("/")))
 
 
 def arguments():
@@ -52,6 +62,8 @@ def arguments():
 
 
 def audit(args):
+    from playwright.sync_api import sync_playwright
+
     args.output.mkdir(parents=True, exist_ok=False)
     receipt = {
         "schema": 1, "passed": False,
@@ -122,6 +134,7 @@ def audit(args):
                 check(f"{name}_object", isinstance(body, dict))
                 if name == "publication.json":
                     check("publication_dashboard_source", body.get("dashboard_source") == args.source)
+                    publication = body
                 else:
                     snapshot = body
                     check("snapshot_exact_bytes", digest(raw)["sha256"] == args.snapshot_sha256)
@@ -141,6 +154,32 @@ def audit(args):
                   and page.locator("#source-dirty").inner_text() == "Clean checkout")
             check("run_title_and_branch", page.locator("#run-title").inner_text() == snapshot["run"]["title"]
                   and page.locator("#source-branch").inner_text() == snapshot["source"]["branch"])
+            atlas_route = "ember-rite/balance.json"
+            if atlas_route in publication.get("dashboard_files", {}):
+                timing = context.request.get(urljoin(args.base_url, atlas_route)).json()["maps"]
+                page.locator("#atlas-data").wait_for()
+                picker = page.locator("#atlas-map")
+                check("atlas_lists_source_maps", picker.locator("option").all_text_contents() == [m["title"] for m in timing])
+                for m in timing:
+                    picker.select_option(m["id"])
+                    dry = page.locator("#atlas-metrics dd").nth(2).inner_text()
+                    check(f"atlas_dry_rotation_{m['id']}", dry == f"{m['retake_dry_s']:.1f} s", dry)
+                    plate = page.locator("#atlas-plate").get_attribute("href")
+                    response = context.request.get(urljoin(args.base_url, plate))
+                    check(f"atlas_district_drawing_{m['id']}", response.status == 200 and
+                          digest(response.body()) == publication["dashboard_files"][f"ember-rite/{m['id']}-architecture.svg"])
+                for route, mime in (("ember-rite/rehearsal.html", "text/html"),
+                                    ("ember-rite/yuga-map-atlas.pdf", "application/pdf")):
+                    actual = page.locator(f"#atlas a[href^='./{route}']").get_attribute("href")
+                    page_asset = context.request.get(urljoin(args.base_url, actual))
+                    check(f"atlas_artifact_{route}", page_asset.status == 200
+                          and mime in page_asset.headers.get("content-type", "")
+                          and digest(page_asset.body()) == publication["dashboard_files"][route])
+                if snapshot["run"]["id"] == "ember-rite-map-and-hero-balance":
+                    documents = page.locator("#atlas-documents a")
+                    check("atlas_evidence_links", documents.all_text_contents() ==
+                          ["Panel roadmap", "District research", "Hero balance", "Rust skirmish download"])
+                picker.select_option(timing[0]["id"])
             counts = {"jobs": page.locator(".job-row").count(), "assets": page.locator("#artifact-list .artifact").count(),
                       "milestones": page.locator("#milestone-list .milestone").count()}
             check("rendered_counts", counts == expected_counts, counts)
@@ -185,15 +224,13 @@ def audit(args):
                 expected = [urljoin(args.base_url, item["url"]) for item in job.get("outputs", []) if item.get("url")]
                 check(f"job_output_links_{job_id}", actual == expected, actual)
                 links.update(actual)
-            origin = urlsplit(args.base_url)
             for url in sorted(links):
-                parsed = urlsplit(url)
-                check("link_safe_origin", (parsed.scheme, parsed.netloc) == (origin.scheme, origin.netloc)
-                      and not parsed.username and not parsed.password, url)
+                check("link_safe_origin", allowed_output_link(url, args.base_url), url)
                 response = context.request.head(url, timeout=45000)
                 row = {"url": url, "final_url": response.url, "status": response.status,
                        "content_type": response.headers.get("content-type")}
                 receipt["links"].append(row)
+                check("linked_output_redirect_stays_allowed", allowed_output_link(response.url, args.base_url), row)
                 check("linked_media_available", response.status == 200, row)
             page.locator(f'.job-row[data-job-id="{args.select_job}"]').click()
             for width, height in ((1440, 1080), (390, 844), (320, 740)):

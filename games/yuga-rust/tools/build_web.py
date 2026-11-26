@@ -16,6 +16,7 @@ from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 PROJECT = Path(__file__).resolve().parents[1]
 ROOT = PROJECT.parents[1]
 NATIVE = ROOT / "games/yuga-native"
+ATLAS = NATIVE / "docs/design/ember-rite-5v5/atlas"
 BROWSER = ROOT / "games/yuga"
 WEB = PROJECT / "web"
 TARGET = "wasm32-unknown-unknown"
@@ -161,6 +162,7 @@ def main():
     args = parser.parse_args()
     out = args.output.resolve()
     out.mkdir(exist_ok=True, parents=True)
+    subprocess.run([sys.executable, ATLAS / "rehearsal/build.py", "--check"], check=True)
     subprocess.run(
         ["cargo", "build", "--locked", "--release", "--target", TARGET, "--lib"],
         cwd=PROJECT,
@@ -235,7 +237,10 @@ def main():
         if sha(blobs["hero"]) != hero_info["sha256"]:
             raise ValueError("Hanuman model changed during packaging")
         (stage / "yuga-rust.wasm").write_bytes(blobs["wasm"])
+        rehearsal = (ATLAS / "rehearsal.html").read_bytes()
+        (stage / "ember-rite.html").write_bytes(rehearsal)
         payload = {
+            "rehearsal": rehearsal.decode("utf-8"),
             "coverMime": "image/webp" if cover.suffix == ".webp" else "image/png",
             "map": json.loads(
                 (NATIVE / "assets/world/confluence-map.json").read_text()
@@ -265,6 +270,7 @@ def main():
         filename = "yuga-rust.html"
         (stage / filename).write_text(document, encoding="utf-8")
         report = {
+            "rehearsal": {"file": "ember-rite.html", "sha256": sha(rehearsal)},
             "hanuman": hero_info,
             "cover": {"source": str(cover.relative_to(ROOT)), "mime": payload["coverMime"]},
             "rustc": capture(["rustc", "--version"]).strip(),
@@ -282,11 +288,13 @@ def main():
         }
         (stage / "build.json").write_text(json.dumps(report, indent=2) + "\n")
         (stage / "PLAY.txt").write_text(
+            "For solo Ember Rite map practice, open ember-rite.html or select Ember Rite map rehearsal on the game title. Choose a map and duty, then carry the vessel or practice a retake. This drill works offline.\n\n"
             "Extract and open yuga-rust.html in a desktop browser with WebGL 2 and WebAssembly. All assets are embedded.\nIf your browser blocks local HTML, open a terminal in the extracted folder, run python3 -m http.server 8000 --bind 127.0.0.1, and visit http://127.0.0.1:8000/yuga-rust.html.\nChoose a hero and explore the arena, or choose Hanuman practice to train against three stationary targets. Explore has no AI opponents yet. Move with WASD, aim with the mouse and cast with LMB / Q / E / C / X. Hanuman can press V to call Vanara Sena at the aimed ground. Soldier waves are paused. For private 5v5, 3v3 or 1v1 rooms install Node 22.12 or newer. In this extracted folder run node serve_rooms.mjs, then open http://127.0.0.1:8787. To play across a trusted LAN, run node serve_rooms.mjs --host 0.0.0.0 and each player opens http://HOST-LAN-IP:8787. The host chooses a format and shares the room code. A match starts when all ten, six or two seats are filled. 5v5 is first to 25 hero knockouts, 3v3 to 20 and 1v1 to 10; the higher score wins at 18 minutes, with a draw if tied. Leave the terminal running while playing. For Hanuman, click Mountain Pulse and point at the floor to see its footprint. A gold center means the landing is clear. A crossed center and the status text explain an unavailable landing. X quick-casts. Escape cancels targeting or pauses.\n"
         )
         with ZipFile(stage / "yuga-rust-confluence.zip", "w") as archive:
             for name in [
                 filename,
+                "ember-rite.html",
                 "PLAY.txt",
                 "build.json",
                 "THIRD-PARTY.txt",
@@ -300,7 +308,7 @@ def main():
                     compress_type=ZIP_DEFLATED,
                     compresslevel=7,
                 )
-        for name in [filename, "build.json", "yuga-rust-confluence.zip"]:
+        for name in [filename, "ember-rite.html", "build.json", "yuga-rust-confluence.zip"]:
             os.replace(stage / name, out / name)
         print(f"{out/filename}    {report['html_sha256']}")
 

@@ -79,6 +79,27 @@ class AdditivePublicationTests(unittest.TestCase):
         for name in ("verify_ui.py", "DESIGN.md", "source.js.map", "arbitrary.js", "package.json"):
             self.assertFalse((self.site / "production" / name).exists())
 
+    def test_atlas_requires_canonical_regular_files_and_refuses_private_siblings(self):
+        for route, repo_path in publisher.ATLAS_FILES.items():
+            p = self.root / repo_path
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_bytes(route.encode())
+        pdf_route = "ember-rite/yuga-map-atlas.pdf"
+        pdf = self.root / publisher.ATLAS_FILES[pdf_route]
+        secret = pdf.with_name("private.txt")
+        secret.write_text("Internal design note")
+        pdf.unlink()
+        pdf.symlink_to(secret)
+        with self.assertRaises(ValueError):
+            publisher.publish(self.site, self.web, "a" * 40, "b" * 40, self.root)
+        pdf.unlink()
+        pdf.write_bytes(b"Reviewed blueprint")
+        receipt = publisher.publish(self.site, self.web, "a" * 40, "b" * 40, self.root)
+        for route, repo_path in publisher.ATLAS_FILES.items():
+            self.assertEqual((self.site / "production" / route).read_bytes(), (self.root / repo_path).read_bytes())
+            self.assertIn(route, receipt["dashboard_files"])
+        self.assertFalse((self.site / "production/ember-rite/private.txt").exists())
+
     def test_publishes_compiled_viewer_and_not_its_source_or_dependency_tree(self):
         for name in ("viewer/index.html", "viewer/assets/viewer-abc.js", "viewer/NOTICE.txt", "viewer/PLAYCANVAS-LICENSE.txt", "viewer/favicon.svg",
                      "viewer/src/main.js", "viewer/node_modules/three/index.js", "viewer/assets/viewer.js.map"):

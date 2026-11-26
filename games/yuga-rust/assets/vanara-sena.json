@@ -2,11 +2,15 @@
   "id": "vanara_sena",
   "slot": "ability_4",
   "label": "Vanara Sena",
-  "description": "Call five fleeting guardian echoes to a clear area. Enemies inside take an initial hit and gradual damage; leave the marked area or use cover.",
+  "description": "Call five guardian echoes to clear ground. On arrival they restore 12 HP to each visible wounded teammate within 3 m. Enemies take an initial hit and damage while they stay. Solid cover blocks both effects.",
   "cooldown_s": 20,
   "timing": {"windup_s": 0.60, "travel_s": 0, "active_s": 2.0, "recovery_s": 0.40},
   "geometry": {"kind": "disk", "anchor": "ground_target", "target_range_m": 10, "radius_m": 3, "height_m": 1.6},
-  "effects": [{"kind": "damage", "team": "enemy", "amount": 12}, {"kind": "damage_rate", "team": "enemy", "amount_per_s": 8}],
+  "effects": [
+    {"kind": "damage", "team": "enemy", "amount": 12},
+    {"kind": "damage_rate", "team": "enemy", "amount_per_s": 8},
+    {"kind": "heal", "team": "ally", "amount": 12, "include_caster": false}
+  ],
   "motion": "cast2",
   "motion_phase": 0.5,
   "color": "ffc66d"

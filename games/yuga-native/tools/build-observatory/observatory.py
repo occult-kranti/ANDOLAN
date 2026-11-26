@@ -20,6 +20,8 @@ import threading
 import time
 from urllib.parse import unquote, urlsplit
 
+from publish_site import ATLAS_FILES
+
 MAX_BYTES = 2 * 1024 * 1024
 MAX_JOBS = 256
 MAX_ITEMS = 128
@@ -78,7 +80,7 @@ def safe_url(value):
         if any(c.isspace() for c in value):
             raise ValueError("Unsafe HTTPS URL")
         return value
-    if value in {"viewer/", "viewer/index.html"}:
+    if value in {"viewer/", "viewer/index.html"} or value in ATLAS_FILES:
         return value
     if not value.startswith("media/"):
         raise ValueError("Only media-relative, exact viewer or HTTPS URLs are public")
@@ -174,9 +176,32 @@ def atomic_json(path, value):
             os.unlink(temporary)
 
 
-def new_state(run_id, title):
-    return {"schema_version": 1, "run": {"id": ident(run_id), "title": text(title, 200), "updated_at": now()},
-            "jobs": [], "milestones": [], "assets": [], "sources": []}
+def new_state(run_id, title, summary=None):
+    run = {"id": ident(run_id), "title": text(title, 200), "updated_at": now()}
+    if summary:
+        run["summary"] = text(summary, 1000)
+    return {"schema_version": 1, "run": run, "jobs": [], "milestones": [], "assets": [], "sources": []}
+
+
+def resume_snapshot(directory, snapshot):
+    """Restore the recorded outcomes on a fresh worker. Sample its own host and liveness."""
+    if snapshot.get("mode") != "snapshot" or snapshot.get("schema_version") != 1:
+        raise ValueError("Resume needs a saved schema 1 snapshot")
+    state = {key: copy.deepcopy(snapshot[key]) for key in ("schema_version", "run", "jobs", "milestones", "assets", "sources")}
+    if not isinstance(state["jobs"], list) or any(not isinstance(job, dict) for job in state["jobs"]):
+        raise ValueError("Invalid saved jobs")
+    for job in state["jobs"]:
+        job.pop("verification", None)
+        if job.get("status") == "running":
+            job["status"] = "stale"
+        if any(key.startswith("_") or key in {"pid", "heartbeat_ttl_seconds"} for key in job):
+            raise ValueError("Saved jobs must contain only their public evidence")
+    validate_state(state)
+    with locked(directory):
+        path = directory / "state.json"
+        if path.exists():
+            raise ValueError("Run already exists in this state directory")
+        atomic_json(path, state)
 
 
 def process_identity(pid):
@@ -332,8 +357,10 @@ def validate_state(state):
     if set(state) != {"schema_version", "run", "jobs", "milestones", "assets", "sources"} or state["schema_version"] != 1:
         raise ValueError("Invalid state schema")
     run = state["run"]
-    if not isinstance(run, dict) or set(run) != {"id", "title", "updated_at"}:
+    if not isinstance(run, dict) or (set(run) - {"summary"}) != {"id", "title", "updated_at"}:
         raise ValueError("Invalid run")
+    if "summary" in run:
+        text(run["summary"], 1000)
     ident(run["id"])
     text(run["title"], 200)
     stamp(run["updated_at"])
@@ -477,7 +504,7 @@ class Observatory:
         return result
 
 
-def static_path(web, url):
+def static_path(web, url, workspace=None):
     if url.startswith("//"):
         raise ValueError("Invalid static path")
     decoded = unquote(urlsplit(url).path)
@@ -487,8 +514,9 @@ def static_path(web, url):
     if decoded.startswith("//"):
         raise ValueError("Invalid static path")
     relative_path(value)
-    p = safe_existing(web / value)
-    if not p.is_relative_to(safe_existing(web, directory=True)) or not p.is_file():
+    root, source = (workspace, ATLAS_FILES[value]) if workspace and value in ATLAS_FILES else (web, value)
+    p = safe_existing(root / source)
+    if not p.is_relative_to(safe_existing(root, directory=True)) or not p.is_file():
         raise FileNotFoundError("Static file absent")
     if p.stat().st_size > 32 * 1024 * 1024:
         raise ValueError("Static file exceeds limit")
@@ -502,14 +530,19 @@ def make_server(observatory, port):
         def log_message(self, *_):
             pass  # Never copy arbitrary request paths or headers to logs.
 
-        def send_body(self, status, payload, kind="application/json; charset=utf-8"):
+        def send_body(self, status, payload, kind="application/json; charset=utf-8", *, standalone=False):
             self.send_response(status)
             self.send_header("Content-Type", kind)
             self.send_header("Content-Length", str(len(payload)))
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.send_header("Referrer-Policy", "no-referrer")
-            self.send_header("Content-Security-Policy", "default-src 'self'; img-src 'self' https:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'")
+            if standalone:
+                # The portable route drill contains its own SVG, CSS and script.
+                policy = "sandbox allow-scripts; default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+            else:
+                policy = "default-src 'self'; img-src 'self' https:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'"
+            self.send_header("Content-Security-Policy", policy)
             self.end_headers()
             self.wfile.write(payload)
 
@@ -529,13 +562,16 @@ def make_server(observatory, port):
                 elif path.startswith("/api/"):
                     self.send_body(404, b'{"error":"Unknown API route"}')
                 else:
-                    p = static_path(observatory.web, self.path)
+                    p = static_path(observatory.web, self.path, observatory.workspace)
                     kinds = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
-                             ".json": "application/json; charset=utf-8", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+                             ".json": "application/json; charset=utf-8", ".pdf": "application/pdf", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
                              ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
                     if p.suffix not in kinds:
                         raise ValueError("Static type not allowed")
-                    self.send_body(200, p.read_bytes(), kinds[p.suffix])
+                    self.send_body(200, p.read_bytes(), kinds[p.suffix], standalone=path == "/ember-rite/rehearsal.html")
+            except (BrokenPipeError, ConnectionResetError):
+                # Navigating into the drill can cancel an in-flight status or preview response.
+                return
             except FileNotFoundError:
                 self.send_body(404, b'{"error":"Not found or run not initialized"}')
             except (ValueError, KeyError, TypeError, UnicodeError):
@@ -582,13 +618,16 @@ def make_server(observatory, port):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    for name in ("init", "emit", "configure", "serve", "export"):
+    for name in ("init", "resume", "emit", "configure", "serve", "export"):
         p = commands.add_parser(name)
         p.add_argument("--workspace", type=Path, required=True)
         p.add_argument("--state-dir", type=Path)
         if name == "init":
             p.add_argument("--run-id", required=True)
             p.add_argument("--title", required=True)
+            p.add_argument("--summary")
+        if name == "resume":
+            p.add_argument("--snapshot", type=Path, required=True)
         if name in {"emit", "configure"}:
             p.add_argument("--record", type=Path, required=True)
         if name == "serve":
@@ -600,7 +639,9 @@ def main(argv=None):
         workspace = workspace_path(args.workspace)
         directory = state_directory(workspace, args.state_dir)
         if args.command == "init":
-            update_state(directory, initialize=(args.run_id, args.title))
+            update_state(directory, initialize=(args.run_id, args.title, args.summary))
+        elif args.command == "resume":
+            resume_snapshot(directory, read_json(args.snapshot))
         elif args.command in {"emit", "configure"}:
             update_state(directory, read_json(args.record), context=args.command == "configure")
         elif args.command == "export":

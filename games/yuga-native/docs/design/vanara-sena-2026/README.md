@@ -19,6 +19,7 @@ This packet separates the first competitive slice from proposed future independe
 | Placement | Fixed ground-targeted disk, radius **3 m**, up to **10 m** from Hanuman; the origin and destination must be valid and a clear route must exist between them. |
 | Clock | **0.60 s** windup, then an immediate impact and **2.00 s** active field; body recovery is **0.40 s** after impact; **20 s** cooldown starts on accepted cast. Authority uses 20 ticks/s. |
 | Enemy effect | **12 damage** at impact, then **8 damage/s** while eligible inside the field. The ideal uninterrupted 2 s exposure is **28 total damage**, before shields and other match interactions; it is not five separate hits multiplied by five guardians. |
+| Ally recovery | Each living wounded teammate in sight inside the disk at impact receives up to **12 HP**, capped at their own maximum. The caster is excluded. Overlapping allied landings share credit when a teammate reaches full health. [Team and map scenarios](../ember-rite-5v5/HERO_BALANCE.md) |
 | Counterplay | The caster is vulnerable. Opponents can interrupt by defeating Hanuman, leave the marked area, take cover, or move outside its supported height band. There are no invulnerability frames, roots, armor breaks or secret damage multipliers in this first rule. |
 | Multiplayer | The server owns the accepted cast, tick, radius, cooldown and actual recipient receipts. Visual guardians are cues only: they have no independent health, collision, targeting, pathfinding or damage. No persistent lane or jungle minions are introduced. |
 

@@ -93,10 +93,29 @@ def run(output):
 
         page.route('**/api/status', route_api)
         page.route('**/status.json', route_snapshot)
+        atlas_file = web.parents[2] / 'docs/design/ember-rite-5v5/atlas/balance.json'
+        timings = json.loads(atlas_file.read_bytes())
+        atlas_available = False
+        def route_atlas(route):
+            if atlas_available:
+                route.fulfill(status=200, content_type='application/json', body=json.dumps(timings))
+            else:
+                route.fulfill(status=503, body='map data unavailable')
+        page.route('**/ember-rite/balance.json', route_atlas)
         page.goto(base)
         page.get_by_text('Live worker observation', exact=True).wait_for()
         check('live_label_and_no_gpu_observation', 'No attached GPU observed' in page.locator('#gpu-observation').inner_text())
         check('three_job_buttons', page.locator('.job-row').count() == 3)
+        page.get_by_text('Route measurements are unavailable.', exact=False).wait_for()
+        check('missing_timings_keep_blueprint_access', page.locator('#atlas a[href$=".pdf"]').is_visible())
+        atlas_available = True
+        page.locator('#refresh-button').click()
+        page.locator('#atlas-data').wait_for()
+        picker = page.locator('#atlas-map')
+        check('atlas_maps_match_source', picker.locator('option').all_text_contents() == [m['title'] for m in timings['maps']])
+        last_map = timings['maps'][-1]
+        picker.select_option(last_map['id'])
+        check('selected_map_updates_rotation', page.locator('#atlas-metrics dd').nth(2).inner_text() == f"{last_map['retake_dry_s']:.1f} s")
         page.locator('#status-filter').select_option('review')
         check('status_filter', page.locator('.job-row').count() == 1 and 'Diya' in page.locator('.job-row').inner_text())
         check('filter_selects_visible_job', 'Diya' in page.locator('#inspector-title').inner_text())

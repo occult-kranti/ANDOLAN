@@ -1,0 +1,47 @@
+{
+  "recorded_utc": "2026-11-26T00:07:03Z",
+  "scope": "Native Rust authority and practice coaching. The release invocation separately exercised the Godot 4.6.3 oracle and twenty simulated minutes.",
+  "default_suite": {
+    "command": "cargo test --offline --locked --manifest-path games/yuga-rust/Cargo.toml",
+    "passed": 101,
+    "failed": 0,
+    "ignored": 2
+  },
+  "optional_suite": {
+    "command": "cargo test --offline --locked --release --manifest-path games/yuga-rust/Cargo.toml --lib -- --ignored",
+    "passed": 2,
+    "failed": 0,
+    "ignored": 0,
+    "tests": [
+      "army::match_tests::twenty_minute_full_match_stays_bounded_and_all_lanes_fight",
+      "army::tests::compares_current_godot_spawn_order_and_uncontested_marches"
+    ]
+  },
+  "hero_regressions": [
+    "battle::tests::a_step_refund_reaches_the_rama_seat_and_remote_roster_on_either_side",
+    "battle::tests::simultaneous_sena_receipts_share_the_cap_and_omit_lethal_targets",
+    "battle::tests::sena_aids_each_eligible_teammate_once_and_publishes_the_same_impact_to_observers",
+    "rama::tests::a_completed_step_recovers_one_arrow_after_collision_and_only_when_spent",
+    "the_default_drill_can_demonstrate_an_ally_only_sena_without_hitting_a_guard"
+  ],
+  "exact_step_margin_m": {
+    "received_arrow": [
+      3.0
+    ],
+    "no_arrow": [
+      2.99
+    ],
+    "command": "cargo test --offline --locked --manifest-path games/yuga-rust/Cargo.toml --lib a_completed_step_recovers_one_arrow_after_collision_and_only_when_spent"
+  },
+  "practice_coach": {
+    "command": "node games/yuga-rust/tools/test_practice_coach.mjs",
+    "result": "pass",
+    "techniques": 6
+  },
+  "source_sha256": {
+    "games/yuga-rust/src/battle.rs": "8043ce7779498720481bcae3f97e45b1281059a136a08b499a32c745dca1de5a",
+    "games/yuga-rust/src/combat.rs": "03d0e6c97f1dc152f2c0991d19d11be6efbd6d0b72fb9eae745d735f8a181865",
+    "games/yuga-rust/src/rama.rs": "391c3b19fa716d3d60367cc94f2d9b326aafb9a7d0f84304b2b4253d1be483a6",
+    "games/yuga-rust/assets/vanara-sena.json": "e97101f7cf0b6b443263eedbaaef335675263da9980d48f80dfb6b16f0305c87"
+  }
+}

@@ -43,6 +43,16 @@ PRIVATE_KEYS = {"pid", "boot_id", "start_ticks", "_liveness", "_tracking", "proc
 MAX_JSON = 2 * 1024 * 1024
 MAX_FILE = 64 * 1024 * 1024
 MAX_WEB_TOTAL = 256 * 1024 * 1024
+ATLAS = "games/yuga-native/docs/design/ember-rite-5v5/atlas"
+# Exact public aliases for files with a single authoring location.
+ATLAS_FILES = {
+    "ember-rite/balance.json": f"{ATLAS}/balance.json",
+    "ember-rite/rehearsal.html": f"{ATLAS}/rehearsal.html",
+    "ember-rite/yuga-map-atlas.pdf": f"{ATLAS}/blueprints/yuga-map-atlas.pdf",
+    "ember-rite/overview.jpg": f"{ATLAS}/massing/overview.jpg",
+    **{f"ember-rite/{district}-architecture.svg": f"{ATLAS}/blueprints/{district}-architecture.svg"
+       for district in ("mandala", "lanka", "ayodhya", "kurukshetra")},
+}
 
 
 def relative(value):
@@ -137,8 +147,8 @@ def artifact_url(value, selected):
             raise ValueError("Referenced viewer is absent")
         return
     p = relative(value)
-    if p.parts[0] != "media" or value not in selected:
-        raise ValueError("Artifact must reference an approved existing media file")
+    if (p.parts[0] != "media" and value not in ATLAS_FILES) or value not in selected:
+        raise ValueError("Artifact must reference an approved existing file")
 
 
 def validate_snapshot(path, selected):
@@ -173,7 +183,7 @@ def validate_snapshot(path, selected):
     return data
 
 
-def publish(site, web, baseline_ref, source_ref):
+def publish(site, web, baseline_ref, source_ref, workspace=None):
     if not SHA.fullmatch(baseline_ref) or not SHA.fullmatch(source_ref):
         raise ValueError("Full lowercase source commits are required")
     site, web = safe_root(site), safe_root(web)
@@ -187,6 +197,14 @@ def publish(site, web, baseline_ref, source_ref):
         raise ValueError("production/ already exists; assemble a fresh baseline")
     source_files = files_under(web)
     selected = {name: path for name, path in source_files.items() if approved(name)}
+    if workspace is not None:
+        workspace = safe_root(workspace)
+        for route, repo_path in ATLAS_FILES.items():
+            file = workspace / repo_path
+            safe_root(file.parent)
+            if file.is_symlink() or not file.is_file():
+                raise ValueError(f"Missing regular atlas file for {route}")
+            selected[route] = file
     if not REQUIRED_WEB.issubset(selected):
         raise ValueError("Dashboard entry files or status snapshot are missing")
     if "viewer/index.html" in selected and not VIEWER_NOTICES.issubset(selected):
@@ -226,11 +244,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--site", type=Path, required=True)
     parser.add_argument("--web", type=Path, required=True)
+    parser.add_argument("--workspace", type=Path, help="Copy reviewed atlas outputs from their canonical sources")
     parser.add_argument("--baseline-ref", required=True)
     parser.add_argument("--source-ref", required=True)
     args = parser.parse_args()
     try:
-        result = publish(args.site, args.web, args.baseline_ref, args.source_ref)
+        result = publish(args.site, args.web, args.baseline_ref, args.source_ref, args.workspace)
     except (ValueError, OSError) as exc:
         parser.exit(1, f"Observatory publication refused: {exc}\n")
     print(json.dumps({"status": "ready_for_pages_artifact", "baseline_files": result["baseline_files"],

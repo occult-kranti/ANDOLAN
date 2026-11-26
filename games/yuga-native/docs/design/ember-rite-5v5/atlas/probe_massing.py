@@ -47,10 +47,12 @@ def ground_reader(floor, graph):
     depth = ceiling - min(v.z for v in vertices) + 1
 
     def floor_at(point):
-        hit, normal, _, _ = tree.ray_cast(plan_position(point, ceiling), Vector((0, 0, -1)), depth)
-        require(hit is not None and abs(normal.z) > 0.05,
-                f"{floor.name}: no top surface beneath {point}")
-        return hit.z
+        for dx, dy in ((0,0),(.0002,.0002),(-.0002,-.0002)):
+            start = plan_position((point[0]+dx,point[1]+dy),ceiling)
+            hit, normal, _, _ = tree.ray_cast(start, Vector((0,0,-1)), depth)
+            if hit is not None and normal.z > .05:
+                return hit.z
+        raise ValueError(f"{floor.name}: no top surface beneath {point}")
 
     return floor_at
 
@@ -122,9 +124,51 @@ def cells(results):
     return out + [" / ".join(distances)]
 
 
+def route_profiles(data,ground):
+    """Sample across the corridor. Report the largest sustained centre-line grade."""
+    nodes = data["nodes"]
+    peaks = {}
+    rays = 0
+    for link in data["links"]:
+        if link["kind"] == "fold":
+            continue
+        start,end = link["from"],link["to"]
+        points = [nodes[start]["xz"],*link.get("via",[]),nodes[end]["xz"]]
+        profile = []
+        total = 0.
+        for a,b in zip(points,points[1:]):
+            length = math.dist(a,b)
+            steps = math.ceil(length/.25)
+            dx,dy = (b[0]-a[0])/length,(b[1]-a[1])/length
+            for i in range(steps+1):
+                x,y = a[0]+(b[0]-a[0])*i/steps,a[1]+(b[1]-a[1])*i/steps
+                for offset in (-.46,0,.46):
+                    z = ground((x-dy*link["width"]*offset,y+dx*link["width"]*offset))
+                    rays += 1
+                    if offset == 0 and (i>0 or not profile):
+                        profile.append((total+length*i/steps,z))
+            total += length
+        left = 0
+        maximum,run = 0.,0.
+        for right,height in profile:
+            while left+1 < len(profile) and right-profile[left+1][0] >= 2:
+                left += 1
+            distance = right-profile[left][0]
+            if distance >= 2:
+                grade = abs(height-profile[left][1])/distance
+                if grade > maximum or run == 0:
+                    maximum,run = grade,distance
+        peaks[start,end] = maximum,run
+    return rays,peaks
+
+
 def markdown():
+    sys.path.insert(0,str(ROOT))
+    from massing import verify_footprint
     rows, hashes, cover_edges = [], [], []
+    profiles = []
     total_anchors = total_covers = 0
+    inside = outside = total_samples = 0
     for map_id in MAPS:
         source = ROOT / "maps" / (map_id + ".json")
         model = ROOT / "massing" / (map_id + ".glb")
@@ -136,6 +180,23 @@ def markdown():
         floors = [o for o in bpy.context.scene.objects if o.type == 'MESH' and o.get("kind") == "atlas_floor"]
         require(len(floors) == 1, f"{model.name}: expected one continuous floor mesh")
         ground = ground_reader(floors[0], graph)
+        occupied,empty = verify_footprint(source,model,import_model=False)
+        inside += occupied
+        outside += empty
+        casts,peaks = route_profiles(data,ground)
+        total_samples += casts
+        peak = max(peaks,key=peaks.get)
+        cases = [peak]
+        if map_id == "mandala":
+            for site in ("a","b"):
+                sluice = next(pair for pair in peaks if set(pair) == {"mid",site})
+                if sluice not in cases:
+                    cases.append(sluice)
+        for j,route in enumerate(cases):
+            grade,run = peaks[route]
+            names = " → ".join(data["nodes"][k]["label"] for k in route)
+            profiles.append(f"| {data['title']} | {casts if j==0 else 'as above'} | {names} | "
+                            f"{grade*100:.1f}% | {run:.2f} m |")
         cover_tops = verify_placement(data, source, floors[0], graph, ground)
         total_anchors += len(data["nodes"])
         total_covers += len(data["cover"])
@@ -155,7 +216,7 @@ def markdown():
                                    f"| {high_ray_z:.2f} | {results[-1][0][0]} |")
     intro = [
         "# Sightlines in the exported 3D maps", "",
-        f"Blender imported all four GLBs and cast {len(rows)*len(EYE_HEIGHTS)*2} sight rays through their "
+        f"Blender imported the four district floor models and cast {len(rows)*len(EYE_HEIGHTS)*2} sight rays through their "
         f"triangles. Each of the {len(rows)} sights in the [drawings](../README.md) uses a pair of "
         "grounded endpoints. Each column raises both ends by the stated height above their local floors "
         "and tests the segment in both directions. Heights are example probes for low, standing and elevated views.", "",
@@ -174,11 +235,21 @@ def markdown():
         "The graybox still needs the final walls, ceilings, corner cameras and heroes. A clear central view "
         "can change when the camera moves to the outside shoulder. Check each entry again with the real "
         "camera offset, avatar height, aiming ray and visibility rules on both sides.", "",
+        "## Corridor grades", "",
+        f"Blender took {total_samples:,} floor samples at most 0.25 m apart along each physical corridor, at its centre and "
+        "at 46% of its width on either side. The table shows the steepest sustained centreline grade per "
+        "map, plus the Sluice descents to both sites. A moving window spans at least 2 m "
+        "of horizontal travel. Water measures the modeled bed. These measurements guide character-controller trials.", "",
+        "| District | Floor samples | Measured route | Peak grade | Window |",
+        "| --- | ---: | --- | ---: | ---: |",*profiles,"",
         "## Model identity and placement", "",
+        f"A 2 m grid yielded {inside:,} successful interior floor hits and {outside:,} successful exterior misses. "
+        "The occupancy checks omit samples within 0.15 m of the analytical boundary to allow for the tessellated curves.", "",
         f"After import, Blender checked the positions and local floor heights of {total_anchors} room anchors "
         f"and the ground-relative top elevation and footprint of {total_covers} cover meshes against the "
         "map JSON within 0.02 m. North is positive Y in Blender and negative Z in glTF. Dropping a ray "
-        "onto the continuous floor mesh supplies the height at each probe end. Sightline casts then use the whole scene.", "",
+        "onto the continuous floor mesh supplies the height at each probe end. Sightline casts then use the whole floor-study scene. "
+        "The [separate architectural models and doorway tests](architecture-checks.md) use the same map registration.", "",
         "The floor's embedded SHA-256 must match its full JSON input. Prefixes below identify the tested files.", "",
         "| Map GLB | Map JSON SHA-256 prefix | GLB SHA-256 prefix |", "| --- | --- | --- |", *hashes, "",
         "Reproduce from the repository root with Blender 4.3.2. Omit the final `-- --check` to regenerate this report.", "",
@@ -189,19 +260,70 @@ def markdown():
     return "\n".join(intro)
 
 
+def architecture_report():
+    sys.path.insert(0,str(ROOT))
+    from massing import verify_architecture, verify_approaches
+    from architecture import Architecture
+    rows,ids,approaches = [],[],[]
+    for key in MAPS:
+        source = ROOT / "maps" / f"{key}.json"
+        model = ROOT / "massing" / f"{key}-architecture.glb"
+        data = json.loads(source.read_text())
+        arch = Architecture(data)
+        parts,rays = verify_architecture(source,model)
+        route_checks = verify_approaches(source,ROOT / "massing" / f"{key}.glb")
+        approaches.append(f"| {arch.name} | "+", ".join(route_checks)+f" | {sum(route_checks.values())} |")
+        head = f"{arch.clear_height:.2f} m" if arch.clear_height is not None else "Open to sky"
+        rows.append(f"| [{arch.name}]({model.name}) · [{arch.source_id}](../RESEARCH_ROUNDS.md) | "
+                    f"{arch.w:g} × {arch.d:g} × {arch.height:g} m | {arch.opening:g} m | "
+                    f"{head} | {parts} | {rays} |")
+        pos = " → ".join(f"({x:g}, {z:g})" for x,z in arch.thresholds)
+        ids.append(f"| {data['title']} · {arch.node['label']} | {pos} | "
+                   f"{arch.bearing:g}° | {arch.level:+g} m | `{checksum(model)[:16]}` |")
+    return "\n".join([
+        "# Architectural models and measured clearances","",
+        "Each building imports in metres at the host room’s map coordinates. Combine its GLB with the corresponding "
+        "[district floor study](sightlines.md) at the scene origin to rehearse its approaches. "
+        "The standalone models retain individual named courses, piers, arch stones and gauge elements for editing. "
+        "Each third sheet in the [12-page atlas](../blueprints/yuga-map-atlas.pdf) cuts the same geometry.","",
+        "![Four orthographic building studies rendered from the exported GLBs](architecture-overview.jpg)","",
+        "| Building and research reference | Width × axial depth × height above sill | Clear width | Full-width headroom | Named mesh parts | Clear axial rays |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",*rows,"",
+        "| District and host room | Entrance I → exit II, map X/Z | I → II bearing | Dry sill | GLB SHA-256 prefix |",
+        "| --- | --- | ---: | ---: | --- |",*ids,"",
+        "In Blender the horizontal coordinates are X east and Y north. In glTF, north is negative Z and elevation is positive Y. "
+        "Bearings turn clockwise from north. A ray traversed the whole building in both directions at its centre and at "
+        "±49.5% of its clear width. Test heights were 0.12, 1.70 and 2.12 m above the dry sill, plus 0.04 m below "
+        "the recorded headroom on covered buildings. Each import passed source-hash, room registration, bearing and bounding-envelope checks.","",
+        "## Approach routes with both models loaded","",
+        "Blender then imported the district and the building together at the shared origin. It tested each incident ordinary "
+        "corridor from the host room centre to just outside the architectural footprint, following the authored bends. "
+        "Casts at 0.25, 1.70 and 2.12 m above the host sill used the centreline and both 0.28 m shoulder offsets.","",
+        "| Building | Ordinary approaches | Clear segment rays |","| --- | --- | ---: |",*approaches,"",
+        "The pavilion has four corbelled courses and a one-notch inlay at the entrance. The gallery’s two rows of "
+        "four columns leave three recurring bays. The gate has eleven separate arch stones at each end. The well has "
+        "three treads on each bank and a recessed water surface. Three additional vertical rays touched both water surfaces at +0.20 m "
+        "and the central causeway at +1.00 m. In an integrated district scene, cut openings in the host floor over the two basin rectangles "
+        "before enabling water visuals or collision. The ray samples leave shoulder-camera clipping, a swept character capsule "
+        "and lateral movement outside the authored approaches for a playable build.","",
+        "From this atlas directory, regenerate both Blender reports and the capture sheets with:","",
+        "```sh","blender -b --factory-startup -t 1 --python-exit-code 1 --python probe_massing.py",
+        "python3 massing/render_studies.py","```",""])
+
+
 def main():
     args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="fail if the checked-in report differs")
     check = parser.parse_args(args).check
-    report = markdown()
-    path = ROOT / "massing" / "sightlines.md"
-    if check:
-        require(path.exists() and path.read_text(encoding="utf-8") == report,
-                "Sightlines report is stale. Run the probe script without --check to update it.")
-    else:
-        path.write_text(report, encoding="utf-8")
-    print("Verified Blender map placement and sightline report.")
+    for name,report in (("sightlines.md",markdown()),("architecture-checks.md",architecture_report())):
+        path = ROOT / "massing" / name
+        if check:
+            require(path.exists() and path.read_text(encoding="utf-8") == report,
+                    f"{name} is stale. Run the probe script without --check to update it.")
+        else:
+            path.write_text(report, encoding="utf-8")
+    print("Verified floor grades, model placement, architectural clearances and sightlines.")
 
 
 if __name__ == "__main__":

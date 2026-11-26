@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Ember Rite · Atlas rehearsal</title>
+<!--APP_STYLE-->
+</head>
+<body>
+<main>
+  <header class="mast">
+    <div class="identity"><span>YUGA</span><i></i><b>Ember Rite</b></div>
+    <h1>Atlas rehearsal</h1>
+    <p>Solo route practice</p>
+  </header>
+  <nav id="districts" aria-label="District"></nav>
+  <div class="workspace">
+    <section class="board" aria-labelledby="district-name">
+      <header class="board-head">
+        <div><h2 id="district-name"></h2><p id="district-place"></p></div>
+        <button id="zoom" type="button" aria-pressed="false">Follow marker</button>
+      </header>
+      <div class="map-wrap">
+        <svg id="plan" tabindex="0" role="img" aria-label="Navigable tactical floor plan. Use the direction controls or arrow keys.">
+          <defs>
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 H 0 V 10" fill="none" stroke="#304941" stroke-width=".24"/>
+            </pattern>
+            <pattern id="wet" width="2.2" height="2.2" patternUnits="userSpaceOnUse"><rect width="2.2" height="2.2" fill="#75b7b9"/><path d="M0 1.6 Q .55 .9 1.1 1.6 T 2.2 1.6" fill="none" stroke="#356c70" stroke-width=".23"/></pattern>
+            <pattern id="stone" width="1.8" height="1.2" patternUnits="userSpaceOnUse"><rect width="1.8" height="1.2" fill="#9d6c49"/><path d="M0 .6 H1.8 M.8 .6 V0 M.2 .6 V1.2" fill="none" stroke="#e7c293" stroke-width=".13"/></pattern>
+            <pattern id="solid" width="1.6" height="1.6" patternUnits="userSpaceOnUse"><rect width="1.6" height="1.6" fill="#2b3c38"/><path d="M-1 1 l2 -2 M0 1.6 l2 -2 M1.6 1.6 l1 -1" stroke="#889690" stroke-width=".17"/></pattern>
+          </defs>
+          <rect x="-1000" y="-1000" width="2000" height="2000" fill="url(#grid)"/>
+          <g id="floors"></g><g id="guide-layer"></g><g id="marks"></g><g id="labels"></g>
+          <g id="vessel"><circle class="reach" r="1.5"/><path class="spark" d="M0 -1.7 Q2 .2 1 1.2 Q-.3 2 -1.25 .7 Q-1.6 -.3 0 -1.7Z"/></g>
+          <g id="player"><circle class="player-ring" r="2.1"/><path d="M0 -3 L1.45 1.55 L0 .94 L-1.45 1.55Z"/></g>
+        </svg>
+        <div aria-hidden="true" class="north">N<span>↑</span></div>
+        <span aria-hidden="true" id="scale"></span>
+      </div>
+      <div class="readouts"><div><span>Position</span><strong id="position"></strong></div><div><span id="time-title">Route time</span><strong id="clock"></strong></div></div>
+      <div class="legend" aria-label="Map symbols"><span><i class="floor-key"></i>Dry floor</span><span><i class="water-key"></i>Water</span><span><i class="cover-key"></i>Cover</span><span><i class="masonry-key"></i>Masonry</span><span><i class="fold-key"></i>Fold</span><span><i class="line-key"></i>Guide</span></div>
+    </section>
+    <section class="brief" aria-label="Drill controls">
+      <div class="brief-heading"><h2>Field drill</h2><button type="button" id="reset">Restart</button></div>
+      <div class="row"><label>Exercise<select id="mode"><option value="explore">Explore</option><option value="carry">Carry and kindle</option><option value="retake">Quench</option></select></label><label>Start at<select id="start"></select></label></div>
+      <div class="row"><label><span id="goal-caption">Guide to</span><select id="goal"></select></label><label>Route guide<select id="profile"><option value="dry">Dry paths</option><option value="all">All crossings</option></select></label></div>
+      <div class="itinerary"><span>Guide from start</span><p id="route"></p><strong id="estimate"></strong></div>
+      <div class="control-area">
+        <div class="dpad" aria-label="Map movement">
+          <button data-direction="up" aria-label="Move north">↑</button><button data-direction="left" aria-label="Move west">←</button>
+          <button data-direction="down" aria-label="Move south">↓</button><button data-direction="right" aria-label="Move east">→</button>
+        </div>
+        <div class="actions"><button id="interact" type="button">Interact</button><button id="drop" type="button">Drop vessel</button></div>
+      </div>
+      <div class="progress-line"><progress id="progress" max="1" value="0" aria-label="Interaction progress"></progress><span id="progress-text">Ready</span></div>
+      <p id="status" role="status" aria-live="polite"></p>
+      <div class="operations"><button type="button" id="handoff" hidden>Rehearse this retake</button><button type="button" id="pause">Pause</button><button type="button" id="interrupt">Simulate interruption</button></div>
+      <details><summary>Controls and drill rules</summary><p>Focus the plan to walk with WASD or the arrow keys, or use the direction pad. Hold E or Interact at a site or fold. G drops the vessel. Hold Interact near it to pick it up. A hold stops on release. P pauses.</p><p>The guide measures the route from your selected start at full walking speed. Ramp grade is represented on the plan. Fixed cover and masonry stop the marker. At Measure Well the central sill stays dry between the two recessed basins. The clock starts with the first move or hold and pauses while this window is hidden.</p><p>Kindle anywhere on the 3 m disk. The solo handoff lets you try a defender’s retake of that exact vessel. The Quench exercise instead places a practice vessel 2 m north of the chosen site centre. This is an offline drill without opponents.</p></details>
+    </section>
+  </div>
+  <section class="district-notes" aria-labelledby="landmark-name"><figure><div id="art" role="img"></div><figcaption id="art-caption"></figcaption></figure><div><h2 id="landmark-name"></h2><p id="landmark-cue"></p><p id="district-decision"></p></div></section>
+</main>
+<!--ATLAS_DATA-->
+<!--APP_CODE-->
+</body>
+</html>

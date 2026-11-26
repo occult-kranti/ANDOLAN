@@ -1,14 +1,34 @@
 # YUGA production observatory and reuse-first art stages
 
-**Current run:** [reuse into playable integration](research/reuse-production-continuation/README.md), ignored state `.local-swarm/observatory-reuse-production-continuation`, loopback port **8768**. The jobs separate integrated banks/camera, the typed authority factory, diagnostics and rejected hair appearances. Public data is a deliberately exported snapshot; hosted workers and CPU authoring do not imply active local inference or an attached production GPU.
+## Ember Rite map and hero balance
+
+The current handoff follows four two-site maps and the playable Hanuman and Rama skirmish changes through three panel rounds. Select a map in the Observatory to compare the site entry leads, dry rotation and remaining quench time, then rehearse the route or print the floorplans. The figures come from the route graph. Human pick rates, round outcomes and performance on players’ hardware still need playtests. [Public dashboard](https://occult-kranti.github.io/ANDOLAN/production/#atlas) · [Route drill](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html) · [Printable atlas](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/yuga-map-atlas.pdf)
+
+The selector reads the same generated timing file on GitHub Pages and on a local worker. The publisher copies that file, the standalone drill, the PDF, the massing overview and the four individual SVG architecture sheets from their canonical atlas locations. The dashboard receipt binds their byte lengths and SHA‑256 digests to the publication commit. The queue links the architectural sources, balance decisions and next playtests. The separate Rust download contains the skirmish. [Atlas and floorplans](design/ember-rite-5v5/atlas/README.md) · [Balance model](design/ember-rite-5v5/atlas/BALANCE_MATH.md) · [Research](design/ember-rite-5v5/atlas/RESEARCH_ROUNDS.md) · [Hero decisions](design/ember-rite-5v5/HERO_BALANCE.md) · [Panel roadmap](design/ember-rite-5v5/atlas/PANEL_ROADMAP.md) · [Game download](../../yuga-rust/downloads/yuga-rust-confluence.zip?raw=true)
+
+On a fresh clone, run these commands from the repository root. The first command seeds a new local record directory with the outcomes in the checked-in snapshot. A worker you already initialized needs only the second command. Open `http://127.0.0.1:8769/` to view local observations. CPU, memory and optional NVIDIA readings now come from that host.
+
+```sh
+python3 games/yuga-native/tools/build-observatory/observatory.py resume \
+  --workspace "$PWD" --state-dir "$PWD/.local-swarm/observatory-ember-rite" \
+  --snapshot games/yuga-native/tools/build-observatory/web/status.json
+python3 games/yuga-native/tools/build-observatory/observatory.py serve \
+  --workspace "$PWD" --state-dir "$PWD/.local-swarm/observatory-ember-rite" --port 8769
+```
+
+The preceding public Sanctum checkpoint retains its own dated run, visual previews, eight job records and receipts. Its media remains addressable in the Observatory. [Previous public data](https://github.com/occult-kranti/ANDOLAN/blob/82b1a4d310f1ea1068f23d068102b61a033b110f/games/yuga-native/tools/build-observatory/web/status.json) · [Sanctum publication evidence](https://github.com/occult-kranti/ANDOLAN/tree/82b1a4d310f1ea1068f23d068102b61a033b110f/games/yuga-native/tools/build-observatory/evidence/sanctum-publication-r1)
+
+## Earlier art runs
+
+The [reuse into playable integration run](research/reuse-production-continuation/README.md) used ignored state `.local-swarm/observatory-reuse-production-continuation` on loopback port **8768**. Its jobs separate integrated banks/camera, the typed authority factory, diagnostics and rejected hair appearances.
 
 The [observatory source](../tools/build-observatory/README.md) is a read-only progress dashboard for actual jobs, model/tool identities, outputs and next steps. The [reuse stage](research/production-reuse-oct23/README.md) owns source decisions and the next five dependent production gates. The [art packet](../art/production-stage-oct23/README.md) distinguishes the existing animated Rama from the new, unrigged GPU-generated source. Neither a concept image nor a clean dashboard closes the commercial graphics target.
 
-The [latest ten-stage checkpoint](research/ten-rounds-oct23/README.md) continues
+The [October ten-stage checkpoint](research/ten-rounds-oct23/README.md) continues
 those sources with six specialists. It records accepted compatibility/world
 work, actual effects motion and rejected hero cleanup/binding candidates.
 Its [next-owner queue](research/ten-rounds-oct23/NEXT_SIX_TASKS.md) names the
-remaining artistic and gameplay gates. Current cloud observations use
+remaining artistic and gameplay gates. Its cloud observations used
 `.local-swarm/observatory-ten-rounds/` on loopback port **8767**; pass that
 `--state-dir` explicitly when resuming this run. The default port/state below
 describe the earlier run. Private state is ignored by Git and must be
@@ -25,7 +45,7 @@ bounded CPU authoring/render jobs are recorded separately.
 
 ## View the work
 
-The [public dashboard](https://occult-kranti.github.io/ANDOLAN/production/) and [interactive source viewer](https://occult-kranti.github.io/ANDOLAN/production/viewer/) were first deployed from source `069ab775`. Latest checkpoint publication is recorded in [the new publication packet](research/ten-rounds-oct23/publication/README.md). [The independent public-byte audit](research/production-stage-oct23/publication/README.md) verifies 19 successful HTTP observations, 13 exact source-file matches and five preserved game/lab entry points. GitHub Pages serves a **saved snapshot**. Its collection timestamp and recorded-running labels remain visible; polling that file does not make the cloud's hardware live. The browser renders the actual self-hosted GLB using the project's existing PlayCanvas engine, with orbit/zoom/reset controls. It does not turn the source mesh into an animated game hero.
+The public dashboard and interactive source viewer were first deployed from source `069ab775`. An October audit recorded 19 successful HTTP observations, 13 exact source-file matches and five preserved game/lab entry points. GitHub Pages serves a saved snapshot with its original collection timestamp. The viewer renders a self-hosted GLB using PlayCanvas, with orbit, zoom and reset controls. [Source viewer](https://occult-kranti.github.io/ANDOLAN/production/viewer/) · [October publication packet](research/ten-rounds-oct23/publication/README.md) · [Initial public-byte audit](research/production-stage-oct23/publication/README.md)
 
 The live worker view runs while its ordinary local service is running:
 
@@ -34,7 +54,7 @@ python3 games/yuga-native/tools/build-observatory/observatory.py serve \
   --workspace /absolute/path/to/ANDOLAN --port 8765
 ```
 
-The current cloud run has local state under `.local-swarm/observatory/`, ignored by Git. A new machine needs its own `init` and explicit job records; private process IDs are not copied from another host. On your laptop, open the local service in your browser after starting it. This cloud's loopback service has no public forwarding route. The public snapshot is the accessible handoff when the cloud service is unavailable.
+The original cloud run used local state under `.local-swarm/observatory/`, ignored by Git. A new machine can start an empty record via `init` or seed saved outcomes via `resume`. Process identity and hardware readings belong to the local worker. The public snapshot provides the handoff between workers.
 
 ## What the dashboard means
 
@@ -46,7 +66,7 @@ The current cloud run has local state under `.local-swarm/observatory/`, ignored
 
 The HTTP surface has no execution, download, delete, credential or job-control endpoint. Local CLI commands record state; the separate [job runner](../tools/local-swarm/CONTROL.md) handles selected commands with the invoking user's privileges. It is not an OS sandbox. Keep real client/account/container isolation and supported login paths.
 
-## Reuse already implemented
+## October art reuse
 
 | Component | Reused input and actual result | Remaining acceptance |
 | --- | --- | --- |
@@ -59,7 +79,7 @@ The HTTP surface has no execution, download, delete, credential or job-control e
 
 The [GPU report](research/production-stage-oct23/gpu/README.md) retains official API/source metadata, request identities, failures/successes, previews and hashes. Supported public quota is an available compute path. A CTF label does not supply access to someone else's account, keys, quota or machine; no such bypass was used.
 
-## Stage plan and six owners
+## October art stage plan and six owners
 
 1. **Source and material intake:** freeze original art, licenses, model input, code/tool versions and source hashes. Do not download another bulk library where the current kit is adequate.
 2. **Character source comparison:** compare actual front and rear geometry at the same camera/light settings. Keep the generated source outside runtime. Choose an artist-controlled cleanup plan from observed defects.
@@ -69,10 +89,10 @@ The [GPU report](research/production-stage-oct23/gpu/README.md) retains official
 
 Assign W1 independent acceptance, W2 UI/input, W3 hero art/rigging, W4 world/materials/collision, W5 motion/combat and W6 models/build/delivery. Each owner returns its exact files, input/output hashes, executed checks, actual images or footage, defects and next gate. Use the existing [next-six-owner queue](evidence/desktop-finish/continuation-oct18b/NEXT_SIX_OWNERS.md), not a new claim of completed rounds.
 
-The current stage delivered a monitoring tool, source/model intake and bounded render evidence. Full Deadlock-level art/motion quality remains open. The desktop ledger remains **17/78 accepted packets and 0/13 complete rounds**; Android remains **0/108 implementation packets**, deferred.
+That October checkpoint delivered the observer, source intake and bounded render evidence. Its desktop ledger recorded 17 of 78 accepted packets and zero of 13 complete rounds. The Android ledger recorded zero of 108 implementation packets.
 
 ## Publication and maintenance
 
-The dedicated workflow rebuilds the existing browser site from its exact previously deployed source before adding `/production/`; it does not replace the site root with the dashboard. The publisher verifies pre-existing sibling file hashes remain unchanged during the additive copy, validates snapshot mode and copies only approved web/media/viewer/license files. Rebuilding that pinned source does not establish byte equality with an older deployment; public checks have their own receipt.
+On `game/yuga-hanuman-trial`, a push touching an Ember Rite design file, the current Rust ZIP or the dashboard runs the dedicated Pages workflow. It rebuilds the preserved game and lab baseline at `176b6f8e71fcffd3d570d96e66643d8cb9893603`, checks every pre-existing file digest, and publishes the dashboard under `/production/`. The publication receipt gives the actual deployed source and the file census. [Additive Pages workflow](../../../.github/workflows/yuga-observatory.yml) · [Public receipt](https://occult-kranti.github.io/ANDOLAN/production/publication.json)
 
 After an observable job result, emit its CLI record and export `web/status.json`. Then publish a reviewed snapshot. Never keep an abandoned process or anonymous demo marked running indefinitely, and never run a heartbeat loop that outlives its actual owner just to make the dashboard appear busy.

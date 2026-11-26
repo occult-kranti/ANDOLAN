@@ -16,6 +16,8 @@
     "mid":    {"label":"Ledger Court","xz":[-16,6],"size":[18,16],"y":3},
     "weigh":  {"label":"Weigh House","xz":[-21,-22],"size":[16,14],"y":2},
     "sluice": {"label":"Sluice Gate","xz":[13,17],"size":[14,12],"y":2},
+    "well":   {"label":"Measure Well","xz":[35,9],"size":[14,12],"y":1},
+    "landing":{"label":"Ferry Landing","xz":[46,-6],"size":[11,9],"y":0},
     "wash":   {"label":"Wash Steps","xz":[18,-3],"size":[14,12],"y":0}
   },
   "links": [
@@ -24,7 +26,10 @@
     {"from":"a","to":"north","kind":"walk","width":6,"via":[[-50,44],[-28,48],[-22,56]]},
     {"from":"north","to":"def","kind":"ramp","width":7,"via":[[8,61],[28,61]]},
     {"from":"def","to":"east","kind":"ramp","width":7,"via":[[53,44],[53,33]]},
-    {"from":"east","to":"b","kind":"ramp","width":7,"via":[[53,-7],[40,-7]]},
+    {"from":"east","to":"landing","kind":"ramp","width":7,"via":[[53,7],[53,-6]]},
+    {"from":"landing","to":"b","kind":"walk","width":7,"via":[[47,-14],[43,-17]]},
+    {"from":"sluice","to":"well","kind":"ramp","width":6,"via":[[23,18],[29,9]]},
+    {"from":"well","to":"landing","kind":"ramp","width":6,"via":[[43,9],[46,3]]},
     {"from":"b","to":"south","kind":"walk","width":6,"via":[[28,-35],[27,-46]]},
     {"from":"south","to":"atk","kind":"walk","width":7,"via":[[-3,-59],[-17,-58]]},
     {"from":"west","to":"weigh","kind":"walk","width":6,"via":[[-44,-26],[-40,-21]]},
@@ -48,6 +53,21 @@
     {"label":"Gauge plinth","xz":[59,24],"size":[3,4],"height":1.2},
     {"label":"Wash parapet","xz":[13,1],"size":[2,3],"height":1.1}
   ],
+  "architecture": {
+    "node": "well",
+    "name": "Measure Well",
+    "form": "stepwell",
+    "footprint": [
+      8,
+      12
+    ],
+    "height": 3,
+    "tiers": 3,
+    "opening": 5,
+    "axis_deg": 90,
+    "source_id": "A1",
+    "play": "A level crossing passes between two stepped water gauges. Its far threshold leads to Ferry Landing if Wash Steps is held."
+  },
   "section":{"title":"Assembly terrace to river landing","route":["a","mid","wash","b"]},
   "artifacts": [
     {"label":"Petition canopy","node":"a","cue":"A shallow fan roof marks the assembly entrance from the uphill street."},

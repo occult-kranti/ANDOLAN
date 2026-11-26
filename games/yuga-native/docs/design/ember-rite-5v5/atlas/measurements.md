@@ -16,7 +16,7 @@ From the repository root run `python3 games/yuga-native/docs/design/ember-rite-5
 
 [Drawing inputs](maps/mandala.json) · [Encounter notes](maps/mandala.md)
 
-15 rooms and 26 bidirectional links. Dry corridors span 5–8 m in width. Authored floor elevations run from -0.3 to 2.4 m.
+15 rooms and 26 bidirectional links. Dry corridors span 5–8 m in width. Authored floor elevations run from -0.3 to 1.8 m.
 
 | Run | Dry (s) | All links (s) | Fastest dry callouts |
 | --- | ---: | ---: | --- |
@@ -24,7 +24,7 @@ From the repository root run `python3 games/yuga-native/docs/design/ember-rite-5
 | Attack → B | 31.5 | 28.3 | Spice Gate → South Temple → Sluice → Bazaar Sanctuary |
 | Attack → Mid | 25.4 | 25.4 | Spice Gate → South Temple → Sluice |
 | Defend → A | 24.8 | 24.8 | Water Gate → North Temple → Ghat Mandapa |
-| Defend → B | 29.2 | 26.4 | Water Gate → North Temple → Sluice → Bazaar Sanctuary |
+| Defend → B | 29.1 | 26.4 | Water Gate → North Temple → Sluice → Bazaar Sanctuary |
 | Defend → Mid | 23.0 | 23.0 | Water Gate → North Temple → Sluice |
 | A → B | 11.4 | 11.4 | Ghat Mandapa → Sluice → Bazaar Sanctuary |
 
@@ -40,7 +40,7 @@ After ignition, a defender starting at the opposite site centre has **25.1 s** i
 Fastest runs that use a special crossing
 
 - Attack → B via Spice Gate → South Temple → South Pyramid (fold) → Bazaar Sanctuary saves 3.2 s.
-- Defend → B via Water Gate → North Temple → North Pyramid (fold) → Bazaar Sanctuary saves 2.8 s.
+- Defend → B via Water Gate → North Temple → North Pyramid (fold) → Bazaar Sanctuary saves 2.7 s.
 
 | Optional crossing | Kind | Crossing (s) | Fastest dry detour (s) |
 | --- | --- | ---: | ---: |
@@ -59,7 +59,7 @@ Fastest runs that use a special crossing
 
 [Drawing inputs](maps/lanka.json) · [Encounter notes](maps/lanka.md)
 
-13 rooms and 18 bidirectional links. Dry corridors span 6–7 m in width. Authored floor elevations run from 0 to 6 m.
+14 rooms and 21 bidirectional links. Dry corridors span 6–7 m in width. Authored floor elevations run from 0 to 6 m.
 
 | Run | Dry (s) | All links (s) | Fastest dry callouts |
 | --- | ---: | ---: | --- |
@@ -77,8 +77,8 @@ After ignition, a defender starting at the opposite site centre has **14.6 s** i
 | --- | ---: | --- |
 | Attack → A | 26.9 | Ferry Gate → Chain Foot → Wind Arch → Signal Court |
 | Attack → B | 28.3 | Ferry Gate → Chain Foot → Wind Arch → Fruit Stalls → Ashoka Garden |
-| Defend → A | 24.5 | Upland Gate → Bell Pier → Wind Arch → Signal Court |
-| Defend → B | 25.9 | Upland Gate → Bell Pier → Wind Arch → Fruit Stalls → Ashoka Garden |
+| Defend → A | 20.8 | Upland Gate → Bell Pier → Rain Gallery → Signal Court |
+| Defend → B | 23.6 | Upland Gate → Bell Pier → Fruit Stalls → Ashoka Garden |
 
 | Shoulder-camera probe | Length in plan (m) | Fixed cover intersected in plan |
 | --- | ---: | --- |
@@ -89,7 +89,7 @@ After ignition, a defender starting at the opposite site centre has **14.6 s** i
 
 [Drawing inputs](maps/ayodhya.json) · [Encounter notes](maps/ayodhya.md)
 
-12 rooms and 19 bidirectional links. Dry corridors span 6–7 m in width. Authored floor elevations run from 0 to 4 m.
+14 rooms and 22 bidirectional links. Dry corridors span 6–7 m in width. Authored floor elevations run from 0 to 4 m.
 
 | Run | Dry (s) | All links (s) | Fastest dry callouts |
 | --- | ---: | ---: | --- |
@@ -97,7 +97,7 @@ After ignition, a defender starting at the opposite site centre has **14.6 s** i
 | Attack → B | 17.9 | 17.9 | Cart Gate → Potters Bend → Ferry Quay |
 | Attack → Mid | 24.3 | 24.3 | Cart Gate → Potters Bend → Weigh House → Ledger Court |
 | Defend → A | 24.2 | 24.2 | Archive Gate → Cloth Gate → Assembly Court |
-| Defend → B | 19.0 | 19.0 | Archive Gate → Gauge Steps → Ferry Quay |
+| Defend → B | 18.3 | 18.3 | Archive Gate → Gauge Steps → Ferry Landing → Ferry Quay |
 | Defend → Mid | 23.3 | 23.3 | Archive Gate → Gauge Steps → Sluice Gate → Ledger Court |
 | A → B | 28.0 | 24.5 | Assembly Court → Ledger Court → Sluice Gate → Wash Steps → Ferry Quay |
 
@@ -127,14 +127,14 @@ Fastest runs that use a special crossing
 
 [Drawing inputs](maps/kurukshetra.json) · [Encounter notes](maps/kurukshetra.md)
 
-15 rooms and 19 bidirectional links. Dry corridors span 5–7 m in width. Authored floor elevations run from 0 to 4 m.
+17 rooms and 22 bidirectional links. Dry corridors span 5–7 m in width. Authored floor elevations run from 0 to 4 m.
 
 | Run | Dry (s) | All links (s) | Fastest dry callouts |
 | --- | ---: | ---: | --- |
 | Attack → A | 22.8 | 22.8 | Cart Yard → Ox Gate → Stone Weir → Palace Terrace |
 | Attack → B | 20.6 | 20.6 | Cart Yard → Furrow → Mill Sill → Wind Field |
 | Attack → Mid | 13.2 | 13.2 | Cart Yard → Boat Yard → Gauge Bridge |
-| Defend → A | 12.9 | 12.9 | Record Gate → Archive → Palace Terrace |
+| Defend → A | 19.5 | 19.5 | Record Gate → Roll Call → Archive → Palace Terrace |
 | Defend → B | 14.6 | 14.6 | Record Gate → Winnow Shed → Wind Field |
 | Defend → Mid | 15.1 | 15.1 | Record Gate → Tally Steps → Gauge Bridge |
 | A → B | 21.9 | 21.9 | Palace Terrace → Seal Porch → Gauge Bridge → Tally Steps → Wind Field |
