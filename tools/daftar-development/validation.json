@@ -1,0 +1,251 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-11-26",
+  "teamRevision": "yuga-a35493d-20261126",
+  "baselineCommit": "a35493d67cf5111d7da2ff9eea6c58ed3499aeca",
+  "integrationHeadBeforeUpdate": "d19e48151965944322e6e30af5cac51ac23387ff",
+  "branch": "feat/daftar-moe-creative-development",
+  "nodeVersion": "v24.22.3",
+  "scope": "Current-source team handoff; real offline Python venv creation, isolated source checks and existing solo movement/audio tests. No game engine, rendering, human listening or GPU run.",
+  "checks": [
+    {
+      "command": "DAFTAR_TEST_PYTHON=/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 node --test tools/daftar-development/python-workspace.test.mjs",
+      "exitCode": 0,
+      "testsPassed": 5,
+      "testsFailed": 0,
+      "testsSkipped": 0,
+      "scope": "Three rejection cases, executable Windows-layout package isolation regression, and actual fresh Linux venv route/balance execution."
+    },
+    {
+      "command": "node tools/daftar-development/python-workspace.mjs create --python /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "exitCode": 0,
+      "pythonVersion": "3.12.14",
+      "pipVersion": "25.0.1",
+      "localEnvironment": "tools/daftar-development/.venv",
+      "venvPrefixVerified": true,
+      "userSiteDisabled": true,
+      "baseSitePackagesExcluded": true,
+      "pythonPackageIndexRequests": 0
+    },
+    {
+      "command": "node tools/daftar-development/python-workspace.mjs routes",
+      "exitCode": 0,
+      "maps": 4,
+      "spawnToSiteOpeningPairs": 16,
+      "drySiteRotations": 4
+    },
+    {
+      "command": "node tools/daftar-development/python-workspace.mjs balance",
+      "exitCode": 0,
+      "retakeWindows": 4,
+      "independentEntrancePairs": 16
+    },
+    {
+      "command": "node tools/daftar-development/python-workspace.mjs test-balance",
+      "exitCode": 0,
+      "testsPassed": 2,
+      "testsFailed": 0
+    },
+    {
+      "command": "node --test games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal/audio.test.mjs games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal/simulation.test.mjs",
+      "exitCode": 0,
+      "testsPassed": 16,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "check": "VS Code JSON parses; all twelve tasks use explicit process arguments; four Python tasks use the verified venv helper; no folder-open execution",
+      "passed": true,
+      "tasks": 12,
+      "folderOpenTasks": 0
+    },
+    {
+      "command": "node --check tools/daftar-development/python-workspace.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/daftar-development/python-workspace.mjs check",
+      "exitCode": 0,
+      "utf8Mode": true,
+      "venvPrefixVerified": true,
+      "userSiteDisabled": true,
+      "baseSitePackagesExcluded": true
+    }
+  ],
+  "prerequisiteRestoration": {
+    "path": "games/yuga-native/art/yagna-audio/score.json",
+    "sha256": "f7a8fa1dbcd907fdffe2c337b04bf53b697579e304e580a8f6fe853708b3fdbc",
+    "source": "Exact unchanged integration HEAD blob; small source JSON restored from sparse checkout without audio/render binaries.",
+    "initialSoloTestResult": {
+      "passed": 15,
+      "failed": 1,
+      "reason": "ENOENT for required score.json in sparse workspace"
+    },
+    "afterRestoration": {
+      "passed": 16,
+      "failed": 0
+    }
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c8a6692ee05538824fee81dc98a28686a5cecc670a98c59a3df785fcf8218c6f"
+    },
+    {
+      "path": "project.json",
+      "sha256": "57aa1ba987b22e184646daaf9dcf72ca3ecca3245d4380117bcbabe1bdc5a124"
+    },
+    {
+      "path": "andolan-yuga.code-workspace",
+      "sha256": "634831898740fc435f1adb8f12582fbf7be714448a25146f772d26a23c4562e5"
+    },
+    {
+      "path": "python-workspace.mjs",
+      "sha256": "c6c7947003bed772aaaa10ef2a79a4445e139d2e4d6bf9b1801544f8dcc8d4d6"
+    },
+    {
+      "path": "python-workspace.test.mjs",
+      "sha256": "19aa1dfd8129d7c795fed7834ce56b5c5df00f91e24f508db6efd8bf8fb2012f"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "08239aadebf9a9b105e2efecca3129f9198067993418529ddc8117d41997b7ec"
+    }
+  ],
+  "remaining": [
+    "Apply current team to the owner runtime and verify installed model digest.",
+    "Run actual MoE inference with a task that fits the unchanged context profile.",
+    "Commission Monsoon collision/objectives and listener/audio authority in the actual game.",
+    "Ten seats, two rendered clients, human listening/game feel and physical-GPU profiling.",
+    "Selected Unreal project import/render remains a separate experiment.",
+    "Corrected Windows helper CI must pass at the new published commit."
+  ],
+  "externalProviderRequests": 0,
+  "resourceRentals": 0,
+  "unrealExecuted": false,
+  "gpuTested": false,
+  "previousAcceptance": {
+    "status": "retained_historical_receipt_not_rerun_here",
+    "record": {
+      "schemaVersion": 1,
+      "checkedDate": "2026-11-26",
+      "baselineCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+      "branch": "feat/daftar-moe-creative-development",
+      "nodeVersion": "v24.22.3",
+      "checks": [
+        {
+          "command": "node tools/daftar-development/check.mjs",
+          "exitCode": 0,
+          "result": {
+            "schemaVersion": 1,
+            "status": "package_integrity_and_geometry_verified",
+            "sourceRepository": "occult-kranti/ANDOLAN",
+            "conventionsCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+            "manifestSha256": "18eef7ef3e36a66b92228146f0b6ec4b8b23c404e6755b92e1807916e357509c",
+            "glbSha256": "3f73be3a96600498387288489e4d5a222900c110b116c94f4686a543cc4691d4",
+            "nodes": 73,
+            "meshes": 73,
+            "positionSamples": 11602,
+            "gltfBoundsMinM": [
+              -24,
+              -0.4,
+              -28
+            ],
+            "gltfBoundsMaxM": [
+              24,
+              3.37,
+              28
+            ],
+            "spawnMarkersVerified": 10,
+            "storedBlenderReimportEvidenceBound": true,
+            "engineLaunchedByThisCheck": false,
+            "gameplayVerified": false,
+            "unrealExecuted": false,
+            "gpuTested": false
+          }
+        },
+        {
+          "command": "node --test tools/daftar-development/check.test.mjs",
+          "exitCode": 0,
+          "testsPassed": 5,
+          "testsFailed": 0
+        },
+        {
+          "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/audit.py --check",
+          "exitCode": 0,
+          "maps": 4,
+          "spawnToSiteOpeningPairs": 16,
+          "drySiteRotations": 4
+        },
+        {
+          "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/balance.py --check",
+          "exitCode": 0,
+          "retakeWindows": 4,
+          "independentEntrancePairs": 16
+        },
+        {
+          "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/test_balance.py",
+          "exitCode": 0,
+          "testsPassed": 2
+        },
+        {
+          "check": "VS Code workspace JSON parses; tasks use explicit process arguments without folder-open execution",
+          "passed": true,
+          "tasks": 9
+        }
+      ],
+      "storedArtEvidence": "games/yuga-native/art/daftar-route-lab/geometry-acceptance.json",
+      "actualVisualReviewed": "games/yuga-native/art/daftar-route-lab/route-lab-preview.png",
+      "remaining": [
+        "Live Daftar company apply and model assignment",
+        "Actual model inference and memory acceptance",
+        "Full Rust game build/execution for any subsequent gameplay change",
+        "Godot import and controller/collision/navigation acceptance",
+        "Unreal project selection, import, scene and render acceptance",
+        "Physical GPU performance and human playtesting"
+      ],
+      "providerCalls": 0,
+      "resourceRentals": 0,
+      "unrealExecuted": false,
+      "gpuTested": false
+    }
+  },
+  "portabilityCorrection": {
+    "previousHead": "1f18a25d1e66df1714f24692b05fd4da9b77a65e",
+    "priorCiRun": "https://github.com/occult-kranti/ANDOLAN/actions/runs/45761893079",
+    "priorWindowsJob": "https://github.com/occult-kranti/ANDOLAN/actions/runs/45761893079/job/139713599012",
+    "priorWindowsResult": {
+      "platform": "Windows Server 2025",
+      "pythonVersion": "3.12.10",
+      "passed": 3,
+      "failed": 1,
+      "skipped": 0,
+      "failure": "Aggregate isolated-venv proof rejected the new interpreter before source tasks."
+    },
+    "reproducedCause": "CPython Windows site.getsitepackages includes the exact base interpreter root as well as Lib/site-packages. The previous predicate incorrectly treated a legitimate standard-library root on sys.path as a base package leak.",
+    "pythonSource": {
+      "url": "https://github.com/python/cpython/blob/v3.12.10/Lib/site.py",
+      "gitBlob": "aed254ad504d3594029fe8ab1fc4e9487b7530aa"
+    },
+    "correction": "Normalize base_prefix and base_exec_prefix; exclude only their exact roots from the package-directory set; retain and check both actual package directories. Preserve config, prefix, isolated-mode, user-site and pip checks. Name every failed invariant.",
+    "encoding": "All helper interpreter calls use fixed -X utf8 with -I. Helper-owned PYTHONUTF8=1 also carries UTF-8 into reviewed build scripts\u2019 non-isolated Python children. The Unicode balance report comparisons use this mode.",
+    "regression": {
+      "cases": [
+        "allow Windows standard-library roots",
+        "reject base Lib/site-packages with case variation",
+        "reject separate base_exec_prefix Lib/site-packages"
+      ],
+      "execution": "Actual Python process with Windows path/site layout fixtures on Linux; real Windows rerun remains a CI gate."
+    },
+    "localAcceptance": {
+      "pythonVersion": "3.12.14",
+      "testsPassed": 5,
+      "testsFailed": 0,
+      "testsSkipped": 0,
+      "actualFreshVenv": true,
+      "actualAuthoredRouteAndBalanceChecks": true
+    },
+    "correctedWindowsCi": "pending publication and actual CI rerun",
+    "browserBuildExecuted": false
+  }
+}

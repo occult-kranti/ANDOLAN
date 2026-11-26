@@ -78,15 +78,29 @@ func _run() -> void:
 		var card: Control = scene.main_panel.get_node("Card")
 		var actions: Array[Control] = []
 		scene._focusable_children(scene.main_panel, actions)
-		var required_actions := ["ConfluenceMode", "TrainingMode", "ExploreConfluence", "RamaAbilities", "WatchConfluenceDuel", "Help", "Settings", "Quit"]
+		var required_actions := ["ConfluenceMode", "TrainingMode", "HanumanTrialMode", "ExploreConfluence", "RamaAbilities", "WatchConfluenceDuel", "Help", "Settings", "Quit"]
 		var actual_actions: Array[String] = []
-		for action in actions: actual_actions.append(str(action.name))
+		var outside_or_short: Array[String] = []
+		for action in actions:
+			actual_actions.append(str(action.name))
+			if not card.get_global_rect().encloses(action.get_global_rect()) or action.size.y < 44:
+				outside_or_short.append(str(action.name))
 		required_actions.sort()
 		actual_actions.sort()
-		var fit := actual_actions == required_actions
-		for action in actions: fit = fit and card.get_global_rect().encloses(action.get_global_rect()) and action.size.y >= 44
-		_record("Required mode, launch and utility actions fit without scrolling at " + str(dimensions), fit and view.encloses(card.get_global_rect()), {"card":str(card.get_global_rect()),"actions":actions.size()})
+		var fit := actual_actions == required_actions and outside_or_short.is_empty()
+		_record("Required mode, launch and utility actions fit without scrolling at " + str(dimensions), fit and view.encloses(card.get_global_rect()), {"card":str(card.get_global_rect()),"actions":actual_actions,"expected_actions":required_actions,"outside_or_short":outside_or_short})
 		_record("All title actions reached once in each Tab direction at " + str(dimensions), _complete_cycle(scene,scene.main_panel))
+		var training: Button = scene.main_panel.train_mode_button
+		var hanuman: Button = scene.main_panel.hanuman_mode_button
+		training.grab_focus()
+		scene._trap_modal_focus(_key(KEY_TAB))
+		var enters_trial := root.gui_get_focus_owner() == hanuman
+		scene._trap_modal_focus(_key(KEY_TAB))
+		var reaches_launch := root.gui_get_focus_owner() == explore
+		scene._trap_modal_focus(_key(KEY_TAB, true))
+		var returns_to_trial := root.gui_get_focus_owner() == hanuman
+		scene._trap_modal_focus(_key(KEY_TAB, true))
+		_record("Hanuman Trial has correct forward and backward Tab neighbours at " + str(dimensions), enters_trial and reaches_launch and returns_to_trial and root.gui_get_focus_owner() == training, {"focus":_focus_name()})
 		var face: Vector2 = scene.title_camera.unproject_position(scene.player.global_position + Vector3(0,1.78,0))
 		var veil: TextureRect = scene.main_panel.get_child(0)
 		var face_veil_alpha: float = veil.texture.gradient.sample(clampf(face.x / view.size.x,0,1)).a

@@ -1,0 +1,53 @@
+name: Daftar development Python workspace
+
+on:
+  pull_request:
+    paths:
+      - 'tools/daftar-development/**'
+      - 'games/yuga-native/art/daftar-route-lab/**'
+      - 'games/yuga-native/docs/design/ember-rite-5v5/atlas/**'
+      - '.github/workflows/daftar-development.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python-workspace:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    env:
+      # The stored render acceptance binds exact source bytes on both platforms.
+      GIT_CONFIG_COUNT: '1'
+      GIT_CONFIG_KEY_0: core.autocrlf
+      GIT_CONFIG_VALUE_0: 'false'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          sparse-checkout: |
+            tools/daftar-development
+            games/yuga-native/art/daftar-route-lab
+            games/yuga-native/docs/design/ember-rite-5v5/atlas
+            games/yuga-rust/src
+            games/yuga-rust/assets
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select the actual bootstrap interpreter
+        run: python -c "import os,sys; open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8').write('DAFTAR_TEST_PYTHON=' + os.path.realpath(sys.executable) + '\n')"
+      - name: Install a real isolated environment and execute current map checks
+        run: node --test --test-reporter=tap tools/daftar-development/python-workspace.test.mjs
+      - name: Verify the source-bound Route Lab artifact and negative cases
+        run: |
+          node tools/daftar-development/check.mjs
+          node --test --test-reporter=tap tools/daftar-development/check.test.mjs
