@@ -243,6 +243,43 @@ class ObservatoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             obs.safe_url(desk + "private.flac")
 
+    def test_district_serves_embedded_textures_modules_and_resumable_models(self):
+        workspace = self.directory / "map-checkout"
+        observer = obs.Observatory(workspace, self.directory)
+        observer.web = self.directory / "web"
+        atlas = obs.EXCHANGE_ROUTE
+        for name, data in (("index.html", b"District"), ("three.bundle.mjs", b"export {};"),
+                           ("scene/monsoon-exchange.glb", b"glTFpayload")):
+            target = workspace / obs.ATLAS_FILES[atlas + name]
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(data)
+        observer.web.mkdir(parents=True, exist_ok=True)
+        (observer.web / "index.html").write_text("Observatory")
+        server = obs.make_server(observer, 0)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        self.addCleanup(thread.join)
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+
+        def get(path, headers=None):
+            with contextlib.closing(http.client.HTTPConnection("127.0.0.1", server.server_port, timeout=3)) as connection:
+                connection.request("GET", "/" + path, headers=headers or {})
+                with connection.getresponse() as response:
+                    return response.status, response.headers, response.read()
+
+        self.assertEqual(get(atlas.rstrip("/"))[1]["Location"], "/" + atlas)
+        for page in (atlas, atlas + "index.html"):
+            status, headers, body = get(page)
+            self.assertEqual((status, body), (200, b"District"))
+            self.assertIn("img-src 'self' blob:", headers["Content-Security-Policy"])
+            self.assertIn("connect-src 'self' blob:", headers["Content-Security-Policy"])
+        self.assertNotIn("blob:", get("")[1]["Content-Security-Policy"])
+        self.assertTrue(get(atlas + "three.bundle.mjs")[1]["Content-Type"].startswith("text/javascript"))
+        status, headers, body = get(atlas + "scene/monsoon-exchange.glb", {"Range": "bytes=0-3"})
+        self.assertEqual((status, headers["Content-Type"], body), (206, "model/gltf-binary", b"glTF"))
+        self.assertEqual(get(atlas + "private.blend")[0], 404)
+
     def test_gpu_telemetry_is_bounded_explicit_and_has_no_network_calls(self):
         with mock.patch.object(obs.shutil, "which", return_value="/safe/nvidia-smi"), mock.patch.object(obs, "command", return_value="GPU name, 8192, 1024, 10") as run:
             gpu = obs.host_info()["gpu"]

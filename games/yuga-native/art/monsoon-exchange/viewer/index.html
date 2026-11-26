@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3efdf" />
+    <meta
+      name="description"
+      content="Explore the measured floorplan, original paintings and editable Blender district for YUGA’s Monsoon Exchange."
+    />
+    <title>Monsoon Exchange · YUGA map atlas</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="atlas.css" />
+    <script type="module" src="atlas.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#atlas">Skip to map</a>
+    <header class="mast">
+      <div class="identity">
+        <a class="wordmark" id="home" href="../" aria-label="YUGA production">YUGA</a
+        ><span class="series">Ember Rite / Map atlas</span>
+      </div>
+      <nav aria-label="On this page">
+        <a href="#atlas">Explore</a><a href="#landmarks">Landmarks</a><a href="#files">Files</a>
+      </nav>
+    </header>
+    <main>
+      <section class="opening" aria-labelledby="name">
+        <div class="opening-copy">
+          <h1 id="name"><span>Monsoon</span> <span>Exchange</span></h1>
+          <p>
+            Carry the ember through a monsoon trading district. An elevated copper court and a sunken
+            indigo cistern meet around the screened crossing at Weavers’ Gate.
+          </p>
+          <a class="enter" href="#atlas"
+            >Explore the map
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+          ></a>
+        </div>
+        <figure class="cover">
+          <a data-asset="concepts/district-keyart.webp" href="concepts/district-keyart.webp"
+            ><img
+              data-asset="concepts/district-keyart.webp"
+              alt="Painted aerial concept of the district, with the indigo cistern to the west and the copper court to the east."
+              fetchpriority="high"
+          /></a>
+          <figcaption><span>Monsoon Exchange</span><span>District concept painting</span></figcaption>
+        </figure>
+      </section>
+      <section class="atlas" id="atlas" aria-labelledby="atlas-title">
+        <div class="section-head">
+          <h2 id="atlas-title">District atlas</h2>
+          <div class="mode-switch" role="group" aria-label="Map view">
+            <button type="button" data-mode="plan" aria-pressed="true">Floorplan</button
+            ><button type="button" data-mode="still" aria-pressed="false">Blender view</button
+            ><button type="button" data-mode="orbit" aria-pressed="false">Orbit in 3D</button>
+          </div>
+        </div>
+        <div class="workbench">
+          <div class="sheet">
+            <div class="frame" id="frame">
+              <div class="plan-surface" id="plan-surface">
+                <svg
+                  id="plan"
+                  role="group"
+                  aria-labelledby="plan-title plan-desc"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title id="plan-title">Interactive district floorplan</title>
+                  <desc id="plan-desc">
+                    North is up. Choose a marked site or gate to inspect its approach and elevation.
+                  </desc>
+                </svg>
+              </div>
+              <div class="render-surface" id="render-surface" hidden><img id="still" alt="" /></div>
+              <div class="orbit-surface" id="orbit-surface" hidden></div>
+              <div class="load-state" id="load-state" role="status" hidden></div>
+            </div>
+            <div class="sheet-foot">
+              <span id="surface-note">Measured floorplan · North up</span>
+              <div class="sheet-controls" id="plan-layers">
+                <label><input type="checkbox" id="route-layer" checked /> Routes</label
+                ><label><input type="checkbox" id="cover-layer" checked /> Cover</label>
+              </div>
+              <div class="sheet-controls" id="orbit-controls" hidden>
+                <button type="button" id="turn-model">Turn</button
+                ><button type="button" id="zoom-out" aria-label="Zoom out">−</button
+                ><button type="button" id="zoom-in" aria-label="Zoom in">+</button
+                ><button type="button" id="reset-camera">Reset view</button
+                ><button type="button" id="open-walk" aria-controls="walk-panel" aria-expanded="false">
+                  Walk a route
+                </button>
+              </div>
+            </div>
+            <p class="assist" id="orbit-help" hidden>
+              Drag to orbit, scroll or pinch to zoom. With the model focused, use the arrow keys to
+              orbit, + or − to zoom and Home to reset.
+            </p>
+            <div class="walk-panel" id="walk-panel" hidden>
+              <div class="walk-setup">
+                <label for="walk-route">Approach from Caravan Yard</label
+                ><select id="walk-route"></select>
+              </div>
+              <div class="walk-position">
+                <label for="walk-time">Route position</label
+                ><output id="walk-readout" for="walk-time" aria-live="off"></output>
+                <input id="walk-time" type="range" min="0" max="1" step="0.01" value="0" />
+              </div>
+              <div class="walk-actions">
+                <button id="walk-play" type="button">Start walk</button
+                ><button id="walk-exit" type="button">Return to orbit</button>
+              </div>
+              <p class="assist" id="walk-help"></p>
+            </div>
+            <noscript
+              ><p>
+                Open the <a href="plan/floorplan.svg">measured floorplan</a> or the
+                <a href="plan/floorplans.pdf">printable set</a>.
+              </p></noscript
+            >
+          </div>
+          <aside class="inspector" aria-label="Location inspector">
+            <label for="location">Inspect a location</label
+            ><select id="location">
+              <option value="overview">Entire district</option>
+              <option value="sun-court">Site A · Sun Court</option>
+              <option value="indigo-cistern">Site B · Indigo Cistern</option>
+              <option value="weavers-gate">Mid · Weavers’ Gate</option>
+            </select>
+            <div class="readout" aria-live="polite" aria-atomic="true">
+              <h3 id="place-name">Entire district</h3>
+              <p id="place-copy">
+                The east arcade climbs to Sun Court. Dyers’ Passage drops to Indigo Cistern. The gate
+                between them gives either side a way to change course.
+              </p>
+              <dl id="place-facts"></dl>
+            </div>
+            <a
+              class="quiet-link"
+              id="full-plan"
+              data-asset="plan/floorplan.svg"
+              href="plan/floorplan.svg"
+              >Open measured drawing</a
+            >
+          </aside>
+        </div>
+      </section>
+      <section id="landmarks" class="landmarks" aria-labelledby="views-title">
+        <div class="section-head">
+          <h2 id="views-title">Landmarks at eye level</h2>
+          <p>Blender camera studies</p>
+        </div>
+        <div class="views">
+          <figure>
+            <button class="view-link" type="button" data-shot="sun-court">
+              <img
+                data-asset="renders/sun-court.webp"
+                loading="lazy"
+                alt="Blender view from the Sun Court approach"
+              /><span>Site A <b>Sun Court</b></span>
+            </button>
+          </figure>
+          <figure>
+            <button class="view-link" type="button" data-shot="indigo-cistern">
+              <img
+                data-asset="renders/indigo-cistern.webp"
+                loading="lazy"
+                alt="Blender view inside the Indigo Cistern"
+              /><span>Site B <b>Indigo Cistern</b></span>
+            </button>
+          </figure>
+          <figure>
+            <button class="view-link" type="button" data-shot="weavers-gate">
+              <img
+                data-asset="renders/weavers-gate.webp"
+                loading="lazy"
+                alt="Blender study of the central Weavers’ Gate"
+              /><span>Mid <b>Weavers’ Gate</b></span>
+            </button>
+          </figure>
+        </div>
+      </section>
+      <section id="drawings" class="drawings" aria-labelledby="drawings-title">
+        <div class="section-head">
+          <h2 id="drawings-title">The district from above</h2>
+          <p>Open each plate at full size.</p>
+        </div>
+        <div class="plates">
+          <figure>
+            <a data-asset="concepts/painted-plan.webp" href="concepts/painted-plan.webp"
+              ><img
+                data-asset="concepts/painted-plan.webp"
+                loading="lazy"
+                alt="Illustrated plan interpreting the forms and materials of the whole district"
+            /></a>
+            <figcaption>Painted interpretation</figcaption>
+          </figure>
+          <figure>
+            <a data-asset="renders/north-up.webp" href="renders/north-up.webp"
+              ><img
+                data-asset="renders/north-up.webp"
+                loading="lazy"
+                alt="North-up orthographic Blender render of the complete built district"
+            /></a>
+            <figcaption>Blender roof plan</figcaption>
+          </figure>
+          <figure>
+            <a data-asset="plan/floorplan.svg" href="plan/floorplan.svg"
+              ><img
+                data-asset="plan/floorplan.png"
+                loading="lazy"
+                alt="Dimensioned north-up survey drawing of the district with rooms and connections"
+            /></a>
+            <figcaption>Measured survey drawing</figcaption>
+          </figure>
+        </div>
+      </section>
+      <section id="files" class="files" aria-labelledby="files-title">
+        <div>
+          <h2 id="files-title">Working files</h2>
+          <p>
+            Use the scene for the full Blender assembly, the GLB for an engine import and the survey for
+            coordinates in metres.
+          </p>
+        </div>
+        <div class="file-list">
+          <a data-asset="scene/monsoon-exchange.blend" href="scene/monsoon-exchange.blend" download
+            ><b>Editable Blender scene</b><span>.blend</span></a
+          >
+          <a data-asset="scene/monsoon-exchange.glb" href="scene/monsoon-exchange.glb" download
+            ><b>Portable district model</b><span>.glb</span></a
+          >
+          <a data-asset="monsoon-exchange-atlas.pdf" href="monsoon-exchange-atlas.pdf"
+            ><b>Illustrated map design atlas</b><span>.pdf</span></a
+          >
+          <a data-asset="film/district-tour.mp4" href="film/district-tour.mp4"
+            ><b>Watch the filmed tour</b><span>.mp4</span></a
+          >
+          <a data-asset="plan/floorplans.pdf" href="plan/floorplans.pdf"
+            ><b>Printable floorplans and sections</b><span>.pdf</span></a
+          >
+          <a data-asset="plan/survey.json" href="plan/survey.json" download
+            ><b>Metric map survey</b><span>.json</span></a
+          >
+          <a
+            href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/docs/research/dust2-map-lab/inventory"
+            ><b>Dust II function and structure inventory</b><span>GitHub</span></a
+          >
+          <a
+            href="https://github.com/occult-kranti/ANDOLAN/blob/game/yuga-hanuman-trial/games/yuga-native/art/monsoon-exchange/design/transfer-register.md"
+            ><b>What the district keeps and transforms</b><span>GitHub</span></a
+          >
+          <a
+            href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/art/monsoon-exchange"
+            ><b>Design and source credits</b><span>GitHub</span></a
+          >
+        </div>
+      </section>
+    </main>
+    <footer><span>YUGA / Ember Rite</span><a href="#name">Back to the district</a></footer>
+  </body>
+</html>

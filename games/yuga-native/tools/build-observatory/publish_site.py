@@ -47,8 +47,20 @@ MAX_WEB_TOTAL = 256 * 1024 * 1024
 ATLAS = "games/yuga-native/docs/design/ember-rite-5v5/atlas"
 AUDIO_ROUTE = "ember-rite/audio/"
 AUDIO = "games/yuga-native/art/yagna-audio"
+EXCHANGE_ROUTE = "monsoon-exchange/"
+EXCHANGE = "games/yuga-native/art/monsoon-exchange"
 # Exact public aliases for files with a single authoring location.
 ATLAS_FILES = {
+    **{EXCHANGE_ROUTE + name: f"{EXCHANGE}/viewer/{name}" for name in (
+        "index.html", "atlas.css", "atlas.js", "orbit.js", "three.bundle.mjs", "THREE-LICENSE.txt", "favicon.svg")},
+    **{EXCHANGE_ROUTE + name: f"{EXCHANGE}/{name}" for name in (
+        "monsoon-exchange-atlas.pdf", "plan/survey.json", "plan/geometry.json", "plan/metrics.json", "plan/floorplan.png",
+        "plan/floorplan.svg", "plan/sun-court.svg", "plan/indigo-cistern.svg", "plan/sections.svg",
+        "plan/floorplans.pdf", "scene/scene-register.json",
+        "scene/monsoon-exchange.glb", "scene/monsoon-exchange.blend", "renders/overview.webp",
+        "renders/sun-court.webp", "renders/indigo-cistern.webp", "renders/weavers-gate.webp", "renders/north-up.webp",
+        "renders/render-register.json", "film/district-tour.mp4", "qa/drawing-verification.json", "qa/geometry-verification.json",
+        "concepts/district-keyart.webp", "concepts/painted-plan.webp")},
     **{AUDIO_ROUTE + name: f"{AUDIO}/{name}" for name in (
         "index.html", "listen.css", "listen.js", "ritual-mix.flac", "drone.flac", "low-drum.flac",
         "hand-drum.flac", "reed.flac", "expiry.flac", "quench.flac",
@@ -259,7 +271,8 @@ def artifact_url(value, selected):
         return
     if value == STUDIO_ROUTE and STUDIO_ROUTE + "index.html" in selected:
         return
-    if value in {AUDIO_ROUTE, AUDIO_ROUTE.rstrip("/")} and AUDIO_ROUTE + "index.html" in selected:
+    if any(value in {route, route.rstrip("/")} and route + "index.html" in selected
+           for route in (AUDIO_ROUTE, EXCHANGE_ROUTE)):
         return
     p = relative(value)
     if (p.parts[0] != "media" and value not in ATLAS_FILES and not value.startswith(STUDIO_ROUTE)) or value not in selected:

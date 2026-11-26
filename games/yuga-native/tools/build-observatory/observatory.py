@@ -20,7 +20,7 @@ import threading
 import time
 from urllib.parse import unquote, urlsplit
 
-from publish_site import AUDIO_ROUTE, ATLAS_FILES, MAX_FILE, STUDIO, STUDIO_ROUTE, studio_index
+from publish_site import AUDIO_ROUTE, ATLAS_FILES, EXCHANGE_ROUTE, MAX_FILE, STUDIO, STUDIO_ROUTE, studio_index
 
 MAX_BYTES = 2 * 1024 * 1024
 MAX_JOBS = 256
@@ -80,7 +80,8 @@ def safe_url(value):
         if any(c.isspace() for c in value):
             raise ValueError("Unsafe HTTPS URL")
         return value
-    if value in {"viewer/", "viewer/index.html", STUDIO_ROUTE, AUDIO_ROUTE, AUDIO_ROUTE.rstrip("/")} or value in ATLAS_FILES:
+    if value in {"viewer/", "viewer/index.html", STUDIO_ROUTE, AUDIO_ROUTE, AUDIO_ROUTE.rstrip("/"),
+                 EXCHANGE_ROUTE, EXCHANGE_ROUTE.rstrip("/")} or value in ATLAS_FILES:
         return value
     if value.startswith(STUDIO_ROUTE):
         return relative_path(value)
@@ -513,13 +514,13 @@ def static_path(web, url, workspace=None):
     if len(decoded) > 1000 or any(c in decoded for c in ("\\", "\x00", "%")):
         raise ValueError("Invalid static path")
     value = decoded.lstrip("/") or "index.html"
-    if value in {"viewer/", STUDIO_ROUTE, AUDIO_ROUTE}:
+    if value in {"viewer/", STUDIO_ROUTE, AUDIO_ROUTE, EXCHANGE_ROUTE}:
         value += "index.html"
     if decoded.startswith("//"):
         raise ValueError("Invalid static path")
     relative_path(value)
-    if value.startswith(AUDIO_ROUTE) and value not in ATLAS_FILES:
-        raise FileNotFoundError("Unpublished audio file")
+    if value.startswith((AUDIO_ROUTE, EXCHANGE_ROUTE)) and value not in ATLAS_FILES:
+        raise FileNotFoundError("Unpublished studio file")
     root, source = (workspace, ATLAS_FILES[value]) if workspace and value in ATLAS_FILES else (web, value)
     if workspace and value.startswith(STUDIO_ROUTE):
         root, source = workspace / STUDIO, value.removeprefix(STUDIO_ROUTE)
@@ -528,7 +529,7 @@ def static_path(web, url, workspace=None):
     p = safe_existing(root / source)
     if not p.is_relative_to(safe_existing(root, directory=True)) or not p.is_file():
         raise FileNotFoundError("Static file absent")
-    if p.stat().st_size > (MAX_FILE if value.startswith(STUDIO_ROUTE) else 32 * 1024 * 1024):
+    if p.stat().st_size > (MAX_FILE if value.startswith((STUDIO_ROUTE, EXCHANGE_ROUTE)) else 32 * 1024 * 1024):
         raise ValueError("Static file exceeds limit")
     return p
 
@@ -540,7 +541,7 @@ def make_server(observatory, port):
         def log_message(self, *_):
             pass  # Never copy arbitrary request paths or headers to logs.
 
-        def headers_for(self, status, kind, length, *, standalone=False, cache="no-store"):
+        def headers_for(self, status, kind, length, *, standalone=False, model_atlas=False, cache="no-store"):
             self.send_response(status)
             self.send_header("Content-Type", kind)
             self.send_header("Content-Length", str(length))
@@ -550,6 +551,9 @@ def make_server(observatory, port):
             if standalone:
                 # The two portable map drills embed their own SVG, CSS, images and script.
                 policy = "sandbox allow-scripts; default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+            elif model_atlas:
+                # Three's glTF loader decodes the map's packaged textures through local blob URLs.
+                policy = "default-src 'self'; img-src 'self' blob:; style-src 'self'; script-src 'self'; connect-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; base-uri 'none'"
             else:
                 policy = "default-src 'self'; img-src 'self' https:; style-src 'self'; script-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'"
             self.send_header("Content-Security-Policy", policy)
@@ -565,8 +569,9 @@ def make_server(observatory, port):
                 stat = os.fstat(stream.fileno())
                 size = stat.st_size
                 etag = f'"{size:x}-{stat.st_mtime_ns:x}"'
-                seekable = route.startswith("/" + STUDIO_ROUTE) or (
-                    route.startswith("/" + AUDIO_ROUTE) and file.suffix in {".wav", ".flac"})
+                seekable = (route.startswith("/" + STUDIO_ROUTE)
+                            or (route.startswith("/" + AUDIO_ROUTE) and file.suffix in {".wav", ".flac"})
+                            or (route.startswith("/" + EXCHANGE_ROUTE) and file.suffix in {".glb", ".blend", ".pdf", ".mp4"}))
                 if seekable and self.headers.get("If-None-Match") == etag:
                     self.send_response(304)
                     self.send_header("ETag", etag)
@@ -587,6 +592,7 @@ def make_server(observatory, port):
                         return
                 count = end - start + 1
                 self.headers_for(206 if requested else 200, kind, count, standalone=route in {"/ember-rite/rehearsal.html", "/ember-rite/vertical-play.html"},
+                                 model_atlas=route in {"/" + EXCHANGE_ROUTE, "/" + EXCHANGE_ROUTE + "index.html"},
                                  cache="no-cache" if seekable else "no-store")
                 if seekable:
                     self.send_header("Accept-Ranges", "bytes")
@@ -615,14 +621,14 @@ def make_server(observatory, port):
                     self.send_body(200, raw)
                 elif path.startswith("/api/"):
                     self.send_body(404, b'{"error":"Unknown API route"}')
-                elif path in {"/" + STUDIO_ROUTE.rstrip("/"), "/" + AUDIO_ROUTE.rstrip("/")}:
+                elif path in {"/" + route.rstrip("/") for route in (STUDIO_ROUTE, AUDIO_ROUTE, EXCHANGE_ROUTE)}:
                     self.send_response(301)
                     self.send_header("Location", path + "/")
                     self.send_header("Content-Length", "0")
                     self.end_headers()
                 else:
                     p = static_path(observatory.web, self.path, observatory.workspace)
-                    kinds = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8",
+                    kinds = {".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".mjs": "text/javascript; charset=utf-8",
                              ".json": "application/json; charset=utf-8", ".pdf": "application/pdf", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
                              ".webp": "image/webp", ".svg": "image/svg+xml", ".glb": "model/gltf-binary", ".blend": "application/octet-stream",
                              ".flac": "audio/flac", ".wav": "audio/wav", ".mp4": "video/mp4", ".woff2": "font/woff2", ".ttf": "font/ttf", ".txt": "text/plain; charset=utf-8"}
