@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-11-26",
+  "baselineCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+  "branch": "feat/daftar-moe-creative-development",
+  "nodeVersion": "v24.22.3",
+  "checks": [
+    {
+      "command": "node tools/daftar-development/check.mjs",
+      "exitCode": 0,
+      "result": {
+        "schemaVersion": 1,
+        "status": "package_integrity_and_geometry_verified",
+        "sourceRepository": "occult-kranti/ANDOLAN",
+        "conventionsCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+        "manifestSha256": "18eef7ef3e36a66b92228146f0b6ec4b8b23c404e6755b92e1807916e357509c",
+        "glbSha256": "3f73be3a96600498387288489e4d5a222900c110b116c94f4686a543cc4691d4",
+        "nodes": 73,
+        "meshes": 73,
+        "positionSamples": 11602,
+        "gltfBoundsMinM": [
+          -24,
+          -0.4,
+          -28
+        ],
+        "gltfBoundsMaxM": [
+          24,
+          3.37,
+          28
+        ],
+        "spawnMarkersVerified": 10,
+        "storedBlenderReimportEvidenceBound": true,
+        "engineLaunchedByThisCheck": false,
+        "gameplayVerified": false,
+        "unrealExecuted": false,
+        "gpuTested": false
+      }
+    },
+    {
+      "command": "node --test tools/daftar-development/check.test.mjs",
+      "exitCode": 0,
+      "testsPassed": 5,
+      "testsFailed": 0
+    },
+    {
+      "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/audit.py --check",
+      "exitCode": 0,
+      "maps": 4,
+      "spawnToSiteOpeningPairs": 16,
+      "drySiteRotations": 4
+    },
+    {
+      "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/balance.py --check",
+      "exitCode": 0,
+      "retakeWindows": 4,
+      "independentEntrancePairs": 16
+    },
+    {
+      "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/test_balance.py",
+      "exitCode": 0,
+      "testsPassed": 2
+    },
+    {
+      "check": "VS Code workspace JSON parses; tasks use explicit process arguments without folder-open execution",
+      "passed": true,
+      "tasks": 9
+    }
+  ],
+  "storedArtEvidence": "games/yuga-native/art/daftar-route-lab/geometry-acceptance.json",
+  "actualVisualReviewed": "games/yuga-native/art/daftar-route-lab/route-lab-preview.png",
+  "remaining": [
+    "Live Daftar company apply and model assignment",
+    "Actual model inference and memory acceptance",
+    "Full Rust game build/execution for any subsequent gameplay change",
+    "Godot import and controller/collision/navigation acceptance",
+    "Unreal project selection, import, scene and render acceptance",
+    "Physical GPU performance and human playtesting"
+  ],
+  "providerCalls": 0,
+  "resourceRentals": 0,
+  "unrealExecuted": false,
+  "gpuTested": false
+}
