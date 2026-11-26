@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
+import { PYTHON_ENVIRONMENT_PROBE } from './python-workspace.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
 const script = path.join(directory, 'python-workspace.mjs');
@@ -52,6 +53,36 @@ test('rejects enabled or ambiguous global site-packages before starting an inter
   }
 });
 
+test('Windows stdlib roots are allowed while base and base-exec site-packages remain excluded',
+  { skip: !process.env.DAFTAR_TEST_PYTHON }, () => {
+    const fixture = `import json,ntpath,os,site,sys
+# Reproduce CPython's Windows site.getsitepackages branch on either CI host.
+# All imports happen before installing these synthetic Windows search paths.
+os.path=ntpath
+os.sep=chr(92)
+sys.base_prefix="C:/PythonBase"
+sys.base_exec_prefix="C:/PythonExec"
+sys.prefix="D:/Workspace/venv"
+paths=json.loads(sys.argv[1])
+sys.argv=["probe","D:/Workspace/venv"]
+sys.path=paths
+`;
+    const allowed = ['C:/PythonBase', 'C:/PythonExec', 'C:/PythonBase/Lib', 'D:/Workspace/venv/Lib/site-packages'];
+    for (const [paths, expected] of [[allowed, true],
+      [[...allowed, 'c:/PYTHONBASE/Lib/site-packages'], false],
+      [[...allowed, 'c:/PYTHONEXEC/Lib/site-packages'], false]]) {
+      const result = spawnSync(process.env.DAFTAR_TEST_PYTHON,
+        ['-X', 'utf8', '-I', '-c', fixture + PYTHON_ENVIRONMENT_PROBE, JSON.stringify(paths)],
+        { encoding: 'utf8', shell: false, timeout: 30000 });
+      assert.equal(result.status, 0, result.stderr);
+      const receipt = JSON.parse(result.stdout);
+      assert.equal(receipt.baseSitePackagesExcluded, expected, JSON.stringify(paths));
+      for (const key of ['prefixMatches', 'isolatedPrefix', 'isolatedMode', 'utf8Mode', 'userSiteDisabled']) {
+        assert.equal(receipt[key], true, key);
+      }
+    }
+  });
+
 test('creates a real offline venv and runs the current route and balance checks inside it',
   { skip: !process.env.DAFTAR_TEST_PYTHON }, t => {
     const venv = path.join(temporary(t), 'environment');
@@ -59,7 +90,7 @@ test('creates a real offline venv and runs the current route and balance checks 
     assert.equal(created.status, 0, created.stderr);
     const receipt = JSON.parse(created.stdout);
     assert.equal(receipt.prefixMatches, true); assert.equal(receipt.isolatedPrefix, true);
-    assert.equal(receipt.isolatedMode, true); assert.equal(receipt.userSiteDisabled, true);
+    assert.equal(receipt.isolatedMode, true); assert.equal(receipt.utf8Mode, true); assert.equal(receipt.userSiteDisabled, true);
     assert.equal(receipt.baseSitePackagesExcluded, true); assert.equal(receipt.pythonPackageIndexRequests, 0);
     for (const action of ['routes', 'balance', 'test-balance']) {
       const result = run([action, '--venv', venv]);

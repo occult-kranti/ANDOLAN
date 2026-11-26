@@ -15,10 +15,15 @@ const tasks = {
   'test-balance': [atlas + '/test_balance.py'],
   'build-web': ['games/yuga-rust/tools/build_web.py'],
 };
-const proof = `import json,os,site,sys
+export const PYTHON_ENVIRONMENT_PROBE = `import json,os,site,sys
 normal=lambda value:os.path.normcase(os.path.realpath(value))
-base_sites={normal(value) for value in site.getsitepackages([sys.base_prefix])}
-print(json.dumps({"version":list(sys.version_info[:3]),"prefixMatches":normal(sys.prefix)==normal(sys.argv[1]),"isolatedPrefix":normal(sys.prefix)!=normal(sys.base_prefix),"isolatedMode":sys.flags.isolated==1,"userSiteDisabled":site.ENABLE_USER_SITE is False,"baseSitePackagesExcluded":not any(normal(value) in base_sites for value in sys.path)}))`;
+base_prefixes=[sys.base_prefix,sys.base_exec_prefix]
+base_roots={normal(value) for value in base_prefixes}
+# On Windows site.getsitepackages includes the interpreter root itself, which
+# can also be a legitimate stdlib/DLL search path. Only exclude those exact roots;
+# their actual Lib/site-packages directories must remain absent.
+base_sites={normal(value) for value in site.getsitepackages(base_prefixes)}-base_roots
+print(json.dumps({"version":list(sys.version_info[:3]),"prefixMatches":normal(sys.prefix)==normal(sys.argv[1]),"isolatedPrefix":normal(sys.prefix)!=normal(sys.base_prefix),"isolatedMode":sys.flags.isolated==1,"utf8Mode":sys.flags.utf8_mode==1,"userSiteDisabled":site.ENABLE_USER_SITE is False,"baseSitePackagesExcluded":not any(normal(value) in base_sites for value in sys.path)}))`;
 // -I excludes the current directory. Add only this reviewed script's own source
 // directory so sibling modules such as audit and ritual_rules remain importable.
 const runScript = `import pathlib,runpy,sys
@@ -48,12 +53,16 @@ function options(argv) {
 function environment(venv) {
   const env = { ...process.env };
   for (const name of Object.keys(env)) if (/^(?:PYTHON|PIP_)/i.test(name)) delete env[name];
-  return { ...env, VIRTUAL_ENV: venv, PYTHONNOUSERSITE: '1', PIP_REQUIRE_VIRTUALENV: 'true',
+  // Reviewed build scripts can start sys.executable children without -I/-X;
+  // give those children the same encoding without inheriting an owner override.
+  return { ...env, VIRTUAL_ENV: venv, PYTHONNOUSERSITE: '1', PYTHONUTF8: '1', PIP_REQUIRE_VIRTUALENV: 'true',
     PIP_DISABLE_PIP_VERSION_CHECK: '1', PIP_CONFIG_FILE: process.platform === 'win32' ? 'nul' : '/dev/null' };
 }
 
 function execute(command, args, venv, timeout = 60000) {
-  const result = spawnSync(command, args, { cwd: root, env: environment(venv), shell: false,
+  // -I ignores PYTHONUTF8; a fixed interpreter flag also keeps Windows report
+  // reads/writes and piped diagnostics consistent with the UTF-8 source files.
+  const result = spawnSync(command, ['-X', 'utf8', ...args], { cwd: root, env: environment(venv), shell: false,
     windowsHide: true, encoding: 'utf8', timeout, maxBuffer: 2 * 1024 * 1024 });
   if (result.error || result.status !== 0) {
     throw new Error((result.error?.message ?? result.stderr.trim() ?? '') ||
@@ -75,11 +84,13 @@ function inspect(venv) {
     throw new Error('The venv must have exactly one include-system-site-packages = false entry.');
   }
   const python = path.join(venv, process.platform === 'win32' ? 'Scripts/python.exe' : 'bin/python');
-  const result = JSON.parse(execute(python, ['-I', '-c', proof, venv], venv).stdout);
-  if (!result.prefixMatches || !result.isolatedPrefix || !result.isolatedMode ||
-      !result.userSiteDisabled || !result.baseSitePackagesExcluded || result.version[0] !== 3 || result.version[1] < 10) {
-    throw new Error('The selected interpreter did not prove Python 3.10+ and isolated venv execution.');
-  }
+  const result = JSON.parse(execute(python, ['-I', '-c', PYTHON_ENVIRONMENT_PROBE, venv], venv).stdout);
+  const checks = { prefixMatches: result.prefixMatches, isolatedPrefix: result.isolatedPrefix,
+    isolatedMode: result.isolatedMode, utf8Mode: result.utf8Mode, userSiteDisabled: result.userSiteDisabled,
+    baseSitePackagesExcluded: result.baseSitePackagesExcluded,
+    pythonVersionSupported: result.version[0] === 3 && result.version[1] >= 10 };
+  const failed = Object.keys(checks).filter(key => checks[key] !== true);
+  if (failed.length) throw new Error('The selected interpreter did not prove Python 3.10+ and isolated venv execution. Failed checks: ' + failed.join(', ') + '.');
   const pip = execute(python, ['-I', '-m', 'pip', '--isolated', '--require-virtualenv', '--version'], venv).stdout.trim();
   if (!/^pip \d/.test(pip)) throw new Error('The venv requires its own pip; use a bootstrap Python with ensurepip.');
   return { schemaVersion: 1, venv, python, ...result, pipVersion: pip.split(/\s+/)[1],

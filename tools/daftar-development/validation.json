@@ -11,9 +11,10 @@
     {
       "command": "DAFTAR_TEST_PYTHON=/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 node --test tools/daftar-development/python-workspace.test.mjs",
       "exitCode": 0,
-      "testsPassed": 4,
+      "testsPassed": 5,
       "testsFailed": 0,
-      "testsSkipped": 0
+      "testsSkipped": 0,
+      "scope": "Three rejection cases, executable Windows-layout package isolation regression, and actual fresh Linux venv route/balance execution."
     },
     {
       "command": "node tools/daftar-development/python-workspace.mjs create --python /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
@@ -61,6 +62,14 @@
     {
       "command": "node --check tools/daftar-development/python-workspace.mjs",
       "exitCode": 0
+    },
+    {
+      "command": "node tools/daftar-development/python-workspace.mjs check",
+      "exitCode": 0,
+      "utf8Mode": true,
+      "venvPrefixVerified": true,
+      "userSiteDisabled": true,
+      "baseSitePackagesExcluded": true
     }
   ],
   "prerequisiteRestoration": {
@@ -80,7 +89,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "f78ee2c744c8d9a4906c22b2f87dd5342888aa8538745b0ec1b3a6e795854245"
+      "sha256": "c8a6692ee05538824fee81dc98a28686a5cecc670a98c59a3df785fcf8218c6f"
     },
     {
       "path": "project.json",
@@ -92,11 +101,11 @@
     },
     {
       "path": "python-workspace.mjs",
-      "sha256": "82b21c6752b7f03dd587484a360adec5b8435c562213ec94ccc16824b5551a8d"
+      "sha256": "c6c7947003bed772aaaa10ef2a79a4445e139d2e4d6bf9b1801544f8dcc8d4d6"
     },
     {
       "path": "python-workspace.test.mjs",
-      "sha256": "b2eb6fa56140a614c49597b48861781ca08b22321f94d901795b735e31851966"
+      "sha256": "19aa1dfd8129d7c795fed7834ce56b5c5df00f91e24f508db6efd8bf8fb2012f"
     },
     {
       "path": ".gitignore",
@@ -109,7 +118,7 @@
     "Commission Monsoon collision/objectives and listener/audio authority in the actual game.",
     "Ten seats, two rendered clients, human listening/game feel and physical-GPU profiling.",
     "Selected Unreal project import/render remains a separate experiment.",
-    "Windows execution of the Python helper is untested; platform paths are implemented."
+    "Corrected Windows helper CI must pass at the new published commit."
   ],
   "externalProviderRequests": 0,
   "resourceRentals": 0,
@@ -200,5 +209,43 @@
       "unrealExecuted": false,
       "gpuTested": false
     }
+  },
+  "portabilityCorrection": {
+    "previousHead": "1f18a25d1e66df1714f24692b05fd4da9b77a65e",
+    "priorCiRun": "https://github.com/occult-kranti/ANDOLAN/actions/runs/45761893079",
+    "priorWindowsJob": "https://github.com/occult-kranti/ANDOLAN/actions/runs/45761893079/job/139713599012",
+    "priorWindowsResult": {
+      "platform": "Windows Server 2025",
+      "pythonVersion": "3.12.10",
+      "passed": 3,
+      "failed": 1,
+      "skipped": 0,
+      "failure": "Aggregate isolated-venv proof rejected the new interpreter before source tasks."
+    },
+    "reproducedCause": "CPython Windows site.getsitepackages includes the exact base interpreter root as well as Lib/site-packages. The previous predicate incorrectly treated a legitimate standard-library root on sys.path as a base package leak.",
+    "pythonSource": {
+      "url": "https://github.com/python/cpython/blob/v3.12.10/Lib/site.py",
+      "gitBlob": "aed254ad504d3594029fe8ab1fc4e9487b7530aa"
+    },
+    "correction": "Normalize base_prefix and base_exec_prefix; exclude only their exact roots from the package-directory set; retain and check both actual package directories. Preserve config, prefix, isolated-mode, user-site and pip checks. Name every failed invariant.",
+    "encoding": "All helper interpreter calls use fixed -X utf8 with -I. Helper-owned PYTHONUTF8=1 also carries UTF-8 into reviewed build scripts\u2019 non-isolated Python children. The Unicode balance report comparisons use this mode.",
+    "regression": {
+      "cases": [
+        "allow Windows standard-library roots",
+        "reject base Lib/site-packages with case variation",
+        "reject separate base_exec_prefix Lib/site-packages"
+      ],
+      "execution": "Actual Python process with Windows path/site layout fixtures on Linux; real Windows rerun remains a CI gate."
+    },
+    "localAcceptance": {
+      "pythonVersion": "3.12.14",
+      "testsPassed": 5,
+      "testsFailed": 0,
+      "testsSkipped": 0,
+      "actualFreshVenv": true,
+      "actualAuthoredRouteAndBalanceChecks": true
+    },
+    "correctedWindowsCi": "pending publication and actual CI rerun",
+    "browserBuildExecuted": false
   }
 }

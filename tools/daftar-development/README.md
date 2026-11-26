@@ -66,9 +66,18 @@ different environment. The helper never overwrites an existing non-venv director
 It requires exactly one `include-system-site-packages = false` setting and verifies
 the real interpreter prefix, disabled user site, excluded base packages and its
 own pip. An existing environment with global packages enabled is rejected.
+On Windows the base interpreter root can be a normal standard-library/DLL search
+path: the check allows that exact root while still excluding the actual
+`Lib/site-packages` directories for both base prefixes. Failed inspections name
+the specific failed checks. The directory distinction follows
+[CPython 3.12's site implementation](https://github.com/python/cpython/blob/v3.12.10/Lib/site.py).
 
 The four Python editor tasks call this helper and its verified interpreter with
-isolated mode. Only the selected script's source directory is added for existing
+isolated mode and an explicit `-X utf8` flag. The flag keeps Unicode report
+comparisons and piped diagnostics consistent on Windows even though isolated
+mode ignores `PYTHONUTF8`. The helper also sets its own `PYTHONUTF8=1` for reviewed
+build scripts' Python children that do not inherit interpreter flags. Only the
+selected script's source directory is added for existing
 sibling imports such as `audit` and `ritual_rules`. Terminal activation is
 unnecessary. If using VS Code's Python extension, select the interpreter printed
 by the check: `.venv/bin/python` on POSIX or `.venv/Scripts/python.exe` on Windows.
@@ -193,8 +202,10 @@ the current authored routes, balance audit and two balance tests inside it:
 DAFTAR_TEST_PYTHON=/absolute/path/to/python3 node --test tools/daftar-development/python-workspace.test.mjs
 ```
 
-Without the explicit test interpreter, only the environment-creation case is
-skipped; the three rejection tests still run. The authored checks retain their
+The five tests include an executable Windows-layout regression which permits the
+standard-library roots and rejects both base package directories. Without the
+explicit test interpreter, the two Python execution tests are skipped; the three
+rejection tests still run. The authored checks retain their
 analytic scope. Full game execution,
 engine collision/navigation, GPU profiling, Unreal import/render and live model
 inference remain separate work.
