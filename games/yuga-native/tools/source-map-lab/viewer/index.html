@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#1d2927" />
+    <title>Dust II | Local material study</title>
+    <link rel="stylesheet" href="viewer.css" />
+    <script type="importmap">
+      { "imports": { "three": "./vendor/build/three.module.min.js" } }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div>
+        <span class="brand">YUGA</span
+        ><span class="archive"> / Level studies</span>
+      </div>
+      <a href="README.md">Build notes ↗</a>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <p class="eyebrow">COUNTER-STRIKE · SOURCE 1</p>
+          <h1>Dust II</h1>
+          <p class="dek">
+            Inspect the complete level with its original structural paving or a
+            jade finish. Both views use the same geometry, UVs and camera.
+          </p>
+        </div>
+        <div class="metrics">
+          <span><b>3,158</b>static props</span><span><b>260</b>floor faces</span
+          ><span><b>7,737 m²</b>tinted ground</span>
+        </div>
+      </div>
+      <div class="toolbar">
+        <div class="choices" role="group" aria-label="Ground finish">
+          <button data-finish="baseline" aria-pressed="false">Original</button
+          ><button data-finish="jade" aria-pressed="true">Jade ground</button>
+        </div>
+        <label
+          >View
+          <select id="view">
+            <option value="overview">District overview</option>
+            <option value="site-a">Site A</option>
+            <option value="site-b">Site B</option>
+          </select></label
+        ><button id="mode">Inspect in 3D</button>
+      </div>
+      <figure>
+        <div id="stage">
+          <img
+            id="still"
+            alt="Blender render of the Dust II map in its selected ground finish"
+          />
+          <div id="surface" hidden></div>
+        </div>
+        <figcaption>
+          <span id="caption">Matching Blender camera</span
+          ><output id="status" aria-live="polite"></output>
+        </figcaption>
+      </figure>
+      <div class="links">
+        <a href="models/dust2-jade.glb" download
+          >Jade model <small>glTF</small></a
+        ><a href="models/dust2-baseline.glb" download
+          >Original model <small>glTF</small></a
+        ><a href="native/jade/csgo/maps/de_dust2.bsp" download
+          >Rebuilt level <small>Source BSP</small></a
+        ><a href="source/de_dust2_reconstructed.vmf" download
+          >Editable brushes <small>Hammer VMF</small></a
+        ><a href="blender/dust2-ground-study.blend" download
+          >Both finishes <small>Blender scene</small></a
+        >
+      </div>
+    </main>
+    <script type="module" src="viewer.js"></script>
+  </body>
+</html>
