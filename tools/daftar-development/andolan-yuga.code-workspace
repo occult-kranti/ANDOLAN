@@ -1,67 +1,191 @@
 {
-  "folders": [{ "name": "ANDOLAN / YUGA", "path": "../.." }],
+  "folders": [
+    {
+      "name": "ANDOLAN / YUGA",
+      "path": "../.."
+    }
+  ],
   "tasks": {
     "version": "2.0.0",
     "tasks": [
       {
+        "label": "Yuga: Create isolated Python venv",
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/python-workspace.mjs",
+          "create",
+          "--python",
+          "${input:yugaBootstrapPython}"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
+      },
+      {
+        "label": "Yuga: Check isolated Python venv",
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/python-workspace.mjs",
+          "check"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
+      },
+      {
         "label": "Daftar: Verify Route Lab package",
-        "type": "process", "command": "node",
-        "args": ["${workspaceFolder}/tools/daftar-development/check.mjs"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/check.mjs"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Daftar: Test Route Lab package checks",
-        "type": "process", "command": "node",
-        "args": ["--test", "${workspaceFolder}/tools/daftar-development/check.test.mjs"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "--test",
+          "${workspaceFolder}/tools/daftar-development/check.test.mjs"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Daftar: Reimport Route Lab in Blender",
-        "type": "process", "command": "blender",
-        "args": ["--background", "--factory-startup", "--disable-autoexec", "--threads", "2", "--python-exit-code", "1", "--python", "${workspaceFolder}/games/yuga-native/art/daftar-route-lab/verify_route_lab.py"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "blender",
+        "args": [
+          "--background",
+          "--factory-startup",
+          "--disable-autoexec",
+          "--threads",
+          "2",
+          "--python-exit-code",
+          "1",
+          "--python",
+          "${workspaceFolder}/games/yuga-native/art/daftar-route-lab/verify_route_lab.py"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Verify authored map routes",
-        "type": "process", "command": "python3",
-        "args": ["${workspaceFolder}/games/yuga-native/docs/design/ember-rite-5v5/atlas/audit.py", "--check"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/python-workspace.mjs",
+          "routes"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Verify authored map balance",
-        "type": "process", "command": "python3",
-        "args": ["${workspaceFolder}/games/yuga-native/docs/design/ember-rite-5v5/atlas/balance.py", "--check"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/python-workspace.mjs",
+          "balance"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Test authored map balance",
-        "type": "process", "command": "python3",
-        "args": ["${workspaceFolder}/games/yuga-native/docs/design/ember-rite-5v5/atlas/test_balance.py"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/python-workspace.mjs",
+          "test-balance"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Test Ember Rite solo movement and audio",
-        "type": "process", "command": "node",
-        "args": ["--test", "audio.test.mjs", "simulation.test.mjs"],
-        "options": { "cwd": "${workspaceFolder}/games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "--test",
+          "audio.test.mjs",
+          "simulation.test.mjs"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}/games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Test Rust authority",
-        "type": "process", "command": "cargo",
-        "args": ["test", "--release", "--locked", "--manifest-path", "${workspaceFolder}/games/yuga-rust/Cargo.toml"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "cargo",
+        "args": [
+          "test",
+          "--release",
+          "--locked",
+          "--manifest-path",
+          "${workspaceFolder}/games/yuga-rust/Cargo.toml"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Build Rust browser package",
-        "type": "process", "command": "python3",
-        "args": ["${workspaceFolder}/games/yuga-rust/tools/build_web.py"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "node",
+        "args": [
+          "${workspaceFolder}/tools/daftar-development/python-workspace.mjs",
+          "build-web"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
       },
       {
         "label": "Yuga: Import Godot comparison assets",
-        "type": "process", "command": "godot",
-        "args": ["--headless", "--path", "${workspaceFolder}/games/yuga-native", "--editor", "--import", "--quit"],
-        "options": { "cwd": "${workspaceFolder}" }, "problemMatcher": []
+        "type": "process",
+        "command": "godot",
+        "args": [
+          "--headless",
+          "--path",
+          "${workspaceFolder}/games/yuga-native",
+          "--editor",
+          "--import",
+          "--quit"
+        ],
+        "options": {
+          "cwd": "${workspaceFolder}"
+        },
+        "problemMatcher": []
+      }
+    ],
+    "inputs": [
+      {
+        "id": "yugaBootstrapPython",
+        "type": "promptString",
+        "description": "Trusted absolute Python 3.10+ executable with venv and ensurepip (no download)"
       }
     ]
   }

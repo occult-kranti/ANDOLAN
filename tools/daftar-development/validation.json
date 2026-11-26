@@ -1,83 +1,204 @@
 {
   "schemaVersion": 1,
   "checkedDate": "2026-11-26",
-  "baselineCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+  "teamRevision": "yuga-a35493d-20261126",
+  "baselineCommit": "a35493d67cf5111d7da2ff9eea6c58ed3499aeca",
+  "integrationHeadBeforeUpdate": "d19e48151965944322e6e30af5cac51ac23387ff",
   "branch": "feat/daftar-moe-creative-development",
   "nodeVersion": "v24.22.3",
+  "scope": "Current-source team handoff; real offline Python venv creation, isolated source checks and existing solo movement/audio tests. No game engine, rendering, human listening or GPU run.",
   "checks": [
     {
-      "command": "node tools/daftar-development/check.mjs",
+      "command": "DAFTAR_TEST_PYTHON=/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 node --test tools/daftar-development/python-workspace.test.mjs",
       "exitCode": 0,
-      "result": {
-        "schemaVersion": 1,
-        "status": "package_integrity_and_geometry_verified",
-        "sourceRepository": "occult-kranti/ANDOLAN",
-        "conventionsCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
-        "manifestSha256": "18eef7ef3e36a66b92228146f0b6ec4b8b23c404e6755b92e1807916e357509c",
-        "glbSha256": "3f73be3a96600498387288489e4d5a222900c110b116c94f4686a543cc4691d4",
-        "nodes": 73,
-        "meshes": 73,
-        "positionSamples": 11602,
-        "gltfBoundsMinM": [
-          -24,
-          -0.4,
-          -28
-        ],
-        "gltfBoundsMaxM": [
-          24,
-          3.37,
-          28
-        ],
-        "spawnMarkersVerified": 10,
-        "storedBlenderReimportEvidenceBound": true,
-        "engineLaunchedByThisCheck": false,
-        "gameplayVerified": false,
-        "unrealExecuted": false,
-        "gpuTested": false
-      }
+      "testsPassed": 4,
+      "testsFailed": 0,
+      "testsSkipped": 0
     },
     {
-      "command": "node --test tools/daftar-development/check.test.mjs",
+      "command": "node tools/daftar-development/python-workspace.mjs create --python /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
       "exitCode": 0,
-      "testsPassed": 5,
-      "testsFailed": 0
+      "pythonVersion": "3.12.14",
+      "pipVersion": "25.0.1",
+      "localEnvironment": "tools/daftar-development/.venv",
+      "venvPrefixVerified": true,
+      "userSiteDisabled": true,
+      "baseSitePackagesExcluded": true,
+      "pythonPackageIndexRequests": 0
     },
     {
-      "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/audit.py --check",
+      "command": "node tools/daftar-development/python-workspace.mjs routes",
       "exitCode": 0,
       "maps": 4,
       "spawnToSiteOpeningPairs": 16,
       "drySiteRotations": 4
     },
     {
-      "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/balance.py --check",
+      "command": "node tools/daftar-development/python-workspace.mjs balance",
       "exitCode": 0,
       "retakeWindows": 4,
       "independentEntrancePairs": 16
     },
     {
-      "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/test_balance.py",
+      "command": "node tools/daftar-development/python-workspace.mjs test-balance",
       "exitCode": 0,
-      "testsPassed": 2
+      "testsPassed": 2,
+      "testsFailed": 0
     },
     {
-      "check": "VS Code workspace JSON parses; tasks use explicit process arguments without folder-open execution",
+      "command": "node --test games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal/audio.test.mjs games/yuga-native/docs/design/ember-rite-5v5/atlas/rehearsal/simulation.test.mjs",
+      "exitCode": 0,
+      "testsPassed": 16,
+      "testsFailed": 0,
+      "testsSkipped": 0
+    },
+    {
+      "check": "VS Code JSON parses; all twelve tasks use explicit process arguments; four Python tasks use the verified venv helper; no folder-open execution",
       "passed": true,
-      "tasks": 9
+      "tasks": 12,
+      "folderOpenTasks": 0
+    },
+    {
+      "command": "node --check tools/daftar-development/python-workspace.mjs",
+      "exitCode": 0
     }
   ],
-  "storedArtEvidence": "games/yuga-native/art/daftar-route-lab/geometry-acceptance.json",
-  "actualVisualReviewed": "games/yuga-native/art/daftar-route-lab/route-lab-preview.png",
-  "remaining": [
-    "Live Daftar company apply and model assignment",
-    "Actual model inference and memory acceptance",
-    "Full Rust game build/execution for any subsequent gameplay change",
-    "Godot import and controller/collision/navigation acceptance",
-    "Unreal project selection, import, scene and render acceptance",
-    "Physical GPU performance and human playtesting"
+  "prerequisiteRestoration": {
+    "path": "games/yuga-native/art/yagna-audio/score.json",
+    "sha256": "f7a8fa1dbcd907fdffe2c337b04bf53b697579e304e580a8f6fe853708b3fdbc",
+    "source": "Exact unchanged integration HEAD blob; small source JSON restored from sparse checkout without audio/render binaries.",
+    "initialSoloTestResult": {
+      "passed": 15,
+      "failed": 1,
+      "reason": "ENOENT for required score.json in sparse workspace"
+    },
+    "afterRestoration": {
+      "passed": 16,
+      "failed": 0
+    }
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "f78ee2c744c8d9a4906c22b2f87dd5342888aa8538745b0ec1b3a6e795854245"
+    },
+    {
+      "path": "project.json",
+      "sha256": "57aa1ba987b22e184646daaf9dcf72ca3ecca3245d4380117bcbabe1bdc5a124"
+    },
+    {
+      "path": "andolan-yuga.code-workspace",
+      "sha256": "634831898740fc435f1adb8f12582fbf7be714448a25146f772d26a23c4562e5"
+    },
+    {
+      "path": "python-workspace.mjs",
+      "sha256": "82b21c6752b7f03dd587484a360adec5b8435c562213ec94ccc16824b5551a8d"
+    },
+    {
+      "path": "python-workspace.test.mjs",
+      "sha256": "b2eb6fa56140a614c49597b48861781ca08b22321f94d901795b735e31851966"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "08239aadebf9a9b105e2efecca3129f9198067993418529ddc8117d41997b7ec"
+    }
   ],
-  "providerCalls": 0,
+  "remaining": [
+    "Apply current team to the owner runtime and verify installed model digest.",
+    "Run actual MoE inference with a task that fits the unchanged context profile.",
+    "Commission Monsoon collision/objectives and listener/audio authority in the actual game.",
+    "Ten seats, two rendered clients, human listening/game feel and physical-GPU profiling.",
+    "Selected Unreal project import/render remains a separate experiment.",
+    "Windows execution of the Python helper is untested; platform paths are implemented."
+  ],
+  "externalProviderRequests": 0,
   "resourceRentals": 0,
   "unrealExecuted": false,
-  "gpuTested": false
+  "gpuTested": false,
+  "previousAcceptance": {
+    "status": "retained_historical_receipt_not_rerun_here",
+    "record": {
+      "schemaVersion": 1,
+      "checkedDate": "2026-11-26",
+      "baselineCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+      "branch": "feat/daftar-moe-creative-development",
+      "nodeVersion": "v24.22.3",
+      "checks": [
+        {
+          "command": "node tools/daftar-development/check.mjs",
+          "exitCode": 0,
+          "result": {
+            "schemaVersion": 1,
+            "status": "package_integrity_and_geometry_verified",
+            "sourceRepository": "occult-kranti/ANDOLAN",
+            "conventionsCommit": "9e59880f31452ce0df8d326cd4f1291b700dc228",
+            "manifestSha256": "18eef7ef3e36a66b92228146f0b6ec4b8b23c404e6755b92e1807916e357509c",
+            "glbSha256": "3f73be3a96600498387288489e4d5a222900c110b116c94f4686a543cc4691d4",
+            "nodes": 73,
+            "meshes": 73,
+            "positionSamples": 11602,
+            "gltfBoundsMinM": [
+              -24,
+              -0.4,
+              -28
+            ],
+            "gltfBoundsMaxM": [
+              24,
+              3.37,
+              28
+            ],
+            "spawnMarkersVerified": 10,
+            "storedBlenderReimportEvidenceBound": true,
+            "engineLaunchedByThisCheck": false,
+            "gameplayVerified": false,
+            "unrealExecuted": false,
+            "gpuTested": false
+          }
+        },
+        {
+          "command": "node --test tools/daftar-development/check.test.mjs",
+          "exitCode": 0,
+          "testsPassed": 5,
+          "testsFailed": 0
+        },
+        {
+          "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/audit.py --check",
+          "exitCode": 0,
+          "maps": 4,
+          "spawnToSiteOpeningPairs": 16,
+          "drySiteRotations": 4
+        },
+        {
+          "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/balance.py --check",
+          "exitCode": 0,
+          "retakeWindows": 4,
+          "independentEntrancePairs": 16
+        },
+        {
+          "command": "python3 games/yuga-native/docs/design/ember-rite-5v5/atlas/test_balance.py",
+          "exitCode": 0,
+          "testsPassed": 2
+        },
+        {
+          "check": "VS Code workspace JSON parses; tasks use explicit process arguments without folder-open execution",
+          "passed": true,
+          "tasks": 9
+        }
+      ],
+      "storedArtEvidence": "games/yuga-native/art/daftar-route-lab/geometry-acceptance.json",
+      "actualVisualReviewed": "games/yuga-native/art/daftar-route-lab/route-lab-preview.png",
+      "remaining": [
+        "Live Daftar company apply and model assignment",
+        "Actual model inference and memory acceptance",
+        "Full Rust game build/execution for any subsequent gameplay change",
+        "Godot import and controller/collision/navigation acceptance",
+        "Unreal project selection, import, scene and render acceptance",
+        "Physical GPU performance and human playtesting"
+      ],
+      "providerCalls": 0,
+      "resourceRentals": 0,
+      "unrealExecuted": false,
+      "gpuTested": false
+    }
+  }
 }

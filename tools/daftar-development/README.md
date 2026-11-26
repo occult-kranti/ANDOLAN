@@ -17,8 +17,9 @@ The older default and distribution branches are distinct from this source.
 - A read-only package check that verifies exact file and procedural-source hashes,
   reads the actual GLB vertex data, measures metre-scale bounds and checks all ten
   spawn positions against the plan-to-glTF axis conversion.
-- A VS Code workspace with explicit process tasks for the lab, authored map audits,
-  Rust authority tests/build and the retained Godot comparison import.
+- A VS Code workspace with twelve explicit process tasks for an isolated Python
+  environment, the lab, authored map audits, Rust authority tests/build and the
+  retained Godot comparison import.
 - A source and engine [project profile](project.json) linking this checkout to
   the Daftar company setup. It is metadata, not evidence of a running model or team.
 
@@ -32,6 +33,53 @@ by the presence of this package.
 [Monsoon Exchange](../../games/yuga-native/art/monsoon-exchange/README.md) is an authored district and browser walk, not this Route Lab or a server-playable map. Start with the survey and Blender/GLB receipts before engine collision and ten-client commissioning.
 
 Run **Yuga: Test Ember Rite solo movement and audio** in VS Code to check the exact solo drill. It runs neither a browser nor a live match. The [audio QA](../../games/yuga-native/docs/design/ember-rite-5v5/audio/qa.md) separates listener behavior in the drill from the remaining authoritative, ten-seat, and physical listening checks.
+
+Team revision `yuga-a35493d-20261126` adds a gameplay audio owner and an
+animation/performance owner. The first coordinates accepted listener receipts,
+captions, stale events and reconnect clocks with Rust authority. The second binds
+cast, takeoff, contact and recovery witnesses to actual motion/audio markers and
+rendered-client timings. The map owner commissions Monsoon's thirteen rooms,
+eighteen connections, ten pads, seven thresholds and two ritual sites. Independent
+QA owns the ten-seat/two-rendered-client gate and retains separate human
+listening, game-feel and physical-GPU requirements.
+
+## Install and use the Python venv
+
+Run **Yuga: Create isolated Python venv** once. Enter the absolute path of a trusted
+installed Python 3.10+ interpreter with `venv` and `ensurepip`. The task creates
+`tools/daftar-development/.venv/`, installs Python's bundled pip without a package
+index, and prints the exact interpreter to use. If the selected interpreter
+fails, the helper reports that failure; it does not choose another interpreter.
+
+Equivalent commands from the repository root:
+
+```sh
+node tools/daftar-development/python-workspace.mjs create --python /absolute/path/to/python3
+node tools/daftar-development/python-workspace.mjs check
+node tools/daftar-development/python-workspace.mjs routes
+node tools/daftar-development/python-workspace.mjs balance
+node tools/daftar-development/python-workspace.mjs test-balance
+```
+
+Use `--venv /absolute/environment/path` on every command when selecting a
+different environment. The helper never overwrites an existing non-venv directory.
+It requires exactly one `include-system-site-packages = false` setting and verifies
+the real interpreter prefix, disabled user site, excluded base packages and its
+own pip. An existing environment with global packages enabled is rejected.
+
+The four Python editor tasks call this helper and its verified interpreter with
+isolated mode. Only the selected script's source directory is added for existing
+sibling imports such as `audit` and `ritual_rules`. Terminal activation is
+unnecessary. If using VS Code's Python extension, select the interpreter printed
+by the check: `.venv/bin/python` on POSIX or `.venv/Scripts/python.exe` on Windows.
+Do not commit the local venv; the checked-in helper recreates it.
+
+These Python checks use the standard library. Python isolation is not a sandbox
+for untrusted source. VS Code, Node, Cargo and the engines remain their own
+programs; Blender uses its embedded Python for authoring. The explicit browser
+build keeps its existing Cargo/Node/toolchain prerequisites and may fetch those
+tools' locked dependencies. Opening the workspace performs no installation or
+execution.
 
 ## Use the package checks
 
@@ -70,12 +118,14 @@ the existing source command.
 
 | Task | Required source/tool boundary |
 | --- | --- |
+| Create/check isolated Python venv | Explicit installed absolute bootstrap interpreter; local venv and bundled pip |
 | Verify Route Lab package / test its checks | Node; included original package |
 | Reimport Route Lab in Blender | Blender; package source and export beside the verifier |
-| Verify authored map routes | Python; four Ember Rite JSON plans and current `measurements.md` |
-| Verify/test authored map balance | Python; atlas source plus `games/yuga-rust/src/ritual.rs` and `assets/vanara-sena.json` |
+| Verify authored map routes | Verified venv Python; four Ember Rite JSON plans and current `measurements.md` |
+| Verify/test authored map balance | Verified venv Python; atlas source plus `games/yuga-rust/src/ritual.rs` and `assets/vanara-sena.json` |
+| Test Ember Rite solo movement and audio | Node; existing listener and solo-simulation tests, separate from a live room |
 | Test Rust authority | Cargo; full `games/yuga-rust` source and lockfile |
-| Build Rust browser package | Existing `build_web.py`, installed locked dependencies and the documented Rust/WASM toolchain |
+| Build Rust browser package | Existing `build_web.py` through venv Python, installed locked dependencies and the documented Rust/WASM toolchain |
 | Import Godot comparison assets | Installed matching Godot and the complete retained native project |
 
 A sparse source review does not contain the full binary asset set. Expand the
@@ -91,9 +141,11 @@ The companion
 [ANDOLAN / YUGA company kit](https://github.com/occult-kranti/engineering-intelligence-atlas/tree/feat/donna-moe-creative-studio-20261125/projects/andolan-yuga-development)
 uses Daftar's native company-kit schema and additive command boundary. It reuses
 the existing exact repository-bound company and six bootstrap office specialists,
-adds four focused specialists, and binds source-specific role contracts and seven
-development gates. A real setup receipt contains the actual employee IDs; a kit
-file does not mean the owner's live workspace was changed.
+adds six focused specialists, and binds twelve role contracts and thirteen
+development gates. The update preserves the prior ten roles, owner-edited
+contracts and completed gates; it appends two specialists, six gates and five
+versioned current-source handoffs. A real setup receipt contains the actual
+employee IDs; a kit file does not mean the owner's live workspace was changed.
 
 The first reviewed coding model is
 [`qwen3-coder:30b-a3b-q4_K_M`](https://ollama.com/library/qwen3-coder:30b-a3b-q4_K_M),
@@ -121,17 +173,29 @@ mannequins are not automatic collision or gameplay objects. Capture actual edito
 and render evidence before marking Unreal acceptance. The portable geometry and
 CPU preview do not establish that this step has run.
 
-The current authored-map next gate remains the documented isolated Mandala slice:
-ordinary dry paths, selected solids, legal interaction, interruption/reset/side
-swap and authoritative event ordering, with folds closed initially. Retain the
-two-rendered-client and human playtest gates.
+The current authored-map next gates extend the documented isolated Mandala slice
+into Monsoon: ordinary dry paths, selected solids, both legal interactions,
+interruption/reset/side swap and authoritative event ordering, with folds closed
+initially. Listener-scoped audio and accepted hero contact timing feed the
+ten-seat/two-rendered-client gate. The optional Unreal experiment does not block
+this production path.
 
 ## Validation record
 
 [validation.json](validation.json) records commands actually run for this scoped
 integration. The five package tests include negative cases for corruption,
 external buffers, wrong scale, moved/missing spawns, stale evidence and path escape.
-The authored route and balance checks retain their own scope. Full game execution,
+Their earlier acceptance remains historical. The Python helper tests challenge
+invalid paths and site-package settings, create a real disposable venv and run
+the current authored routes, balance audit and two balance tests inside it:
+
+```sh
+DAFTAR_TEST_PYTHON=/absolute/path/to/python3 node --test tools/daftar-development/python-workspace.test.mjs
+```
+
+Without the explicit test interpreter, only the environment-creation case is
+skipped; the three rejection tests still run. The authored checks retain their
+analytic scope. Full game execution,
 engine collision/navigation, GPU profiling, Unreal import/render and live model
 inference remain separate work.
 
