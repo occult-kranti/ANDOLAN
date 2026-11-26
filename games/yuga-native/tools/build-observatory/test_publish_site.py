@@ -9,6 +9,20 @@ from unittest.mock import patch
 import publish_site as publisher
 
 
+def write_studio_fixture(studio):
+    catalog = {"schema": 1, "elements": [{"id": "room-gate", "plate": "plates/room-gate.svg",
+               "render": "renders/room-gate.webp", "clip": "clips/room-gate.mp4"}]}
+    concepts = {"boards": [{"id": "portals", "file": "boards/portals.webp", "items": ["room-gate"]}],
+                "items": {"room-gate": {"file": "items/room-gate.webp", "board": "portals"}},
+                "hero": "items/rite-ember-vessel.webp"}
+    for name in publisher.studio_names(catalog, concepts):
+        path = studio / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(name.encode())
+    (studio / "catalog.json").write_text(json.dumps(catalog))
+    (studio / "concepts/index.json").write_text(json.dumps(concepts))
+
+
 class AdditivePublicationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -94,6 +108,11 @@ class AdditivePublicationTests(unittest.TestCase):
             publisher.publish(self.site, self.web, "a" * 40, "b" * 40, self.root)
         pdf.unlink()
         pdf.write_bytes(b"Reviewed blueprint")
+        # A public atlas alias points into the studio. Its existence alone
+        # must never be accepted in place of the complete studio manifests.
+        with self.assertRaisesRegex(ValueError, "catalog.json"):
+            publisher.publish(self.site, self.web, "a" * 40, "b" * 40, self.root)
+        write_studio_fixture(self.root / publisher.STUDIO)
         receipt = publisher.publish(self.site, self.web, "a" * 40, "b" * 40, self.root)
         for route, repo_path in publisher.ATLAS_FILES.items():
             self.assertEqual((self.site / "production" / route).read_bytes(), (self.root / repo_path).read_bytes())
@@ -136,7 +155,8 @@ class AdditivePublicationTests(unittest.TestCase):
                 self.assert_refused_untouched()
 
     def test_missing_artifact_and_missing_viewer_are_rejected(self):
-        for value in ("media/missing.glb", "viewer/"):
+        for value in ("media/missing.glb", "viewer/", publisher.AUDIO_ROUTE, publisher.AUDIO_ROUTE.rstrip("/"),
+                      publisher.AUDIO_ROUTE + "quench.flac", publisher.AUDIO_ROUTE + "private.flac"):
             with self.subTest(value=value):
                 self.data["jobs"][0]["outputs"][0]["url"] = value
                 self.write_snapshot()

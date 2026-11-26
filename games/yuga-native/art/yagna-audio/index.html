@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#242820" />
+    <title>Ash at the Waterline · YUGA sound</title>
+    <link rel="stylesheet" href="listen.css" />
+    <script defer src="listen.js"></script>
+  </head>
+  <body>
+    <header>
+      <a
+        class="wordmark"
+        href="https://occult-kranti.github.io/ANDOLAN/production/"
+        >YUGA</a
+      ><span>Ember Rite / Sound</span
+      ><a
+        class="nav"
+        href="https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html?map=mandala&amp;exercise=explore&amp;listen=1"
+        >Open map rehearsal</a
+      >
+    </header>
+    <main>
+      <section class="record" aria-labelledby="title">
+        <figure>
+          <img
+            src="../mandala-map-studio/concepts/items/rite-ember-vessel.webp"
+            alt="The perforated brass ember vessel glows on a step beside its woven carrying strap."
+          />
+          <figcaption>The carried ember · Mandala Rift</figcaption>
+        </figure>
+        <div class="intro">
+          <p class="overline">Original game score</p>
+          <h1 id="title"><span>Ash at the</span> <span>Waterline</span></h1>
+          <p>
+            One plucked drone at ignition. A low drum, a hand drum and a reed
+            enter as the fire approaches its forty-second limit.
+          </p>
+          <div class="spec">
+            96 BPM <span>·</span> 40 seconds <span>·</span> Stereo
+          </div>
+        </div>
+      </section>
+      <section class="player" aria-labelledby="track">
+        <div class="play-head">
+          <div>
+            <p class="overline">Listening desk</p>
+            <h2 id="track" aria-live="polite">Full ritual mix</h2>
+          </div>
+          <a id="download" href="ritual-mix.flac" download
+            >Download recording ↓</a
+          >
+        </div>
+        <audio
+          id="sound"
+          controls
+          preload="metadata"
+          playsinline
+          src="ritual-mix.flac"
+          aria-label="Selected Ember Rite recording"
+        ></audio>
+        <p id="notice" role="status" hidden></p>
+        <div
+          class="phases"
+          role="group"
+          aria-label="Play the full score from a phase"
+        >
+          <button type="button" data-at="0"><span>0:00</span>Ignition</button
+          ><button type="button" data-at="10"><span>0:10</span>Low drum</button
+          ><button type="button" data-at="20"><span>0:20</span>Hand drum</button
+          ><button type="button" data-at="30">
+            <span>0:30</span>Reed call
+          </button>
+        </div>
+      </section>
+      <div class="library">
+        <section aria-labelledby="stems">
+          <p class="overline">Arrangement</p>
+          <h2 id="stems">Hear a single layer</h2>
+          <p>
+            Each loop lasts sixteen beats. Compare the attacks and the space
+            each layer leaves for a cast.
+          </p>
+          <ul class="takes">
+            <li>
+              <button
+                type="button"
+                data-file="drone.flac"
+                data-title="Plucked drone"
+              >
+                <b>Plucked drone</b><small>Tanpura-inspired strings</small>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                data-file="low-drum.flac"
+                data-title="Low drum"
+              >
+                <b>Low drum</b><small>Open, pressed and bent tones</small>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                data-file="hand-drum.flac"
+                data-title="Hand drum"
+              >
+                <b>Hand drum</b><small>Ring, rim and closed strokes</small>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                data-file="reed.flac"
+                data-title="Reed call"
+              >
+                <b>Reed call</b><small>A short, rising phrase</small>
+              </button>
+            </li>
+          </ul>
+        </section>
+        <section aria-labelledby="outcomes">
+          <p class="overline">Round events</p>
+          <h2 id="outcomes">Hear the result</h2>
+          <p>
+            The result cue plays once when the round resolves. The guide voices
+            below are synthetic timing reads for the proposed announcer.
+          </p>
+          <div class="endings">
+            <button
+              type="button"
+              data-file="expiry.flac"
+              data-title="Fire completed"
+            >
+              Fire completed</button
+            ><button
+              type="button"
+              data-file="quench.flac"
+              data-title="Fire quenched"
+            >
+              Fire quenched
+            </button>
+          </div>
+          <label for="lang">Guide voice</label
+          ><select id="lang">
+            <option value="en">English</option>
+            <option value="hi" lang="hi">हिन्दी / Hindi</option>
+          </select>
+          <div class="endings">
+            <button type="button" data-line="ignite">Ignition line</button
+            ><button type="button" data-line="quench">Quench line</button>
+          </div>
+          <p id="transcript" aria-live="polite" hidden></p>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <a
+        href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/docs/design/ember-rite-5v5/audio"
+        >Read the audio bible</a
+      ><a
+        href="https://github.com/occult-kranti/ANDOLAN/tree/game/yuga-hanuman-trial/games/yuga-native/art/yagna-audio"
+        >Score, credits and source files</a
+      >
+    </footer>
+  </body>
+</html>

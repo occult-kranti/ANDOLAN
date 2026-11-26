@@ -1,0 +1,1229 @@
+{
+  "schema": 1,
+  "id": "monsoon-exchange",
+  "title": "Monsoon Exchange",
+  "basis": "metres; X east, Y north, Z above district datum",
+  "bounds": [
+    -52,
+    -60,
+    52,
+    60
+  ],
+  "rules": {
+    "kindle_radius_m": 3,
+    "quench_reach_m": 1.5,
+    "walk_m_s": 5,
+    "clearance_radius_m": 0.65,
+    "standing_height_m": 1.8,
+    "standing_eye_m": 1.6,
+    "water_speed_factor": 0.85,
+    "teams": 2,
+    "team_size": 5,
+    "waves": false
+  },
+  "rooms": [
+    {
+      "id": "atk",
+      "name": "Caravan Yard",
+      "center": [
+        0,
+        -49
+      ],
+      "size": [
+        22,
+        14
+      ],
+      "z": 0,
+      "role": "attacker spawn",
+      "material": "clay"
+    },
+    {
+      "id": "def",
+      "name": "Archive Court",
+      "center": [
+        0,
+        50
+      ],
+      "size": [
+        22,
+        14
+      ],
+      "z": 1.2,
+      "role": "defender spawn",
+      "material": "chalk"
+    },
+    {
+      "id": "a",
+      "name": "Sun Court",
+      "center": [
+        34,
+        22
+      ],
+      "size": [
+        27,
+        21
+      ],
+      "z": 3,
+      "role": "site A",
+      "material": "sunstone"
+    },
+    {
+      "id": "b",
+      "name": "Indigo Cistern",
+      "center": [
+        -34,
+        20
+      ],
+      "size": [
+        29,
+        25
+      ],
+      "z": -1.4,
+      "role": "site B",
+      "material": "basalt"
+    },
+    {
+      "id": "mid",
+      "name": "Weavers’ Gate",
+      "center": [
+        0,
+        -8
+      ],
+      "size": [
+        16,
+        14
+      ],
+      "z": 0.6,
+      "role": "screened central choice",
+      "material": "jade"
+    },
+    {
+      "id": "scales",
+      "name": "Dye Scales",
+      "center": [
+        0,
+        -27
+      ],
+      "size": [
+        15,
+        12
+      ],
+      "z": 0,
+      "role": "south middle approach",
+      "material": "clay"
+    },
+    {
+      "id": "toll",
+      "name": "Mint Turn",
+      "center": [
+        29,
+        -40
+      ],
+      "size": [
+        14,
+        12
+      ],
+      "z": 0,
+      "role": "east commitment",
+      "material": "sunstone"
+    },
+    {
+      "id": "copper",
+      "name": "Copper Arcade",
+      "center": [
+        42,
+        -13
+      ],
+      "size": [
+        12,
+        24
+      ],
+      "z": 1.2,
+      "role": "long arcade",
+      "material": "sunstone"
+    },
+    {
+      "id": "ledger",
+      "name": "Ledger Balcony",
+      "center": [
+        12,
+        9
+      ],
+      "size": [
+        12,
+        12
+      ],
+      "z": 2.4,
+      "role": "upper shortcut",
+      "material": "jade"
+    },
+    {
+      "id": "sail",
+      "name": "Sailcloth Yard",
+      "center": [
+        -32,
+        -39
+      ],
+      "size": [
+        15,
+        14
+      ],
+      "z": 0,
+      "role": "west commitment",
+      "material": "clay"
+    },
+    {
+      "id": "dyers",
+      "name": "Dyers’ Passage",
+      "center": [
+        -40,
+        -12
+      ],
+      "size": [
+        12,
+        19
+      ],
+      "z": -1.4,
+      "role": "covered west approach",
+      "material": "basalt"
+    },
+    {
+      "id": "sluice",
+      "name": "Sluice Walk",
+      "center": [
+        -23,
+        -7
+      ],
+      "size": [
+        12,
+        16
+      ],
+      "z": -1.4,
+      "role": "wet floor and dry ledge",
+      "material": "basalt"
+    },
+    {
+      "id": "well",
+      "name": "Rain Register",
+      "center": [
+        0,
+        29
+      ],
+      "size": [
+        14,
+        12
+      ],
+      "z": 1.2,
+      "role": "northern junction",
+      "material": "chalk"
+    }
+  ],
+  "links": [
+    {
+      "id": "caravan-scales",
+      "name": "Spindle Street",
+      "from": "atk",
+      "to": "scales",
+      "width": 6,
+      "points": [
+        [
+          0,
+          -42,
+          0
+        ],
+        [
+          0,
+          -33,
+          0
+        ]
+      ],
+      "kind": "walk",
+      "material": "clay"
+    },
+    {
+      "id": "scales-mid",
+      "name": "Gate Approach",
+      "from": "scales",
+      "to": "mid",
+      "width": 5.5,
+      "points": [
+        [
+          2,
+          -21,
+          0
+        ],
+        [
+          2,
+          -15,
+          0.6
+        ]
+      ],
+      "kind": "ramp",
+      "material": "jade"
+    },
+    {
+      "id": "caravan-toll",
+      "name": "Copper Lane",
+      "from": "atk",
+      "to": "toll",
+      "width": 6,
+      "points": [
+        [
+          11,
+          -49,
+          0
+        ],
+        [
+          17,
+          -49,
+          0
+        ],
+        [
+          17,
+          -40,
+          0
+        ],
+        [
+          22,
+          -40,
+          0
+        ]
+      ],
+      "kind": "walk",
+      "material": "clay"
+    },
+    {
+      "id": "toll-copper",
+      "name": "Copper Ascent",
+      "from": "toll",
+      "to": "copper",
+      "width": 6,
+      "points": [
+        [
+          36,
+          -40,
+          0
+        ],
+        [
+          42,
+          -40,
+          0
+        ],
+        [
+          42,
+          -25,
+          1.2
+        ]
+      ],
+      "kind": "ramp",
+      "material": "sunstone"
+    },
+    {
+      "id": "copper-a",
+      "name": "Sun Arcade",
+      "from": "copper",
+      "to": "a",
+      "width": 6,
+      "points": [
+        [
+          40,
+          -1,
+          1.2
+        ],
+        [
+          40,
+          11.5,
+          3
+        ]
+      ],
+      "kind": "ramp",
+      "material": "sunstone"
+    },
+    {
+      "id": "mid-ledger",
+      "name": "Ledger Climb",
+      "from": "mid",
+      "to": "ledger",
+      "width": 5,
+      "points": [
+        [
+          8,
+          -6,
+          0.6
+        ],
+        [
+          12,
+          -6,
+          0.6
+        ],
+        [
+          12,
+          3,
+          2.4
+        ]
+      ],
+      "kind": "ramp",
+      "material": "jade"
+    },
+    {
+      "id": "ledger-a",
+      "name": "Seal Gallery",
+      "from": "ledger",
+      "to": "a",
+      "width": 5,
+      "points": [
+        [
+          12,
+          15,
+          2.4
+        ],
+        [
+          12,
+          22,
+          2.4
+        ],
+        [
+          20.5,
+          22,
+          3
+        ]
+      ],
+      "kind": "ramp",
+      "material": "jade"
+    },
+    {
+      "id": "caravan-sail",
+      "name": "Canvas Lane",
+      "from": "atk",
+      "to": "sail",
+      "width": 5.5,
+      "points": [
+        [
+          -11,
+          -49,
+          0
+        ],
+        [
+          -20,
+          -49,
+          0
+        ],
+        [
+          -20,
+          -39,
+          0
+        ],
+        [
+          -24.5,
+          -39,
+          0
+        ]
+      ],
+      "kind": "walk",
+      "material": "clay"
+    },
+    {
+      "id": "sail-dyers",
+      "name": "Dyers’ Descent",
+      "from": "sail",
+      "to": "dyers",
+      "width": 5,
+      "points": [
+        [
+          -37,
+          -32,
+          0
+        ],
+        [
+          -37,
+          -21.5,
+          -1.4
+        ]
+      ],
+      "kind": "ramp",
+      "material": "basalt"
+    },
+    {
+      "id": "dyers-b",
+      "name": "Indigo Vault",
+      "from": "dyers",
+      "to": "b",
+      "width": 5.5,
+      "points": [
+        [
+          -40.5,
+          -2.5,
+          -1.4
+        ],
+        [
+          -40.5,
+          7.5,
+          -1.4
+        ]
+      ],
+      "kind": "vault",
+      "material": "basalt"
+    },
+    {
+      "id": "dyers-sluice",
+      "name": "Loom Door",
+      "from": "dyers",
+      "to": "sluice",
+      "width": 4,
+      "points": [
+        [
+          -34,
+          -12,
+          -1.4
+        ],
+        [
+          -29,
+          -12,
+          -1.4
+        ]
+      ],
+      "kind": "walk",
+      "material": "basalt"
+    },
+    {
+      "id": "mid-sluice",
+      "name": "Stone Spillway",
+      "from": "mid",
+      "to": "sluice",
+      "width": 5,
+      "points": [
+        [
+          -8,
+          -11,
+          0.6
+        ],
+        [
+          -17,
+          -11,
+          -1.4
+        ]
+      ],
+      "kind": "ramp",
+      "material": "basalt"
+    },
+    {
+      "id": "sluice-b",
+      "name": "Dye Gate",
+      "from": "sluice",
+      "to": "b",
+      "width": 5,
+      "points": [
+        [
+          -17,
+          -3,
+          -1.4
+        ],
+        [
+          -13,
+          -3,
+          -1.4
+        ],
+        [
+          -13,
+          19,
+          -1.4
+        ],
+        [
+          -19.5,
+          19,
+          -1.4
+        ]
+      ],
+      "kind": "walk",
+      "material": "basalt"
+    },
+    {
+      "id": "mid-well",
+      "name": "Rain Lane",
+      "from": "mid",
+      "to": "well",
+      "width": 6,
+      "points": [
+        [
+          -3,
+          -1,
+          0.6
+        ],
+        [
+          -3,
+          23,
+          1.2
+        ]
+      ],
+      "kind": "ramp",
+      "material": "jade"
+    },
+    {
+      "id": "well-def",
+      "name": "Archive Lane",
+      "from": "well",
+      "to": "def",
+      "width": 5.5,
+      "points": [
+        [
+          0,
+          35,
+          1.2
+        ],
+        [
+          0,
+          43,
+          1.2
+        ]
+      ],
+      "kind": "walk",
+      "material": "chalk"
+    },
+    {
+      "id": "def-a",
+      "name": "Sun Return",
+      "from": "def",
+      "to": "a",
+      "width": 6,
+      "points": [
+        [
+          11,
+          50,
+          1.2
+        ],
+        [
+          34,
+          50,
+          3
+        ],
+        [
+          34,
+          32.5,
+          3
+        ]
+      ],
+      "kind": "ramp",
+      "material": "sunstone"
+    },
+    {
+      "id": "def-b",
+      "name": "Cistern Return",
+      "from": "def",
+      "to": "b",
+      "width": 6,
+      "points": [
+        [
+          -11,
+          50,
+          1.2
+        ],
+        [
+          -34,
+          50,
+          -1.4
+        ],
+        [
+          -34,
+          32.5,
+          -1.4
+        ]
+      ],
+      "kind": "ramp",
+      "material": "basalt"
+    },
+    {
+      "id": "well-a",
+      "name": "Witness Gate",
+      "from": "well",
+      "to": "a",
+      "width": 4,
+      "points": [
+        [
+          7,
+          30,
+          1.2
+        ],
+        [
+          14,
+          30,
+          1.2
+        ],
+        [
+          14,
+          37.5,
+          1.2
+        ],
+        [
+          26,
+          37.5,
+          3
+        ],
+        [
+          26,
+          32.5,
+          3
+        ]
+      ],
+      "kind": "ramp",
+      "material": "chalk"
+    }
+  ],
+  "covers": [
+    {
+      "id": "a-arcade-brass",
+      "name": "Bell chest",
+      "room": "a",
+      "center": [
+        36,
+        16.1
+      ],
+      "size": [
+        3.3,
+        2.1,
+        2.45
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-arcade-scale",
+      "name": "Counterweight",
+      "room": "a",
+      "center": [
+        44.3,
+        16.7
+      ],
+      "size": [
+        3,
+        2.2,
+        2.55
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-gallery-plinth",
+      "name": "Seal plinth",
+      "room": "a",
+      "center": [
+        25,
+        18
+      ],
+      "size": [
+        2.3,
+        3,
+        2.4
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-gallery-press",
+      "name": "Archive press",
+      "room": "a",
+      "center": [
+        25.3,
+        25.6
+      ],
+      "size": [
+        2.6,
+        2.7,
+        2.45
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-return-canopy",
+      "name": "Shutter stack",
+      "room": "a",
+      "center": [
+        31,
+        28.4
+      ],
+      "size": [
+        2.3,
+        2,
+        2.4
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-return-measure",
+      "name": "Weighing crib",
+      "room": "a",
+      "center": [
+        38.6,
+        28.3
+      ],
+      "size": [
+        3.3,
+        2.2,
+        2.65
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-witness-cask",
+      "name": "Copper cask",
+      "room": "a",
+      "center": [
+        23.1,
+        29.1
+      ],
+      "size": [
+        2.35,
+        2,
+        2.3
+      ],
+      "z": 3
+    },
+    {
+      "id": "a-witness-slip",
+      "name": "Clay stamp store",
+      "room": "a",
+      "center": [
+        28.1,
+        25.8
+      ],
+      "size": [
+        2.1,
+        2.1,
+        2.4
+      ],
+      "z": 3
+    },
+    {
+      "id": "b-vault-spool",
+      "name": "Rope spool press",
+      "room": "b",
+      "center": [
+        -44.9,
+        12.3
+      ],
+      "size": [
+        3.2,
+        2,
+        2.4
+      ],
+      "z": -1.4
+    },
+    {
+      "id": "b-vault-shelf",
+      "name": "Vat screen",
+      "room": "b",
+      "center": [
+        -35.8,
+        13
+      ],
+      "size": [
+        3,
+        2.3,
+        2.5
+      ],
+      "z": -1.4
+    },
+    {
+      "id": "b-sluice-stack",
+      "name": "Indigo bale rack",
+      "room": "b",
+      "center": [
+        -24,
+        14.5
+      ],
+      "size": [
+        2.1,
+        3.1,
+        2.5
+      ],
+      "z": -1.4
+    },
+    {
+      "id": "b-sluice-drum",
+      "name": "Drum stone",
+      "room": "b",
+      "center": [
+        -24.2,
+        23.5
+      ],
+      "size": [
+        2.3,
+        2.8,
+        2.35
+      ],
+      "z": -1.4
+    },
+    {
+      "id": "b-return-spout",
+      "name": "Cast spout",
+      "room": "b",
+      "center": [
+        -39,
+        28.1
+      ],
+      "size": [
+        3.2,
+        2.3,
+        2.35
+      ],
+      "z": -1.4
+    },
+    {
+      "id": "b-return-slab",
+      "name": "Filter rack",
+      "room": "b",
+      "center": [
+        -29.1,
+        28.4
+      ],
+      "size": [
+        3.2,
+        2.4,
+        2.55
+      ],
+      "z": -1.4
+    },
+    {
+      "id": "mid-weave",
+      "name": "West loom screen",
+      "room": "mid",
+      "center": [
+        -0.4,
+        -4.6
+      ],
+      "size": [
+        6.6,
+        1.4,
+        3.5
+      ],
+      "z": 0.6
+    },
+    {
+      "id": "mid-spindle",
+      "name": "East wicket",
+      "room": "mid",
+      "center": [
+        -5,
+        -10.4
+      ],
+      "size": [
+        2.1,
+        3,
+        2.65
+      ],
+      "z": 0.6
+    },
+    {
+      "id": "copper-wheel",
+      "name": "Procession wheel",
+      "room": "copper",
+      "center": [
+        45,
+        -12
+      ],
+      "size": [
+        2,
+        5,
+        2.3
+      ],
+      "z": 1.2
+    },
+    {
+      "id": "sail-bales",
+      "name": "Canvas bale",
+      "room": "sail",
+      "center": [
+        -33,
+        -35.2
+      ],
+      "size": [
+        4,
+        1.8,
+        2.3
+      ],
+      "z": 0
+    },
+    {
+      "id": "well-jar",
+      "name": "Register screen",
+      "room": "well",
+      "center": [
+        3.4,
+        26.4
+      ],
+      "size": [
+        2,
+        3,
+        2.35
+      ],
+      "z": 1.2
+    },
+    {
+      "id": "toll-vault",
+      "name": "Unstruck copper",
+      "room": "toll",
+      "center": [
+        31,
+        -41.7
+      ],
+      "size": [
+        2,
+        2,
+        2.35
+      ],
+      "z": 0
+    }
+  ],
+  "objectives": [
+    {
+      "id": "ember-a",
+      "room": "a",
+      "center": [
+        34,
+        22,
+        3
+      ],
+      "radius": 3
+    },
+    {
+      "id": "ember-b",
+      "room": "b",
+      "center": [
+        -34,
+        20,
+        -1.4
+      ],
+      "radius": 3
+    }
+  ],
+  "spawns": [
+    {
+      "id": "sun",
+      "room": "atk",
+      "center": [
+        0,
+        -49,
+        0
+      ],
+      "facing": [
+        0,
+        1
+      ],
+      "pads": [
+        [
+          -3,
+          -49,
+          0
+        ],
+        [
+          0,
+          -49,
+          0
+        ],
+        [
+          3,
+          -49,
+          0
+        ],
+        [
+          -1.5,
+          -51.6,
+          0
+        ],
+        [
+          1.5,
+          -51.6,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "moon",
+      "room": "def",
+      "center": [
+        0,
+        50,
+        1.2
+      ],
+      "facing": [
+        0,
+        -1
+      ],
+      "pads": [
+        [
+          -3,
+          50,
+          1.2
+        ],
+        [
+          0,
+          50,
+          1.2
+        ],
+        [
+          3,
+          50,
+          1.2
+        ],
+        [
+          -1.5,
+          52.6,
+          1.2
+        ],
+        [
+          1.5,
+          52.6,
+          1.2
+        ]
+      ]
+    }
+  ],
+  "water": [
+    {
+      "id": "runnel",
+      "name": "Dye runnel",
+      "room": "sluice",
+      "center": [
+        -23.5,
+        -7
+      ],
+      "size": [
+        2.6,
+        14
+      ],
+      "z": -1.4,
+      "depth": 0.12
+    }
+  ],
+  "entries": [
+    {
+      "id": "a-arcade",
+      "site": "a",
+      "link": "copper-a",
+      "center": [
+        40,
+        11.5,
+        3
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "width": 6,
+      "covers": [
+        "a-arcade-brass",
+        "a-arcade-scale"
+      ]
+    },
+    {
+      "id": "a-gallery",
+      "site": "a",
+      "link": "ledger-a",
+      "center": [
+        20.5,
+        22,
+        3
+      ],
+      "normal": [
+        1,
+        0
+      ],
+      "width": 5,
+      "covers": [
+        "a-gallery-plinth",
+        "a-gallery-press"
+      ]
+    },
+    {
+      "id": "a-return",
+      "site": "a",
+      "link": "def-a",
+      "center": [
+        34,
+        32.5,
+        3
+      ],
+      "normal": [
+        0,
+        -1
+      ],
+      "width": 6,
+      "covers": [
+        "a-return-canopy",
+        "a-return-measure"
+      ]
+    },
+    {
+      "id": "a-witness",
+      "site": "a",
+      "link": "well-a",
+      "center": [
+        26,
+        32.5,
+        3
+      ],
+      "normal": [
+        0,
+        -1
+      ],
+      "width": 4,
+      "covers": [
+        "a-witness-cask",
+        "a-witness-slip"
+      ]
+    },
+    {
+      "id": "b-vault",
+      "site": "b",
+      "link": "dyers-b",
+      "center": [
+        -40.5,
+        7.5,
+        -1.4
+      ],
+      "normal": [
+        0,
+        1
+      ],
+      "width": 5.5,
+      "covers": [
+        "b-vault-spool",
+        "b-vault-shelf"
+      ]
+    },
+    {
+      "id": "b-sluice",
+      "site": "b",
+      "link": "sluice-b",
+      "center": [
+        -19.5,
+        19,
+        -1.4
+      ],
+      "normal": [
+        -1,
+        0
+      ],
+      "width": 5,
+      "covers": [
+        "b-sluice-stack",
+        "b-sluice-drum"
+      ]
+    },
+    {
+      "id": "b-return",
+      "site": "b",
+      "link": "def-b",
+      "center": [
+        -34,
+        32.5,
+        -1.4
+      ],
+      "normal": [
+        0,
+        -1
+      ],
+      "width": 6,
+      "covers": [
+        "b-return-spout",
+        "b-return-slab"
+      ]
+    }
+  ]
+}

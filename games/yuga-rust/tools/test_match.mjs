@@ -44,7 +44,8 @@ async function until(page, description, predicate, timeout = 60_000) {
   }
   throw Error(description + ' timed out. Last state ' + JSON.stringify({mode:last?.mode,hero:last?.state?.hero,
     tick:last?.state?.army?.tick, actor:last?.state?.actor?.pos, opponent:last?.state?.opponent?.actor?.pos, winner:last?.state?.winner, active:last?.state?.active?.id, clip:last?.renderer?.activeClip,
-    events:last?.state?.events?.slice(-2), room:await page.locator('#room-status').textContent(), status:await page.locator('#status').textContent()}));
+    events:last?.state?.events?.slice(-2), mixer:last?.mixer, audio:last?.audio,
+    room:await page.locator('#room-status').textContent(), status:await page.locator('#status').textContent()}));
 }
 
 function track(context, allowedDocument, roomUrl, packets) {
@@ -180,7 +181,7 @@ async function localMatch(browser) {
         const audio = await until(page,'Rust stereo limiter',p=>p.mixer==='openbf-rust');
         evidence.audio_mixer = audio.mixer;
         check(audio.mixer==='openbf-rust' && audio.audio.state==='running' && audio.audio.gain===1,
-          'localhost Chromium activated the packaged openbf Rust stereo limiter and a live unity-gain output');
+          'Chromium activated the packaged openbf Rust stereo limiter and a live unity-gain output');
         await page.locator('#sound').click();
         const muted = await until(page,'mute audio quantum',p=>p.audio.muted && p.audio.gain===0);
         check(muted.audio.muted && muted.audio.gain===0 && muted.mixer==='openbf-rust',

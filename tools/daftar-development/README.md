@@ -6,7 +6,7 @@ to use the verified package checks and the existing Yuga build commands. Opening
 the workspace starts no process, model download, paid service or authority change.
 
 The source baseline is `game/yuga-hanuman-trial` at
-`9e59880f31452ce0df8d326cd4f1291b700dc228`. Begin with the repository
+`a35493d67cf5111d7da2ff9eea6c58ed3499aeca`. Begin with the repository
 [AGENTS.md](../../AGENTS.md) and [current entry point](../../docs/START_HERE.md).
 The older default and distribution branches are distinct from this source.
 
@@ -26,6 +26,12 @@ The original authored maps and runtime asset paths remain in place. The new art
 package lives under `art/`; the project's existing authoring/import boundary still
 applies. An imported engine scene, navigation mesh or gameplay level is not created
 by the presence of this package.
+
+## Current authored work
+
+[Monsoon Exchange](../../games/yuga-native/art/monsoon-exchange/README.md) is an authored district and browser walk, not this Route Lab or a server-playable map. Start with the survey and Blender/GLB receipts before engine collision and ten-client commissioning.
+
+Run **Yuga: Test Ember Rite solo movement and audio** in VS Code to check the exact solo drill. It runs neither a browser nor a live match. The [audio QA](../../games/yuga-native/docs/design/ember-rite-5v5/audio/qa.md) separates listener behavior in the drill from the remaining authoritative, ten-seat, and physical listening checks.
 
 ## Use the package checks
 

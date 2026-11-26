@@ -7,6 +7,8 @@ on:
       - 'games/yuga-native/tools/build-observatory/**'
       - 'games/yuga-native/docs/design/ember-rite-5v5/**'
       - 'games/yuga-native/art/mandala-map-studio/**'
+      - 'games/yuga-native/art/monsoon-exchange/**'
+      - 'games/yuga-native/art/yagna-audio/**'
       - 'games/yuga-rust/downloads/yuga-rust-confluence.zip'
       - 'games/yuga-native/tools/production-art-stage/**'
       - 'games/yuga-native/art/production-stage-oct23/**'
@@ -51,6 +53,7 @@ jobs:
           python3 -m unittest test_balance
           python3 rehearsal/build.py --check
           node --test rehearsal/simulation.test.mjs
+          if test -f rehearsal/audio.test.mjs; then node --test rehearsal/audio.test.mjs; fi
       - name: Verify hero heights, two-cover entrances and recorded casts
         if: hashFiles('games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play/build.py') != ''
         working-directory: games/yuga-native/docs/design/ember-rite-5v5/atlas/vertical-play
@@ -62,6 +65,15 @@ jobs:
           python3 build.py --check
           python3 -m unittest discover -p 'test_*.py'
           node --test fieldbook.test.mjs
+      - name: Check the Dust inventory and registered Monsoon Exchange map
+        if: hashFiles('games/yuga-native/art/monsoon-exchange/check_delivery.py') != ''
+        working-directory: games/yuga-native/art/monsoon-exchange
+        run: |
+          python3 ../../docs/research/dust2-map-lab/inventory/verify.py
+          python3 plan/geometry.py --check
+          python3 plan/measure.py --check
+          python3 design/verify_register.py
+          python3 check_delivery.py
       - name: Verify the read-only observatory and additive publisher
         run: python3 -m unittest discover -s games/yuga-native/tools/build-observatory -p 'test_*.py' -v
       - name: Verify the studio catalog, scale drawings, paintings and registered models

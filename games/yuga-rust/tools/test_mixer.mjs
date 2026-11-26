@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { resolve } from 'node:path';
+import { basename, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { performance } from 'node:perf_hooks';
@@ -20,7 +20,8 @@ const wasm = await readFile(values.wasm);
 const worklet = await readFile(resolve(project, 'web/mix-worklet.js'));
 const module = await WebAssembly.compile(wasm);
 const api = new WebAssembly.Instance(module, {}).exports;
-const fixtures = resolve(project, '../yuga-native/assets/audio/hanuman-trial');
+const native = resolve(project, '../yuga-native');
+const fixtures = resolve(native, 'assets/audio/hanuman-trial');
 function wavPcm(data) {
   assert.equal(data.toString('ascii', 0, 4), 'RIFF');
   assert.equal(data.toString('ascii', 8, 12), 'WAVE');
@@ -37,11 +38,16 @@ function wavPcm(data) {
   assert.deepEqual(format, [1, 1, 24000, 16]); assert.ok(samples?.length); return samples;
 }
 const waves = [];
-for (const name of (await readdir(fixtures)).filter(n=>n.endsWith('.wav')).sort()) {
+const baseCues = JSON.parse(await readFile(resolve(native, 'NOTICE/HANUMAN-ABILITY-AUDIO.json'), 'utf8'));
+const senaCue = JSON.parse(await readFile(resolve(native, 'NOTICE/VANARA_SENA_AUDIO.json'), 'utf8'));
+const sources = new Map([...Object.values(baseCues.files), senaCue.file].map(cue => [basename(cue.path), cue.sha256]));
+const names = (await readdir(fixtures)).filter(name => name.endsWith('.wav')).sort();
+assert.deepEqual(names, [...sources.keys()].sort(), 'Stress every credited hero cue');
+for (const name of names) {
   const data = await readFile(resolve(fixtures,name));
+  assert.equal(hash(data), sources.get(name), name);
   waves.push({ name, sha256:hash(data), samples:wavPcm(data) });
 }
-assert.equal(waves.length, 6);
 const stack = Array.from({length: Math.max(...waves.map(w=>w.samples.length))}, (_,i) =>
   waves.reduce((s,w)=>s + (w.samples[i] ?? 0) * 2, 0));
 const inputPeak = Math.max(...stack.map(Math.abs));

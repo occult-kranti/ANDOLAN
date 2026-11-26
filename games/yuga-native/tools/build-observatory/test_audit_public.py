@@ -12,6 +12,7 @@ import unittest
 import audit_public as auditor
 import publish_site as publisher
 import observatory
+from test_publish_site import write_studio_fixture
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -34,30 +35,25 @@ class PublicAuditTests(unittest.TestCase):
             (web / 'status.json').write_text(json.dumps({
                 'schema_version': 1, 'mode': 'snapshot', 'collected_at': '2026-10-24T00:00:00+00:00',
                 'source': {'commit': 'a' * 40, 'dirty': False},
-                'jobs': [], 'assets': [], 'milestones': [], 'sources': []}))
+                'jobs': [], 'assets': [{'url': route} for route in (
+                    publisher.AUDIO_ROUTE, publisher.AUDIO_ROUTE.rstrip('/'), publisher.AUDIO_ROUTE + 'quench.flac')],
+                'milestones': [], 'sources': []}))
             for route, repo_path in publisher.ATLAS_FILES.items():
                 path = root / repo_path
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text('Bounded fixture for ' + route)
             studio = root / publisher.STUDIO
-            catalog = {'schema': 1, 'elements': [{'id': 'room-gate', 'plate': 'plates/room-gate.svg',
-                         'render': 'renders/room-gate.webp', 'clip': 'clips/room-gate.mp4'}]}
-            concepts = {'boards': [{'id': 'portals', 'file': 'boards/portals.webp', 'items': ['room-gate']}],
-                        'items': {'room-gate': {'file': 'items/room-gate.webp', 'board': 'portals'}}, 'hero': 'hero.webp'}
-            for name in publisher.studio_names(catalog, concepts):
-                path = studio / name
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_bytes(name.encode())
-            (studio / 'catalog.json').write_text(json.dumps(catalog))
-            (studio / 'concepts/index.json').write_text(json.dumps(concepts))
+            write_studio_fixture(studio)
             (studio / 'work-in-progress.html').write_text('studio working file')
             def git(*args):
                 return subprocess.check_output(['git', *args], cwd=root, stderr=subprocess.DEVNULL)
+            def commit(message):
+                git('-c', 'user.name=Audit fixture', '-c', 'user.email=fixture@example.invalid',
+                    '-c', 'commit.gpgsign=false', 'commit', '-qm', message)
+                return git('rev-parse', 'HEAD').decode().strip()
             git('init', '-q')
             git('add', '.')
-            git('-c', 'user.name=Audit fixture', '-c', 'user.email=fixture@example.invalid',
-                '-c', 'commit.gpgsign=false', 'commit', '-qm', 'Frozen publication fixture')
-            source = git('rev-parse', 'HEAD').decode().strip()
+            source = commit('Frozen publication fixture')
             site = root / 'site'
             site.mkdir()
             for name in publisher.REQUIRED_BASELINE:
@@ -97,7 +93,10 @@ class PublicAuditTests(unittest.TestCase):
                 base = f'http://127.0.0.1:{server.server_port}/'
                 accepted = auditor.audit(root, source, 'b' * 40, base, root / 'accepted')
                 self.assertTrue(accepted['passed'], accepted['checks'])
-                self.assertTrue(publisher.ATLAS_FILES.keys() <= accepted['expected_files'].keys())
+                files = accepted['expected_files']
+                self.assertTrue(publisher.ATLAS_FILES.keys() <= files.keys())
+                vessel = 'concepts/items/rite-ember-vessel.webp'
+                self.assertEqual(files['ember-rite/mandala-map-studio/' + vessel], files[publisher.STUDIO_ROUTE + vessel])
                 # Actual delivered file changes while both Git and the publisher receipt remain frozen.
                 (site / 'production/app.js').write_text('Stale or tampered deployed JavaScript')
                 rejected = auditor.audit(root, source, 'b' * 40, base, root / 'rejected')
@@ -122,6 +121,18 @@ class PublicAuditTests(unittest.TestCase):
                     self.assertTrue((root / f'snapshot-{index}/receipt.json').exists())
                 with self.assertRaises(FileExistsError):
                     auditor.audit(root, source, 'b' * 40, base, root / 'accepted')
+                index = studio / 'concepts/index.json'
+                concepts = json.loads(index.read_text())
+                del concepts['hero']
+                index.write_text(json.dumps(concepts))
+                git('add', str(index))
+                atlas_only, _ = auditor.expected_files(root, commit('Remove the studio route for the shared vessel'))
+                self.assertIn('ember-rite/mandala-map-studio/' + vessel, atlas_only)
+                self.assertNotIn(publisher.STUDIO_ROUTE + vessel, atlas_only)
+                git('rm', '--', publisher.ATLAS_FILES[publisher.AUDIO_ROUTE + 'quench.flac'])
+                incomplete = commit('Remove one required audio asset')
+                with self.assertRaisesRegex(ValueError, 'Incomplete committed atlas publication'):
+                    auditor.expected_files(root, incomplete)
             finally:
                 server.shutdown()
                 server.server_close()

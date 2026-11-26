@@ -21,6 +21,7 @@ try {
   const open = tab.getByRole('button', {name: 'Ember Rite map rehearsal'});
   const dialog = tab.getByRole('dialog', {name: 'Ember Rite solo map rehearsal'});
   const outcomes = [];
+  const mixKey = 'yuga.ember-rite.rehearsal.mix.v1';
   for (const district of ['Lanka', 'Kurukshetra']) {
     await open.click();
     await dialog.waitFor();
@@ -28,6 +29,31 @@ try {
     const drill = tab.frames().find(f => f.url() === 'about:srcdoc');
     assert.ok(drill);
     assert.equal(await drill.evaluate(() => self.origin), 'null');
+    assert.equal(await drill.evaluate(() => {
+      try { localStorage.getItem('test'); return false; }
+      catch (error) { return error.name === 'SecurityError'; }
+    }), true);
+    await frame.locator('#mix-settings > summary').click();
+    const music = frame.locator('#music-volume');
+    if (!outcomes.length) {
+      await frame.locator('#mono').check();
+      await music.focus();
+      await music.press('Home');
+      for (let step = 0; step < 3; step++) await music.press('ArrowRight');
+      await frame.getByRole('button', {name: 'Enable sound'}).click();
+    } else {
+      await frame.getByRole('button', {name: 'Resume sound'}).waitFor();
+      assert.equal(await frame.locator('#sound-toggle').getAttribute('aria-pressed'), 'false');
+      assert.equal(await frame.locator('#mono').isChecked(), true);
+      assert.equal(await music.inputValue(), '3');
+      assert.equal(await frame.locator('#captions').isChecked(), true);
+      await frame.getByRole('button', {name: 'Resume sound'}).click();
+    }
+    await frame.getByRole('button', {name: 'Mute sound'}).waitFor();
+    await tab.waitForFunction(key => {
+      const saved = JSON.parse(localStorage.getItem(key));
+      return saved?.music === 0.03 && saved.mono && saved.enabled;
+    }, mixKey);
     assert.equal(await frame.locator('#districts button').count(), 4);
     await frame.getByRole('button', {name: district, exact: true}).click();
     await frame.locator('#mode').selectOption('retake');
@@ -42,7 +68,9 @@ try {
   assert.equal(await tab.locator('#play').isVisible(), false);
   await writeFile(reportFile, JSON.stringify({result: 'pass', entry, drill_hash: digest(standalone),
     html_sha256: digest(bytes), districts_tested_through_title: outcomes, opaque_frame: true,
-    fresh_drill_and_focus_on_return: true}, null, 2) + '\n');
+    fresh_drill_and_focus_on_return: true, browser_version: browser.version(),
+    preferences_restored: {mono: true, captions: true, music: 0.03},
+    fresh_gesture_required_after_reopening: true}, null, 2) + '\n');
 } finally {
   await browser.close();
 }

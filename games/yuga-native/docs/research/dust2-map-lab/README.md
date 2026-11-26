@@ -1,5 +1,7 @@
 # Dust II, rebuilt locally
 
+**Use the rebuilt maps in design.** The field inventory describes both editions’ entities, navigation, architecture, props, material families, collision and audio. The transfer register traces each tactical decision into Monsoon Exchange, an original district with a surveyed floorplan and an editable Blender model. [Inventory and edition differences](inventory/README.md) · [Keep and transform register](../../../art/monsoon-exchange/design/transfer-register.md) · [Walk the YUGA district](https://occult-kranti.github.io/ANDOLAN/production/monsoon-exchange/)
+
 Two editions, one art change. We reconstructed the complete legacy CS:GO Dust II from Valve’s registered level and game assets, then used Rust to give its structural ground a jade finish. We also compiled Hanzo’s complete Nexuiz remake from its editable map, applied a jade ground finish, and walked it in its game client. These builds supply different kinds of evidence: fidelity to Valve’s shipped level and a working compiler path from editable brush geometry to a playable map. [Download the illustrated field guide](dust2-field-guide.pdf) · [Inspect the full-size comparison](matched-views.webp) · [Tools and exact rebuild commands](../../../tools/source-map-lab/README.md) · [File sizes, hashes and rerun results](build-receipt.json)
 
 ![The same north-up overview, Site A and Site B before and after the edit. Jade paving surrounds the original orange site markings.](matched-views.webp)

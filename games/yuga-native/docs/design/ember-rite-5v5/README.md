@@ -1,5 +1,7 @@
 # Ember Rite · YUGA tactical objective direction
 
+**Sound and counterplay.** An attacker can make an audible offer to kindle, release the hold and leave a defender guessing. Only confirmed ignition starts the public fire clock and its score. Rehearse this in the four offline districts, compare sounds around cover or audition both musical outcomes and the guide voices. [Play the listening exercise](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/rehearsal.html?map=mandala&exercise=explore&listen=1) · [Listening desk](https://occult-kranti.github.io/ANDOLAN/production/ember-rite/audio/index.html) · [Audio bible and production roadmap](audio/README.md)
+
 The vertical design study gives both sites in every district two shelter choices per entrance. Mandala also has measured flight, arrow and chakra paths, a 20-second mobile preparation phase, and a two-team rehearsal script. [Design fieldbook](atlas/vertical-play/README.md) · [All site entrances](atlas/vertical-play/door-register.md)
 
 Ember Rite adapts the user's **“plant the fire”** brief into an original 5v5, two-site objective on the proposed Mandala Rift map. Attackers carry a protected ember and kindle a site; defenders interrupt or quench it. This is a **fictional ritual-inspired game mechanic**, not a description of an actual religious ceremony. Ten proposed hero concepts, a prologue and seasonal ideas supply the surrounding fiction.

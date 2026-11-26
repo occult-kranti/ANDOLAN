@@ -33,7 +33,187 @@ function rectAttrs({xz:[x,z], size:[w,d]}) {
 }
 let plan, session, mapId, goal, follow = false, paused = false;
 let lastTime = null, lag = 0, scale = 1;
-const seenKeys = new Set();
+let practicePoint = null;
+const mixKey = "yuga.ember-rite.rehearsal.mix.v1";
+function validMix(saved) {
+  const settings = {};
+  for (const [key, initial] of Object.entries(REHEARSAL_DEFAULT_MIX)) {
+    const value = saved?.[key];
+    if (typeof value !== typeof initial) continue;
+    if (typeof value === "boolean" || (Number.isFinite(value) && value >= 0 && value <= 1)) settings[key] = value;
+  }
+  return settings;
+}
+const mix = {...REHEARSAL_DEFAULT_MIX};
+try { Object.assign(mix, validMix(JSON.parse(localStorage.getItem(mixKey)))); }
+catch { /* A scripts-only frame may deny storage. Its controls still work. */ }
+const embedded = window.parent !== window;
+let editedMix = false, restoredParentMix = false;
+let soundState = "off", soundActivated = false, openingSound = false;
+let captionTimer, captionPriority = -1, captionUntil = 0, showingPreview = false;
+function clearCaption() {
+  clearTimeout(captionTimer);
+  captionPriority = -1;
+  captionUntil = 0;
+  showingPreview = false;
+  setText("practice-caption", "");
+  delete byId("sound-caption").dataset.type;
+  setText("sound-caption", "");
+}
+function soundCaption(cue) {
+  if (!mix.captions || (!cue.preview && cue.priority < captionPriority && performance.now() < captionUntil)) return;
+  clearTimeout(captionTimer);
+  captionPriority = cue.priority;
+  captionUntil = performance.now() + 1100;
+  showingPreview = cue.preview;
+  setText("practice-caption", cue.preview ? cue.text : "");
+  byId("sound-caption").dataset.type = cue.type;
+  setText("sound-caption", cue.text);
+  captionTimer = setTimeout(clearCaption, cue.priority >= 2 ? 4200 : 2400);
+}
+function drawSoundState() {
+  const playing = soundState === "ready" && mix.enabled;
+  const blocked = soundState === "blocked" || soundState === "unavailable";
+  const button = byId("sound-toggle");
+  button.setAttribute("aria-pressed", String(playing));
+  button.disabled = openingSound;
+  setText("sound-toggle", playing ? "Mute sound" : openingSound ? "Enabling…" :
+    soundState === "unavailable" ? "Retry sound" : mix.enabled ? "Resume sound" : "Enable sound");
+  const context = playing ? (mix.mono ? "Sound on · Mono" : "Sound on · Stereo") :
+    blocked ? (soundState === "unavailable" ? "Audio unavailable in this browser" : "Playback needs permission") : "Sound off";
+  setText("sound-status", context + (mix.captions ? " · Captions on" : " · Captions off"));
+}
+const audio = new RehearsalAudio({
+  score: JSON.parse(byId("audio-assets").textContent),
+  onCaption: soundCaption,
+  onStatus: status => { soundState = status; drawSoundState(); }
+});
+function applyMix(save = true) {
+  audio.setMix({...mix, enabled: mix.enabled && soundActivated});
+  for (const name of ["master", "effects", "music"]) {
+    const value = Math.round(100 * mix[name]);
+    byId(name + "-volume").value = String(value);
+    setText(name + "-readout", value + "%");
+  }
+  byId("captions").checked = mix.captions;
+  byId("mono").checked = mix.mono;
+  if (!mix.captions) clearCaption();
+  if (save) {
+    editedMix = true;
+    try { localStorage.setItem(mixKey, JSON.stringify(mix)); } catch { /* Keep session preferences. */ }
+    if (embedded) window.parent.postMessage({type: "yuga.ember.audio.write", mix: {...mix}}, "*");
+  }
+  drawSoundState();
+}
+byId("sound-toggle").addEventListener("click", async () => {
+  if (openingSound) return;
+  if (soundState === "ready" && mix.enabled) {
+    mix.enabled = false;
+    applyMix();
+    return;
+  }
+  mix.enabled = true;
+  soundActivated = true;
+  openingSound = true;
+  applyMix();
+  try { await audio.unlock(); }
+  finally {
+    openingSound = false;
+    drawSoundState();
+    syncWorldSound();
+  }
+});
+for (const name of ["master", "effects", "music"]) {
+  byId(name + "-volume").addEventListener("input", event => {
+    mix[name] = event.target.valueAsNumber / 100;
+    applyMix();
+  });
+}
+for (const name of ["captions", "mono"]) {
+  byId(name).addEventListener("change", event => {
+    mix[name] = event.target.checked;
+    applyMix();
+  });
+}
+byId("restore-mix").addEventListener("click", () => {
+  Object.assign(mix, REHEARSAL_DEFAULT_MIX);
+  soundActivated = false;
+  clearCaption();
+  applyMix();
+});
+applyMix(false);
+if (embedded) {
+  window.addEventListener("message", event => {
+    if (event.source !== window.parent || event.data?.type !== "yuga.ember.audio.restore" || editedMix || restoredParentMix) return;
+    const settings = validMix(event.data.mix);
+    if (!Object.keys(settings).length) return;
+    restoredParentMix = true;
+    Object.assign(mix, settings);
+    applyMix(false);
+  });
+  window.parent.postMessage({type: "yuga.ember.audio.read"}, "*");
+}
+
+const practiceNames = {footstep: "Footstep on source surface", kindle_start: "Kindle windup",
+  hanuman_leap: "Hanuman’s leap", kali_tandava: "Kali’s Tandava"};
+options(byId("practice-cue"), Object.entries(practiceNames).map(([key, label]) =>
+  [key, label + " · " + REHEARSAL_CUE_RANGES[key] + " m"]));
+function syncWorldSound() {
+  if (!session) return;
+  audio.listen(plan, session.position, session.facing);
+  const running = session.phase === "burn" && session.started;
+  audio.syncBurn(running ? session.remaining / rules.hz : null, rules.burn / rules.hz);
+}
+function deliverCue(cue) {
+  audio.listen(plan, session.position, session.facing);
+  return audio.emit(cue);
+}
+function drawPractice() {
+  const lab = byId("listening-lab");
+  lab.hidden = session.mode !== "explore";
+  const visible = !lab.hidden && lab.open;
+  const pinned = visible && practicePoint !== null;
+  const marker = byId("practice-marker");
+  marker.setAttribute("display", pinned ? "inline" : "none");
+  if (!visible) return;
+  if (pinned) marker.setAttribute("transform", "translate(" + practicePoint[0] + " " + -practicePoint[1] + ")");
+  byId("play-source").disabled = !pinned || paused;
+  for (const id of ["place-source", "turn-left", "turn-right"]) byId(id).disabled = paused;
+  const angle = Math.atan2(session.facing[0], session.facing[1]) / (Math.PI / 4);
+  const heading = ["N","NE","E","SE","S","SW","W","NW"][(Math.round(angle) + 8) % 8];
+  const position = pinned ? distance(session.position, practicePoint).toFixed(1) + " m from source · " : "";
+  setText("practice-position", position + "Facing " + heading);
+}
+function placePracticeSource() {
+  if (session.mode !== "explore" || paused || !byId("listening-lab").open) return;
+  practicePoint = [...session.position];
+  const wet = plan.surface(practicePoint).kind === "water";
+  if (showingPreview) clearCaption();
+  setText("practice-outcome", "Source placed on " + (wet ? "shallow water." : "dry floor."));
+  drawPractice();
+}
+function playPracticeCue() {
+  if (!practicePoint || session.mode !== "explore" || paused || !byId("listening-lab").open) return;
+  const type = byId("practice-cue").value;
+  if (showingPreview) clearCaption();
+  const surface = plan.surface(practicePoint).kind === "water" ? "water" : "stone";
+  const received = deliverCue({type, at: practicePoint, surface, preview: true});
+  const range = REHEARSAL_CUE_RANGES[type];
+  const outOfRange = !rehearsalCueInRange(type, distance(session.position, practicePoint));
+  setText("practice-outcome", received ? "Cue in range." : outOfRange ? "Outside the " + range + " m range." : "Wait a moment, then play the cue again.");
+}
+function turnInPlace(turns) {
+  if (session.mode !== "explore" || paused || !byId("listening-lab").open) return;
+  session.turn(turns);
+  syncWorldSound();
+  drawActor();
+}
+byId("listening-lab").addEventListener("toggle", () => { if (session) drawPractice(); });
+byId("place-source").addEventListener("click", placePracticeSource);
+byId("play-source").addEventListener("click", playPracticeCue);
+byId("turn-left").addEventListener("click", () => turnInPlace(-1));
+byId("turn-right").addEventListener("click", () => turnInPlace(1));
+const seenKeys = new Map();
 const mapButtons = new Map();
 for (const map of maps) {
   const button = document.createElement("button");
@@ -184,8 +364,14 @@ function configureGoals(preferred) {
 }
 function restart() {
   clearInput();
-  session=new Rehearsal(plan,rules,byId("mode").value,byId("start").value,goal);
+  audio.reset();
+  clearCaption();
+  practicePoint = null;
+  setText("practice-outcome", "");
+  session=new Rehearsal(plan,rules,byId("mode").value,byId("start").value,goal,deliverCue);
   paused=false;
+  audio.setPaused(document.hidden);
+  syncWorldSound();
   updateGuide();frameMap();drawActor();
 }
 function chooseExercise(preferredGoal) {
@@ -214,11 +400,14 @@ function loadMap(id, preferredGoal) {
 function takeDefence() {
   if(session.phase!=="handoff")return;
   clearInput();
+  audio.reset();
+  clearCaption();
   session.takeDefence();
   byId("mode").value="retake";
   byId("start").value=session.start;
   configureGoals(session.target);
   paused=false;
+  syncWorldSound();
   updateGuide();frameMap();drawActor();
 }
 function drawActor() {
@@ -241,7 +430,7 @@ function drawActor() {
   byId("handoff").hidden=!inHandoff;
   byId("drop").hidden=session.mode!=="carry" || !session.carrying;
   byId("drop").disabled=paused;
-  byId("interrupt").disabled=paused || ended || inHandoff;
+  byId("interrupt").disabled=paused || !session.channel;
   byId("interact").disabled=paused || ended || inHandoff;
   byId("pause").disabled=ended || inHandoff;
   setText("pause",paused?"Resume":"Pause");
@@ -249,6 +438,7 @@ function drawActor() {
   byId("progress").value=session.progress/total;
   setText("progress-text",session.channel?Math.round(session.progress*100/total)+"%":paused?"Paused":"Ready");
   setText("status",session.channel ? session.channel.name+" · keep holding." : session.message);
+  drawPractice();
 }
 function step() {
   const values=new Set(held.values());
@@ -260,10 +450,16 @@ function step() {
 }
 function frame(stamp) {
   if(lastTime!==null && !paused && !document.hidden) {
-    lag+=Math.min(stamp-lastTime,250);
+    lag+=Math.max(0,stamp-lastTime);
     const interval=1000/rules.hz;
-    if(lag>=interval) {
-      while(lag>=interval){step();lag-=interval;}
+    const ticks=Math.floor(lag/interval);
+    if(ticks) {
+      lag-=ticks*interval;
+      for(let i=0;i<ticks;i++){
+        step();
+        if(!session.started || session.phase==="ended" || session.phase==="handoff")break;
+      }
+      syncWorldSound();
       if(follow)frameMap();
       drawActor();
     }
@@ -273,13 +469,24 @@ function frame(stamp) {
 }
 function togglePause() {
   if (session.phase==="ended" || session.phase==="handoff") return;
-  clearInput();paused=!paused;drawActor();
+  clearInput();
+  paused=!paused;
+  audio.setPaused(paused || document.hidden);
+  syncWorldSound();
+  drawActor();
+}
+function tapAction(action) {
+  const [x,z]=vectors[action] ?? [0,0];
+  session.step({x,z,hold:action==="hold"});
+  syncWorldSound();
+  if(follow)frameMap();
+  drawActor();
 }
 function heldButton(button,action) {
   const pressTick=new Map();
   const id=event=>"pointer-"+event.pointerId;
   button.addEventListener("pointerdown",event=>{
-    if(event.button!==0 || button.disabled) return;
+    if(event.button!==0 || button.disabled || paused) return;
     event.preventDefault(); button.focus({preventScroll:true});
     button.setPointerCapture(event.pointerId);
     pressTick.set(event.pointerId,session.elapsed);
@@ -289,20 +496,24 @@ function heldButton(button,action) {
     const shortTap=event.type==="pointerup" && held.has(id(event)) &&
       pressTick.get(event.pointerId)===session.elapsed;
     held.delete(id(event));pressTick.delete(event.pointerId);
-    if(shortTap && vectors[action] && !paused){
-      session.step({x:vectors[action][0],z:vectors[action][1]});drawActor();
-    }
+    if(shortTap && !paused)tapAction(action);
     if(![...held.values()].includes(action))button.classList.remove("active");
   };
   for(const type of ["pointerup","pointercancel","lostpointercapture"]) button.addEventListener(type,release);
   button.addEventListener("keydown",event=>{
     if(!["Space","Enter"].includes(event.code))return;
     event.preventDefault();
-    if(!button.disabled){held.set(event.code,action);button.classList.add("active");}
+    if(!button.disabled && !paused && !held.has(event.code)){
+      pressTick.set(event.code,session.elapsed);
+      held.set(event.code,action);button.classList.add("active");
+    }
   });
   button.addEventListener("keyup",event=>{
     if(!["Space","Enter"].includes(event.code))return;
+    const shortTap=held.has(event.code) && pressTick.get(event.code)===session.elapsed;
+    pressTick.delete(event.code);
     event.preventDefault();held.delete(event.code);button.classList.remove("active");
+    if(shortTap && !paused)tapAction(action);
   });
   button.addEventListener("blur",()=>{held.delete("Space");held.delete("Enter");button.classList.remove("active");});
   // Assistive activation may emit a click without a pointer or key hold.
@@ -311,7 +522,7 @@ function heldButton(button,action) {
     if(action==="hold"){
       if(held.has("assist-hold"))held.delete("assist-hold");else held.set("assist-hold","hold");
     }else if(!held.size){
-      session.step({x:vectors[action][0],z:vectors[action][1]});drawActor();
+      tapAction(action);
     }
   });
 }
@@ -320,23 +531,49 @@ heldButton(byId("interact"),"hold");
 document.addEventListener("keydown",event=>{
   if(event.altKey||event.ctrlKey||event.metaKey||event.target.closest?.("input,select,textarea,summary"))return;
   const action=bindings[event.code];
-  if(!action && event.code!=="KeyP" && event.code!=="KeyG")return;
+  const labKey=session.mode==="explore" && byId("listening-lab").open &&
+    ["KeyQ","KeyR","KeyV"].includes(event.code);
+  if(!action && !labKey && event.code!=="KeyP" && event.code!=="KeyG")return;
   event.preventDefault();
   if(event.repeat || seenKeys.has(event.code))return;
-  seenKeys.add(event.code);
+  seenKeys.set(event.code,session.elapsed);
   if(event.code==="KeyP"){togglePause();return;}
   if(paused)return;
+  if(labKey){
+    if(event.code==="KeyV")playPracticeCue();
+    else turnInPlace(event.code==="KeyQ"?-1:1);
+    return;
+  }
   if(event.code==="KeyG"){session.drop();drawActor();return;}
   held.set(event.code,action);
 });
-document.addEventListener("keyup",event=>{held.delete(event.code);seenKeys.delete(event.code);});
+document.addEventListener("keyup",event=>{
+  const action=bindings[event.code];
+  const shortTap=action && held.has(event.code) && seenKeys.get(event.code)===session.elapsed;
+  held.delete(event.code);seenKeys.delete(event.code);
+  if(shortTap && !paused && !document.hidden)tapAction(action);
+});
 function suspend(){
   clearInput();
+  audio.setPaused(true);
+  clearCaption();
   if(session?.started && !["ended","handoff"].includes(session.phase))paused=true;
   if(session)drawActor();
 }
 window.addEventListener("blur",suspend);
-document.addEventListener("visibilitychange",()=>{if(document.hidden)suspend();});
+window.addEventListener("pagehide",event=>{
+  suspend();
+  if(!event.persisted)audio.dispose();
+});
+function restoreFocus() {
+  if(!document.hidden && !paused) {
+    audio.setPaused(false);
+    syncWorldSound();
+  }
+}
+window.addEventListener("focus", restoreFocus);
+window.addEventListener("pageshow", restoreFocus);
+document.addEventListener("visibilitychange",()=>{if(document.hidden)suspend();else restoreFocus();});
 byId("reset").addEventListener("click",restart);
 byId("mode").addEventListener("change",()=>chooseExercise("a"));
 byId("start").addEventListener("change",restart);
@@ -356,6 +593,7 @@ byId("zoom").addEventListener("click",()=>{
 planCanvas.addEventListener("pointerdown",()=>planCanvas.focus({preventScroll:true}));
 const query=new URLSearchParams(location.search);
 if(["explore","carry","retake"].includes(query.get("exercise")))byId("mode").value=query.get("exercise");
+if(byId("mode").value==="explore" && query.get("listen")==="1")byId("listening-lab").open=true;
 loadMap(mapButtons.has(query.get("map"))?query.get("map"):maps[0].id,query.get("site"));
 new ResizeObserver(frameMap).observe(planCanvas);
 requestAnimationFrame(frame);
