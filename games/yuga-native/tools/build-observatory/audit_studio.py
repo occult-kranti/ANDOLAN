@@ -12,6 +12,10 @@ from urllib.request import getproxies
 
 from playwright.sync_api import sync_playwright
 
+# Check the source file header. CDNs can otherwise range a compressed
+# representation whose first 32 bytes cannot be independently decompressed.
+FILE_HEADER = {"Range": "bytes=0-31", "Accept-Encoding": "identity"}
+
 
 def verify(base, output, chromium):
     output.mkdir(parents=True, exist_ok=False)
@@ -34,10 +38,14 @@ def verify(base, output, chromium):
             record["chromium"] = browser.version
             context = browser.new_context(viewport={"width":1440,"height":900}, reduced_motion="reduce")
             page = context.new_page()
-            page.set_default_timeout(20000)
-            page.on("pageerror", lambda error: record["page_errors"].append(str(error)))
-            page.on("response", lambda r: record["http_errors"].append({"url":r.url,"status":r.status}) if r.status >= 400 else None)
-            page.on("console", lambda m: record["console_errors"].append({"text":m.text,"url":m.location.get("url")}) if m.type == "error" else None)
+
+            def observe(tab):
+                tab.set_default_timeout(20000)
+                tab.on("pageerror", lambda error: record["page_errors"].append(str(error)))
+                tab.on("response", lambda r: record["http_errors"].append({"url":r.url,"status":r.status}) if r.status >= 400 else None)
+                tab.on("console", lambda m: record["console_errors"].append({"text":m.text,"url":m.location.get("url")}) if m.type == "error" else None)
+
+            observe(page)
             catalog = context.request.get(urljoin(base, "catalog.json")).json()
             concepts = context.request.get(urljoin(base, "concepts/index.json")).json()
             models = context.request.get(urljoin(base, "models/index.json")).json()
@@ -98,7 +106,7 @@ def verify(base, output, chromium):
                 local_model = models["models"][item["id"]]
                 check("individual model link " + item["id"], model_url == "./models/" + local_model["file"]
                       and local_model["file"] == item["id"] + ".glb" and model.get_attribute("download") is not None)
-                model_header = context.request.get(urljoin(base, model_url),headers={"Range":"bytes=0-31"})
+                model_header = context.request.get(urljoin(base, model_url),headers=FILE_HEADER)
                 check("individual GLB header " + item["id"], model_header.status in {200,206}
                       and model_header.body()[:8] == b"glTF\x02\x00\x00\x00")
                 model_header.dispose()
@@ -147,13 +155,13 @@ def verify(base, output, chromium):
             tour = video_frame(page.locator("#district-film"))
             check("district film plays", tour["duration"] > 0 and tour["width"] > 0)
             for name in ("mandala-rift.blend","mandala-rift.glb"):
-                response = context.request.get(urljoin(base,name),headers={"Range":"bytes=0-31"})
+                response = context.request.get(urljoin(base,name),headers=FILE_HEADER)
                 magic = response.body()[:8]
                 starts = (b"BLENDER",b"\x28\xb5\x2f\xfd",b"\x1f\x8b") if name.endswith(".blend") else (b"glTF",)
                 check("download " + name, response.status in {200,206} and magic.startswith(starts))
                 response.dispose()
             book = page.get_by_role("link",name="Complete art book")
-            response = context.request.get(urljoin(base,book.get_attribute("href")),headers={"Range":"bytes=0-31"})
+            response = context.request.get(urljoin(base,book.get_attribute("href")),headers=FILE_HEADER)
             check("printable art book download", book.get_attribute("download") is not None
                   and response.status in {200,206} and response.body()[:5] == b"%PDF-")
             response.dispose()
@@ -170,6 +178,28 @@ def verify(base, output, chromium):
                 page.locator("#close").click()
                 page.locator("dialog[open]").wait_for(state="hidden")
                 record["viewports"].append(width)
+            folded = next((item for item in elements if item.get("travel_kind") == "fold"), None)
+            if folded:
+                mobile = browser.new_context(viewport={"width":390,"height":844}, is_mobile=True,
+                                             has_touch=True, device_scale_factor=2, reduced_motion="reduce")
+                phone = mobile.new_page()
+                observe(phone)
+                phone.goto(base, wait_until="domcontentloaded")
+                phone.locator('#filters button[data-kind="route"]').tap()
+                phone.locator("#search").fill(folded["title"])
+                phone.locator(f'.study[data-id="{folded["id"]}"]').tap()
+                phone.locator("#location summary").tap()
+                check("touch navigation opens both fold mouths", phone.locator("#locator circle").count()
+                      == len(folded["mouths_xyz"]) and phone.evaluate("navigator.maxTouchPoints > 0"))
+                phone.screenshot(path=str(output/"fold-touch-390.png"))
+                phone.get_by_role("button",name="Motion",exact=True).tap()
+                frame = video_frame(phone.locator("#media-view video"))
+                check("touch route film presents a frame", frame["duration"] > 0 and frame["width"] > 0)
+                phone.locator("#close").tap()
+                phone.locator("dialog[open]").wait_for(state="hidden")
+                check("touch returns to the filtered route index", phone.locator("#search").input_value()
+                      == folded["title"] and phone.evaluate("document.documentElement.scrollWidth <= innerWidth"))
+                mobile.close()
             check("browser console, scripts and HTTP", not any(record[key] for key in ("page_errors","http_errors","console_errors")))
             record["passed"] = True
             browser.close()
