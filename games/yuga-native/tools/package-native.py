@@ -1583,6 +1583,7 @@ def _native_contract_inputs(project: Path) -> dict:
         'games/yuga/shared/map.ts', 'games/yuga/shared/types.ts',
         'games/yuga-native/assets/world/confluence-map.json',
         'games/yuga-native/docs/GAME_DESIGN_MASTER.md',
+        'games/yuga-native/tests/fixtures/contracts/production-6v6-v1-design-master.md',
         'games/yuga-native/scripts/relay_control.gd',
         *[f'games/yuga-native/tests/fixtures/contracts/native-content{revision}-{kind}.json'
           for revision in (3, 4, 5, 6, 7) for kind in ('catalog', 'descriptor')],
@@ -1630,7 +1631,8 @@ def prove_native_contract_sources(output: Path, project: Path | None = None) -> 
     if len(set(names)) != len(names) or not required.issubset(names):
         raise ValueError('Native contract proof omits required source checks')
     report_sources = ('assets/contracts/native-contracts-v1.json', 'assets/contracts/native-envelope-v1.schema.json',
-                      'tools/check-native-contracts.py', 'scripts/native_contracts.gd')
+                      'tools/check-native-contracts.py', 'scripts/native_contracts.gd',
+                      'tests/fixtures/contracts/production-6v6-v1-design-master.md')
     expected = {'games/yuga-native/' + path: before['games/yuga-native/' + path]['sha256']
                 for path in report_sources}
     if report.get('source_sha256') != expected or _native_contract_inputs(project) != before:

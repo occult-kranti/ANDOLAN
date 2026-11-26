@@ -70,6 +70,22 @@ def main():
         checks.append({'name': 'actual current checker and full exact source closure accept',
                        'passed': valid['checks'] > 0 and valid['sources'] == inputs,
                        'checker_assertions': valid['checks'], 'source_count': len(inputs)})
+        snapshot_relative = 'games/yuga-native/tests/fixtures/contracts/production-6v6-v1-design-master.md'
+        checks.append({'name': 'immutable v1 design is bound in the source closure and checker proof',
+                       'passed': snapshot_relative in valid['sources']
+                       and valid_report['source_sha256'].get(snapshot_relative)
+                       == valid['sources'][snapshot_relative]['sha256']})
+        snapshot = repository / snapshot_relative
+        snapshot_original = snapshot.read_bytes()
+        snapshot.write_bytes(snapshot_original + b'\n# synthetic stale historical source\n')
+        rejected('changed production v1 design snapshot rejects source proof',
+                 lambda: packaging.prove_native_contract_sources(folder() / 'report.json', project),
+                 'Native contract source check failed')
+        snapshot.unlink()
+        rejected('missing production v1 design snapshot rejects source closure',
+                 lambda: packaging._native_contract_inputs(project),
+                 'Missing or unsafe native contract input: ' + snapshot_relative)
+        snapshot.write_bytes(snapshot_original)
         player = project / 'scripts/player.gd'
         original_player = player.read_bytes()
         player.write_bytes(original_player + b'\n# stale contract fixture\n')
